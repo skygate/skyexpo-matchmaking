@@ -7,8 +7,7 @@ This file is required and if development.py is present these
 values are overridden.
 """
 import sentry_sdk
-from sentry_sdk.integrations.django import \
-    DjangoIntegration
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from server.settings.components import config
 
