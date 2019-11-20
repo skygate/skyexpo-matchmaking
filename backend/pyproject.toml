@@ -9,7 +9,7 @@ style = "https://raw.githubusercontent.com/wemake-services/wemake-python-stylegu
 
 [tool.poetry]
 name = "skyexpo_matchmaking"
-description = "The first version of the streaming platform"
+description = "The matchmaking app for sky expo 2020."
 version = "0.1.0"
 readme = "README.md"
 authors = ["Marcin Josiński"]
@@ -32,6 +32,7 @@ gunicorn = "^20.0"
 python-decouple = "^3.3"
 dump-env = "^1.1"
 bcrypt = "^3.1"
+sentry-sdk = "^0.13"
 pyrsistent = "0.14.2"
 # TODO: drf-yasg should be in dev-dependecies but views currently need decorator from this package
 # Try to resolve it somehow so we can move drf-yasg into dev-dependencies.

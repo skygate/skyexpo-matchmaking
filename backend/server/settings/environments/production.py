@@ -8,6 +8,10 @@ values are overridden.
 """
 
 from server.settings.components import config
+import sendry_sdk
+from sentry_sdk.integrations.django import \
+    DjangoIntegration
+
 
 # Production flags:
 
@@ -68,3 +72,12 @@ SECURE_SSL_REDIRECT = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+
+# Django error tracking with sentry
+# https://sentry.io/for/django/
+
+
+sentry_sdk.init(
+    integrations=[DjangoIntegration()]
+)
