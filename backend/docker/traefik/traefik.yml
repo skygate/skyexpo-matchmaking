@@ -1,0 +1,26 @@
+---
+
+log:
+  level: "DEBUG"
+
+entryPoints:
+  web:
+    address: ":80"
+
+  web-secure:
+    address: ":443"
+
+ping:
+  entryPoint: "web"
+
+providers:
+  file:
+    filename: "/etc/traefik/dynamic_conf.yml"
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: "josinski@outlook.com"
+      storage: "acme.json"
+      httpChallenge:
+        entryPoint: "web"
