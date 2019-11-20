@@ -20,7 +20,7 @@ providers:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: "josinski@outlook.com"
+      email: "marcin.josinski@skygate.io"
       storage: "acme.json"
       httpChallenge:
         entryPoint: "web"
