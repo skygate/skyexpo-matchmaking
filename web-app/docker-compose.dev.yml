@@ -7,4 +7,4 @@ services:
     command: yarn start
     restart: unless-stopped
     volumes:
-      - ./web-app/src:/web-app/src
+      - ./web-app:/web-app
