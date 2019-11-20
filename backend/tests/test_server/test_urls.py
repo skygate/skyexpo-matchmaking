@@ -23,19 +23,3 @@ def test_admin_authorized(admin_client):
     response = admin_client.get('/admin/')
 
     assert response.status_code == 200
-
-
-def test_robots_txt(client):
-    """This test ensures that `robots.txt` is accessible."""
-    response = client.get('/robots.txt')
-
-    assert response.status_code == 200
-    assert response.get('Content-Type') == 'text/plain'
-
-
-def test_humans_txt(client):
-    """This test ensures that `humans.txt` is accessible."""
-    response = client.get('/humans.txt')
-
-    assert response.status_code == 200
-    assert response.get('Content-Type') == 'text/plain'

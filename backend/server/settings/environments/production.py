@@ -6,12 +6,11 @@ This file contains all the settings used in production.
 This file is required and if development.py is present these
 values are overridden.
 """
-
-from server.settings.components import config
-import sendry_sdk
+import sentry_sdk
 from sentry_sdk.integrations.django import \
     DjangoIntegration
 
+from server.settings.components import config
 
 # Production flags:
 

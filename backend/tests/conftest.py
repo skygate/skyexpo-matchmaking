@@ -8,11 +8,6 @@ It may be also used for extending doctest's context:
 2. https://docs.pytest.org/en/latest/doctest.html
 """
 import pytest
-from django.contrib.auth import get_user_model
-from django.test import Client
-
-
-User = get_user_model()
 
 
 @pytest.fixture(autouse=True)
@@ -35,18 +30,3 @@ def _auth_backends(settings):
     settings.AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
     )
-
-
-@pytest.fixture()
-def admin_user(db):  # noqa: WPS442
-    """Returns a Django admin user."""
-    return User.objects.create_superuser('admin@example.com', 'password')
-
-
-@pytest.fixture()
-def admin_client(admin_user):  # noqa: WPS442
-    """Returns a Django test client logged in as an admin user."""
-    client = Client()
-    client.login(username=admin_user.email, password='password')
-
-    return client
