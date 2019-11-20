@@ -1,0 +1,10 @@
+version: "3.2"
+
+services:
+  web-app:
+    build:
+      dockerfile: dev.Dockerfile
+    command: yarn start
+    restart: unless-stopped
+    volumes:
+      - ./web-app/src:/web-app/src
