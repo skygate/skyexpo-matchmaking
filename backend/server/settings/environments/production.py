@@ -76,6 +76,6 @@ CSRF_COOKIE_SECURE = True
 # https://sentry.io/for/django/
 
 
-sentry_sdk.init(
+sentry_sdk.init(  # type: ignore
     integrations=[DjangoIntegration()],
 )
