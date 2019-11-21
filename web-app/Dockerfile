@@ -1,12 +1,12 @@
 FROM node:carbon as builder
 
-WORKDIR /
+WORKDIR /web-app
 
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 
 RUN yarn
 
-COPY . /
+COPY . .
 
 RUN yarn build

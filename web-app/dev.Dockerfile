@@ -1,10 +1,10 @@
 FROM node:carbon
 
-WORKDIR /
+WORKDIR /web-app
 
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 
 RUN yarn
 
-COPY . /
+COPY . .
