@@ -5,6 +5,18 @@ import { FormQuestions } from '../components/FormQuestions';
 import { formSteps } from '../components/formSteps';
 import { validationPage1, validationPage2, validationPage3 } from '../components/validationSchemas';
 
+const initialValues = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    firstName1: '',
+    lastName1: '',
+    email1: '',
+    firstName2: '',
+    lastName2: '',
+    email2: '',
+};
+
 export const RegisterCompanyForm = () => {
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -21,7 +33,7 @@ export const RegisterCompanyForm = () => {
     };
 
     const handleSubmit = values => {
-        console.log('yolo values', values);
+        console.log('Submitted values', values);
     };
 
     return (
@@ -33,42 +45,16 @@ export const RegisterCompanyForm = () => {
                 <Formik
                     onSubmit={handleSubmit}
                     isInitialValid={false}
-                    initialValues={{
-                        firstName: '',
-                        lastName: '',
-                        email: '',
-                        firstName1: '',
-                        lastName1: '',
-                        email1: '',
-                        firstName2: '',
-                        lastName2: '',
-                        email2: '',
-                    }}
+                    initialValues={initialValues}
                     validationSchema={validationSchemas[currentStep]}
                 >
                     {props => (
                         <Form>
-                            {currentStep === 0 && (
-                                <FormQuestions
-                                    {...props}
-                                    pageProps={formSteps[currentStep]}
-                                    nextPage={() => handleNextPage(props)}
-                                />
-                            )}
-                            {currentStep === 1 && (
-                                <FormQuestions
-                                    {...props}
-                                    pageProps={formSteps[currentStep]}
-                                    nextPage={() => handleNextPage(props)}
-                                />
-                            )}
-                            {currentStep === 2 && (
-                                <FormQuestions
-                                    {...props}
-                                    pageProps={formSteps[currentStep]}
-                                    nextPage={() => handleNextPage(props)}
-                                />
-                            )}
+                            <FormQuestions
+                                {...props}
+                                pageProps={formSteps[currentStep]}
+                                nextPage={() => handleNextPage(props)}
+                            />
                             <button type="button" onClick={() => handleNextPage(props)}>
                                 {currentStep > 1 ? 'submit' : 'next page'}
                             </button>

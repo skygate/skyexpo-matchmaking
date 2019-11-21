@@ -11,7 +11,7 @@ export const FormQuestions = ({ handleChange, values, touched, errors, pageProps
                     name={input.name}
                     type="text"
                     placeholder={input.placeholder}
-                ></input>
+                />
                 {errors && touched[input.name] && <span>{errors[input.name]} </span>}
             </div>
         ))}
