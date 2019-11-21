@@ -19,4 +19,15 @@ services:
       - "8888:8888"
     volumes:
       # We only mount source code in development:
-      - .:/code
+      - ./backend:/code
+
+  web-app:
+    build:
+      dockerfile: dev.Dockerfile
+    command: yarn start
+    restart: unless-stopped
+    volumes:
+      - ./web-app:/web-app
+      - ./web-app/node_modules
+    ports:
+      - 3000:3000

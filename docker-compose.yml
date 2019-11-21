@@ -16,13 +16,13 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - webnet
-    env_file: ./config/.env
+    env_file: ./backend/config/.env
 
   web:
     <<: &web
       build:
         target: development_build
-        context: .
+        context: ./backend
         dockerfile: ./docker/django/Dockerfile
         args:
           DJANGO_ENV: development
@@ -33,7 +33,7 @@ services:
       networks:
         - webnet
         - proxynet
-      env_file: ./config/.env
+      env_file: ./backend/config/.env
       environment:
         DJANGO_DATABASE_HOST: db
     command: python -Wd manage.py runserver 0.0.0.0:8000
@@ -48,6 +48,14 @@ services:
 # some_worker:
 #   <<: *web
 #   command: python manage.py worker_process
+
+  web-app:
+    container_name: skyexpo-webapp
+    build:
+      context: ./web-app
+    image: skyexpo_web-app
+    networks:
+      - webnet
 
 networks:
   # Network for your proxy server and application to connect them,

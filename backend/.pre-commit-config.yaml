@@ -16,6 +16,6 @@ repos:
     hooks:
       - id: flake8
         name: flake8
-        entry: docker-compose -f backend/docker-compose.yml -f backend/docker-compose.override.yml run --rm web flake8
+        entry: docker-compose run --rm web flake8
         pass_filenames: false
         language: system

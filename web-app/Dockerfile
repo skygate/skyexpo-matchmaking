@@ -10,3 +10,8 @@ RUN yarn
 COPY . .
 
 RUN yarn build
+
+FROM nginx
+
+COPY ./nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY --from=builder /web-app/build /web-app/build
