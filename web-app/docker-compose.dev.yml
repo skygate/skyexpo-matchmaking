@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  web-app:
+    build:
+      dockerfile: dev.Dockerfile
+    command: yarn start
+    restart: unless-stopped
+    volumes:
+      - ./:/web-app
+      - /web-app/node_modules
