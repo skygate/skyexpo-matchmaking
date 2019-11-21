@@ -4,5 +4,7 @@ services:
   web-app:
     container_name: web-app-skyexpo
     build:
-      context: ./web-app
+      context: ./
     image: skyexpo_web-app
+    ports:
+      - 3000:3000

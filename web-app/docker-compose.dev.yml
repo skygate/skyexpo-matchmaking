@@ -8,3 +8,4 @@ services:
     restart: unless-stopped
     volumes:
       - ./web-app:/web-app
+      - ./web-app/node_modules
