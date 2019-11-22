@@ -1,0 +1,77 @@
+[build-system]
+requires = ["poetry==0.12.17"]
+build-backend = "poetry.masonry.api"
+
+
+[tool.nitpick]
+style = "https://raw.githubusercontent.com/wemake-services/wemake-python-styleguide/master/styles/nitpick-style-wemake.toml"
+
+
+[tool.poetry]
+name = "skyexpo_matchmaking"
+description = "The matchmaking app for skyexpo 2020."
+version = "0.1.0"
+readme = "README.md"
+authors = ["Marcin Josiński"]
+
+
+[tool.poetry.dependencies]
+python = "3.7.4"
+django = "^2.2"
+djangorestframework = "^3.10"
+djangorestframework-camel-case = "^1.1"
+djangorestframework-simplejwt = "^4.3"
+django-split-settings = "^1.0"
+django-axes = "^5.0"
+django-csp = "^3.5"
+django-health-check = "^3.11"
+django-http-referrer-policy = "^1.0"
+django-feature-policy = "^3.1"
+psycopg2 = "^2.8"
+gunicorn = "^20.0"
+python-decouple = "^3.3"
+dump-env = "^1.1"
+bcrypt = "^3.1"
+sentry-sdk = "^0.13"
+pyrsistent = "0.14.2"
+# TODO: drf-yasg should be in dev-dependecies but views currently need decorator from this package
+# Try to resolve it somehow so we can move drf-yasg into dev-dependencies.
+drf-yasg = "^1.17"
+
+
+[tool.poetry.dev-dependencies]
+django-debug-toolbar = "^2.1"
+django-querycount = "^0.7"
+django-extensions = "^2.2"
+nplusone = "^1.0"
+
+wemake-python-styleguide = "^0.13.0"
+flake8-pytest = "^1.3"
+flake8-pytest-style = "^0.1.3"
+flake8-django = "^0.0.4"
+xenon = "^0.5"
+nitpick = "^0.21.2"
+
+pytest = "^5.2"
+pytest-django = "^3.7"
+pytest-cov = "^2.8"
+pytest-randomly = "^3.1"
+pytest-deadfixtures = "^2.1"
+pytest-testmon = "^0.9"
+pytest-timeout = "^1.3"
+factory_boy = "^2.12"
+
+mypy = "^0.720"
+django-stubs = "^1.1"
+djangorestframework-stubs = "^1.0"
+
+ipython = "^7.9"
+jupyter = "^1.0"
+
+yamllint = "^1.18"
+safety = "^1.8"
+dotenv-linter = "^0.1"
+polint = "^0.4"
+dennis = "^0.9"
+
+pre-commit = "^1.20"

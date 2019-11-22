@@ -1,0 +1,13 @@
+---
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.2.3
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: no-commit-to-branch
+        args: [--branch, master, --branch, develop]
+      - id: end-of-file-fixer
+      - id: debug-statements
+      - id: check-merge-conflict

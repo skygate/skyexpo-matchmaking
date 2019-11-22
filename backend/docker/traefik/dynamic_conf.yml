@@ -1,0 +1,76 @@
+---
+
+http:
+  routers:
+    to-frontend:
+      entryPoints:
+        - "web"
+      rule: "Host(`localhost`) && PathPrefix(`/`)"
+      service: "service-frontend"
+      middlewares:
+        - "https-redirect"
+          tls:
+            certResolver: letsencrypt
+    to-backend:
+      entryPoints:
+        - "web"
+      rule: "Host(`localhost`) && PathPrefix(`/api`)"
+      service: "service-backend"
+      middlewares:
+        - "https-redirect"
+      tls:
+        certResolver: letsencrypt
+    to-admin:
+      entryPoints:
+        - "web"
+      rule: "Host(`localhost`) && PathPrefix(`/admin`)"
+      service: "service-admin"
+      middlewares:
+        - "https-redirect"
+      tls:
+        certResolver: letsencrypt
+    to-static:
+      entryPoints:
+        - "web"
+      rule: "Host(`localhost`) && PathPrefix(`/static`)"
+      service: "service-static"
+      middlewares:
+        - "https-redirect"
+      tls:
+        certResolver: letsencrypt
+    to-media:
+      entryPoints:
+        - "web"
+      rule: "Host(`localhost`) && PathPrefix(`/media`)"
+      service: "service-media"
+      middlewares:
+        - "https-redirect"
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    service-backend:
+      loadBalancer:
+        servers:
+          - url: "http://web:8000/api"
+    service-admin:
+      loadBalancer:
+        servers:
+          - url: "http://web:8000/admin"
+    service-static:
+      loadBalancer:
+        servers:
+          - url: "http://nginx/static"
+    service-media:
+      loadBalancer:
+        servers:
+          - url: "http://nginx/media"
+    service-frontend:
+      loadBalancer:
+        servers:
+          - url: "http://web-app:3000"
+
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
