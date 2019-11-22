@@ -11,6 +11,7 @@ version: "3.7"
 services:
   db:
     image: "postgres:9.6.9-alpine"
+    container_name: skyexpo-db
     restart: unless-stopped
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -26,6 +27,7 @@ services:
         dockerfile: ./docker/django/Dockerfile
         args:
           DJANGO_ENV: development
+      container_name: skyexpo-web
       volumes:
         - django-static:/var/www/django/static
       depends_on:
