@@ -2,6 +2,15 @@
 
 http:
   routers:
+    to-frontend:
+      entryPoints:
+        - "web"
+      rule: "Host(`localhost`) && PathPrefix(`/`)"
+      service: "service-frontend"
+      middlewares:
+        - "https-redirect"
+          tls:
+            certResolver: letsencrypt
     to-backend:
       entryPoints:
         - "web"
@@ -56,6 +65,10 @@ http:
       loadBalancer:
         servers:
           - url: "http://nginx/media"
+    service-frontend:
+      loadBalancer:
+        servers:
+          - url: "http://web-app:3000"
 
   middlewares:
     https-redirect:
