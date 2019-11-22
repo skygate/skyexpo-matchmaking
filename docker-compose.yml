@@ -53,9 +53,11 @@ services:
     container_name: skyexpo-webapp
     build:
       context: ./web-app
+    restart: unless-stopped
     image: skyexpo_web-app
     networks:
       - webnet
+      - proxynet
 
 networks:
   # Network for your proxy server and application to connect them,

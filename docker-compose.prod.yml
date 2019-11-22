@@ -18,6 +18,7 @@ services:
     depends_on:
       - web
       - nginx
+      - web-app
     networks:
       - proxynet
 
