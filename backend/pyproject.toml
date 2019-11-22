@@ -9,7 +9,7 @@ style = "https://raw.githubusercontent.com/wemake-services/wemake-python-stylegu
 
 [tool.poetry]
 name = "skyexpo_matchmaking"
-description = "The matchmaking app for sky expo 2020."
+description = "The matchmaking app for skyexpo 2020."
 version = "0.1.0"
 readme = "README.md"
 authors = ["Marcin Josiński"]
