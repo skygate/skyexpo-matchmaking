@@ -64,7 +64,7 @@ pipeline {
                     steps {
                         sh 'dump-env -t ./backend/config/.env.template -p "SECRET_" > ./backend/config/.env'
                         sh 'docker-compose -f docker-compose.yml -f docker-compose.prod.yml config --quiet'
-                        sh 'docker-compose run --rm web sh ./docker/ci.sh'
+                        sh 'docker-compose -f docker-compose.yml run --rm web sh ./docker/ci.sh'
                     }
                 }
             }
