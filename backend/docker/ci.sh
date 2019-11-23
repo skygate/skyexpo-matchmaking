@@ -55,7 +55,7 @@ run_ci () {
   pip check
 
   # Checking `yaml` files:
-  yamllint -d '{"extends": "default", "ignore": ".venv"}' -s .
+  yamllint -d '{"extends": "default", "ignore": ".venv", ".drone.yml"}' -s .
 
   # Checking `.env` files:
   dotenv-linter config/.env config/.env.template
