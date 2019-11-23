@@ -9,8 +9,8 @@ http:
       service: "service-frontend"
       middlewares:
         - "https-redirect"
-          tls:
-            certResolver: letsencrypt
+      tls:
+        certResolver: letsencrypt
     to-backend:
       entryPoints:
         - "web"

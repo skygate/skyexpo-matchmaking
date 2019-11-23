@@ -13,11 +13,11 @@ kind: pipeline
 type: docker
 name: default
 
-clone:
-  depth: 1
+#clone:
+#  depth: 1
 
 steps:
-- name: Create .env configuration file
+- name: create .env configuration file
   image: python:3.7.5-alpine3.10
   commands:
     - python -m pip install --upgrade pip
@@ -29,7 +29,7 @@ steps:
       from_secret: SECRET_DJANGO_SECRET_KEY
 
 
-- name: Prepare docker-compose
+- name: prepare docker-compose
   image: *docker-compose-image
   volumes:
     *docker-compose-volumes
@@ -39,7 +39,7 @@ steps:
     - docker info
     - uname -a
 
-- name: Run backend CI
+- name: run backend CI
   image: *docker-compose-image
   volumes:
     *docker-compose-volumes
@@ -48,7 +48,7 @@ steps:
     - docker-compose -f docker-compose.yml -f docker-compose.prod.yml config --quiet
     - docker-compose run --rm web sh ./docker/ci.sh
 
-- name: Deploy to staging
+- name: deploy to staging
   image: *docker-compose-image
   volumes:
     *docker-compose-volumes
