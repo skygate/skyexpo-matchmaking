@@ -1,6 +1,6 @@
 ---
 
-globalvariables:
+global-variables:
   image: &docker-compose-image tmaier/docker-compose:latest
   volumes: &docker-compose-volumes
     - name: hosts
@@ -13,8 +13,8 @@ kind: pipeline
 type: docker
 name: default
 
-#clone:
-#  depth: 1
+clone:
+  depth: 1
 
 steps:
 - name: create .env configuration file
@@ -27,6 +27,10 @@ steps:
   environment:
     SECRET_DJANGO_SECRET_KEY:
       from_secret: SECRET_DJANGO_SECRET_KEY
+  when:
+    branch:
+      - develop
+    event: {exclude: [pull_request]}
 
 
 - name: prepare docker-compose
@@ -45,6 +49,7 @@ steps:
     *docker-compose-volumes
   pull: if-not-exists
   commands:
+    - cp ./backend/config/.env.template ./backend/config/.env
     - docker-compose -f docker-compose.yml -f docker-compose.prod.yml config --quiet
     - docker-compose run --rm web sh ./docker/ci.sh
 
@@ -63,6 +68,7 @@ steps:
   when:
     branch:
       - develop
+    event: {exclude: [pull_request]}
 
 services:
   - name: docker
