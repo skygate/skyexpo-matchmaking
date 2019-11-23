@@ -23,7 +23,7 @@ docker-compose up
 We store secret settings in `config/.env` file.
 Before running a project, you will need to copy file `config/.env.template` to `config/.env`:
 ```
-cp config/.env.template config/.env
+cp ./backend/config/.env.template ./backend/config/.env
 ```
 Then you can set up your secret variables there.
 
