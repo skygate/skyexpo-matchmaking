@@ -29,7 +29,7 @@ steps:
       from_secret: SECRET_DJANGO_SECRET_KEY
   when:
     branch:
-      - develop
+      - fix-drone-ci-rsync
     event: {exclude: [pull_request]}
 
 
@@ -51,7 +51,7 @@ steps:
   commands:
     - cp ./backend/config/.env.template ./backend/config/.env
     - docker-compose -f docker-compose.yml -f docker-compose.prod.yml config --quiet
-    - docker-compose run --rm web sh ./docker/ci.sh
+#    - docker-compose run --rm web sh ./docker/ci.sh
 
 - name: deploy to staging
   image: *docker-compose-image
@@ -68,12 +68,12 @@ steps:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - rsync -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:~/skyexpo
-    - ssh -o StrictHostKeyChecking=no ubuntu@app-skyexpo uptime
-    - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build'
+    - "rsync -e 'ssh -o StrictHostKeyChecking=no' -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:/home/ubuntu/skyexpo"
+    - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml build'
+    - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
   when:
     branch:
-      - develop
+      - fix-drone-ci-rsync
     event: {exclude: [pull_request]}
 
 services:

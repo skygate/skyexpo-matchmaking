@@ -5,48 +5,51 @@ http:
     to-frontend:
       entryPoints:
         - "web"
-      rule: "Host(`localhost`) && PathPrefix(`/`)"
+        - "web-secure"
+      rule: "Host(`skyexpo.hal.skygate.io`) && PathPrefix(`/`)"
       service: "service-frontend"
-      middlewares:
-        - "https-redirect"
-      tls:
-        certResolver: letsencrypt
+#      middlewares:
+#        - "https-redirect"
+#      tls:
+#        certResolver: letsencrypt
     to-backend:
       entryPoints:
         - "web"
-      rule: "Host(`localhost`) && PathPrefix(`/api`)"
+        - "web-secure"
+      rule: "Host(`skyexpo.hal.skygate.io`) && PathPrefix(`/api`)"
       service: "service-backend"
-      middlewares:
-        - "https-redirect"
-      tls:
-        certResolver: letsencrypt
+#      middlewares:
+#        - "https-redirect"
+#      tls:
+#        certResolver: letsencrypt
     to-admin:
       entryPoints:
         - "web"
-      rule: "Host(`localhost`) && PathPrefix(`/admin`)"
+        - "web-secure"
+      rule: "Host(`skyexpo.hal.skygate.io`) && PathPrefix(`/admin`)"
       service: "service-admin"
-      middlewares:
-        - "https-redirect"
-      tls:
-        certResolver: letsencrypt
+#      middlewares:
+#        - "https-redirect"
+#      tls:
+#        certResolver: letsencrypt
     to-static:
       entryPoints:
         - "web"
-      rule: "Host(`localhost`) && PathPrefix(`/static`)"
+      rule: "Host(`skyexpo.hal.skygate.io`) && PathPrefix(`/static`)"
       service: "service-static"
-      middlewares:
-        - "https-redirect"
-      tls:
-        certResolver: letsencrypt
+#      middlewares:
+#        - "https-redirect"
+#      tls:
+#        certResolver: letsencrypt
     to-media:
       entryPoints:
         - "web"
-      rule: "Host(`localhost`) && PathPrefix(`/media`)"
+      rule: "Host(`skyexpo.hal.skygate.io`) && PathPrefix(`/media`)"
       service: "service-media"
-      middlewares:
-        - "https-redirect"
-      tls:
-        certResolver: letsencrypt
+#      middlewares:
+#        - "https-redirect"
+#      tls:
+#        certResolver: letsencrypt
 
   services:
     service-backend:
@@ -69,8 +72,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://web-app:3000"
-
-  middlewares:
-    https-redirect:
-      redirectScheme:
-        scheme: https
+#
+#  middlewares:
+#    https-redirect:
+#      redirectScheme:
+#        scheme: https
