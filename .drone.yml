@@ -68,8 +68,7 @@ steps:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh -o StrictHostKeyChecking=no ubuntu@app-skyexpo 'pwd'
-    - rsync -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/reports . ubuntu@app-skyexpo:/home/ubuntu/skyexpo
+    - rsync -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:~/skyexpo
     - ssh -o StrictHostKeyChecking=no ubuntu@app-skyexpo uptime
     - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build'
   when:
