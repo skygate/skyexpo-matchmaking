@@ -6,37 +6,23 @@
 
 version: "3.7"
 services:
-  traefik:
-    image: traefik:2.1
-    container_name: skyexpo-traefik
-    restart: unless-stopped
-    volumes:
-      - ./backend/docker/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
-      - ./backend/docker/traefik/dynamic_conf.yml:/etc/traefik/dynamic_conf.yml:ro
-    ports:
-      - 80:80
-      - 443:443
-    depends_on:
-      - web
-      - nginx
-      - web-app
-    networks:
-      - proxynet
-
   nginx:
     build:
       context: ./backend
-      dockerfile: ./docker/nginx
+      dockerfile: ./docker/nginx/Dockerfile
     container_name: skyexpo-nginx
     restart: unless-stopped
     volumes:
-      - ./backend/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - django-static:/var/www/django/static:ro  # serving django's statics
       - django-media:/var/www/django/media:ro  # serving django's media
     depends_on:
       - web
+      - web-app
     networks:
       - proxynet
+    ports:
+      - 80:80
+      - 443:443
 
   web:
     <<: &web

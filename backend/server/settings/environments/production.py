@@ -16,7 +16,6 @@ from server.settings.components import config
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    # TODO: check production hosts
     config('DOMAIN_NAME'),
 ]
 
@@ -61,7 +60,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Security
 # https://docs.djangoproject.com/en/2.2/topics/security/
 
-SECURE_HSTS_SECONDS = 31536000  # TODO: setup it in Traefik; the same as Caddy
+SECURE_HSTS_SECONDS = 31536000  # TODO: setup it in nginx; the same as Caddy
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
