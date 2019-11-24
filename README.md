@@ -114,7 +114,7 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build
 
 We do not store our secret settings inside our source code. All sensible settings are stored in config/.env file, which is not tracked by the version control.
 
-We store them as secret environment variables in our [Jenkins CI](https://jenkins.hal.skygate.io/)
+We store them as secret environment variables in our [Drone CI](https://drone.hal.skygate.io/skygate/skyexpo-matchmaking/)
 Then we use dump-env to dump variables from both environment and .env file template. Then, this file is copied inside docker image and when this image is built - everything is ready for production.
 [Check out dump-env project to read more](https://github.com/sobolevn/dump-env).
 
@@ -123,7 +123,7 @@ Then we use dump-env to dump variables from both environment and .env file templ
 
 
 - [Sentry](https://sentry.hal.skygate.io/sentry/skyexpo/) - Our error tracking platform. [Read more about Sentry](http://sentry.io/).
-- [Jenkins](https://jenkins.hal.skygate.io/) - Our CI/CD automation server.
+- [Drone](https://drone.hal.skygate.io/skygate/skyexpo-matchmaking/) - Our CI/CD automation server.
 - [API documentation](http://localhost:8000/redoc)
 - [Staging app](http://skyexpo.hal.skygate.io/)
 - [Read about our flake8 configuration](https://wemake-python-stylegui.de/en/latest/)
