@@ -2,6 +2,8 @@
 
 The matchmaking app for [skyexpo AI 2020](https://skyexpo.ai/).
 
+[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
+[![Build Status](https://drone.hal.skygate.io/api/badges/skygate/skyexpo-matchmaking/status.svg?ref=refs/heads/develop)](https://drone.hal.skygate.io/skygate/skyexpo-matchmaking)
 ## Prerequisites
 
 You need:
