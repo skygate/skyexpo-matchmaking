@@ -6,23 +6,6 @@
 
 version: "3.7"
 services:
-#  traefik:
-#    image: traefik:2.1
-#    container_name: skyexpo-traefik
-#    restart: unless-stopped
-#    volumes:
-#      - ./backend/docker/traefik/traefik.yml:/etc/traefik/traefik.yml:ro
-#      - ./backend/docker/traefik/dynamic_conf.yml:/etc/traefik/dynamic_conf.yml:ro
-#    ports:
-#      - 80:80
-#      - 443:443
-#    depends_on:
-#      - web
-#      - nginx
-#      - web-app
-#    networks:
-#      - proxynet
-
   nginx:
     build:
       context: ./backend
