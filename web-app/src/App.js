@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import "./App.css";
+import './App.css';
 
-function App() {
-  return (
+import { RegisterCompanyForm } from './companyRegistrationForm/container/RegisterCompanyForm';
+
+const App = () => (
     <div className="App">
-      <h1>Form</h1>
+        <RegisterCompanyForm />
     </div>
-  );
-}
+);
 
 export default App;
