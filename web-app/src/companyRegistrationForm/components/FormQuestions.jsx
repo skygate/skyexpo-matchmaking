@@ -18,7 +18,7 @@ export const FormQuestions = ({
     const data = values;
 
     const stepValues = Object.keys(data)
-        .filter(a => condition.includes(a))
+        .filter(value => condition.includes(value))
         .reduce(
             (obj, key) => ({
                 ...obj,
@@ -73,8 +73,8 @@ export const FormQuestions = ({
                             name="teamMembers"
                             render={arrayOfMembers => (
                                 <div>
-                                    {values.teamMembers.map((e, index) => (
-                                        <div key={index}>
+                                    {values.teamMembers.map((_, index) => (
+                                        <div key={`teamMembers.${index}.name`}>
                                             <input
                                                 onChange={handleChange}
                                                 name={`teamMembers.${index}.name`}
@@ -119,7 +119,7 @@ export const FormQuestions = ({
                               error =>
                                   error && (
                                       <>
-                                          <span key={error.name}>{error.name}</span>{' '}
+                                          <span key={error.name}>{error.name}</span>
                                           <span key={error.email}>{error.email}</span>
                                       </>
                                   ),

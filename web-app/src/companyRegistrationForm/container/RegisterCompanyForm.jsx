@@ -36,6 +36,7 @@ export const RegisterCompanyForm = () => {
     const handleNextPage = props => {
         props.submitForm().then(() => {
             if (props.isValid) {
+                currentStep > 1 && handleSubmit(props);
                 setCurrentStep(currentStep + 1);
                 props.validateForm();
                 props.setTouched({});
@@ -43,8 +44,8 @@ export const RegisterCompanyForm = () => {
         });
     };
 
-    const handleSubmit = props => {
-        console.log('Submitted values', props.values);
+    const handleSubmit = ({ values }) => {
+        console.log('Submitted values', values);
     };
 
     const countCompletionProgress = questions => {
@@ -87,14 +88,7 @@ export const RegisterCompanyForm = () => {
                                 nextPage={() => handleNextPage(props)}
                                 countProgress={countCompletionProgress}
                             />
-                            <button
-                                type={currentStep > 2 ? 'submit' : 'button'}
-                                onClick={
-                                    currentStep > 2
-                                        ? () => handleSubmit(props)
-                                        : () => handleNextPage(props)
-                                }
-                            >
+                            <button type="button" onClick={() => handleNextPage(props)}>
                                 {currentStep > 1 ? 'submit' : 'next page'}
                             </button>
                         </Form>
