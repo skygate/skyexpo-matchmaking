@@ -13,7 +13,19 @@ export const FormQuestions = ({
 }) => {
     countProgress(values);
 
-    console.log(errors);
+    const condition = pageProps.inputsFields.map(a => a.name);
+
+    const data = values;
+
+    const stepValues = Object.keys(data)
+        .filter(a => condition.includes(a))
+        .reduce(
+            (obj, key) => ({
+                ...obj,
+                [key]: data[key],
+            }),
+            {},
+        );
 
     return (
         <>
@@ -99,7 +111,6 @@ export const FormQuestions = ({
                             )}
                         />
                     )}
-
                     {input.name === 'teamMembers'
                         ? errors &&
                           errors.teamMembers &&

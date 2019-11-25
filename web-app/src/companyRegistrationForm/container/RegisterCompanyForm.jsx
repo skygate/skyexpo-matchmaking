@@ -43,8 +43,8 @@ export const RegisterCompanyForm = () => {
         });
     };
 
-    const handleSubmit = values => {
-        console.log('Submitted values', values);
+    const handleSubmit = props => {
+        console.log('Submitted values', props.values);
     };
 
     const countCompletionProgress = questions => {
@@ -57,7 +57,6 @@ export const RegisterCompanyForm = () => {
             .filter(question => typeof question === 'object')
             .map(question => Object.values(question))
             .flat();
-
         const allQuestionsNumber = questionsAboutTeamMembers.concat(questionsWithoutTeamMembers)
             .length;
         const answeredQuestion = questionsAboutTeamMembers
@@ -89,8 +88,12 @@ export const RegisterCompanyForm = () => {
                                 countProgress={countCompletionProgress}
                             />
                             <button
-                                type={currentStep > 1 ? 'submit' : 'button'}
-                                onClick={() => handleNextPage(props)}
+                                type={currentStep > 2 ? 'submit' : 'button'}
+                                onClick={
+                                    currentStep > 2
+                                        ? () => handleSubmit(props)
+                                        : () => handleNextPage(props)
+                                }
                             >
                                 {currentStep > 1 ? 'submit' : 'next page'}
                             </button>

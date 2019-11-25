@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './App.css';
+
 import { RegisterCompanyForm } from './companyRegistrationForm/container/RegisterCompanyForm';
 
 const App = () => (
