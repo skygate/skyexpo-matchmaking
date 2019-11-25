@@ -36,7 +36,7 @@ INSTALLED_APPS: Tuple[str, ...] = (
     'django.contrib.admin',
 
     # Your apps go here:
-    # ...
+    'server.apps.company',
 
     # Security:
     'axes',
@@ -105,12 +105,14 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-USE_I18N = True
-USE_L10N = True
+# We do not yet use internationalization,
+# though we are adapted to use it in the future.
+
+USE_I18N = False
+USE_L10N = False
 
 LANGUAGES = (
     ('en', ugt('English')),
-    ('ru', ugt('Russian')),
 )
 
 LOCALE_PATHS = (
