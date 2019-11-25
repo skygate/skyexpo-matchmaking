@@ -36,5 +36,11 @@ services:
       volumes:
         - django-media:/var/www/django/media  # since in dev it is app's folder
     command: sh ./docker/django/gunicorn.sh
+    healthcheck:
+      test: curl --fail https://skyexpo.hal.skygate.io || exit 1
+      interval: 1m
+      timeout: 5s
+      retries: 2
+      start_period: 1m
     expose:
       - 8000
