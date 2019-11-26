@@ -19,7 +19,7 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
         allow_blank=True, help_text='Should be prefixed with http(s)://',
     )
     phone_number = PhoneNumberField(
-        help_text=f'we use {settings.PHONENUMBER_DB_FORMAT} format ' +
+        help_text=f'We use {settings.PHONENUMBER_DB_FORMAT} format ' +
         'for telephone numbers.',
     )
     email = serializers.EmailField()
