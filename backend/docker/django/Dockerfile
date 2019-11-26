@@ -34,6 +34,17 @@ RUN apk --no-cache add \
     musl-dev \
     postgresql-dev \
     tini \
+    # Pillow dependencies
+    jpeg-dev \
+    zlib-dev \
+    freetype-dev \
+    lcms2-dev \
+    openjpeg-dev \
+    tiff-dev \
+    tk-dev \
+    tcl-dev \
+    harfbuzz-dev \
+    fribidi-dev \
   # Installing `poetry` package manager:
   # https://github.com/sdispater/poetry
   && pip install -U "pip<19.0" \

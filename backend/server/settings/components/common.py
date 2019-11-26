@@ -51,6 +51,8 @@ INSTALLED_APPS: Tuple[str, ...] = (
 
     # Third party apps
     'django_http_referrer_policy',
+    'django_countries',
+    'phonenumber_field',
 )
 
 
@@ -201,3 +203,8 @@ FEATURE_POLICY: Dict[str, Union[str, List[str]]] = {}  # noqa: TAE002
 
 # Timeouts
 EMAIL_TIMEOUT = 5
+
+
+# Use E164 standard in phonenumber_field package
+
+PHONENUMBER_DB_FORMAT = 'E164'
