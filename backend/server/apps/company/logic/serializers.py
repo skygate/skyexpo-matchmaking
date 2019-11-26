@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.utils.translation import ugettext as ugt
 from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
@@ -13,6 +14,10 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     Validates the input data in the first step of the form,
     which registers company.
     """
+
+    default_error_messages = {
+        'field_value_exists': ugt('Company with this {field} already exists.'),
+    }
 
     name = serializers.CharField(max_length=120)
     website = serializers.URLField(
@@ -32,13 +37,13 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     def validate_name(self, name):
         if Company.objects.filter(name=name).exists():
             raise serializers.ValidationError(
-                'Company with this name already exists.',
+                self.fail('field_value_exists', field='name'),
             )
         return name
 
     def validate_email(self, email):
         if Company.objects.filter(email=email).exists():
             raise serializers.ValidationError(
-                'Company with this e-mail already exists.',
+                self.fail('field_value_exists', field='e-mail'),
             )
         return email
