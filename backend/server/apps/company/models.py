@@ -41,7 +41,3 @@ class Company(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
-    def save(self, **kwargs):
-        self.full_clean()
-        return super().save(**kwargs)

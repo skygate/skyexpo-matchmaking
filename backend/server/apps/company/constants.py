@@ -61,7 +61,7 @@ class CompanyStage:
 
 
 class ProductType:
-    """Product type choices."""
+    """Product-type choices."""
 
     SOFTWARE = 'SOFTWARE'
     HARDWARE = 'HARDWARE'
