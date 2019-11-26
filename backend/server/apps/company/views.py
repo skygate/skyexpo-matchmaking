@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import views, status, permissions
+from rest_framework import permissions, status, views
 from rest_framework.response import Response
 
-from server.apps.company.logic.serializers import CompanyValidateFormStep1Serializer
+from server.apps.company.logic.serializers import (
+  CompanyValidateFormStep1Serializer,
+)
 
 
 class CompanyValidateFormStep1View(views.APIView):
@@ -18,8 +21,8 @@ class CompanyValidateFormStep1View(views.APIView):
     @swagger_auto_schema(
         request_body=CompanyValidateFormStep1Serializer,
         responses={
-            status.HTTP_204_NO_CONTENT: openapi.Response(description='')
-        }
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
     )
     def post(self, request):
         serializer = CompanyValidateFormStep1Serializer(data=request.data)
