@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import mapValues from 'lodash/mapValues';
+import * as R from 'ramda';
 
 import { emailValidityRegex } from '../../helpers/emailValidation';
 import { phoneRegExp } from '../../helpers/phoneNumberValidation';
@@ -36,7 +36,7 @@ export const validationPage2 = Yup.object().shape({
     teamMembers: Yup.array().of(
         Yup.lazy(obj =>
             Yup.object().shape(
-                mapValues(obj, (_, key) => {
+                R.mapObjIndexed((value, key) => {
                     if (key.includes('name')) {
                         return Yup.string().required('Team member name is required');
                     }
@@ -45,7 +45,7 @@ export const validationPage2 = Yup.object().shape({
                             .matches(emailValidityRegex, 'Invalid email address')
                             .required('Team member email is required');
                     }
-                }),
+                }, obj),
             ),
         ),
     ),

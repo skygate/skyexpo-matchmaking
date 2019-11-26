@@ -41,8 +41,6 @@ export const FormQuestions = ({
                                     </option>
                                 ))}
                             </select>
-
-                            {errors && touched[input.name] && <span>{errors[input.name]} </span>}
                         </>
                     )}
                     {input.type === 'text' && (
@@ -54,7 +52,6 @@ export const FormQuestions = ({
                                 type="text"
                                 placeholder={input.placeholder}
                             />
-                            {errors && touched[input.name] && <span>{errors[input.name]} </span>}
                         </>
                     )}
                     {input.type === 'textarea' && (
@@ -66,7 +63,6 @@ export const FormQuestions = ({
                                 type="textarea"
                                 placeholder={input.placeholder}
                             />
-                            {errors && touched[input.name] && <span>{errors[input.name]} </span>}
                         </>
                     )}
                     {input.type === 'image' && (
@@ -78,7 +74,6 @@ export const FormQuestions = ({
                                 type="file"
                                 placeholder={input.placeholder}
                             />
-                            {errors && touched[input.name] && <span>{errors[input.name]} </span>}
                         </>
                     )}
                     {input.type === 'team' && (
@@ -86,7 +81,7 @@ export const FormQuestions = ({
                             name="teamMembers"
                             render={arrayOfMembers => (
                                 <div>
-                                    {values.teamMembers.map((cos, index) => (
+                                    {values.teamMembers.map((_, index) => (
                                         <div key={`name${index}`}>
                                             <input
                                                 onChange={handleChange}
@@ -136,6 +131,9 @@ export const FormQuestions = ({
                                 </div>
                             )}
                         />
+                    )}
+                    {input.type !== 'team' && errors && errors && touched[input.name] && (
+                        <span>{errors[input.name]} </span>
                     )}
                 </div>
             ))}
