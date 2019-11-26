@@ -36,7 +36,7 @@ INSTALLED_APPS: Tuple[str, ...] = (
     'django.contrib.admin',
 
     # Your apps go here:
-    # ...
+    'server.apps.company',
 
     # Security:
     'axes',
@@ -51,6 +51,8 @@ INSTALLED_APPS: Tuple[str, ...] = (
 
     # Third party apps
     'django_http_referrer_policy',
+    'django_countries',
+    'phonenumber_field',
 )
 
 
@@ -105,12 +107,14 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-USE_I18N = True
-USE_L10N = True
+# We do not yet use internationalization,
+# though we are adapted to use it in the future.
+
+USE_I18N = False
+USE_L10N = False
 
 LANGUAGES = (
     ('en', ugt('English')),
-    ('ru', ugt('Russian')),
 )
 
 LOCALE_PATHS = (
@@ -199,3 +203,8 @@ FEATURE_POLICY: Dict[str, Union[str, List[str]]] = {}  # noqa: TAE002
 
 # Timeouts
 EMAIL_TIMEOUT = 5
+
+
+# Use E164 standard in phonenumber_field package
+
+PHONENUMBER_DB_FORMAT = 'E164'
