@@ -17,8 +17,8 @@ const initialValues = {
     logo: '',
     teamMembers: [
         {
-            name: '',
-            email: '',
+            name0: '',
+            email0: '',
         },
     ],
     industries: '',

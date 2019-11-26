@@ -21,11 +21,11 @@ export const formSteps = [
                 type: 'team',
                 inputs: [
                     {
-                        name: 'name',
+                        name: 'name0',
                         placeholder: 'John Doe',
                     },
                     {
-                        name: 'email',
+                        name: 'email0',
                         placeholder: 'johndoe@email.com',
                     },
                 ],

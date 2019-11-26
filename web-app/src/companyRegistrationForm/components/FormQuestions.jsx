@@ -1,7 +1,7 @@
 import React from 'react';
+import { FieldArray } from 'formik';
 
 import { countryList } from '../../helpers/countryList';
-import { FieldArray } from 'formik';
 
 export const FormQuestions = ({
     handleChange,
@@ -33,40 +33,48 @@ export const FormQuestions = ({
             {pageProps.inputsFields.map(input => (
                 <div key={input.name}>
                     {input.type === 'select' && (
-                        <select onChange={handleChange} name={input.name}>
-                            {countryList.map(country => (
-                                <option key={country} value={country}>
-                                    {country}
-                                </option>
-                            ))}
-                        </select>
+                        <>
+                            <select onChange={handleChange} name={input.name}>
+                                {countryList.map(country => (
+                                    <option key={country} value={country}>
+                                        {country}
+                                    </option>
+                                ))}
+                            </select>
+                        </>
                     )}
                     {input.type === 'text' && (
-                        <input
-                            onChange={handleChange}
-                            value={values[input.name]}
-                            name={input.name}
-                            type="text"
-                            placeholder={input.placeholder}
-                        />
+                        <>
+                            <input
+                                onChange={handleChange}
+                                value={values[input.name]}
+                                name={input.name}
+                                type="text"
+                                placeholder={input.placeholder}
+                            />
+                        </>
                     )}
                     {input.type === 'textarea' && (
-                        <input
-                            onChange={handleChange}
-                            value={values[input.name]}
-                            name={input.name}
-                            type="textarea"
-                            placeholder={input.placeholder}
-                        />
+                        <>
+                            <input
+                                onChange={handleChange}
+                                value={values[input.name]}
+                                name={input.name}
+                                type="textarea"
+                                placeholder={input.placeholder}
+                            />
+                        </>
                     )}
                     {input.type === 'image' && (
-                        <input
-                            onChange={handleChange}
-                            value={values[input.name]}
-                            name={input.name}
-                            type="file"
-                            placeholder={input.placeholder}
-                        />
+                        <>
+                            <input
+                                onChange={handleChange}
+                                value={values[input.name]}
+                                name={input.name}
+                                type="file"
+                                placeholder={input.placeholder}
+                            />
+                        </>
                     )}
                     {input.type === 'team' && (
                         <FieldArray
@@ -74,19 +82,33 @@ export const FormQuestions = ({
                             render={arrayOfMembers => (
                                 <div>
                                     {values.teamMembers.map((_, index) => (
-                                        <div key={`teamMembers.${index}.name`}>
+                                        <div key={`name${index}`}>
                                             <input
                                                 onChange={handleChange}
-                                                name={`teamMembers.${index}.name`}
+                                                name={`teamMembers.${index}.name${index}`}
                                                 type="text"
                                                 placeholder="name"
                                             />
+                                            {errors &&
+                                                errors.teamMembers &&
+                                                errors.teamMembers[index] && (
+                                                    <span>
+                                                        {errors.teamMembers[index][`name${index}`]}
+                                                    </span>
+                                                )}
                                             <input
                                                 onChange={handleChange}
-                                                name={`teamMembers.${index}.email`}
+                                                name={`teamMembers.${index}.email${index}`}
                                                 type="text"
                                                 placeholder="email"
                                             />
+                                            {errors &&
+                                                errors.teamMembers &&
+                                                errors.teamMembers[index] && (
+                                                    <span>
+                                                        {errors.teamMembers[index][`email${index}`]}
+                                                    </span>
+                                                )}
                                             <button
                                                 type="button"
                                                 onClick={() => arrayOfMembers.remove(index)}
@@ -95,13 +117,12 @@ export const FormQuestions = ({
                                             </button>
                                         </div>
                                     ))}
-
                                     <button
                                         type="button"
                                         onClick={() =>
                                             arrayOfMembers.push({
-                                                name: '',
-                                                email: '',
+                                                [`name${values.teamMembers.length}`]: '',
+                                                [`email${values.teamMembers.length}`]: '',
                                             })
                                         }
                                     >
@@ -111,20 +132,9 @@ export const FormQuestions = ({
                             )}
                         />
                     )}
-                    {input.name === 'teamMembers'
-                        ? errors &&
-                          errors.teamMembers &&
-                          touched.teamMembers &&
-                          errors.teamMembers.map(
-                              error =>
-                                  error && (
-                                      <>
-                                          <span key={error.name}>{error.name}</span>
-                                          <span key={error.email}>{error.email}</span>
-                                      </>
-                                  ),
-                          )
-                        : errors && touched[input.name] && <span>{errors[input.name]} </span>}
+                    {input.type !== 'team' && errors && errors && touched[input.name] && (
+                        <span>{errors[input.name]} </span>
+                    )}
                 </div>
             ))}
         </>
