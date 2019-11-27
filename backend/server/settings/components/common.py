@@ -37,6 +37,7 @@ INSTALLED_APPS: Tuple[str, ...] = (
 
     # Your apps go here:
     'server.apps.company',
+    'server.apps.profile',
 
     # Security:
     'axes',
@@ -81,6 +82,8 @@ MIDDLEWARE: Tuple[str, ...] = (
 ROOT_URLCONF = 'server.urls'
 
 WSGI_APPLICATION = 'server.wsgi.application'
+
+AUTH_USER_MODEL = 'profile.User'
 
 
 # Database

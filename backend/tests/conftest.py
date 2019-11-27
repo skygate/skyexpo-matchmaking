@@ -9,8 +9,12 @@ It may be also used for extending doctest's context:
 """
 import factory
 import pytest
+from django.contrib.auth import get_user_model
+from django.test import Client
 
 from tests.factories import CompanyFactory
+
+User = get_user_model()
 
 
 @pytest.fixture(autouse=True)
@@ -53,3 +57,24 @@ def company_step1_data(company_data):
         'founding_date': company_data['founding_date'],
         'description': company_data['description'],
     }
+
+
+@pytest.fixture()
+def admin_user(db):  # noqa: WPS442
+    """Returns a Django admin user."""
+    return User.objects.create_superuser('admin@example.com', 'password')
+
+
+@pytest.fixture()
+def admin_client(admin_user):  # noqa: WPS442
+    """Returns a Django test client logged in as an admin user."""
+    client = Client()
+    client.login(username=admin_user.email, password='password')
+
+    return client
+
+
+@pytest.fixture()
+def user(db):
+    """Returns a example user."""
+    return User.objects.create_user('user@example.com', 'password')
