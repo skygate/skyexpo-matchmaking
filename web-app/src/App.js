@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './App.css';
+import 'antd/dist/antd.css';
 
 import { RegisterCompanyForm } from './companyRegistrationForm/container/RegisterCompanyForm';
 

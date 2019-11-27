@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Progress } from 'antd';
+import styled from '@emotion/styled';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { formSteps } from '../components/formSteps';
 import { validationPage1, validationPage2, validationPage3 } from '../components/validationSchemas';
+
+const SectionWrapper = styled.div`
+    max-width: 400px;
+    margin: 10rem auto;
+`;
 
 const initialValues = {
     companyName: '',
@@ -21,10 +27,10 @@ const initialValues = {
             email0: '',
         },
     ],
-    industries: '',
+    industries: [''],
     sectors: '',
-    companyStage: '',
-    productType: '',
+    companyStage: [''],
+    productType: [''],
 };
 
 export const RegisterCompanyForm = () => {
@@ -49,7 +55,7 @@ export const RegisterCompanyForm = () => {
     };
 
     const countCompletionProgress = questions => {
-        const allQuestions = Object.values(questions);
+        const allQuestions = Object.values(questions).flat();
         const questionsWithoutTeamMembers = allQuestions.filter(
             question => typeof question !== 'object',
         );
@@ -68,7 +74,7 @@ export const RegisterCompanyForm = () => {
     };
 
     return (
-        <>
+        <SectionWrapper>
             <h1>Register Company Form</h1>
             <Progress type="circle" percent={completionProgress} width={80} />
             {currentStep > 2 ? (
@@ -95,6 +101,6 @@ export const RegisterCompanyForm = () => {
                     )}
                 </Formik>
             )}
-        </>
+        </SectionWrapper>
     );
 };
