@@ -1,10 +1,28 @@
 # -*- coding: utf-8 -*-
 
-import factory.fuzzy  # noqa: WPS301
+import random
+from functools import partial
+from typing import List, Tuple
 
-from server.apps.company.constants import CompanyStage
+import factory.fuzzy  # noqa: WPS301
+from factory import LazyFunction
+
+from server.apps.company.constants import (
+  CompanyStage,
+  Industry,
+  ProductType,
+  Sector,
+)
 from server.apps.company.models import Company
 from server.apps.profile.models import Profile, User
+
+
+def get_multiple_choices(
+    choices: List[Tuple[str, str]],
+) -> List[str]:
+    """Get a random number of choices from given list."""
+    choices_len = random.randint(1, len(choices[0]))   # noqa: S311
+    return [choice[0] for choice in choices[:choices_len]]
 
 
 class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
@@ -23,9 +41,11 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     stage = factory.fuzzy.FuzzyChoice(
         choice[0] for choice in CompanyStage.CHOICES
     )
-    sectors = []
-    industries = []
-    product_types = []
+    sectors = LazyFunction(partial(get_multiple_choices, Sector.CHOICES))
+    industries = LazyFunction(partial(get_multiple_choices, Industry.CHOICES))
+    product_types = LazyFunction(
+        partial(get_multiple_choices, ProductType.CHOICES),
+    )
 
 
 class UserFactory(factory.DjangoModelFactory):  # noqa: D101

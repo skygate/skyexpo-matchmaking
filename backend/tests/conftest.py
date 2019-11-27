@@ -73,13 +73,24 @@ def company_step2_data(company_data):
 
 
 @pytest.fixture()
-def admin_user(db):  # noqa: WPS442
+def company_step3_data(company_data):
+    """Returns company fake data for step3 in registering form."""
+    return {
+        'sectors': company_data['sectors'],
+        'industries': company_data['industries'],
+        'product_types': company_data['product_types'],
+        'stage': company_data['stage'],
+    }
+
+
+@pytest.fixture()
+def admin_user(db):
     """Returns a Django admin user."""
     return User.objects.create_superuser('admin@example.com', 'password')
 
 
 @pytest.fixture()
-def admin_client(admin_user):  # noqa: WPS442
+def admin_client(admin_user):
     """Returns a Django test client logged in as an admin user."""
     client = Client()
     client.login(username=admin_user.email, password='password')

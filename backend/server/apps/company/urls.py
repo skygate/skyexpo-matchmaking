@@ -3,9 +3,10 @@
 from django.urls import path
 
 from server.apps.company.views import (
-    CompanyValidateFormStep1View,
-    CompanyValidateFormStep2View,
-    CompanyValidateFormStep3View)
+  CompanyValidateFormStep1View,
+  CompanyValidateFormStep2View,
+  CompanyValidateFormStep3View,
+)
 
 app_name = 'company'
 

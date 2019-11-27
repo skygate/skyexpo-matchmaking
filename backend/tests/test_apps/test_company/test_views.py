@@ -29,3 +29,16 @@ def test_register_company_step2(client, company_step2_data):
     )
 
     assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+def test_register_company_step3(client, company_step3_data):
+    """
+    Ensures that 'company:validate-form-step-3' endpoint validates,
+    the input data in the third step of the company registration form.
+    """
+    response = client.post(
+        reverse('company:validate-form-step-3'), data=company_step3_data,
+    )
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT

@@ -7,9 +7,10 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.company.logic.serializers import (
-    CompanyValidateFormStep1Serializer,
-    CompanyValidateFormStep2Serializer,
-    CompanyValidateFormStep3Serializer)
+  CompanyValidateFormStep1Serializer,
+  CompanyValidateFormStep2Serializer,
+  CompanyValidateFormStep3Serializer,
+)
 
 
 class CompanyValidateFormStep1View(views.APIView):
