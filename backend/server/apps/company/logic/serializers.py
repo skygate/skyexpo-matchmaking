@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext as ugt
 from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from server.apps.company.models import Company
+from server.apps.profile.models import Profile
+
+User = get_user_model()
 
 
 class CompanyValidateFormStep1Serializer(serializers.Serializer):
@@ -47,3 +51,45 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
                 self.fail('field_value_exists', field='e-mail'),
             )
         return email
+
+
+class CompanyValidateFormStep2Serializer(serializers.Serializer):
+    """
+    Validates the input data in the second step of the form,
+    which registers company.
+    """
+
+    default_error_messages = {
+        'email_taken': ugt('E-mail {value} is already taken.'),
+        'one_of_emails_taken': ugt("One of team member's is taken."),
+    }
+
+    logotype = serializers.ImageField()
+    founder_email = serializers.EmailField(
+        help_text='E-mail address of the person who completes the form',
+    )
+    team_members = serializers.ListField(
+        child=serializers.EmailField(), allow_empty=False,
+    )
+
+    def validate_founder_email(self, founder_email):
+        active_profiles = Profile.objects.active_profiles()
+        taken_email = active_profiles.filter(user__email=founder_email)
+
+        if taken_email.exists():
+            raise serializers.ValidationError(
+                self.fail('email_taken', value=founder_email),
+            )
+
+        return founder_email
+
+    def validate_team_members(self, team_members):
+        active_profiles = Profile.objects.active_profiles()
+        taken_emails = active_profiles.filter(user__email__in=team_members)
+
+        if taken_emails.exists():
+            raise serializers.ValidationError(
+                self.fail('one_of_emails_taken'),
+            )
+
+        return team_members
