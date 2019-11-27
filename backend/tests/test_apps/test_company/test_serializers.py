@@ -109,8 +109,24 @@ def test_register_company_validate_members_email(company_step2_data):
 
     with pytest.raises(
         serializers.ValidationError,
-        match="One of team member's is taken.",
+        match="One of team member's email is taken.",
     ):
 
+        serializer = CompanyValidateFormStep2Serializer(data=company_step2_data)
+        serializer.is_valid(raise_exception=True)
+
+
+@pytest.mark.django_db
+def test_register_company_validate_founder_team(company_step2_data):
+    """Ensures that 'founder_email' cannot be in 'team_members'."""
+    company_step2_data['team_members'] = [
+        company_step2_data['founder_email'],
+        'user@example.com',
+    ]
+
+    with pytest.raises(
+        serializers.ValidationError,
+        match="One of team member's email is taken.",
+    ):
         serializer = CompanyValidateFormStep2Serializer(data=company_step2_data)
         serializer.is_valid(raise_exception=True)

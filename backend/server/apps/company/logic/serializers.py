@@ -93,3 +93,10 @@ class CompanyValidateFormStep2Serializer(serializers.Serializer):
             )
 
         return team_members
+
+    def validate(self, attrs):
+        if attrs['founder_email'] in attrs['team_members']:
+            # TODO: Change this message when we will have new designs.
+            self.fail('one_of_emails_taken')
+
+        return attrs
