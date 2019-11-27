@@ -20,6 +20,8 @@ services:
     volumes:
       # We only mount source code in development:
       - ./backend:/code
+    stdin_open: true
+    tty: true
 
   web-app:
     build:

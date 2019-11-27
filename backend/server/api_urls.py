@@ -15,7 +15,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # Local apps
-    # ...
+    path('companies/', include('server.apps.company.urls')),
 ]
-
-# haah
