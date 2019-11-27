@@ -61,12 +61,12 @@ class CompanyValidateFormStep2Serializer(serializers.Serializer):
 
     default_error_messages = {
         'email_taken': ugt('E-mail {value} is already taken.'),
-        'one_of_emails_taken': ugt("One of team member's is taken."),
+        'one_of_emails_taken': ugt("One of team member's email is taken."),
     }
 
     logotype = serializers.ImageField()
     founder_email = serializers.EmailField(
-        help_text='E-mail address of the person who completes the form',
+        help_text='E-mail address of the person who completes the form.',
     )
     team_members = serializers.ListField(
         child=serializers.EmailField(), allow_empty=False,

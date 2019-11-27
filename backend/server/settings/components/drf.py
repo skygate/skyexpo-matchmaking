@@ -14,9 +14,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PARSER_CLASSES': [
         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-        # TODO READ ABOUT IT -> BROWSABLE API
         'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.FormParser',
     ],
 }
 
