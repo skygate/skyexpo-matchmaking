@@ -7,9 +7,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.company.logic.serializers import (
-  CompanyValidateFormStep1Serializer,
-  CompanyValidateFormStep2Serializer,
-)
+    CompanyValidateFormStep1Serializer,
+    CompanyValidateFormStep2Serializer,
+    CompanyValidateFormStep3Serializer)
 
 
 class CompanyValidateFormStep1View(views.APIView):
@@ -50,6 +50,27 @@ class CompanyValidateFormStep2View(views.APIView):
     )
     def post(self, request: Request) -> Response:
         serializer = CompanyValidateFormStep2Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CompanyValidateFormStep3View(views.APIView):
+    """
+    Validates the data provided in the third step of the
+    company registration form.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    @swagger_auto_schema(
+        request_body=CompanyValidateFormStep3Serializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = CompanyValidateFormStep3Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         return Response(status=status.HTTP_204_NO_CONTENT)

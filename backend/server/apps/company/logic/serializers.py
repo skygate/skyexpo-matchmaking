@@ -7,6 +7,7 @@ from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
+from server.apps.company.constants import Industry, Sector, CompanyStage, ProductType
 from server.apps.company.models import Company
 from server.apps.profile.models import Profile
 
@@ -100,3 +101,15 @@ class CompanyValidateFormStep2Serializer(serializers.Serializer):
             self.fail('one_of_emails_taken')
 
         return attrs
+
+
+class CompanyValidateFormStep3Serializer(serializers.Serializer):
+    """
+    Validates the input data in the third step of the form,
+    which registers company.
+    """
+
+    industries = serializers.MultipleChoiceField(choices=Industry.CHOICES)
+    sectors = serializers.MultipleChoiceField(choices=Sector.CHOICES)
+    product_types = serializers.MultipleChoiceField(choices=ProductType.CHOICES)
+    company_stage = serializers.ChoiceField(choices=CompanyStage.CHOICES)
