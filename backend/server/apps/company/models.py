@@ -25,6 +25,7 @@ class Company(models.Model):
     description = models.CharField(max_length=255, blank=True)
     # TODO: set 'default' attr on ImageField when I get the default logotype.
     logotype = models.ImageField(blank=True)
+    founder_email = models.EmailField(unique=True)
     stage = models.CharField(choices=CompanyStage.CHOICES, max_length=33)
     sectors = ArrayField(
         models.CharField(choices=Sector.CHOICES, max_length=15),

@@ -8,6 +8,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from server.apps.company.models import Company
 from server.apps.profile.logic.managers import UserManager
+from server.apps.profile.logic.querysets import ProfileQuerySet
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -38,6 +39,8 @@ class Profile(models.Model):
         related_name='profiles',
         default=None,
     )
+
+    objects = ProfileQuerySet.as_manager()
 
     class Meta:
         constraints = [
