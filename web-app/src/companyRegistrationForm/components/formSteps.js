@@ -35,10 +35,20 @@ export const formSteps = [
     {
         title: 'Startup sectors',
         inputsFields: [
-            { name: 'industries', placeholder: 'Industries', type: 'text' },
-            { name: 'sectors', placeholder: 'Sectors', type: 'text' },
+            {
+                name: 'industries',
+                placeholder: 'Industries',
+                type: 'selectTags',
+                tags: 'industriesTags',
+            },
+            { name: 'sectors', placeholder: 'Sectors', type: 'selectTags', tags: 'sectorsTags' },
             { name: 'companyStage', placeholder: 'Company stage', type: 'text' },
-            { name: 'productType', placeholder: 'Product type', type: 'text' },
+            {
+                name: 'productType',
+                placeholder: 'Product type',
+                type: 'selectTags',
+                tags: 'productTags',
+            },
         ],
     },
 ];

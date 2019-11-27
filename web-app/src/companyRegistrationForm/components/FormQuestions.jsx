@@ -2,6 +2,7 @@ import React from 'react';
 import { FieldArray } from 'formik';
 
 import { countryList } from '../../helpers/countryList';
+import { SelectTagsInput } from './SelectTagsInput';
 
 export const FormQuestions = ({
     handleChange,
@@ -10,6 +11,7 @@ export const FormQuestions = ({
     errors,
     pageProps,
     countProgress,
+    setFieldValue,
 }) => {
     countProgress(values);
 
@@ -90,8 +92,12 @@ export const FormQuestions = ({
                                                 placeholder="name"
                                             />
                                             {errors &&
+                                                touched &&
                                                 errors.teamMembers &&
-                                                errors.teamMembers[index] && (
+                                                errors.teamMembers[index] &&
+                                                touched.teamMembers &&
+                                                touched.teamMembers[index] &&
+                                                touched.teamMembers[index][`name${index}`] && (
                                                     <span>
                                                         {errors.teamMembers[index][`name${index}`]}
                                                     </span>
@@ -103,8 +109,12 @@ export const FormQuestions = ({
                                                 placeholder="email"
                                             />
                                             {errors &&
+                                                touched &&
                                                 errors.teamMembers &&
-                                                errors.teamMembers[index] && (
+                                                errors.teamMembers[index] &&
+                                                touched.teamMembers &&
+                                                touched.teamMembers[index] &&
+                                                touched.teamMembers[index][`email${index}`] && (
                                                     <span>
                                                         {errors.teamMembers[index][`email${index}`]}
                                                     </span>
@@ -130,6 +140,13 @@ export const FormQuestions = ({
                                     </button>
                                 </div>
                             )}
+                        />
+                    )}
+                    {input.type === 'selectTags' && (
+                        <SelectTagsInput
+                            input={input}
+                            setFieldValue={setFieldValue}
+                            values={values}
                         />
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (

@@ -52,18 +52,23 @@ export const validationPage2 = Yup.object().shape({
 });
 
 export const validationPage3 = Yup.object().shape({
-    industries: Yup.string()
-        .trim()
-        .required('First Name is required'),
-    sectors: Yup.string()
-        .trim()
-        .required('Last Name is required'),
+    industries: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Industries are required'),
+    ),
+    sectors: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Sectors are required'),
+    ),
     companyStage: Yup.string()
         .trim()
         .matches(emailValidityRegex, 'Invalid email address')
         .required('Email is required'),
-    productType: Yup.string()
-        .trim()
-        .matches(emailValidityRegex, 'Invalid email address')
-        .required('Email is required'),
+    productType: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Product types are required'),
+    ),
 });
