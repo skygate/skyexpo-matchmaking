@@ -43,6 +43,7 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     )
     founding_date = serializers.DateField()
     description = serializers.CharField(max_length=255, allow_blank=True)
+    logotype = serializers.ImageField()
 
     def validate_name(self, name):
         if Company.objects.filter(name=name).exists():
@@ -70,7 +71,6 @@ class CompanyValidateFormStep2Serializer(serializers.Serializer):
         'one_of_emails_taken': ugt("One of team member's email is taken."),
     }
 
-    logotype = serializers.ImageField()
     founder_email = serializers.EmailField(
         help_text='E-mail address of the person who completes the form.',
     )

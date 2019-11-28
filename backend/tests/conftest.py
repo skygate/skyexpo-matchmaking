@@ -56,6 +56,7 @@ def company_step1_data(company_data):
         'country': company_data['country'],
         'founding_date': company_data['founding_date'],
         'description': company_data['description'],
+        'logotype': company_data['logotype'],
     }
 
 
@@ -63,7 +64,6 @@ def company_step1_data(company_data):
 def company_step2_data(company_data):
     """Returns company fake data for step2 in registering form."""
     return {
-        'logotype': company_data['logotype'],
         'founder_email': company_data['founder_email'],
         'team_members': [
             'user1@example.com',

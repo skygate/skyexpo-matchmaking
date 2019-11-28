@@ -33,6 +33,7 @@ def test_register_company_validation_step1(
         'country',
         'founding_date',
         'description',
+        'logotype',
     }
 
 
@@ -80,7 +81,6 @@ def test_register_company_validation_step2(
         serializer.is_valid()
 
     assert set(serializer.data.keys()) == {
-        'logotype',
         'founder_email',
         'team_members',
     }
