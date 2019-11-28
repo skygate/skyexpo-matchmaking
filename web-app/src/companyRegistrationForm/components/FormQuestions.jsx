@@ -40,7 +40,7 @@ export const FormQuestions = ({
     return (
         <>
             <h1>{pageProps.title}</h1>
-            <h2>{pageProps.subtitle && pageProps.subtitle}</h2>
+            {pageProps.subtitle && <h2>{pageProps.subtitle}</h2>}
             {pageProps.inputsFields.map(input => (
                 <div key={input.name}>
                     {input.type === 'select' && (
