@@ -6,6 +6,7 @@ from rest_framework import serializers
 from server.apps.company.logic.serializers import (
   CompanyValidateFormStep1Serializer,
   CompanyValidateFormStep2Serializer,
+  CompanyValidateFormStep3Serializer,
 )
 from server.apps.company.models import Company
 from tests.factories import ProfileFactory
@@ -130,3 +131,24 @@ def test_register_company_validate_founder_team(company_step2_data):
     ):
         serializer = CompanyValidateFormStep2Serializer(data=company_step2_data)
         serializer.is_valid(raise_exception=True)
+
+
+@pytest.mark.django_db
+def test_register_company_validation_step3(
+    django_assert_num_queries, company_step3_data,
+):
+    """
+    Ensures that serializer returns proper fields
+    and a number of queries are as expected.
+    """
+    serializer = CompanyValidateFormStep3Serializer(data=company_step3_data)
+
+    with django_assert_num_queries(0):
+        serializer.is_valid()
+
+    assert set(serializer.data.keys()) == {
+        'industries',
+        'sectors',
+        'product_types',
+        'stage',
+    }
