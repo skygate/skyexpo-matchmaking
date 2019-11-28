@@ -5,9 +5,9 @@
 import django.contrib.postgres.fields
 import django.contrib.postgres.fields.ranges
 import django.contrib.postgres.validators
-from django.db import migrations, models
 import django_countries.fields
 import phonenumber_field.modelfields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

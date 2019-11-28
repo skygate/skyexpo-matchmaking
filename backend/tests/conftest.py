@@ -61,10 +61,11 @@ def company_step1_data(company_data):
 
 
 @pytest.fixture()
-def company_step2_data(company_data):
+def company_step2_data(user, company_data):
     """Returns company fake data for step2 in registering form."""
     return {
-        'founder_email': company_data['founder_email'],
+        'founder_name': 'Founder name',
+        'founder_email': user.email,
         'team_members': [
             'user1@example.com',
             'user2@example.com',
@@ -80,8 +81,8 @@ def company_step3_data(company_data):
         'industries': company_data['industries'],
         'product_types': company_data['product_types'],
         'stage': company_data['stage'],
-        'min_investment_size': company_data['min_investment_size'],
-        'max_investment_size': company_data['max_investment_size'],
+        'min_investment_size': company_data['investment_size'].lower,
+        'max_investment_size': company_data['investment_size'].upper,
     }
 
 

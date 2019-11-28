@@ -71,6 +71,7 @@ class CompanyValidateFormStep2Serializer(serializers.Serializer):
         'one_of_emails_taken': ugt("One of team member's email is taken."),
     }
 
+    founder_name = serializers.CharField(max_length=255)
     founder_email = serializers.EmailField(
         help_text='E-mail address of the person who completes the form.',
     )

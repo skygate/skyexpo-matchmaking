@@ -6,6 +6,7 @@ from typing import List, Tuple
 
 import factory.fuzzy  # noqa: WPS301
 from factory import LazyFunction
+from psycopg2._range import NumericRange   # noqa: WPS436
 
 from server.apps.company.constants import (
   CompanyStage,
@@ -37,7 +38,6 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     phone_number = '+48 508223012'
     country = 'PL'
     logotype = factory.django.ImageField()
-    founder_email = factory.Faker('safe_email')
     stage = factory.fuzzy.FuzzyChoice(
         choice[0] for choice in CompanyStage.CHOICES
     )
@@ -46,10 +46,7 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     product_types = LazyFunction(
         partial(get_multiple_choices, ProductType.CHOICES),
     )
-    min_investment_size = factory.fuzzy.FuzzyInteger(low=0)
-    max_investment_size = factory.LazyAttribute(
-        lambda company: company.min_investment_size + 100,
-    )
+    investment_size = NumericRange(0, 100)
 
 
 class UserFactory(factory.DjangoModelFactory):  # noqa: D101

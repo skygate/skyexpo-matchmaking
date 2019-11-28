@@ -81,6 +81,7 @@ def test_register_company_validation_step2(
         serializer.is_valid()
 
     assert set(serializer.data.keys()) == {
+        'founder_name',
         'founder_email',
         'team_members',
     }
