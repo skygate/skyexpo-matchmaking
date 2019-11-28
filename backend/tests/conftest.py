@@ -80,6 +80,8 @@ def company_step3_data(company_data):
         'industries': company_data['industries'],
         'product_types': company_data['product_types'],
         'stage': company_data['stage'],
+        'min_investment_size': company_data['min_investment_size'],
+        'max_investment_size': company_data['max_investment_size'],
     }
 
 

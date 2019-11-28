@@ -46,6 +46,10 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     product_types = LazyFunction(
         partial(get_multiple_choices, ProductType.CHOICES),
     )
+    min_investment_size = factory.fuzzy.FuzzyInteger(low=0)
+    max_investment_size = factory.LazyAttribute(
+        lambda company: company.min_investment_size + 100,
+    )
 
 
 class UserFactory(factory.DjangoModelFactory):  # noqa: D101

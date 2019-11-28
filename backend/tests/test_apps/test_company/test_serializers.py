@@ -151,4 +151,24 @@ def test_register_company_validation_step3(
         'sectors',
         'product_types',
         'stage',
+        'min_investment_size',
+        'max_investment_size',
     }
+
+
+@pytest.mark.django_db
+def test_register_company_validate_investment(company_step3_data):
+    """
+    Ensures that 'max_investment_size' cannot be
+    lower than 'min_investment_size'.
+    """
+    company_step3_data['min_investment_size'] = 1
+    company_step3_data['max_investment_size'] = 0
+
+    with pytest.raises(
+        serializers.ValidationError,
+        match='Maximum investment size should be lower or' +
+        ' equal to minimum investment size.',
+    ):
+        serializer = CompanyValidateFormStep3Serializer(data=company_step3_data)
+        serializer.is_valid(raise_exception=True)

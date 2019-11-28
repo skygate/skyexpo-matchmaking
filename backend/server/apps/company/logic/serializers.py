@@ -114,7 +114,24 @@ class CompanyValidateFormStep3Serializer(serializers.Serializer):
     which registers company.
     """
 
+    default_error_messages = {
+        'investment_size': ugt(
+            'Maximum investment size should be lower or' +
+            ' equal to minimum investment size.',
+        ),
+    }
+
     industries = serializers.MultipleChoiceField(choices=Industry.CHOICES)
     sectors = serializers.MultipleChoiceField(choices=Sector.CHOICES)
     product_types = serializers.MultipleChoiceField(choices=ProductType.CHOICES)
     stage = serializers.ChoiceField(choices=CompanyStage.CHOICES)
+    min_investment_size = serializers.IntegerField(
+        min_value=0, help_text='In EUR currency.',
+    )
+    max_investment_size = serializers.IntegerField(help_text='In EUR currency.')
+
+    def validate(self, attrs):
+        if attrs['max_investment_size'] < attrs['min_investment_size']:
+            self.fail('investment_size')
+
+        return attrs

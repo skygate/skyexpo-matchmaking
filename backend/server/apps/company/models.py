@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.postgres.fields import ArrayField
+from django.core.validators import MinValueValidator
 from django.db import models
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -36,6 +37,8 @@ class Company(models.Model):
     product_types = ArrayField(
         models.CharField(choices=ProductType.CHOICES, max_length=8),
     )
+    min_investment_size = models.IntegerField(validators=[MinValueValidator(0)])
+    max_investment_size = models.IntegerField()
 
     class Meta:
         verbose_name_plural = 'Companies'
