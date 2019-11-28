@@ -29,9 +29,18 @@ export const FormQuestions = ({
             {},
         );
 
+    const addHttpsPrefix = inputName => {
+        inputName === 'website' && !values[inputName] && setFieldValue(inputName, 'https://');
+    };
+
+    const removeHttpsPrefix = inputName => {
+        inputName === 'website' && values[inputName] === 'https://' && setFieldValue(inputName, '');
+    };
+
     return (
         <>
             <h1>{pageProps.title}</h1>
+            <h2>{pageProps.subtitle && pageProps.subtitle}</h2>
             {pageProps.inputsFields.map(input => (
                 <div key={input.name}>
                     {input.type === 'select' && (
@@ -53,6 +62,8 @@ export const FormQuestions = ({
                                 name={input.name}
                                 type="text"
                                 placeholder={input.placeholder}
+                                onFocus={() => addHttpsPrefix(input.name)}
+                                onBlur={() => removeHttpsPrefix(input.name)}
                             />
                         </>
                     )}
@@ -85,6 +96,9 @@ export const FormQuestions = ({
                                 <div>
                                     {values.teamMembers.map((_, index) => (
                                         <div key={`name${index}`}>
+                                            <h2>
+                                                {index > 0 ? `Member ${index + 1}` : 'Your details'}
+                                            </h2>
                                             <input
                                                 onChange={handleChange}
                                                 name={`teamMembers.${index}.name${index}`}
@@ -150,6 +164,17 @@ export const FormQuestions = ({
                             setFieldValue={setFieldValue}
                             values={values}
                         />
+                    )}
+                    {input.type === 'number' && (
+                        <>
+                            <input
+                                onChange={handleChange}
+                                value={values[input.name]}
+                                name={input.name}
+                                type="number"
+                                placeholder={input.placeholder}
+                            />
+                        </>
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
                         <span>{errors[input.name]} </span>

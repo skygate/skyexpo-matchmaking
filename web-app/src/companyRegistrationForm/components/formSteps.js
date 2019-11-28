@@ -7,14 +7,15 @@ export const formSteps = [
             { name: 'phone', placeholder: '+48 123 123 123', type: 'text' },
             { name: 'companyContact', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'foundingDate', placeholder: 'Founding date', type: 'text' },
+            { name: 'logo', placeholder: 'Logo', type: 'image' },
+            { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
             { name: 'shortDescription', placeholder: 'Short description', type: 'textarea' },
         ],
     },
     {
-        title: 'Your team',
+        title: 'Team members',
+        subtitle: 'Participating on the skyexpo',
         inputsFields: [
-            { name: 'logo', placeholder: 'Logo', type: 'image' },
             {
                 name: 'teamMembers',
                 placeholder: 'Team members',
@@ -48,6 +49,16 @@ export const formSteps = [
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
+            },
+            {
+                name: 'minimumInvest',
+                placeholder: 'Minimum investment size (EUR)',
+                type: 'number',
+            },
+            {
+                name: 'maximumInvest',
+                placeholder: 'Maximum investment size (EUR)',
+                type: 'number',
             },
         ],
     },

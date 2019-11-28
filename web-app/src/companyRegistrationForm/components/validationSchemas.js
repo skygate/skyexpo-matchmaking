@@ -3,13 +3,14 @@ import * as R from 'ramda';
 
 import { emailValidityRegex } from '../../helpers/emailValidation';
 import { phoneRegExp } from '../../helpers/phoneNumberValidation';
+import { dateValidityRegex } from '../../helpers/dateValidation';
 
 export const validationPage1 = Yup.object().shape({
     companyName: Yup.string()
         .trim()
         .required('Company name  is required'),
     website: Yup.string()
-        .trim()
+        .url()
         .required('Website is required'),
     phone: Yup.string()
         .matches(phoneRegExp, 'Invalid phone number')
@@ -21,8 +22,12 @@ export const validationPage1 = Yup.object().shape({
     country: Yup.string()
         .trim()
         .required('Country is required'),
+    logo: Yup.string()
+        .trim()
+        .required('Logo is required'),
     foundingDate: Yup.string()
         .trim()
+        .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
         .required('Founding date is required'),
     shortDescription: Yup.string()
         .trim()
@@ -30,9 +35,6 @@ export const validationPage1 = Yup.object().shape({
 });
 
 export const validationPage2 = Yup.object().shape({
-    logo: Yup.string()
-        .trim()
-        .required('Logo is required'),
     teamMembers: Yup.array().of(
         Yup.lazy(obj =>
             Yup.object().shape(
@@ -64,11 +66,12 @@ export const validationPage3 = Yup.object().shape({
     ),
     companyStage: Yup.string()
         .trim()
-        .matches(emailValidityRegex, 'Invalid email address')
-        .required('Email is required'),
+        .required('Company stage is required'),
     productType: Yup.array().of(
         Yup.string()
             .trim()
             .required('Product types are required'),
     ),
+    minimumInvest: Yup.number().required('Minimum investment is required'),
+    maximumInvest: Yup.number().required('Maximum investment required'),
 });

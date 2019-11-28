@@ -31,6 +31,8 @@ const initialValues = {
     sectors: '',
     companyStage: [''],
     productType: [''],
+    minimumInvest: '',
+    maximumInvest: '',
 };
 
 export const RegisterCompanyForm = () => {
