@@ -50,6 +50,10 @@ export const RegisterCompanyForm = () => {
         });
     };
 
+    const handleBackPage = () => {
+        setCurrentStep(currentStep - 1);
+    };
+
     const handleSubmit = ({ values }) => {
         console.log('Submitted values', values);
     };
@@ -94,6 +98,11 @@ export const RegisterCompanyForm = () => {
                                 nextPage={() => handleNextPage(props)}
                                 countProgress={countCompletionProgress}
                             />
+                            {currentStep > 0 && (
+                                <button type="button" onClick={() => handleBackPage(props)}>
+                                    back
+                                </button>
+                            )}
                             <button type="button" onClick={() => handleNextPage(props)}>
                                 {currentStep > 1 ? 'submit' : 'next page'}
                             </button>

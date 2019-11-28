@@ -119,12 +119,14 @@ export const FormQuestions = ({
                                                         {errors.teamMembers[index][`email${index}`]}
                                                     </span>
                                                 )}
-                                            <button
-                                                type="button"
-                                                onClick={() => arrayOfMembers.remove(index)}
-                                            >
-                                                remove
-                                            </button>
+                                            {index > 0 && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => arrayOfMembers.remove(index)}
+                                                >
+                                                    remove
+                                                </button>
+                                            )}
                                         </div>
                                     ))}
                                     <button
@@ -136,7 +138,7 @@ export const FormQuestions = ({
                                             })
                                         }
                                     >
-                                        add
+                                        add new member
                                     </button>
                                 </div>
                             )}
