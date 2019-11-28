@@ -69,7 +69,7 @@ mypy = "^0.720"
 django-stubs = "^1.1"
 djangorestframework-stubs = "^1.0"
 
-ipython = "^7.9"
+ipython = "^7.10"
 jupyter = "^1.0"
 
 yamllint = "^1.18"
