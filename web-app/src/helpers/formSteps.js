@@ -77,6 +77,21 @@ export const formSteps = [
                 tags: 'targetMarketTags',
             },
             {
+                name: 'businessType',
+                placeholder: 'Business Type',
+                type: 'radio',
+                options: [
+                    {
+                        optionName: 'B2B (Business to Business)',
+                        optionValue: 'B2B (Business to Business)',
+                    },
+                    {
+                        optionName: 'B2C (Business to Customer)',
+                        optionValue: 'B2C (Business to Customer)',
+                    },
+                ],
+            },
+            {
                 name: 'minimumInvest',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',

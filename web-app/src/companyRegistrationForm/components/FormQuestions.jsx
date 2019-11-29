@@ -38,10 +38,6 @@ export const FormQuestions = ({
         inputName === 'website' && values[inputName] === 'https://' && setFieldValue(inputName, '');
     };
 
-    const onRadioChange = (e, inputName) => {
-        setFieldValue(inputName, e.target.value);
-    };
-
     return (
         <>
             <h1>{pageProps.title}</h1>
@@ -183,8 +179,9 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'radio' && (
                         <Radio.Group
-                            onChange={e => onRadioChange(e, input.name)}
+                            onChange={handleChange}
                             value={values[input.name]}
+                            name={input.name}
                         >
                             {input.options.map(option => (
                                 <Radio key={option.optionName} value={option.optionValue}>
@@ -193,6 +190,7 @@ export const FormQuestions = ({
                             ))}
                         </Radio.Group>
                     )}
+
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
                         <span>{errors[input.name]} </span>
                     )}

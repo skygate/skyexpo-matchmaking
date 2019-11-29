@@ -81,6 +81,9 @@ export const validationPage3 = Yup.object().shape({
             .trim()
             .required('Target market is required'),
     ),
+    businessType: Yup.string()
+        .trim()
+        .required('Business type stage is required'),
     minimumInvest: Yup.number().required('Minimum investment is required'),
     maximumInvest: Yup.number().required('Maximum investment required'),
 });
