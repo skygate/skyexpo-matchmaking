@@ -190,7 +190,6 @@ export const FormQuestions = ({
                             ))}
                         </Radio.Group>
                     )}
-
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
                         <span>{errors[input.name]} </span>
                     )}

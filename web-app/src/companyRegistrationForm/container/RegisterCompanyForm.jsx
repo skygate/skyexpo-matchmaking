@@ -40,7 +40,7 @@ const initialValues = {
 };
 
 export const RegisterCompanyForm = () => {
-    const [currentStep, setCurrentStep] = useState(2);
+    const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const validationSchemas = [validationPage1, validationPage2, validationPage3];
