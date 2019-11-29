@@ -34,7 +34,7 @@ const initialValues = {
     productType: [''],
     productOnMarket: '',
     targetMarket: [''],
-    businessType: '',
+    businessType: [''],
     minimumInvest: '',
     maximumInvest: '',
 };

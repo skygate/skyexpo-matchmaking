@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldArray } from 'formik';
-import { Radio } from 'antd';
+import { Radio, Checkbox } from 'antd';
 
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput } from './SelectTagsInput';
@@ -36,6 +36,10 @@ export const FormQuestions = ({
 
     const removeHttpsPrefix = inputName => {
         inputName === 'website' && values[inputName] === 'https://' && setFieldValue(inputName, '');
+    };
+
+    const handleCheckboxClick = checkedValues => {
+        setFieldValue('businessType', checkedValues);
     };
 
     return (
@@ -189,6 +193,15 @@ export const FormQuestions = ({
                                 </Radio>
                             ))}
                         </Radio.Group>
+                    )}
+                    {input.type === 'checkboxGroup' && (
+                        <div name={input.name}>
+                            <Checkbox.Group
+                                name={input.name}
+                                options={input.options}
+                                onChange={handleCheckboxClick}
+                            />
+                        </div>
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
                         <span>{errors[input.name]} </span>

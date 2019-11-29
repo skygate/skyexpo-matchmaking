@@ -79,15 +79,15 @@ export const formSteps = [
             {
                 name: 'businessType',
                 placeholder: 'Business Type',
-                type: 'radio',
+                type: 'checkboxGroup',
                 options: [
                     {
-                        optionName: 'B2B (Business to Business)',
-                        optionValue: 'B2B (Business to Business)',
+                        label: 'B2B (Business to Business)',
+                        value: 'B2B (Business to Business)',
                     },
                     {
-                        optionName: 'B2C (Business to Customer)',
-                        optionValue: 'B2C (Business to Customer)',
+                        label: 'B2C (Business to Customer)',
+                        value: 'B2C (Business to Customer)',
                     },
                 ],
             },
