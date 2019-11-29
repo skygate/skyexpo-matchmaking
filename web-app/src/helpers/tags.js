@@ -28,3 +28,10 @@ export const investmentStageTags = [
 ];
 
 export const companyStageTags = ['Concept Stage', 'Seed Stage', 'Early Stage'];
+
+export const targetMarketTags = [
+    'TargetMarket1',
+    'TargetMarket2',
+    'TargetMarket3',
+    'TargetMarket4',
+];

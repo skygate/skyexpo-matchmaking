@@ -76,6 +76,11 @@ export const validationPage3 = Yup.object().shape({
             .required('Product types are required'),
     ),
     productOnMarket: Yup.boolean().required('Please define if your product is on marekt'),
+    targetMarket: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Target market is required'),
+    ),
     minimumInvest: Yup.number().required('Minimum investment is required'),
     maximumInvest: Yup.number().required('Maximum investment required'),
 });

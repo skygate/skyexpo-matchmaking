@@ -7,6 +7,7 @@ import {
     sectorsTags,
     investmentStageTags,
     companyStageTags,
+    targetMarketTags,
 } from '../../helpers/tags';
 
 export const SelectTagsInput = ({ input, setFieldValue }) => {
@@ -18,6 +19,7 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
         sectorsTags,
         investmentStageTags,
         companyStageTags,
+        targetMarketTags,
     };
 
     const handleTagSelect = selectedItem => {

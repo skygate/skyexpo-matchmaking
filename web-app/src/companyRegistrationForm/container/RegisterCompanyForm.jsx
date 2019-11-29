@@ -33,6 +33,7 @@ const initialValues = {
     companyStage: [''],
     productType: [''],
     productOnMarket: '',
+    targetMarket: [''],
     minimumInvest: '',
     maximumInvest: '',
 };

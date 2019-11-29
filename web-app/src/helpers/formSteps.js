@@ -67,6 +67,12 @@ export const formSteps = [
                 type: 'radio',
             },
             {
+                name: 'targetMarket',
+                placeholder: 'Target Market',
+                type: 'selectTags',
+                tags: 'targetMarketTags',
+            },
+            {
                 name: 'minimumInvest',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
