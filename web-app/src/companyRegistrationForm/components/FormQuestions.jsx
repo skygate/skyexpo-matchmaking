@@ -1,5 +1,6 @@
 import React from 'react';
 import { FieldArray } from 'formik';
+import { Radio, Checkbox } from 'antd';
 
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput } from './SelectTagsInput';
@@ -37,6 +38,10 @@ export const FormQuestions = ({
         inputName === 'website' && values[inputName] === 'https://' && setFieldValue(inputName, '');
     };
 
+    const handleCheckboxClick = checkedValues => {
+        setFieldValue('businessType', checkedValues);
+    };
+
     return (
         <>
             <h1>{pageProps.title}</h1>
@@ -47,8 +52,8 @@ export const FormQuestions = ({
                         <>
                             <select onChange={handleChange} name={input.name}>
                                 {countryList.map(country => (
-                                    <option key={country} value={country}>
-                                        {country}
+                                    <option key={country.code} value={country.code}>
+                                        {country.name}
                                     </option>
                                 ))}
                             </select>
@@ -175,6 +180,28 @@ export const FormQuestions = ({
                                 placeholder={input.placeholder}
                             />
                         </>
+                    )}
+                    {input.type === 'radio' && (
+                        <Radio.Group
+                            onChange={handleChange}
+                            value={values[input.name]}
+                            name={input.name}
+                        >
+                            {input.options.map(option => (
+                                <Radio key={option.optionName} value={option.optionValue}>
+                                    {option.optionName}
+                                </Radio>
+                            ))}
+                        </Radio.Group>
+                    )}
+                    {input.type === 'checkboxGroup' && (
+                        <div name={input.name}>
+                            <Checkbox.Group
+                                name={input.name}
+                                options={input.options}
+                                onChange={handleCheckboxClick}
+                            />
+                        </div>
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
                         <span>{errors[input.name]} </span>

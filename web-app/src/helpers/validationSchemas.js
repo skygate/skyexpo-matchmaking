@@ -1,21 +1,19 @@
 import * as Yup from 'yup';
 import * as R from 'ramda';
 
-import { emailValidityRegex } from '../../helpers/emailValidation';
-import { phoneRegExp } from '../../helpers/phoneNumberValidation';
-import { dateValidityRegex } from '../../helpers/dateValidation';
+import { emailValidityRegex } from './emailValidation';
+import { phoneRegExp } from './phoneNumberValidation';
+import { dateValidityRegex } from './dateValidation';
 
 export const validationPage1 = Yup.object().shape({
-    companyName: Yup.string()
+    startupName: Yup.string()
         .trim()
-        .required('Company name  is required'),
+        .required('Startup name  is required'),
     website: Yup.string()
         .url()
         .required('Website is required'),
-    phone: Yup.string()
-        .matches(phoneRegExp, 'Invalid phone number')
-        .required('Phone is required'),
-    companyContact: Yup.string()
+    phone: Yup.string().matches(phoneRegExp, 'Invalid phone number'),
+    startupContact: Yup.string()
         .trim()
         .matches(emailValidityRegex, 'Invalid email address')
         .required('Email is required'),
@@ -64,6 +62,11 @@ export const validationPage3 = Yup.object().shape({
             .trim()
             .required('Sectors are required'),
     ),
+    investmentStage: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Sectors are required'),
+    ),
     companyStage: Yup.string()
         .trim()
         .required('Company stage is required'),
@@ -71,6 +74,17 @@ export const validationPage3 = Yup.object().shape({
         Yup.string()
             .trim()
             .required('Product types are required'),
+    ),
+    productOnMarket: Yup.boolean().required('Please define if your product is on marekt'),
+    targetMarket: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Target market is required'),
+    ),
+    businessType: Yup.array().of(
+        Yup.string()
+            .trim()
+            .required('Business type is required'),
     ),
     minimumInvest: Yup.number().required('Minimum investment is required'),
     maximumInvest: Yup.number().required('Maximum investment required'),

@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Select } from 'antd';
 
-import { productTags, industriesTags, sectorsTags } from '../../helpers/tags';
+import {
+    productTags,
+    industriesTags,
+    sectorsTags,
+    investmentStageTags,
+    companyStageTags,
+    targetMarketTags,
+} from '../../helpers/tags';
 
 export const SelectTagsInput = ({ input, setFieldValue }) => {
     const [selectedTags, setSelectedTags] = useState([]);
@@ -10,6 +17,9 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
         productTags,
         industriesTags,
         sectorsTags,
+        investmentStageTags,
+        companyStageTags,
+        targetMarketTags,
     };
 
     const handleTagSelect = selectedItem => {
