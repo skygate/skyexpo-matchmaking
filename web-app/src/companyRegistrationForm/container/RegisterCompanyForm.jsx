@@ -28,15 +28,17 @@ const initialValues = {
         },
     ],
     industries: [''],
-    sectors: '',
+    sectors: [''],
+    investmentStage: [''],
     companyStage: [''],
     productType: [''],
+    productOnMarket: '',
     minimumInvest: '',
     maximumInvest: '',
 };
 
 export const RegisterCompanyForm = () => {
-    const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(2);
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const validationSchemas = [validationPage1, validationPage2, validationPage3];

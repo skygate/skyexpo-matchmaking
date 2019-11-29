@@ -43,12 +43,28 @@ export const formSteps = [
                 tags: 'industriesTags',
             },
             { name: 'sectors', placeholder: 'Sectors', type: 'selectTags', tags: 'sectorsTags' },
-            { name: 'companyStage', placeholder: 'Company stage', type: 'text' },
+            {
+                name: 'investmentStage',
+                placeholder: 'Investment stage',
+                type: 'selectTags',
+                tags: 'investmentStageTags',
+            },
+            {
+                name: 'companyStage',
+                placeholder: 'Company stage',
+                type: 'selectTags',
+                tags: 'companyStageTags',
+            },
             {
                 name: 'productType',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
+            },
+            {
+                name: 'productOnMarket',
+                placeholder: 'Product on Market',
+                type: 'radio',
             },
             {
                 name: 'minimumInvest',

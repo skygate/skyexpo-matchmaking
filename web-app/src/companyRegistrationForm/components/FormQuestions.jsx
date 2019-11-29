@@ -1,5 +1,6 @@
 import React from 'react';
 import { FieldArray } from 'formik';
+import { Radio } from 'antd';
 
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput } from './SelectTagsInput';
@@ -35,6 +36,10 @@ export const FormQuestions = ({
 
     const removeHttpsPrefix = inputName => {
         inputName === 'website' && values[inputName] === 'https://' && setFieldValue(inputName, '');
+    };
+
+    const onRadioChange = (e, inputName) => {
+        setFieldValue(inputName, e.target.value);
     };
 
     return (
@@ -175,6 +180,15 @@ export const FormQuestions = ({
                                 placeholder={input.placeholder}
                             />
                         </>
+                    )}
+                    {input.type === 'radio' && (
+                        <Radio.Group
+                            onChange={e => onRadioChange(e, input.name)}
+                            value={values[input.name]}
+                        >
+                            <Radio value={false}>A</Radio>
+                            <Radio value={true}>B</Radio>
+                        </Radio.Group>
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
                         <span>{errors[input.name]} </span>
