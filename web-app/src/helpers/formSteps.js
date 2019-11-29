@@ -2,10 +2,10 @@ export const formSteps = [
     {
         title: 'Main info',
         inputsFields: [
-            { name: 'companyName', placeholder: 'Company name', type: 'text' },
+            { name: 'startupName', placeholder: 'Startup name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
             { name: 'phone', placeholder: '+48 123 123 123', type: 'text' },
-            { name: 'companyContact', placeholder: 'Email', type: 'text' },
+            { name: 'startupContact', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
             { name: 'logo', placeholder: 'Logo', type: 'image' },
             { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },

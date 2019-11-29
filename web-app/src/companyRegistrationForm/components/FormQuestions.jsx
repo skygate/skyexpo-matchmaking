@@ -47,8 +47,8 @@ export const FormQuestions = ({
                         <>
                             <select onChange={handleChange} name={input.name}>
                                 {countryList.map(country => (
-                                    <option key={country} value={country}>
-                                        {country}
+                                    <option key={country.code} value={country.code}>
+                                        {country.name}
                                     </option>
                                 ))}
                             </select>

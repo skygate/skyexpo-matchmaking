@@ -4,8 +4,8 @@ import { Progress } from 'antd';
 import styled from '@emotion/styled';
 
 import { FormQuestions } from '../components/FormQuestions';
-import { formSteps } from '../components/formSteps';
-import { validationPage1, validationPage2, validationPage3 } from '../components/validationSchemas';
+import { formSteps } from '../../helpers/formSteps';
+import { validationPage1, validationPage2, validationPage3 } from '../../helpers/validationSchemas';
 
 const SectionWrapper = styled.div`
     max-width: 400px;
@@ -13,10 +13,10 @@ const SectionWrapper = styled.div`
 `;
 
 const initialValues = {
-    companyName: '',
+    startupName: '',
     website: '',
     phone: '',
-    companyContact: '',
+    startupContact: '',
     country: '',
     foundingDate: '',
     shortDescription: '',
