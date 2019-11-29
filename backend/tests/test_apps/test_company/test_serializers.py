@@ -77,7 +77,7 @@ def test_register_company_validation_step2(
     """
     serializer = CompanyValidateFormStep2Serializer(data=company_step2_data)
 
-    with django_assert_num_queries(2):
+    with django_assert_num_queries(len(company_step2_data['team_members']) + 1):
         serializer.is_valid()
 
     assert set(serializer.data.keys()) == {
@@ -104,16 +104,17 @@ def test_register_company_validate_founder_email(company_step2_data):
 
 
 @pytest.mark.django_db
-def test_register_company_validate_members_email(company_step2_data):
+def test_register_company_validate_members_email(user, company_step2_data):
     """Checks if any member's email already exists in the db."""
-    for member_email in company_step2_data['team_members']:
-        ProfileFactory.create(user__email=member_email)
+    profile = ProfileFactory.create(user=user)
+    company_step2_data['team_members'] = [
+        {'name': profile.name, 'email': profile.user.email},
+    ]
 
     with pytest.raises(
         serializers.ValidationError,
-        match="One of team member's email is taken.",
+        match=f'E-mail {profile.user.email} is already taken.',
     ):
-
         serializer = CompanyValidateFormStep2Serializer(data=company_step2_data)
         serializer.is_valid(raise_exception=True)
 
@@ -121,14 +122,15 @@ def test_register_company_validate_members_email(company_step2_data):
 @pytest.mark.django_db
 def test_register_company_validate_founder_team(company_step2_data):
     """Ensures that 'founder_email' cannot be in 'team_members'."""
+    founder_email = company_step2_data['founder_email']
     company_step2_data['team_members'] = [
-        company_step2_data['founder_email'],
-        'user@example.com',
+        {'name': 'UserName1', 'email': founder_email},
     ]
 
     with pytest.raises(
         serializers.ValidationError,
-        match="One of team member's email is taken.",
+        match=f"You can't enter the {founder_email} " +
+        f'more than once.',
     ):
         serializer = CompanyValidateFormStep2Serializer(data=company_step2_data)
         serializer.is_valid(raise_exception=True)

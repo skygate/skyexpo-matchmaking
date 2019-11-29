@@ -11,8 +11,9 @@ import factory
 import pytest
 from django.contrib.auth import get_user_model
 from django.test import Client
+from rest_framework.test import APIClient
 
-from tests.factories import CompanyFactory
+from tests.factories import CompanyFactory, ProfileFactory, UserFactory
 
 User = get_user_model()
 
@@ -63,12 +64,13 @@ def company_step1_data(company_data):
 @pytest.fixture()
 def company_step2_data(user, company_data):
     """Returns company fake data for step2 in registering form."""
+    profile = ProfileFactory.build()
+
     return {
         'founder_name': 'Founder name',
         'founder_email': user.email,
         'team_members': [
-            'user1@example.com',
-            'user2@example.com',
+            {'name': profile.name, 'email': profile.user.email},
         ],
     }
 
@@ -105,3 +107,12 @@ def admin_client(admin_user):
 def user(db):
     """Returns an example user."""
     return User.objects.create_user('user@example.com', 'password')
+
+
+@pytest.fixture()
+def api_client(user):
+    """Returns DjangoRestFramework ApiClient"""
+    client = APIClient()
+    client.force_login(user)
+
+    return client
