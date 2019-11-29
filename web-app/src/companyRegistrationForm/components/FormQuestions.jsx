@@ -186,8 +186,11 @@ export const FormQuestions = ({
                             onChange={e => onRadioChange(e, input.name)}
                             value={values[input.name]}
                         >
-                            <Radio value={false}>A</Radio>
-                            <Radio value={true}>B</Radio>
+                            {input.options.map(option => (
+                                <Radio key={option.optionName} value={option.optionValue}>
+                                    {option.optionName}
+                                </Radio>
+                            ))}
                         </Radio.Group>
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (

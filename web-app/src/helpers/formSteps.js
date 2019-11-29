@@ -65,6 +65,10 @@ export const formSteps = [
                 name: 'productOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
+                options: [
+                    { optionName: 'No', optionValue: false },
+                    { optionName: 'Yes', optionValue: true },
+                ],
             },
             {
                 name: 'targetMarket',
