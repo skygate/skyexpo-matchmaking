@@ -74,7 +74,7 @@ export const RegisterCompanyForm = ({ formSteps, initialValues, validationSchema
                                 nextPage={() => handleNextPage(props)}
                                 countProgress={countCompletionProgress}
                             />
-                            {currentStep > 0 ? (
+                            {currentStep ? (
                                 <button type="button" onClick={() => handleBackPage(props)}>
                                     back
                                 </button>
