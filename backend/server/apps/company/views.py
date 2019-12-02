@@ -20,6 +20,7 @@ class CompanyValidateFormStep1View(views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
+    parser_classes = [parsers.MultiPartParser]
 
     @swagger_auto_schema(
         request_body=CompanyValidateFormStep1Serializer,
@@ -41,7 +42,6 @@ class CompanyValidateFormStep2View(views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [parsers.MultiPartParser]
 
     @swagger_auto_schema(
         request_body=CompanyValidateFormStep2Serializer,

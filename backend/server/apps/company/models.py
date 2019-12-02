@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, IntegerRangeField
+from django.contrib.postgres.validators import RangeMinValueValidator
 from django.db import models
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from server.apps.company.constants import (
+  BusinessType,
   CompanyStage,
   Industry,
+  InvestmentStage,
   ProductType,
   Sector,
 )
@@ -25,7 +28,6 @@ class Company(models.Model):
     description = models.CharField(max_length=255, blank=True)
     # TODO: set 'default' attr on ImageField when I get the default logotype.
     logotype = models.ImageField(blank=True)
-    founder_email = models.EmailField(unique=True)
     stage = models.CharField(choices=CompanyStage.CHOICES, max_length=33)
     sectors = ArrayField(
         models.CharField(choices=Sector.CHOICES, max_length=15),
@@ -36,6 +38,12 @@ class Company(models.Model):
     product_types = ArrayField(
         models.CharField(choices=ProductType.CHOICES, max_length=8),
     )
+    investment_stage = ArrayField(
+        models.CharField(choices=InvestmentStage.CHOICES, max_length=15),
+    )
+    is_product_on_market = models.BooleanField()
+    investment_size = IntegerRangeField(validators=[RangeMinValueValidator(0)])
+    business_type = models.CharField(choices=BusinessType.CHOICES, max_length=3)
 
     class Meta:
         verbose_name_plural = 'Companies'

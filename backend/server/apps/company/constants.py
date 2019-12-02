@@ -72,3 +72,31 @@ class ProductType:
         (HARDWARE, ugtl('Hardware')),
         (OTHER, ugtl('Other')),
     ]
+
+
+class InvestmentStage:
+    """Investment stage choices."""
+
+    BUSINESS_ANGELS = 'BUSINESS_ANGELS'
+    INCUBATOR = 'INCUBATOR'
+    VENTURE_CAPITAL = 'VENTURE_CAPITAL'
+    ACCELERATOR = 'ACCELERATOR'
+
+    CHOICES: Final = [
+        (BUSINESS_ANGELS, ugtl('Business Angels')),
+        (INCUBATOR, ugtl('Incubator')),
+        (VENTURE_CAPITAL, ugtl('Venture Capital')),
+        (ACCELERATOR, ugtl('Accelerator')),
+    ]
+
+
+class BusinessType:
+    """Business type choices."""
+
+    B2B = 'B2B'
+    B2C = 'B2C'
+
+    CHOICES: Final = [
+        (B2B, ugtl('Business to Business')),
+        (B2C, ugtl('Business to Customer')),
+    ]

@@ -11,8 +11,9 @@ import factory
 import pytest
 from django.contrib.auth import get_user_model
 from django.test import Client
+from rest_framework.test import APIClient
 
-from tests.factories import CompanyFactory
+from tests.factories import CompanyFactory, ProfileFactory
 
 User = get_user_model()
 
@@ -56,18 +57,20 @@ def company_step1_data(company_data):
         'country': company_data['country'],
         'founding_date': company_data['founding_date'],
         'description': company_data['description'],
+        'logotype': company_data['logotype'],
     }
 
 
 @pytest.fixture()
-def company_step2_data(company_data):
+def company_step2_data(user, company_data):
     """Returns company fake data for step2 in registering form."""
+    profile = ProfileFactory.build()
+
     return {
-        'logotype': company_data['logotype'],
-        'founder_email': company_data['founder_email'],
+        'founder_name': 'Founder name',
+        'founder_email': user.email,
         'team_members': [
-            'user1@example.com',
-            'user2@example.com',
+            {'name': profile.name, 'email': profile.user.email},
         ],
     }
 
@@ -79,7 +82,12 @@ def company_step3_data(company_data):
         'sectors': company_data['sectors'],
         'industries': company_data['industries'],
         'product_types': company_data['product_types'],
-        'stage': company_data['stage'],
+        'company_stage': company_data['stage'],
+        'investment_stage': company_data['investment_stage'],
+        'business_type': company_data['business_type'],
+        'is_product_on_market': company_data['is_product_on_market'],
+        'min_investment_size': company_data['investment_size'].lower,
+        'max_investment_size': company_data['investment_size'].upper,
     }
 
 
@@ -102,3 +110,12 @@ def admin_client(admin_user):
 def user(db):
     """Returns an example user."""
     return User.objects.create_user('user@example.com', 'password')
+
+
+@pytest.fixture()
+def api_client(user):
+    """Returns DjangoRestFramework ApiClient"""
+    client = APIClient()
+    client.force_login(user)
+
+    return client

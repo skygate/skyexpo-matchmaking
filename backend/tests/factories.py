@@ -6,10 +6,13 @@ from typing import List, Tuple
 
 import factory.fuzzy  # noqa: WPS301
 from factory import LazyFunction
+from psycopg2._range import NumericRange  # noqa: WPS436
 
 from server.apps.company.constants import (
+  BusinessType,
   CompanyStage,
   Industry,
+  InvestmentStage,
   ProductType,
   Sector,
 )
@@ -37,7 +40,6 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     phone_number = '+48 508223012'
     country = 'PL'
     logotype = factory.django.ImageField()
-    founder_email = factory.Faker('safe_email')
     stage = factory.fuzzy.FuzzyChoice(
         choice[0] for choice in CompanyStage.CHOICES
     )
@@ -45,6 +47,14 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     industries = LazyFunction(partial(get_multiple_choices, Industry.CHOICES))
     product_types = LazyFunction(
         partial(get_multiple_choices, ProductType.CHOICES),
+    )
+    investment_stage = LazyFunction(
+        partial(get_multiple_choices, InvestmentStage.CHOICES),
+    )
+    investment_size = NumericRange(0, 100)
+    is_product_on_market = True
+    business_type = factory.fuzzy.FuzzyChoice(
+        choice[0] for choice in BusinessType.CHOICES
     )
 
 
