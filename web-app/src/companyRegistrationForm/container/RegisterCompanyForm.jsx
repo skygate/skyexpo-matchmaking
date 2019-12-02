@@ -4,8 +4,6 @@ import { Progress } from 'antd';
 import styled from '@emotion/styled';
 
 import { FormQuestions } from '../components/FormQuestions';
-import { formSteps } from '../../helpers/formSteps';
-import { validationPage1, validationPage2, validationPage3 } from '../../helpers/validationSchemas';
 import { handleRedirect } from '../../history';
 
 const SectionWrapper = styled.div`
@@ -13,38 +11,9 @@ const SectionWrapper = styled.div`
     margin: 10rem auto;
 `;
 
-const initialValues = {
-    startupName: '',
-    website: '',
-    phone: '',
-    startupContact: '',
-    country: '',
-    foundingDate: '',
-    shortDescription: '',
-    logo: '',
-    teamMembers: [
-        {
-            name0: '',
-            email0: '',
-        },
-    ],
-    industries: [''],
-    sectors: [''],
-    investmentStage: [''],
-    companyStage: [''],
-    productType: [''],
-    productOnMarket: '',
-    targetMarket: [''],
-    businessType: [''],
-    minimumInvest: '',
-    maximumInvest: '',
-};
-
-export const RegisterCompanyForm = () => {
+export const RegisterCompanyForm = ({ formSteps, initialValues, validationSchemas }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
-
-    const validationSchemas = [validationPage1, validationPage2, validationPage3];
 
     const handleNextPage = props => {
         props.submitForm().then(() => {
