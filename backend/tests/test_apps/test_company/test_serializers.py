@@ -153,7 +153,10 @@ def test_register_company_validation_step3(
         'industries',
         'sectors',
         'product_types',
-        'stage',
+        'company_stage',
+        'investment_stage',
+        'business_type',
+        'is_product_on_market',
         'min_investment_size',
         'max_investment_size',
     }

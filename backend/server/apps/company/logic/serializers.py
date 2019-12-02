@@ -9,8 +9,10 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
 from server.apps.company.constants import (
+  BusinessType,
   CompanyStage,
   Industry,
+  InvestmentStage,
   ProductType,
   Sector,
 )
@@ -140,12 +142,21 @@ class CompanyValidateFormStep3Serializer(serializers.Serializer):
 
     industries = serializers.MultipleChoiceField(choices=Industry.CHOICES)
     sectors = serializers.MultipleChoiceField(choices=Sector.CHOICES)
-    product_types = serializers.MultipleChoiceField(choices=ProductType.CHOICES)
-    stage = serializers.ChoiceField(choices=CompanyStage.CHOICES)
+    product_types = serializers.MultipleChoiceField(
+        choices=ProductType.CHOICES,
+    )
+    company_stage = serializers.ChoiceField(choices=CompanyStage.CHOICES)
+    investment_stage = serializers.MultipleChoiceField(
+        choices=InvestmentStage.CHOICES,
+    )
     min_investment_size = serializers.IntegerField(
         min_value=0, help_text='In EUR currency.',
     )
-    max_investment_size = serializers.IntegerField(help_text='In EUR currency.')
+    max_investment_size = serializers.IntegerField(
+        help_text='In EUR currency.',
+    )
+    is_product_on_market = serializers.BooleanField()
+    business_type = serializers.ChoiceField(choices=BusinessType.CHOICES)
 
     def validate(self, attrs):
         if attrs['max_investment_size'] < attrs['min_investment_size']:

@@ -9,8 +9,10 @@ from factory import LazyFunction
 from psycopg2._range import NumericRange  # noqa: WPS436
 
 from server.apps.company.constants import (
+  BusinessType,
   CompanyStage,
   Industry,
+  InvestmentStage,
   ProductType,
   Sector,
 )
@@ -46,7 +48,14 @@ class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
     product_types = LazyFunction(
         partial(get_multiple_choices, ProductType.CHOICES),
     )
+    investment_stage = LazyFunction(
+        partial(get_multiple_choices, InvestmentStage.CHOICES),
+    )
     investment_size = NumericRange(0, 100)
+    is_product_on_market = True
+    business_type = factory.fuzzy.FuzzyChoice(
+        choice[0] for choice in BusinessType.CHOICES
+    )
 
 
 class UserFactory(factory.DjangoModelFactory):  # noqa: D101

@@ -7,8 +7,10 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
 from server.apps.company.constants import (
+  BusinessType,
   CompanyStage,
   Industry,
+  InvestmentStage,
   ProductType,
   Sector,
 )
@@ -36,7 +38,12 @@ class Company(models.Model):
     product_types = ArrayField(
         models.CharField(choices=ProductType.CHOICES, max_length=8),
     )
+    investment_stage = ArrayField(
+        models.CharField(choices=InvestmentStage.CHOICES, max_length=15),
+    )
+    is_product_on_market = models.BooleanField()
     investment_size = IntegerRangeField(validators=[RangeMinValueValidator(0)])
+    business_type = models.CharField(choices=BusinessType.CHOICES, max_length=3)
 
     class Meta:
         verbose_name_plural = 'Companies'
