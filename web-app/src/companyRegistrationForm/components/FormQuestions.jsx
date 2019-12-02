@@ -87,7 +87,6 @@ export const FormQuestions = ({
                         <>
                             <input
                                 onChange={handleChange}
-                                value={values[input.name]}
                                 name={input.name}
                                 type="file"
                                 placeholder={input.placeholder}

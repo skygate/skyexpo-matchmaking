@@ -5,7 +5,7 @@ import { emailValidityRegex } from './emailValidation';
 import { phoneRegExp } from './phoneNumberValidation';
 import { dateValidityRegex } from './dateValidation';
 
-export const validationPage1 = Yup.object().shape({
+const startupValidationPage1 = Yup.object().shape({
     startupName: Yup.string()
         .trim()
         .required('Startup name  is required'),
@@ -32,7 +32,61 @@ export const validationPage1 = Yup.object().shape({
         .required('Short description is required'),
 });
 
-export const validationPage2 = Yup.object().shape({
+const companyValidationPage1 = Yup.object().shape({
+    companyName: Yup.string()
+        .trim()
+        .required('Company name  is required'),
+    website: Yup.string()
+        .url()
+        .required('Website is required'),
+    phone: Yup.string().matches(phoneRegExp, 'Invalid phone number'),
+    companyContact: Yup.string()
+        .trim()
+        .matches(emailValidityRegex, 'Invalid email address')
+        .required('Email is required'),
+    country: Yup.string()
+        .trim()
+        .required('Country is required'),
+    logo: Yup.string()
+        .trim()
+        .required('Logo is required'),
+    foundingDate: Yup.string()
+        .trim()
+        .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
+        .required('Founding date is required'),
+    shortDescription: Yup.string()
+        .trim()
+        .required('Short description is required'),
+});
+
+const individualValidationPage1 = Yup.object().shape({
+    fullName: Yup.string()
+        .trim()
+        .required('Full name  is required'),
+    website: Yup.string()
+        .url()
+        .required('Website is required'),
+    phone: Yup.string().matches(phoneRegExp, 'Invalid phone number'),
+    individualContact: Yup.string()
+        .trim()
+        .matches(emailValidityRegex, 'Invalid email address')
+        .required('Email is required'),
+    country: Yup.string()
+        .trim()
+        .required('Country is required'),
+    logo: Yup.string()
+        .trim()
+        .required('Logo is required'),
+    foundingDate: Yup.string()
+        .trim()
+        .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
+        .required('Founding date is required'),
+    shortDescription: Yup.string()
+        .trim()
+        .required('Short description is required'),
+});
+
+const validationPage2 = Yup.object().shape({
     teamMembers: Yup.array().of(
         Yup.lazy(obj =>
             Yup.object().shape(
@@ -51,7 +105,7 @@ export const validationPage2 = Yup.object().shape({
     ),
 });
 
-export const validationPage3 = Yup.object().shape({
+const validationPage3 = Yup.object().shape({
     industries: Yup.array().of(
         Yup.string()
             .trim()
@@ -89,3 +143,15 @@ export const validationPage3 = Yup.object().shape({
     minimumInvest: Yup.number().required('Minimum investment is required'),
     maximumInvest: Yup.number().required('Maximum investment required'),
 });
+
+export const startupValidationSchemas = [startupValidationPage1, validationPage2, validationPage3];
+export const companyInvestorValidationSchemas = [
+    companyValidationPage1,
+    validationPage2,
+    validationPage3,
+];
+export const individualInvestorValidationSchemas = [
+    individualValidationPage1,
+    validationPage2,
+    validationPage3,
+];
