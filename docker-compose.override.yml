@@ -1,5 +1,4 @@
 ---
-
 # This docker-compose file is required to bind ports in development,
 # since binding ports in regular compose file will ruin scaling
 # in production. Due to how `ports` directive is merged with two files.
@@ -29,6 +28,6 @@ services:
     command: yarn start
     volumes:
       - ./web-app:/web-app
-      - ./web-app/node_modules
+      - /web-app/node_modules
     ports:
       - 3000:3000
