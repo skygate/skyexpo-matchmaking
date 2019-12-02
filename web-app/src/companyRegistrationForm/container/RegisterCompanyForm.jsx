@@ -6,6 +6,7 @@ import styled from '@emotion/styled';
 import { FormQuestions } from '../components/FormQuestions';
 import { formSteps } from '../../helpers/formSteps';
 import { validationPage1, validationPage2, validationPage3 } from '../../helpers/validationSchemas';
+import { handleRedirect } from '../../history';
 
 const SectionWrapper = styled.div`
     max-width: 400px;
@@ -104,10 +105,12 @@ export const RegisterCompanyForm = () => {
                                 nextPage={() => handleNextPage(props)}
                                 countProgress={countCompletionProgress}
                             />
-                            {currentStep > 0 && (
+                            {currentStep > 0 ? (
                                 <button type="button" onClick={() => handleBackPage(props)}>
                                     back
                                 </button>
+                            ) : (
+                                <button onClick={() => handleRedirect('/')}>back</button>
                             )}
                             <button type="button" onClick={() => handleNextPage(props)}>
                                 {currentStep > 1 ? 'submit' : 'next page'}
