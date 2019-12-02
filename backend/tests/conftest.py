@@ -13,7 +13,7 @@ from django.contrib.auth import get_user_model
 from django.test import Client
 from rest_framework.test import APIClient
 
-from tests.factories import CompanyFactory, ProfileFactory, UserFactory
+from tests.factories import CompanyFactory, ProfileFactory
 
 User = get_user_model()
 

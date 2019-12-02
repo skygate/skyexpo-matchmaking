@@ -76,8 +76,8 @@ NOTEBOOK_ARGUMENTS = [
 ]
 
 # This will make debug toolbar to work with django-csp,
-# since `ddt` loads some scripts from `ajax.googleapis.com`:
-CSP_SCRIPT_SRC = ("'self'", 'ajax.googleapis.com', 'blob:')
+# since `ddt` and DRF browsable API load some unsafe scripts.
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")
 CSP_IMG_SRC = ("'self'", 'data:')
 # This will load inline-style used in djangorestframework browsable API,
 # and ReDoc documentation.
@@ -98,14 +98,16 @@ NPLUSONE_LOGGER = logging.getLogger('django')
 NPLUSONE_LOG_LEVEL = logging.WARN
 
 
-REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
-    'rest_framework_simplejwt.authentication.JWTAuthentication',
+REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
     'rest_framework.authentication.SessionAuthentication',
 ]
 
-REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
-    'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += [
     'rest_framework.renderers.BrowsableAPIRenderer',
+]
+
+REST_FRAMEWORK['DEFAULT_PARSER_CLASSES'] += [
+    'rest_framework.parsers.FormParser',
 ]
 
 
