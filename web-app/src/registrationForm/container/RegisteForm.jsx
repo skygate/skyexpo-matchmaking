@@ -11,7 +11,7 @@ const SectionWrapper = styled.div`
     margin: 10rem auto;
 `;
 
-export const RegisterCompanyForm = ({ formSteps, initialValues, validationSchemas }) => {
+export const RegisterForm = ({ formSteps, initialValues, validationSchemas }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
 
