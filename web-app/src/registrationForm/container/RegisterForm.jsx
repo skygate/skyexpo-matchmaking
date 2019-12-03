@@ -55,7 +55,7 @@ export const RegisterForm = ({ formSteps, initialValues, validationSchemas }) =>
 
     return (
         <SectionWrapper>
-            <h1>Register Company Form</h1>
+            <h1>Registration step {currentStep + 1}</h1>
             <Progress type="circle" percent={completionProgress} width={80} />
             {currentStep > 2 ? (
                 <h1>Thank you</h1>
