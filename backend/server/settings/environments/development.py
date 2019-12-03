@@ -77,7 +77,7 @@ NOTEBOOK_ARGUMENTS = [
 
 # This will make debug toolbar to work with django-csp,
 # since `ddt` and DRF browsable API load some unsafe scripts.
-CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'")
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", 'blob:')
 CSP_IMG_SRC = ("'self'", 'data:')
 # This will load inline-style used in djangorestframework browsable API,
 # and ReDoc documentation.
