@@ -54,10 +54,12 @@ INSTALLED_APPS: Tuple[str, ...] = (
     'django_http_referrer_policy',
     'django_countries',
     'phonenumber_field',
+    'corsheaders',
 )
 
 
 MIDDLEWARE: Tuple[str, ...] = (
+    'corsheaders.middleware.CorsMiddleware',
     # Content Security Policy:
     'csp.middleware.CSPMiddleware',
 

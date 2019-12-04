@@ -309,6 +309,17 @@ django-ipware = ">=2.0.2"
 
 [[package]]
 category = "main"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+name = "django-cors-headers"
+optional = false
+python-versions = ">=3.5"
+version = "3.2.0"
+
+[package.dependencies]
+Django = ">=1.11"
+
+[[package]]
+category = "main"
 description = "Provides a country field for Django models."
 name = "django-countries"
 optional = false
@@ -587,7 +598,7 @@ description = "Faker is a Python package that generates fake data for you."
 name = "faker"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-version = "2.0.4"
+version = "2.0.5"
 
 [package.dependencies]
 python-dateutil = ">=2.4"
@@ -2138,7 +2149,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "f71330c989854105acf6b5fa0b9ef09124f3e0e09bbc91a2b648fc4f1f60a2ae"
+content-hash = "bdfb84a533263cb952fa9a724acb07f2856788007dc6ca7a1fde634f28f74dc4"
 python-versions = "3.7.4"
 
 [metadata.hashes]
@@ -2173,6 +2184,7 @@ dictdiffer = ["97cf4ef98ebc1acf737074aed41e379cf48ab5ff528c92109dfb8e2e619e6809"
 django = ["a4ad4f6f9c6a4b7af7e2deec8d0cbff28501852e5010d6c2dc695d3d1fae7ca0", "fa98ec9cc9bf5d72a08ebf3654a9452e761fbb8566e3f80de199cbc15477e891"]
 django-appconf = ["35f13ca4d567f132b960e2cd4c832c2d03cb6543452d34e29b7ba10371ba80e3", "c98a7af40062e996b921f5962a1c4f3f0c979fa7885f7be4710cceb90ebe13a6"]
 django-axes = ["26ed34aca7bbe270e806fe4fcc09109318cb687e3abdc340689afe5661ab50c4", "506f5d25e08daf755f215b89067b6a278499b71279671d49274e17fe4f3c3757"]
+django-cors-headers = ["84933651fbbde8f2bc084bef2f077b79db1ec1389432f21dd661eaae6b3d6a95", "a8b2772582e8025412f4d4b54b617d8b707076ffd53a2b961bd24f10ec207a7c"]
 django-countries = ["1cefad9ec804d6a0318b91c5394b5aef00336755928f44d0a6420507719d65c8", "22e96236101783cfe5222ef5174972242a7e8176336d119a4dc111aedce35897"]
 django-csp = ["04600237701e6d6ff78ed7d41209ff923988148bf292c128f6b474b9befe444f", "8b9997df89a7a936d7c397e051367f974aa1d1a97d0b32acb4300087b3bed071"]
 django-debug-toolbar = ["24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8", "77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"]
@@ -2199,7 +2211,7 @@ entrypoints = ["589f874b313739ad35be6e0cd7efde2a4e9b6fea91edcc34e58ecbb8dbe56d19
 eradicate = ["4ffda82aae6fd49dfffa777a857cb758d77502a1f2e0f54c9ac5155a39d2d01a"]
 face = ["38c94ec17a4d6f9628f094b697faca0f802f4028071ce8cbdb3116d4cde772a3", "9b3ef571d9888ee3b773710b126b92db85ec3116377b8a2c077cb77e8bed8be9"]
 factory-boy = ["728df59b372c9588b83153facf26d3d28947fc750e8e3c95cefa9bed0e6394ee", "faf48d608a1735f0d0a3c9cbf536d64f9132b547dae7ba452c4d99a79e84a370"]
-faker = ["48c03580720e0b46538d528b1296e4e5b24a809dcaf33a7dddec719489a9edb8", "6327c665c0d8721280b3036d9c9e851c60092bc1f30c8394cc433f8723e2bda5"]
+faker = ["29093e61f12745150774fd05ab499e87252a4fa51ed51e45c40179e854f87925", "c1d19f8c63487b4711189403f5c2e06af1dd8b5be7928f6547f5f7cddd13d917"]
 flake8 = ["45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb", "49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca"]
 flake8-annotations-complexity = ["e499d2186efcc5f6f2f1c7eb18568d08f4d9313fad15f614645f3f445f70b45c"]
 flake8-bandit = ["687fc8da2e4a239b206af2e54a90093572a60d0954f3054e23690739b0b0de3b"]
