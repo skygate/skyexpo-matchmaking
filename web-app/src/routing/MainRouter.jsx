@@ -3,7 +3,7 @@ import { Redirect, Router, Route, Switch } from 'react-router-dom';
 
 import { history } from '../history';
 import { WelcomePage } from '../welcomePage/WelcomePage';
-import { RegisterForm } from '../registrationForm/container/RegisterForm';
+import RegisterForm from '../registrationForm/container/RegisterForm';
 import { InvestorTypePage } from '../investorTypePage/InvestorTypePage';
 import {
     startupFormSteps,

@@ -1,17 +1,24 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { Progress } from 'antd';
 import styled from '@emotion/styled';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { handleRedirect } from '../../history';
+import { validateFirstStepRequest } from '../actions/registrationActions';
 
 const SectionWrapper = styled.div`
     max-width: 400px;
     margin: 10rem auto;
 `;
 
-export const RegisterForm = ({ formSteps, initialValues, validationSchemas }) => {
+const RegisterForm = ({
+    formSteps,
+    initialValues,
+    validationSchemas,
+    validateFirstStepRequest,
+}) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
 
@@ -24,6 +31,10 @@ export const RegisterForm = ({ formSteps, initialValues, validationSchemas }) =>
                 props.setTouched({});
             }
         });
+    };
+
+    const handleAction = () => {
+        validateFirstStepRequest();
     };
 
     const handleBackPage = () => {
@@ -60,34 +71,39 @@ export const RegisterForm = ({ formSteps, initialValues, validationSchemas }) =>
             {currentStep > 2 ? (
                 <h1>Thank you</h1>
             ) : (
-                <Formik
-                    onSubmit={handleSubmit}
-                    isInitialValid={false}
-                    initialValues={initialValues}
-                    validationSchema={validationSchemas[currentStep]}
-                >
-                    {props => (
-                        <Form>
-                            <FormQuestions
-                                {...props}
-                                pageProps={formSteps[currentStep]}
-                                nextPage={() => handleNextPage(props)}
-                                countProgress={countCompletionProgress}
-                            />
-                            {currentStep ? (
-                                <button type="button" onClick={() => handleBackPage(props)}>
-                                    back
+                <>
+                    <Formik
+                        onSubmit={handleSubmit}
+                        isInitialValid={false}
+                        initialValues={initialValues}
+                        validationSchema={validationSchemas[currentStep]}
+                    >
+                        {props => (
+                            <Form>
+                                <FormQuestions
+                                    {...props}
+                                    pageProps={formSteps[currentStep]}
+                                    nextPage={() => handleNextPage(props)}
+                                    countProgress={countCompletionProgress}
+                                />
+                                {currentStep ? (
+                                    <button type="button" onClick={() => handleBackPage(props)}>
+                                        back
+                                    </button>
+                                ) : (
+                                    <button onClick={() => handleRedirect('/')}>back</button>
+                                )}
+                                <button type="button" onClick={() => handleNextPage(props)}>
+                                    {currentStep > 1 ? 'submit' : 'next page'}
                                 </button>
-                            ) : (
-                                <button onClick={() => handleRedirect('/')}>back</button>
-                            )}
-                            <button type="button" onClick={() => handleNextPage(props)}>
-                                {currentStep > 1 ? 'submit' : 'next page'}
-                            </button>
-                        </Form>
-                    )}
-                </Formik>
+                            </Form>
+                        )}
+                    </Formik>
+                    <button onClick={() => handleAction()}>hehe</button>
+                </>
             )}
         </SectionWrapper>
     );
 };
+
+export default connect(null, { validateFirstStepRequest })(RegisterForm);

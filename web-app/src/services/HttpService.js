@@ -1,4 +1,4 @@
-const BASE_URL = `https://localhost:8000/api/`;
+const BASE_URL = `http://localhost:8000/api/`;
 
 export class HttpService {
     GET(path, options) {
@@ -21,7 +21,7 @@ export class HttpService {
         const bodyJSON = method === 'GET' ? body : JSON.stringify(body);
 
         const headers = {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
         };
 
         const params = {
