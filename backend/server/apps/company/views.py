@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from djangorestframework_camel_case.parser import CamelCaseMultiPartParser
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import parsers, permissions, status, views
+from rest_framework import permissions, status, views
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -20,7 +21,7 @@ class CompanyValidateFormStep1View(views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [parsers.MultiPartParser]
+    parser_classes = [CamelCaseMultiPartParser]
 
     @swagger_auto_schema(
         request_body=CompanyValidateFormStep1Serializer,
