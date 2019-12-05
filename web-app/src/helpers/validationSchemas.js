@@ -6,82 +6,86 @@ import { phoneRegExp } from './phoneNumberValidation';
 import { dateValidityRegex } from './dateValidation';
 
 const startupValidationPage1 = Yup.object().shape({
-    startupName: Yup.string()
+    name: Yup.string()
         .trim()
         .required('Startup name  is required'),
     website: Yup.string()
         .url()
         .required('Website is required'),
-    phone: Yup.string().matches(phoneRegExp, 'Invalid phone number'),
-    startupContact: Yup.string()
+    phoneNumber: Yup.string()
+        .matches(phoneRegExp, 'Invalid phone number')
+        .required('Phone number is required'),
+    email: Yup.string()
         .trim()
         .matches(emailValidityRegex, 'Invalid email address')
         .required('Email is required'),
     country: Yup.string()
         .trim()
         .required('Country is required'),
-    logo: Yup.string()
-        .trim()
-        .required('Logo is required'),
+    logotype: Yup.mixed().required(),
     foundingDate: Yup.string()
         .trim()
         .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
         .required('Founding date is required'),
-    shortDescription: Yup.string()
+    description: Yup.string()
         .trim()
         .required('Short description is required'),
 });
 
 const companyValidationPage1 = Yup.object().shape({
-    companyName: Yup.string()
+    name: Yup.string()
         .trim()
         .required('Company name  is required'),
     website: Yup.string()
         .url()
         .required('Website is required'),
-    phone: Yup.string().matches(phoneRegExp, 'Invalid phone number'),
-    companyContact: Yup.string()
+    phoneNumber: Yup.string()
+        .matches(phoneRegExp, 'Invalid phone number')
+        .required('Phone number is required'),
+    email: Yup.string()
         .trim()
         .matches(emailValidityRegex, 'Invalid email address')
         .required('Email is required'),
     country: Yup.string()
         .trim()
         .required('Country is required'),
-    logo: Yup.string()
+    logotype: Yup.string()
         .trim()
         .required('Logo is required'),
     foundingDate: Yup.string()
         .trim()
         .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
         .required('Founding date is required'),
-    shortDescription: Yup.string()
+    description: Yup.string()
         .trim()
         .required('Short description is required'),
 });
 
 const individualValidationPage1 = Yup.object().shape({
-    fullName: Yup.string()
+    name: Yup.string()
         .trim()
         .required('Full name  is required'),
     website: Yup.string()
         .url()
         .required('Website is required'),
-    phone: Yup.string().matches(phoneRegExp, 'Invalid phone number'),
-    individualContact: Yup.string()
+    phoneNumber: Yup.string()
+        .matches(phoneRegExp, 'Invalid phone number')
+        .required('Phone number is required'),
+    email: Yup.string()
         .trim()
         .matches(emailValidityRegex, 'Invalid email address')
         .required('Email is required'),
     country: Yup.string()
         .trim()
         .required('Country is required'),
-    logo: Yup.string()
+    logotype: Yup.string()
         .trim()
         .required('Logo is required'),
     foundingDate: Yup.string()
         .trim()
         .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
         .required('Founding date is required'),
-    shortDescription: Yup.string()
+    description: Yup.string()
         .trim()
         .required('Short description is required'),
 });

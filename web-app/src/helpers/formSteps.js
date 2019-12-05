@@ -2,14 +2,14 @@ export const startupFormSteps = [
     {
         title: 'Main info',
         inputsFields: [
-            { name: 'startupName', placeholder: 'Startup name', type: 'text' },
+            { name: 'name', placeholder: 'Startup name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
-            { name: 'phone', placeholder: '+48 123 123 123', type: 'text' },
-            { name: 'startupContact', placeholder: 'Email', type: 'text' },
+            { name: 'phoneNumber', placeholder: '+48 123 123 123', type: 'text' },
+            { name: 'email', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logo', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Logo', type: 'image' },
             { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
-            { name: 'shortDescription', placeholder: 'Short description', type: 'textarea' },
+            { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],
     },
     {
@@ -109,14 +109,14 @@ export const companyInvestorFormSteps = [
     {
         title: 'Main info',
         inputsFields: [
-            { name: 'companyName', placeholder: 'Company name', type: 'text' },
+            { name: 'name', placeholder: 'Company name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
-            { name: 'phone', placeholder: '+48 123 123 123', type: 'text' },
-            { name: 'companyContact', placeholder: 'Email', type: 'text' },
+            { name: 'phoneNumber', placeholder: '+48 123 123 123', type: 'text' },
+            { name: 'email', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logo', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Logo', type: 'image' },
             { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
-            { name: 'shortDescription', placeholder: 'Short description', type: 'textarea' },
+            { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],
     },
     {
@@ -216,14 +216,14 @@ export const individualInvestorFormSteps = [
     {
         title: 'Main info',
         inputsFields: [
-            { name: 'fullName', placeholder: 'Full name', type: 'text' },
+            { name: 'name', placeholder: 'Full name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
-            { name: 'phone', placeholder: '+48 123 123 123', type: 'text' },
-            { name: 'individualContact', placeholder: 'Your email', type: 'text' },
+            { name: 'phoneNumber', placeholder: '+48 123 123 123', type: 'text' },
+            { name: 'email', placeholder: 'Your email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logo', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Logo', type: 'image' },
             { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
-            { name: 'shortDescription', placeholder: 'Short description', type: 'textarea' },
+            { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],
     },
     {

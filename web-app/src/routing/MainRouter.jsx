@@ -3,7 +3,7 @@ import { Redirect, Router, Route, Switch } from 'react-router-dom';
 
 import { history } from '../history';
 import { WelcomePage } from '../welcomePage/WelcomePage';
-import { RegisterCompanyForm } from '../companyRegistrationForm/container/RegisterCompanyForm';
+import RegisterForm from '../registrationForm/container/RegisterForm';
 import { InvestorTypePage } from '../investorTypePage/InvestorTypePage';
 import {
     startupFormSteps,
@@ -28,7 +28,7 @@ export const MainRouter = () => (
                 <WelcomePage />
             </Route>
             <Route exact path="/startup">
-                <RegisterCompanyForm
+                <RegisterForm
                     formSteps={startupFormSteps}
                     initialValues={startupInitialValues}
                     validationSchemas={startupValidationSchemas}
@@ -39,7 +39,7 @@ export const MainRouter = () => (
             </Route>
             <Route exact path="/investor/company">
                 <h1>Company</h1>
-                <RegisterCompanyForm
+                <RegisterForm
                     formSteps={companyInvestorFormSteps}
                     initialValues={companyInvestorInitialValues}
                     validationSchemas={companyInvestorValidationSchemas}
@@ -47,7 +47,7 @@ export const MainRouter = () => (
             </Route>
             <Route exact path="/investor/individual">
                 <h1>Individual</h1>
-                <RegisterCompanyForm
+                <RegisterForm
                     formSteps={individualInvestorFormSteps}
                     initialValues={individualInvestorInitialValues}
                     validationSchemas={individualInvestorValidationSchemas}
