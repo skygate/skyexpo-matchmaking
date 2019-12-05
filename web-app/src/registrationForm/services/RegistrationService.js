@@ -3,9 +3,9 @@ export class RegistrationService {
         this.http = http;
     }
 
-    async validateFirstStep() {
+    async validateFirstStep(data) {
         try {
-            return await this.http.POST('companies/form/step-1/');
+            return await this.http.POST('companies/form/step-1/', data);
         } catch (error) {
             return Promise.reject(error);
         }

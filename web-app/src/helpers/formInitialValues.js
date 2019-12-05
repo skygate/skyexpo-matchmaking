@@ -1,12 +1,12 @@
 export const startupInitialValues = {
-    startupName: '',
+    name: '',
     website: '',
-    phone: '',
-    startupContact: '',
+    phoneNumber: '',
+    email: '',
     country: '',
     foundingDate: '',
-    shortDescription: '',
-    logo: '',
+    description: '',
+    logotype: '',
     teamMembers: [
         {
             name0: '',
@@ -26,14 +26,14 @@ export const startupInitialValues = {
 };
 
 export const companyInvestorInitialValues = {
-    companyName: '',
+    name: '',
     website: '',
-    phone: '',
-    companyContact: '',
+    phoneNumber: '',
+    email: '',
     country: '',
     foundingDate: '',
-    shortDescription: '',
-    logo: '',
+    description: '',
+    logotype: '',
     teamMembers: [
         {
             name0: '',
@@ -53,14 +53,14 @@ export const companyInvestorInitialValues = {
 };
 
 export const individualInvestorInitialValues = {
-    fullName: '',
+    name: '',
     website: '',
-    phone: '',
-    individualContact: '',
+    phoneNumber: '',
+    email: '',
     country: '',
     foundingDate: '',
-    shortDescription: '',
-    logo: '',
+    description: '',
+    logotype: '',
     teamMembers: [
         {
             name0: '',

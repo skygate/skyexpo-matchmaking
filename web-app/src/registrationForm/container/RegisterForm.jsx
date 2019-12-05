@@ -23,6 +23,22 @@ const RegisterForm = ({
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = props => {
+        const currentStepFormInputs = formSteps[currentStep].inputsFields;
+        const condition = currentStepFormInputs.map(a => a.name);
+        const data = props.values;
+
+        const stepValues = Object.keys(data)
+            .filter(value => condition.includes(value))
+            .reduce(
+                (obj, key) => ({
+                    ...obj,
+                    [key]: data[key],
+                }),
+                {},
+            );
+
+        validateFirstStepRequest(stepValues);
+
         props.submitForm().then(() => {
             if (props.isValid) {
                 currentStep > 1 && handleSubmit(props);

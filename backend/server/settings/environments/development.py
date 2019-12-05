@@ -24,7 +24,14 @@ ALLOWED_HOSTS = [
     '*',  # tymczasowo
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True  # tymczasowo
+CORS_ORIGIN_ALLOW_ALL = False  # tymczasowo
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+)
+
+
 
 # Static files:
 # https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-STATICFILES_DIRS

@@ -18,19 +18,15 @@ export class HttpService {
     }
 
     makeRequest(method, path, body = null, options = {}) {
-        const bodyJSON = method === 'GET' ? body : JSON.stringify(body);
-
-        const headers = {
-            'Content-Type': 'multipart/form-data',
-        };
+        const formData = new FormData();
+        for (const name in body) {
+            formData.append(name, body[name]);
+        }
 
         const params = {
-            body: bodyJSON,
-            credentials: 'include',
-            headers,
             method,
+            body: formData,
         };
-
         return fetch(BASE_URL + path, params)
             .then(async response => {
                 if (response.ok) {
