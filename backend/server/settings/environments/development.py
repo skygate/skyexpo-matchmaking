@@ -103,11 +103,11 @@ REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
 ]
 
 REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += [
-    'rest_framework.renderers.BrowsableAPIRenderer',
+    'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
 ]
 
 REST_FRAMEWORK['DEFAULT_PARSER_CLASSES'] += [
-    'rest_framework.parsers.FormParser',
+    'djangorestframework_camel_case.parser.CamelCaseFormParser',
 ]
 
 
