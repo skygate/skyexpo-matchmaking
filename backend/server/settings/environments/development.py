@@ -56,7 +56,7 @@ MIDDLEWARE += (
 
 # github.com/adamchainz/django-cors-headers
 CORS_ORIGIN_WHITELIST = [
-    'localhost:3000',
+    'http://localhost:3000',
 ]
 
 
