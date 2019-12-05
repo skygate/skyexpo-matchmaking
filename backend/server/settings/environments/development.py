@@ -21,10 +21,8 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '[::1]',
-    '*',  # tymczasowo
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True  # tymczasowo
 
 # Static files:
 # https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-STATICFILES_DIRS
@@ -55,6 +53,11 @@ MIDDLEWARE += (
     # Prints how many queries were executed, useful for the APIs.
     'querycount.middleware.QueryCountMiddleware',
 )
+
+# github.com/adamchainz/django-cors-headers
+CORS_ORIGIN_WHITELIST = [
+    'localhost:3000',
+]
 
 
 def custom_show_toolbar(request):
