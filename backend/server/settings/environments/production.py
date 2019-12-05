@@ -21,7 +21,7 @@ ALLOWED_HOSTS = [
 
 # github.com/adamchainz/django-cors-headers
 CORS_ORIGIN_WHITELIST = [
-    'skyexpo.hal.skygate.io',
+    'https://skyexpo.hal.skygate.io',
 ]
 
 # Staticfiles
