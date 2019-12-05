@@ -21,16 +21,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '[::1]',
-    '*',  # tymczasowo
 ]
-
-CORS_ORIGIN_ALLOW_ALL = False  # tymczasowo
-CORS_ALLOW_CREDENTIALS = True
-
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-)
-
 
 
 # Static files:
@@ -62,6 +53,11 @@ MIDDLEWARE += (
     # Prints how many queries were executed, useful for the APIs.
     'querycount.middleware.QueryCountMiddleware',
 )
+
+# github.com/adamchainz/django-cors-headers
+CORS_ORIGIN_WHITELIST = [
+    'localhost:3000',
+]
 
 
 def custom_show_toolbar(request):
@@ -113,11 +109,11 @@ REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [
 ]
 
 REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += [
-    'rest_framework.renderers.BrowsableAPIRenderer',
+    'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
 ]
 
 REST_FRAMEWORK['DEFAULT_PARSER_CLASSES'] += [
-    'rest_framework.parsers.FormParser',
+    'djangorestframework_camel_case.parser.CamelCaseFormParser',
 ]
 
 

@@ -59,6 +59,7 @@ INSTALLED_APPS: Tuple[str, ...] = (
 
 
 MIDDLEWARE: Tuple[str, ...] = (
+    # github.com/adamchainz/django-cors-headers
     'corsheaders.middleware.CorsMiddleware',
     # Content Security Policy:
     'csp.middleware.CSPMiddleware',
