@@ -24,6 +24,7 @@ base_settings = [
     'components/csp.py',
     'components/drf.py',
     'components/caches.py',
+    'components/ddt.py',
 
     # You can even use glob:
     # 'components/*.py'

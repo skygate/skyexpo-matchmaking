@@ -11,7 +11,6 @@ from typing import List
 
 from server.settings.components import config
 from server.settings.components.common import INSTALLED_APPS, MIDDLEWARE
-# Setting the development status:
 from server.settings.components.drf import REST_FRAMEWORK
 
 DEBUG = True
@@ -30,9 +29,6 @@ ALLOWED_HOSTS = [
 STATICFILES_DIRS: List[str] = []
 
 
-# Django debug toolbar
-# django-debug-toolbar.readthedocs.io
-
 # Django extensions
 # django-extensions.readthedocs.io
 
@@ -47,8 +43,10 @@ INSTALLED_APPS += (
 )
 
 MIDDLEWARE += (
+    # Django debug toolbar
+    # django-debug-toolbar.readthedocs.io
+    'server.settings.components.ddt.FixHMLHttpRequest',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-
     # https://github.com/bradmontgomery/django-querycount
     # Prints how many queries were executed, useful for the APIs.
     'querycount.middleware.QueryCountMiddleware',
@@ -65,13 +63,7 @@ def custom_show_toolbar(request):
     return request.user.is_superuser
 
 
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK':
-        'server.settings.environments.development.custom_show_toolbar',
-}
-
 # ./manage.py shell_plus --notebook
-
 NOTEBOOK_ARGUMENTS = [
     '--ip',
     '0.0.0.0',  # noqa: S104
