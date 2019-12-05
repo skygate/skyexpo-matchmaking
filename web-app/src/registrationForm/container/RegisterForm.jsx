@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { Progress } from 'antd';
 import styled from '@emotion/styled';
+import * as R from 'ramda';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { handleRedirect } from '../../history';
@@ -37,20 +38,18 @@ const RegisterForm = ({
                 {},
             );
 
+        console.log(stepValues);
+
         validateFirstStepRequest(stepValues);
 
         props.submitForm().then(() => {
-            if (props.isValid) {
-                currentStep > 1 && handleSubmit(props);
-                setCurrentStep(currentStep + 1);
-                props.validateForm();
-                props.setTouched({});
-            }
-        });
-    };
+            if (!props.isValid) return;
 
-    const handleAction = () => {
-        validateFirstStepRequest();
+            currentStep > 1 && handleSubmit(props);
+            setCurrentStep(currentStep + 1);
+            props.validateForm();
+            props.setTouched({});
+        });
     };
 
     const handleBackPage = () => {
@@ -115,7 +114,6 @@ const RegisterForm = ({
                             </Form>
                         )}
                     </Formik>
-                    <button onClick={() => handleAction()}>hehe</button>
                 </>
             )}
         </SectionWrapper>

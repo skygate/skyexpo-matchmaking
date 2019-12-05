@@ -19,30 +19,23 @@ export class HttpService {
 
     makeRequest(method, path, body = null, options = {}) {
         const formData = new FormData();
-        for (const name in body) {
-            formData.append(name, body[name]);
-        }
+
+        Object.keys(body).forEach(fieldName => formData.append(fieldName, body[fieldName]));
 
         const params = {
             method,
             body: formData,
         };
-        return fetch(BASE_URL + path, params)
-            .then(async response => {
-                if (response.ok) {
-                    return response.json();
-                }
 
-                const err = new Error(response.statusText);
-                err.body = await response.json();
-                err.code = response.status;
-                throw err;
-            })
-            .then(data => {
-                return data;
-            })
-            .catch(error => {
-                throw error;
-            });
+        return fetch(BASE_URL + path, params).then(async response => {
+            if (response.ok) {
+                return response.json();
+            }
+
+            const err = new Error(response.statusText);
+            err.body = await response.json();
+            err.code = response.status;
+            throw err;
+        });
     }
 }

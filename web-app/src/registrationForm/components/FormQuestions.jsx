@@ -86,9 +86,9 @@ export const FormQuestions = ({
                     {input.type === 'image' && (
                         <>
                             <input
-                                onChange={event => {
-                                    setFieldValue('logotype', event.currentTarget.files[0]);
-                                }}
+                                onChange={event =>
+                                    setFieldValue('logotype', event.currentTarget.files[0])
+                                }
                                 name={input.name}
                                 type="file"
                                 placeholder={input.placeholder}
