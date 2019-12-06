@@ -1,5 +1,4 @@
 ---
-
 global-variables:
   image: &docker-compose-image tmaier/docker-compose:latest
   volumes: &docker-compose-volumes
@@ -8,69 +7,85 @@ global-variables:
     - name: dockersock
       path: /var/run
 
-
 kind: pipeline
 type: docker
 name: default
 
 steps:
-- name: create .env configuration file
-  image: python:3.7.5-alpine3.10
-  commands:
-    - python -m pip install --upgrade pip
-    - pip install dump-env
-    - dump-env -t ./backend/config/.env.template -p 'SECRET_'
-      --strict=SECRET_DJANGO_SECRET_KEY > ./backend/config/.env
-  environment:
-    SECRET_DJANGO_SECRET_KEY:
-      from_secret: SECRET_DJANGO_SECRET_KEY
-    SECRET_SENTRY_DSN:
-      from_secret: SECRET_SENTRY_DSN
+  - name: prepare .env
+    image: python:3.7.5-alpine3.10
+    commands:
+      - python -m pip install --upgrade pip
+      - pip install dump-env
+      - dump-env -t ./backend/config/.env.template -p 'SECRET_'
+        --strict=SECRET_DJANGO_SECRET_KEY > ./backend/config/.env
+    environment:
+      SECRET_DJANGO_SECRET_KEY:
+        from_secret: SECRET_DJANGO_SECRET_KEY
+      SECRET_SENTRY_DSN:
+        from_secret: SECRET_SENTRY_DSN
 
-- name: prepare docker-compose
-  image: *docker-compose-image
-  volumes:
-    *docker-compose-volumes
-  commands:
-    - while (! docker info &>/dev/null); do sleep 1; done
-    - docker version
-    - docker info
-    - uname -a
+  - name: pull cache images
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    environment:
+      DOCKER_REGISTRY_USR:
+        from_secret: DOCKER_REGISTRY_USR
+      DOCKER_REGISTRY_PWD:
+        from_secret: DOCKER_REGISTRY_PWD
+    commands:
+      - while (! docker info &>/dev/null); do sleep 1; done
+      - echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USR --password-stdin registry.hal.skygate.io
+      - docker pull registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH} || docker pull registry.hal.skygate.io/skyexpo-web || true
+      - docker tag registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH} registry.hal.skygate.io/skyexpo-web || true
 
-- name: run backend CI
-  image: *docker-compose-image
-  volumes:
-    *docker-compose-volumes
-  pull: if-not-exists
-  commands:
-    - docker-compose -f docker-compose.yml -f docker-compose.prod.yml config --quiet
-    - docker-compose run --rm web sh ./docker/ci.sh
+  - name: run backend CI
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    pull: if-not-exists
+    commands:
+      - docker-compose -f docker-compose.yml -f docker-compose.prod.yml config --quiet
+      - docker-compose build web
+      - docker-compose run --rm web sh ./docker/ci.sh
 
-- name: deploy to staging
-  image: *docker-compose-image
-  volumes:
-    *docker-compose-volumes
-  pull: if-not-exists
-  environment:
-    SSH_PRIVATE_KEY:
-      from_secret: SSH_PRIVATE_KEY
-  commands:
-    - "which ssh-agent || ( apk add --no-cache openssh-client )"
-    - "which rsync || ( apk add --no-cache rsync )"
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - "rsync -e 'ssh -o StrictHostKeyChecking=no' -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:/home/ubuntu/skyexpo"
-    - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml build'
-    - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
-  when:
-    branch:
-      - develop
-    event: {exclude: [pull_request]}
+  - name: push cache images
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    pull: if-not-exists
+    environment:
+      DOCKER_REGISTRY_USR:
+        from_secret: DOCKER_REGISTRY_USR
+      DOCKER_REGISTRY_PWD:
+        from_secret: DOCKER_REGISTRY_PWD
+    commands:
+      - echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USR --password-stdin registry.hal.skygate.io
+      - docker tag registry.hal.skygate.io/skyexpo-web registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH}
+      - docker push registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH}
+
+  - name: deploy to staging
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    pull: if-not-exists
+    environment:
+      SSH_PRIVATE_KEY:
+        from_secret: SSH_PRIVATE_KEY
+    commands:
+      - "which ssh-agent || ( apk add --no-cache openssh-client )"
+      - "which rsync || ( apk add --no-cache rsync )"
+      - eval $(ssh-agent -s)
+      - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+      - mkdir -p ~/.ssh
+      - chmod 700 ~/.ssh
+      - "rsync -e 'ssh -o StrictHostKeyChecking=no' -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:/home/ubuntu/skyexpo"
+      - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml build'
+      - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
+    when:
+      branch:
+        - develop
+      event: { exclude: [pull_request] }
 
 services:
-  - name: docker
+  - name: run docker service
     image: docker:dind
     privileged: true
     environment:
