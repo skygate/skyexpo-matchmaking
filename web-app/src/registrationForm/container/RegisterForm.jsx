@@ -6,7 +6,11 @@ import styled from '@emotion/styled';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { handleRedirect } from '../../history';
-import { validateFirstStepRequest } from '../actions/registrationActions';
+
+import {
+    validateFirstStepRequest,
+    validateTeamMembersRequest,
+} from '../actions/registrationActions';
 
 const SectionWrapper = styled.div`
     max-width: 400px;
@@ -18,8 +22,9 @@ const RegisterForm = ({
     initialValues,
     validationSchemas,
     validateFirstStepRequest,
+    validateTeamMembersRequest,
 }) => {
-    const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(1);
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = props => {
@@ -37,7 +42,19 @@ const RegisterForm = ({
                 {},
             );
 
-        validateFirstStepRequest(stepValues, 'multipart');
+        switch (formSteps[currentStep].title) {
+            case 'Main info':
+                validateFirstStepRequest(stepValues, 'multipart', currentStep + 1);
+                break;
+            case 'Team members':
+                validateTeamMembersRequest(stepValues, 'multipart', currentStep + 1);
+                break;
+            case 'Matching parameters':
+                validateFirstStepRequest(stepValues, 'multipart', currentStep + 1);
+                break;
+            default:
+                return;
+        }
 
         props.submitForm().then(() => {
             if (!props.isValid) return;
@@ -121,4 +138,6 @@ const RegisterForm = ({
     );
 };
 
-export default connect(null, { validateFirstStepRequest })(RegisterForm);
+export default connect(null, { validateFirstStepRequest, validateTeamMembersRequest })(
+    RegisterForm,
+);

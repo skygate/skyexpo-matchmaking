@@ -16,5 +16,17 @@ export function registrationEpicFactory(registrationService) {
             ),
         );
 
-    return combineEpics(validateFirstStepEpic);
+    const validateTeamMembersStepEpic = action$ =>
+        action$.pipe(
+            ofType(action.VALIDATE_TEAM_MEMBERS_REQUESTED),
+            pluck('payload'),
+            switchMap(data =>
+                registrationService
+                    .validateTeamStep(data)
+                    .then(action.validateTeamMembersSuccess)
+                    .catch(action.validateTeamMembersFail),
+            ),
+        );
+
+    return combineEpics(validateFirstStepEpic, validateTeamMembersStepEpic);
 }
