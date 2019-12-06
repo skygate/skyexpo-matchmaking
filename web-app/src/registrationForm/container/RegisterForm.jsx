@@ -38,8 +38,6 @@ const RegisterForm = ({
                 {},
             );
 
-        console.log(stepValues);
-
         validateFirstStepRequest(stepValues);
 
         props.submitForm().then(() => {
@@ -81,39 +79,43 @@ const RegisterForm = ({
 
     return (
         <SectionWrapper>
-            <h1>Registration step {currentStep + 1}</h1>
-            <Progress type="circle" percent={completionProgress} width={80} />
-            {currentStep > 2 ? (
+            {currentStep === formSteps.length ? (
                 <h1>Thank you</h1>
             ) : (
                 <>
-                    <Formik
-                        onSubmit={handleSubmit}
-                        isInitialValid={false}
-                        initialValues={initialValues}
-                        validationSchema={validationSchemas[currentStep]}
-                    >
-                        {props => (
-                            <Form>
-                                <FormQuestions
-                                    {...props}
-                                    pageProps={formSteps[currentStep]}
-                                    nextPage={() => handleNextPage(props)}
-                                    countProgress={countCompletionProgress}
-                                />
-                                {currentStep ? (
-                                    <button type="button" onClick={() => handleBackPage(props)}>
-                                        back
+                    <h1>Registration step {currentStep + 1}</h1>
+                    <Progress type="circle" percent={completionProgress} width={80} />
+                    <div>
+                        <Formik
+                            onSubmit={handleSubmit}
+                            isInitialValid={false}
+                            initialValues={initialValues}
+                            validationSchema={validationSchemas[currentStep]}
+                        >
+                            {props => (
+                                <Form>
+                                    <FormQuestions
+                                        {...props}
+                                        pageProps={formSteps[currentStep]}
+                                        nextPage={() => handleNextPage(props)}
+                                        countProgress={countCompletionProgress}
+                                    />
+                                    {currentStep ? (
+                                        <button type="button" onClick={() => handleBackPage(props)}>
+                                            back
+                                        </button>
+                                    ) : (
+                                        <button onClick={() => handleRedirect('/')}>back</button>
+                                    )}
+                                    <button type="button" onClick={() => handleNextPage(props)}>
+                                        {currentStep === formSteps.length - 1
+                                            ? 'submit'
+                                            : 'next page'}
                                     </button>
-                                ) : (
-                                    <button onClick={() => handleRedirect('/')}>back</button>
-                                )}
-                                <button type="button" onClick={() => handleNextPage(props)}>
-                                    {currentStep > 1 ? 'submit' : 'next page'}
-                                </button>
-                            </Form>
-                        )}
-                    </Formik>
+                                </Form>
+                            )}
+                        </Formik>
+                    </div>
                 </>
             )}
         </SectionWrapper>

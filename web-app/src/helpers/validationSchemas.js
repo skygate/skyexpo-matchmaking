@@ -154,8 +154,4 @@ export const companyInvestorValidationSchemas = [
     validationPage2,
     validationPage3,
 ];
-export const individualInvestorValidationSchemas = [
-    individualValidationPage1,
-    validationPage2,
-    validationPage3,
-];
+export const individualInvestorValidationSchemas = [individualValidationPage1, validationPage3];

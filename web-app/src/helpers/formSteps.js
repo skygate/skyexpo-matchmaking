@@ -227,27 +227,6 @@ export const individualInvestorFormSteps = [
         ],
     },
     {
-        title: 'Team members',
-        subtitle: 'Participating on the skyexpo',
-        inputsFields: [
-            {
-                name: 'teamMembers',
-                placeholder: 'Team members',
-                type: 'team',
-                inputs: [
-                    {
-                        name: 'name0',
-                        placeholder: 'John Doe',
-                    },
-                    {
-                        name: 'email0',
-                        placeholder: 'johndoe@email.com',
-                    },
-                ],
-            },
-        ],
-    },
-    {
         title: 'Matching parameters',
         inputsFields: [
             {

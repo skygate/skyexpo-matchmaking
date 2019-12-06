@@ -61,12 +61,6 @@ export const individualInvestorInitialValues = {
     foundingDate: '',
     description: '',
     logotype: '',
-    teamMembers: [
-        {
-            name0: '',
-            email0: '',
-        },
-    ],
     industries: [''],
     sectors: [''],
     investmentStage: [''],
