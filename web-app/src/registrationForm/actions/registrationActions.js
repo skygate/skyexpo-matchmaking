@@ -1,7 +1,7 @@
 export const VALIDATE_FIRST_STEP_REQUESTED = 'VALIDATE_FIRST_STEP_REQUESTED';
-export const validateFirstStepRequest = formStep => ({
+export const validateFirstStepRequest = (formStep, type) => ({
     type: VALIDATE_FIRST_STEP_REQUESTED,
-    payload: formStep,
+    payload: { formStep, type },
 });
 
 export const VALIDATE_FIRST_STEP_SUCCEEDED = 'VALIDATE_FIRST_STEP_SUCCEEDED';

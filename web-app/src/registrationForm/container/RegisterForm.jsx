@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { Progress } from 'antd';
 import styled from '@emotion/styled';
-import * as R from 'ramda';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { handleRedirect } from '../../history';
@@ -38,7 +37,7 @@ const RegisterForm = ({
                 {},
             );
 
-        validateFirstStepRequest(stepValues);
+        validateFirstStepRequest(stepValues, 'multipart');
 
         props.submitForm().then(() => {
             if (!props.isValid) return;

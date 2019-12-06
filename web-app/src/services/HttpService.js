@@ -17,19 +17,17 @@ export class HttpService {
         return this.makeRequest('DELETE', path, body, options);
     }
 
-    makeRequest(method, path, body = null, options = {}) {
+    makeRequest(method, path, data = null, type = '') {
         const formData = new FormData();
-
-        Object.keys(body).forEach(fieldName => formData.append(fieldName, body[fieldName]));
-
+        Object.keys(data).forEach(fieldName => formData.append(fieldName, data[fieldName]));
         const params = {
             method,
-            body: formData,
+            body: type === 'multipart' ? formData : JSON.stringify(data),
         };
 
         return fetch(BASE_URL + path, params).then(async response => {
             if (response.ok) {
-                return response.json();
+                return response;
             }
 
             const err = new Error(response.statusText);
