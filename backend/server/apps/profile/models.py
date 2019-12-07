@@ -2,16 +2,20 @@
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
-from django.contrib.postgres.fields import ArrayField, IntegerRangeField
-from django.contrib.postgres.validators import RangeMinValueValidator
+from django.contrib.postgres import fields, validators
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as ugtl
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
+from typing_extensions import Final
 
-from server.apps.profile.constants import CompanyStage, Industry, Sector, ProductType, InvestmentStage, BusinessType
+from server.apps.profile import constants
 from server.apps.profile.logic.managers import UserManager
-from server.apps.profile.logic.querysets import ProfileQuerySet
+
+MIN_INVESTMENT_VALUE: Final = 0
+MAX_INTEGER_FIELD_VALUE: Final = 2147483647
 
 
 class BaseInfo(models.Model):
@@ -25,7 +29,7 @@ class BaseInfo(models.Model):
     phone_number = PhoneNumberField()
     country = CountryField()
     founding_date = models.DateField()
-    description = models.CharField(max_length=255, blank=True)
+    description = models.TextField(blank=True)
 
     class Meta:
         abstract = True
@@ -37,22 +41,46 @@ class BaseMatchmakingInfo(models.Model):
     Our algorithms match pairs mainly on the basis of these fields.
     """
 
-    stage = models.CharField(choices=CompanyStage.CHOICES, max_length=33)
-    sectors = ArrayField(
-        models.CharField(choices=Sector.CHOICES, max_length=15),
+    stage = models.CharField(
+        choices=constants.CompanyStage.CHOICES, max_length=33,
     )
-    industries = ArrayField(
-        models.CharField(choices=Industry.CHOICES, max_length=29),
+    sectors = fields.ArrayField(
+        models.CharField(choices=constants.Sector.CHOICES, max_length=15),
     )
-    product_types = ArrayField(
-        models.CharField(choices=ProductType.CHOICES, max_length=8),
+    industries = fields.ArrayField(
+        models.CharField(choices=constants.Industry.CHOICES, max_length=29),
     )
-    investment_stage = ArrayField(
-        models.CharField(choices=InvestmentStage.CHOICES, max_length=15),
+    product_types = fields.ArrayField(
+        models.CharField(choices=constants.ProductType.CHOICES, max_length=8),
+    )
+    investment_stage = fields.ArrayField(
+        models.CharField(
+            choices=constants.InvestmentStage.CHOICES, max_length=15,
+        ),
     )
     is_product_on_market = models.BooleanField()
-    investment_size = IntegerRangeField(validators=[RangeMinValueValidator(0)])
-    business_type = models.CharField(choices=BusinessType.CHOICES, max_length=3)
+    business_type = models.CharField(
+        choices=constants.BusinessType.CHOICES, max_length=3,
+    )
+    investment_size = fields.IntegerRangeField(
+        validators=[
+            validators.RangeMinValueValidator(MIN_INVESTMENT_VALUE),
+            validators.RangeMaxValueValidator(MAX_INTEGER_FIELD_VALUE),
+        ],
+    )
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        if exclude and 'investment_size' in exclude:
+            return
+
+        if self.investment_size.lower > self.investment_size.upper:
+            raise ValidationError({
+                'investment_size': ugtl(
+                    'Maximum investment size should be lower or ' +
+                    'equal to minimum investment size.',
+                ),
+            })
 
     class Meta:
         abstract = True
@@ -138,15 +166,6 @@ class Profile(models.Model):
         related_name='profile',
         default=None,
     )
-
-    objects = ProfileQuerySet.as_manager()
-
-    class Meta:
-        constraints = [
-            models.CheckConstraint(
-                check=~models.Q(name=''), name='non_empty_name',
-            ),
-        ]
 
     def __str__(self) -> str:
         return str(self.user)
