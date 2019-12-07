@@ -6,7 +6,7 @@ from typing import List, Tuple
 
 import factory.fuzzy  # noqa: WPS301
 from factory import LazyFunction
-from psycopg2._range import NumericRange  # noqa: WPS436
+from psycopg2.extras import NumericRange
 
 from server.apps.profile.constants import (
   BusinessType,

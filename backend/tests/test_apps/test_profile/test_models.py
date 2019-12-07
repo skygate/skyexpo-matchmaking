@@ -3,7 +3,7 @@
 import pytest
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from psycopg2._range import NumericRange  # noqa: WPS436
+from psycopg2.extras import NumericRange
 
 from server.apps.profile.models import Company, Profile
 from tests.factories import (

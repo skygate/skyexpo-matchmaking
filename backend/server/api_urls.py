@@ -21,7 +21,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
     # Local apps
-    # ...
+    path('profiles/', include('server.apps.profile.urls')),
 
     # Web-app forms
     path(

@@ -14,7 +14,7 @@ from server.apps.profile.constants import (
   ProductType,
   Sector,
 )
-from server.apps.profile.models import MAX_INTEGER_FIELD_VALUE
+from server.apps.profile.models import MAX_INTEGER_FIELD_VALUE, Company
 
 User = get_user_model()
 
@@ -68,14 +68,12 @@ class CompanyValidateFormStep3Serializer(serializers.Serializer):
     which registers company.
     """
 
-    industries = serializers.MultipleChoiceField(choices=Industry.CHOICES)
-    sectors = serializers.MultipleChoiceField(choices=Sector.CHOICES)
-    product_types = serializers.MultipleChoiceField(
-        choices=ProductType.CHOICES,
+    industries = serializers.ListField()
+    sectors = serializers.ListField()
+    product_types = serializers.ListField(
     )
     stage = serializers.ChoiceField(choices=CompanyStage.CHOICES)
-    investment_stage = serializers.MultipleChoiceField(
-        choices=InvestmentStage.CHOICES,
+    investment_stage = serializers.ListField(
     )
     min_investment_size = serializers.IntegerField(
         min_value=0, help_text='In EUR currency.',
@@ -85,3 +83,29 @@ class CompanyValidateFormStep3Serializer(serializers.Serializer):
     )
     is_product_on_market = serializers.BooleanField()
     business_type = serializers.ChoiceField(choices=BusinessType.CHOICES)
+
+
+class CompanyCreateInputSerializer(
+    CompanyValidateFormStep1Serializer,
+    CompanyValidateFormStep2Serializer,
+    CompanyValidateFormStep3Serializer,
+):
+    """
+    In the last step of the form when the user triggers the 'Finish' button,
+    the client combines together every field from the previous steps and sends
+    it to the API. This serializer validates this input schema.
+    """
+    pass
+
+
+class CompanyCreateOutputSerializer(serializers.ModelSerializer):
+    """Serializes read-only output for the Company model."""
+
+    class Meta:
+        model = Company
+        fields = ['id', 'name', 'email', 'logotype', 'website', 'phone_number',
+                  'country', 'founding_date', 'description', 'stage', 'sectors', 'industries',
+                  'product_types', 'investment_stage', 'is_product_on_market', 'business_type',
+                  'investment_size',
+                  ]
+        read_only_fields = fields

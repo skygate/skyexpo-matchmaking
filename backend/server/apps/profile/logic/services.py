@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
-
+from dataclasses import asdict
 from typing import Any, Dict, List
 
 from django.core.exceptions import ValidationError
-from psycopg2._range import NumericRange  # noqa: WPS436
+from django.db import transaction
+from glom import glom
+from psycopg2.extras import NumericRange
 
+from server.apps.profile.logic.representations import CompanyRepresentation
 from server.apps.profile.models import Company
 
 
@@ -14,6 +17,12 @@ def check_for_duplicated_emails(*, emails: List[str]) -> None:
         raise ValidationError(
             {'team_members': 'You cannot enter the same email twice.'},
         )
+
+
+def validate_company_form_step1(data: Dict[str, Any]) -> None:
+    """Run validation for company registering form step 1."""
+    emails = glom(data, ('team_members', ['email']))
+    check_for_duplicated_emails(emails=emails)
 
 
 def validate_company_form_step2(data: Dict[str, Any]) -> None:
@@ -53,3 +62,22 @@ def validate_company_form_step3(data: Dict[str, Any]) -> None:
             'logotype',
         ],
     )
+
+
+@transaction.atomic()
+def create_company(*, company: CompanyRepresentation) -> Company:
+    """Service that creates company."""
+
+    company_data = asdict(company)
+    team_members = company_data.pop('team_members')
+
+    investment_size = NumericRange(
+        lower=company_data.pop('min_investment_size'),
+        upper=company_data.pop('max_investment_size'),
+    )
+
+    company_instance = Company(**company_data, investment_size=investment_size)
+    company_instance.full_clean()
+    company_instance.save()
+
+    return company_instance
