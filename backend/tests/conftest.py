@@ -64,13 +64,13 @@ def company_step1_data(company_data):
 @pytest.fixture()
 def company_step2_data(user, company_data):
     """Returns company fake data for step2 in registering form."""
-    profile = ProfileFactory.build()
+    profile1 = ProfileFactory.build()
+    profile2 = ProfileFactory.build()
 
     return {
-        'founder_name': 'Founder name',
-        'founder_email': user.email,
         'team_members': [
-            {'name': profile.name, 'email': profile.user.email},
+            {'name': profile1.name, 'email': profile1.user.email},
+            {'name': profile2.name, 'email': profile2.user.email},
         ],
     }
 
@@ -82,7 +82,7 @@ def company_step3_data(company_data):
         'sectors': company_data['sectors'],
         'industries': company_data['industries'],
         'product_types': company_data['product_types'],
-        'company_stage': company_data['stage'],
+        'stage': company_data['stage'],
         'investment_stage': company_data['investment_stage'],
         'business_type': company_data['business_type'],
         'is_product_on_market': company_data['is_product_on_market'],
