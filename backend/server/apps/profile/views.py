@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.db import transaction
 from djangorestframework_camel_case.parser import CamelCaseMultiPartParser, CamelCaseJSONParser
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -7,7 +7,7 @@ from rest_framework import permissions, status, views
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from server.apps.profile.logic.representations import CompanyRepresentation
+from server.apps.profile.logic.representations import CompanyRepresentation, TeamMembersRepresentation
 from server.apps.profile.logic.serializers import (
     CompanyValidateFormStep1Serializer,
     CompanyValidateFormStep2Serializer,
@@ -17,7 +17,7 @@ from server.apps.profile.logic.services import (
     validate_company_form_step1,
     validate_company_form_step2,
     validate_company_form_step3,
-    create_company)
+    create_company, create_profiles)
 from server.apps.profile.models import Company
 from server.utils.exception_handler import ExceptionHandlerMixin
 
@@ -106,10 +106,19 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
         serializer = CompanyCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
+        team_members = TeamMembersRepresentation(
+            serializer.validated_data.pop('team_members'),
+        )
         company = CompanyRepresentation(**serializer.validated_data)
-        instance = create_company(company=company)
+
+        with transaction.atomic():
+            company_instance = create_company(company=company)
+            profiles_instances = create_profiles(
+                team_members=team_members,
+                company_id=company_instance.id,
+            )
 
         return Response(
-            CompanyCreateOutputSerializer(instance).data,
+            CompanyCreateOutputSerializer(company_instance).data,
             status=status.HTTP_201_CREATED,
         )

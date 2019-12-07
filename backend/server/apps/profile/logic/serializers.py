@@ -31,7 +31,7 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     )
     phone_number = PhoneNumberField(
         help_text=f'We use {settings.PHONENUMBER_DB_FORMAT} format ' +
-        'for telephone numbers.',
+        'for telephone numbers.', required=False
     )
     email = serializers.EmailField()
     country = CountryField(

@@ -2,13 +2,18 @@
 from dataclasses import asdict
 from typing import Any, Dict, List
 
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from glom import glom
 from psycopg2.extras import NumericRange
 
-from server.apps.profile.logic.representations import CompanyRepresentation
-from server.apps.profile.models import Company
+from server.apps.profile.logic.representations import CompanyRepresentation, TeamMembersRepresentation, \
+    ProfileRepresentation, UserRepresentation
+from server.apps.profile.models import Company, Profile
+
+
+User = get_user_model()
 
 
 def check_for_duplicated_emails(*, emails: List[str]) -> None:
@@ -64,13 +69,10 @@ def validate_company_form_step3(data: Dict[str, Any]) -> None:
     )
 
 
-@transaction.atomic()
 def create_company(*, company: CompanyRepresentation) -> Company:
     """Service that creates company."""
 
     company_data = asdict(company)
-    team_members = company_data.pop('team_members')
-
     investment_size = NumericRange(
         lower=company_data.pop('min_investment_size'),
         upper=company_data.pop('max_investment_size'),
@@ -81,3 +83,35 @@ def create_company(*, company: CompanyRepresentation) -> Company:
     company_instance.save()
 
     return company_instance
+
+
+@transaction.atomic()
+def create_profile(
+    *, user: UserRepresentation, profile: ProfileRepresentation,
+) -> Profile:
+    user = User(**asdict(user))
+    user.full_clean(exclude=['password'])
+    user.save()
+
+    profile_instance = Profile(user=user, **asdict(profile))
+
+    profile_instance.full_clean()
+    profile_instance.save()
+
+    return profile_instance
+
+
+@transaction.atomic()
+def create_profiles(
+    *, team_members: TeamMembersRepresentation, company_id: int,
+) -> List[Profile]:
+    """Service that creates profiles for company's team members."""
+    team_members_data = asdict(team_members).get('team_members')
+
+    profiles = []
+    for team_member in team_members_data:
+        user = UserRepresentation(email=team_member['email'])
+        profile = ProfileRepresentation(name=team_member['name'])
+        profiles.append(create_profile(user=user, profile=profile))
+
+    return profiles
