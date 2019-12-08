@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.db import transaction
 from djangorestframework_camel_case.parser import CamelCaseMultiPartParser, CamelCaseJSONParser
 from drf_yasg import openapi
@@ -18,7 +19,6 @@ from server.apps.profile.logic.services import (
     validate_company_form_step2,
     validate_company_form_step3,
     create_company, create_profiles)
-from server.apps.profile.models import Company
 from server.utils.exception_handler import ExceptionHandlerMixin
 
 
@@ -113,9 +113,9 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
 
         with transaction.atomic():
             company_instance = create_company(company=company)
-            profiles_instances = create_profiles(
+            create_profiles(
                 team_members=team_members,
-                company_id=company_instance.id,
+                company=company_instance,
             )
 
         return Response(

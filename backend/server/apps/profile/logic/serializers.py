@@ -9,10 +9,6 @@ from rest_framework import serializers
 from server.apps.profile.constants import (
   BusinessType,
   CompanyStage,
-  Industry,
-  InvestmentStage,
-  ProductType,
-  Sector,
 )
 from server.apps.profile.models import MAX_INTEGER_FIELD_VALUE, Company
 
@@ -70,11 +66,9 @@ class CompanyValidateFormStep3Serializer(serializers.Serializer):
 
     industries = serializers.ListField()
     sectors = serializers.ListField()
-    product_types = serializers.ListField(
-    )
+    product_types = serializers.ListField()
     stage = serializers.ChoiceField(choices=CompanyStage.CHOICES)
-    investment_stage = serializers.ListField(
-    )
+    investment_stage = serializers.ListField()
     min_investment_size = serializers.IntegerField(
         min_value=0, help_text='In EUR currency.',
     )
@@ -103,9 +97,24 @@ class CompanyCreateOutputSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Company
-        fields = ['id', 'name', 'email', 'logotype', 'website', 'phone_number',
-                  'country', 'founding_date', 'description', 'stage', 'sectors', 'industries',
-                  'product_types', 'investment_stage', 'is_product_on_market', 'business_type',
-                  'investment_size',
-                  ]
+        fields = [
+            'id',
+            'name',
+            'email',
+            'logotype',
+            'website',
+            'phone_number',
+            'country',
+            'founding_date',
+            'description',
+            'stage',
+            'sectors',
+            'industries',
+            'product_types',
+            'investment_stage',
+            'is_product_on_market',
+            'business_type',
+            'investment_size',
+            'profiles',
+        ]
         read_only_fields = fields

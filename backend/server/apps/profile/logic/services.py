@@ -89,11 +89,11 @@ def create_company(*, company: CompanyRepresentation) -> Company:
 def create_profile(
     *, user: UserRepresentation, profile: ProfileRepresentation,
 ) -> Profile:
-    user = User(**asdict(user))
-    user.full_clean(exclude=['password'])
-    user.save()
+    user_instance = User(**asdict(user))
+    user_instance.full_clean(exclude=['password'])
+    user_instance.save()
 
-    profile_instance = Profile(user=user, **asdict(profile))
+    profile_instance = Profile(user=user_instance, **asdict(profile))
 
     profile_instance.full_clean()
     profile_instance.save()
@@ -103,15 +103,17 @@ def create_profile(
 
 @transaction.atomic()
 def create_profiles(
-    *, team_members: TeamMembersRepresentation, company_id: int,
+    *, team_members: TeamMembersRepresentation, company: Company,
 ) -> List[Profile]:
     """Service that creates profiles for company's team members."""
-    team_members_data = asdict(team_members).get('team_members')
+    team_members_data = asdict(team_members)['team_members']
 
     profiles = []
     for team_member in team_members_data:
         user = UserRepresentation(email=team_member['email'])
-        profile = ProfileRepresentation(name=team_member['name'])
+        profile = ProfileRepresentation(
+            name=team_member['name'], company=company,
+        )
         profiles.append(create_profile(user=user, profile=profile))
 
     return profiles

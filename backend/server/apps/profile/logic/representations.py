@@ -35,20 +35,20 @@ class TeamMembersRepresentation:
 
 @dataclass
 class CompanyRepresentation:
-     name: str
-     email: str
-     website: str
-     country: str
-     founding_date: datetime.date
-     description: str
-     industries: List[str]
-     sectors: List[str]
-     product_types: List[str]
-     stage: str
-     investment_stage: List[str]
-     min_investment_size: int
-     max_investment_size: int
-     is_product_on_market: bool
-     business_type: str
-     phone_number: Optional[PhoneNumber] = None
-     logotype: Optional[InMemoryUploadedFile] = None
+    name: str
+    email: str
+    website: str
+    country: str
+    founding_date: datetime.date
+    description: str
+    industries: List[str]
+    sectors: List[str]
+    product_types: List[str]
+    stage: str
+    investment_stage: List[str]
+    min_investment_size: int
+    max_investment_size: int
+    is_product_on_market: bool
+    business_type: str
+    phone_number: Optional[PhoneNumber] = None
+    logotype: Optional[InMemoryUploadedFile] = None
