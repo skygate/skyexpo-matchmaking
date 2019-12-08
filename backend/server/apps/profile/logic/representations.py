@@ -7,13 +7,14 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from phonenumber_field.phonenumber import PhoneNumber
 from django.utils import timezone
+from typing_extensions import final
 
 from server.apps.profile.models import Company
 
 User = get_user_model()
 
 
-@dataclass
+@dataclass()
 class UserRepresentation:
     email: str
     is_staff: bool = False
@@ -21,19 +22,19 @@ class UserRepresentation:
     password: str = ''
 
 
-@dataclass
+@dataclass()
 class ProfileRepresentation:
     name: str
     date_joined: datetime.datetime = timezone.now()
     company: Optional[Company] = None
 
 
-@dataclass
+@dataclass()
 class TeamMembersRepresentation:
     team_members: List[Dict[str, str]]
 
 
-@dataclass
+@dataclass()
 class CompanyRepresentation:
     name: str
     email: str

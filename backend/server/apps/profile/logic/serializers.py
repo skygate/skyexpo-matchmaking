@@ -118,3 +118,4 @@ class CompanyCreateOutputSerializer(serializers.ModelSerializer):
             'profiles',
         ]
         read_only_fields = fields
+        depth = 1

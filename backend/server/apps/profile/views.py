@@ -18,7 +18,7 @@ from server.apps.profile.logic.services import (
     validate_company_form_step1,
     validate_company_form_step2,
     validate_company_form_step3,
-    create_company, create_profiles)
+    create_company, add_existing_profiles_to_company, create_company_profiles)
 from server.utils.exception_handler import ExceptionHandlerMixin
 
 
@@ -93,7 +93,11 @@ class CompanyValidateFormStep3View(ExceptionHandlerMixin, views.APIView):
 
 
 class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
-    """View used for registering a company after filling out the form."""
+    """
+    View used for registering a company after filling out the form.
+    Firstly we create a new company, then we assign existing profiles
+    to company and if some profiles don't exist, we create new ones.
+    """
 
     permission_classes = [permissions.AllowAny]
     parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]
@@ -113,10 +117,8 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
 
         with transaction.atomic():
             company_instance = create_company(company=company)
-            create_profiles(
-                team_members=team_members,
-                company=company_instance,
-            )
+            add_existing_profiles_to_company(team_members=team_members, company=company_instance)
+            create_company_profiles(team_members=team_members, company=company_instance)
 
         return Response(
             CompanyCreateOutputSerializer(company_instance).data,

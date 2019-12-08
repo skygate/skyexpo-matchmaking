@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+
 from dataclasses import asdict
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -86,9 +87,14 @@ def create_company(*, company: CompanyRepresentation) -> Company:
 
 
 @transaction.atomic()
-def create_profile(
+def create_inactive_profile(
     *, user: UserRepresentation, profile: ProfileRepresentation,
 ) -> Profile:
+    """
+    Creates inactive profile. User has to sign up, assign password
+    and then we can activate profile.
+    """
+    user.is_active = False
     user_instance = User(**asdict(user))
     user_instance.full_clean(exclude=['password'])
     user_instance.save()
@@ -101,19 +107,43 @@ def create_profile(
     return profile_instance
 
 
-@transaction.atomic()
-def create_profiles(
+def update_profile(*, profile: Profile, company: Optional[Company] = None) -> Profile:
+    profile.company = company
+    profile.full_clean()
+    profile.save()
+
+    return profile
+
+
+def add_existing_profiles_to_company(
     *, team_members: TeamMembersRepresentation, company: Company,
 ) -> List[Profile]:
-    """Service that creates profiles for company's team members."""
     team_members_data = asdict(team_members)['team_members']
 
+    profiles = []
+    for team_member in team_members_data:
+        profile_qs = Profile.objects.filter(
+            user__email=team_member['email']
+        )
+        if profile_qs and not profile_qs.unassigned_profiles():
+            raise ValidationError({'team_members': 'Team member is already assigned to company or startup.'})
+        if profile_qs and profile_qs.unassigned_profiles():
+            profiles.append(update_profile(profile=profile_qs.first(), company=company))
+
+    return profiles
+
+
+def create_company_profiles(
+    *, team_members: TeamMembersRepresentation, company: Company
+):
+    team_members_data = asdict(team_members)['team_members']
     profiles = []
     for team_member in team_members_data:
         user = UserRepresentation(email=team_member['email'])
         profile = ProfileRepresentation(
             name=team_member['name'], company=company,
         )
-        profiles.append(create_profile(user=user, profile=profile))
+        profile_instance = create_inactive_profile(user=user, profile=profile)
+        profiles.append(profile_instance)
 
     return profiles
