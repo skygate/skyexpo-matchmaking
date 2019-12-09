@@ -36,8 +36,8 @@ steps:
     commands:
       - while (! docker info &>/dev/null); do sleep 1; done
       - echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USR --password-stdin registry.hal.skygate.io
-      - docker pull registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH} || docker pull registry.hal.skygate.io/skyexpo-web || true
-      - docker tag registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH} registry.hal.skygate.io/skyexpo-web || true
+      - docker pull registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-} || docker pull registry.hal.skygate.io/skyexpo-web || true
+      - docker tag registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-} registry.hal.skygate.io/skyexpo-web || true
 
   - name: run backend CI
     image: *docker-compose-image
@@ -59,8 +59,8 @@ steps:
         from_secret: DOCKER_REGISTRY_PWD
     commands:
       - echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USR --password-stdin registry.hal.skygate.io
-      - docker tag registry.hal.skygate.io/skyexpo-web registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH}
-      - docker push registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH}-${DRONE_TARGET_BRANCH}
+      - docker tag registry.hal.skygate.io/skyexpo-web registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
+      - docker push registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
 
   - name: deploy to staging
     image: *docker-compose-image
