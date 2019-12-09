@@ -463,8 +463,8 @@ category = "main"
 description = "A minimal JSON Web Token authentication plugin for Django REST Framework"
 name = "djangorestframework-simplejwt"
 optional = false
-python-versions = ">=3.5,<4"
-version = "4.3.0"
+python-versions = ">=3.6,<3.9"
+version = "4.4.0"
 
 [package.dependencies]
 django = "*"
@@ -2149,7 +2149,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "bdfb84a533263cb952fa9a724acb07f2856788007dc6ca7a1fde634f28f74dc4"
+content-hash = "bee4ef6d97939485992d85438232f825f75b273baaf81a94e21b420f6b633882"
 python-versions = "3.7.4"
 
 [metadata.hashes]
@@ -2199,7 +2199,7 @@ django-split-settings = ["db4d24a2da2f17e0aa97437f052eda7d043a3e2eaa9c8a85a17127
 django-stubs = ["cd6a7333d518b9168f001b8a31c4ea89a91dea40a9dd1535c798635f69a5f80a", "e3673348a42c7259e81a4ea141dae2b2e711220ec631a6215ba9dc23cdcabdf4"]
 djangorestframework = ["5488aed8f8df5ec1d70f04b2114abc52ae6729748a176c453313834a9ee179c8", "dc81cbf9775c6898a580f6f1f387c4777d12bd87abf0f5406018d32ccae71090"]
 djangorestframework-camel-case = ["9eba4a2f959e1e46b7d0f6136baf950552b2a4a695d4bb3cfb0c37be25294574"]
-djangorestframework-simplejwt = ["4cb1a51bf9b098b983e1326a1cfc65fb0b3c5a2aa0fa43effdbf05dd6da5e8cb", "d025211806622c53020aa4f66029f1f7305e38de6439116b4a842661fc02cf36"]
+djangorestframework-simplejwt = ["288ee78618d906f26abf6282b639b8f1806ce1d9a7578897a125cf79c609f259", "c315be70aa12a5f5790c0ab9acd426c3a58eebea65a77d0893248c5144a5080c"]
 djangorestframework-stubs = ["a14ff25cd53d9003cb44dddcbd5696ed884661ff00999e5c2373e71027408a00", "ee9198861355bf1c26037648bf4a7a0a958f24817c8fac6f0b65e6d2cc0058ed"]
 docopt = ["49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"]
 docutils = ["6c4f696463b79f1fb8ba0c594b63840ebd41f059e92b31957c46b74a4599b6d0", "9e4d7ecfc600058e07ba661411a2b7de2fd0fafa17d1a7f7361cd47b1175c827", "a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"]
