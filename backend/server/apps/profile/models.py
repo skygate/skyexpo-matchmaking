@@ -12,8 +12,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from typing_extensions import Final
 
 from server.apps.profile import constants
-from server.apps.profile.logic.managers import UserManager
-from server.apps.profile.logic.querysets import ProfileQuerySet
+from server.apps.profile.logic import managers, querysets
 
 MIN_INVESTMENT_VALUE: Final = 0
 MAX_INTEGER_FIELD_VALUE: Final = 2147483647
@@ -132,7 +131,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'  # noqa: WPS115
 
-    objects = UserManager()
+    objects = managers.UserManager()
 
 
 class Profile(models.Model):
@@ -168,7 +167,7 @@ class Profile(models.Model):
         default=None,
     )
 
-    objects = ProfileQuerySet.as_manager()
+    objects = querysets.ProfileQuerySet.as_manager()
 
     def __str__(self) -> str:
         return str(self.user)

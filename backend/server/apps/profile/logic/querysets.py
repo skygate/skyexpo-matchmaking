@@ -3,13 +3,13 @@
 from typing import TYPE_CHECKING
 
 from django.db import models
-from django.db.models import Q
+from django.db.models.query import QuerySet
 
 if TYPE_CHECKING:  # pragma: no cover
     from server.apps.profile.models import Profile  # noqa: WPS433
-    BaseQuerySetType = models.QuerySet[Profile]
+    BaseQuerySetType = QuerySet[Profile]
 else:
-    BaseQuerySetType = models.QuerySet
+    BaseQuerySetType = QuerySet
 
 
 class ProfileQuerySet(BaseQuerySetType):
@@ -17,7 +17,11 @@ class ProfileQuerySet(BaseQuerySetType):
 
     def unassigned_profiles(self) -> 'QuerySet[Profile]':
         """
-        Inactive profile is a profile that doesn't belong to
+        Unassigned profile is a profile that doesn't belong to
         neither Company, Startup or AngelInvestor.
         """
-        return self.filter(Q(company__isnull=True) & Q(angel_investor__isnull=True) & Q(startup__isnull=True))
+        return self.filter(
+            models.Q(company__isnull=True) &
+            models.Q(angel_investor__isnull=True) &
+            models.Q(startup__isnull=True),
+        )

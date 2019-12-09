@@ -1,41 +1,49 @@
 # -*- coding: utf-8 -*-
+
 import datetime
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from phonenumber_field.phonenumber import PhoneNumber
 from django.utils import timezone
-from typing_extensions import final
+from phonenumber_field.phonenumber import PhoneNumber
 
 from server.apps.profile.models import Company
 
 User = get_user_model()
 
 
-@dataclass()
+@dataclass
 class UserRepresentation:
+    """User data representation."""
+
     email: str
     is_staff: bool = False
     is_active: bool = True
     password: str = ''
 
 
-@dataclass()
+@dataclass
 class ProfileRepresentation:
+    """Profile data representation."""
+
     name: str
     date_joined: datetime.datetime = timezone.now()
     company: Optional[Company] = None
 
 
-@dataclass()
+@dataclass
 class TeamMembersRepresentation:
+    """Company/Startup's dteam members data"""
+
     team_members: List[Dict[str, str]]
 
 
-@dataclass()
+@dataclass
 class CompanyRepresentation:
+    """Company data representation."""
+
     name: str
     email: str
     website: str

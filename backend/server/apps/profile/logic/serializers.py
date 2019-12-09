@@ -6,10 +6,7 @@ from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
-from server.apps.profile.constants import (
-  BusinessType,
-  CompanyStage,
-)
+from server.apps.profile.constants import BusinessType, CompanyStage
 from server.apps.profile.models import MAX_INTEGER_FIELD_VALUE, Company
 
 User = get_user_model()
@@ -27,7 +24,7 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     )
     phone_number = PhoneNumberField(
         help_text=f'We use {settings.PHONENUMBER_DB_FORMAT} format ' +
-        'for telephone numbers.', required=False
+        'for telephone numbers.', required=False,
     )
     email = serializers.EmailField()
     country = CountryField(
@@ -89,7 +86,8 @@ class CompanyCreateInputSerializer(
     the client combines together every field from the previous steps and sends
     it to the API. This serializer validates this input schema.
     """
-    pass
+
+    pass  # noqa: WPS604, WPS420
 
 
 class CompanyCreateOutputSerializer(serializers.ModelSerializer):
@@ -118,4 +116,4 @@ class CompanyCreateOutputSerializer(serializers.ModelSerializer):
             'profiles',
         ]
         read_only_fields = fields
-        depth = 1
+        depth = 1  # TODO: Change to NestedSerializer

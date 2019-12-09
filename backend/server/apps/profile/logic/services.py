@@ -6,13 +6,17 @@ from typing import Any, Dict, List, Optional
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.utils.translation import ugettext_lazy as ugt
 from glom import glom
 from psycopg2.extras import NumericRange
 
-from server.apps.profile.logic.representations import CompanyRepresentation, TeamMembersRepresentation, \
-    ProfileRepresentation, UserRepresentation
+from server.apps.profile.logic.representations import (
+  CompanyRepresentation,
+  ProfileRepresentation,
+  TeamMembersRepresentation,
+  UserRepresentation,
+)
 from server.apps.profile.models import Company, Profile
-
 
 User = get_user_model()
 
@@ -21,17 +25,11 @@ def check_for_duplicated_emails(*, emails: List[str]) -> None:
     """Check if emails are duplicated in team members input."""
     if len(emails) != len(set(emails)):
         raise ValidationError(
-            {'team_members': 'You cannot enter the same email twice.'},
+            {'team_members': ugt('You cannot enter the same email twice.')},
         )
 
 
 def validate_company_form_step1(data: Dict[str, Any]) -> None:
-    """Run validation for company registering form step 1."""
-    emails = glom(data, ('team_members', ['email']))
-    check_for_duplicated_emails(emails=emails)
-
-
-def validate_company_form_step2(data: Dict[str, Any]) -> None:
     """Run validation for company registering form step 2."""
     company = Company(**data)
     company.full_clean(
@@ -46,6 +44,12 @@ def validate_company_form_step2(data: Dict[str, Any]) -> None:
             'business_type',
         ],
     )
+
+
+def validate_company_form_step2(data: Dict[str, Any]) -> None:
+    """Run validation for company registering form step 1."""
+    emails = glom(data, ('team_members', ['email']))
+    check_for_duplicated_emails(emails=emails)
 
 
 def validate_company_form_step3(data: Dict[str, Any]) -> None:
@@ -71,8 +75,7 @@ def validate_company_form_step3(data: Dict[str, Any]) -> None:
 
 
 def create_company(*, company: CompanyRepresentation) -> Company:
-    """Service that creates company."""
-
+    """Creates company."""
     company_data = asdict(company)
     investment_size = NumericRange(
         lower=company_data.pop('min_investment_size'),
@@ -107,7 +110,10 @@ def create_inactive_profile(
     return profile_instance
 
 
-def update_profile(*, profile: Profile, company: Optional[Company] = None) -> Profile:
+def update_profile(
+    *, profile: Profile, company: Optional[Company] = None,
+) -> Profile:
+    """Update existing profile with specified arguments."""
     profile.company = company
     profile.full_clean()
     profile.save()
@@ -118,32 +124,41 @@ def update_profile(*, profile: Profile, company: Optional[Company] = None) -> Pr
 def add_existing_profiles_to_company(
     *, team_members: TeamMembersRepresentation, company: Company,
 ) -> List[Profile]:
-    team_members_data = asdict(team_members)['team_members']
-
+    """If profile exists - add it to specified company."""
     profiles = []
-    for team_member in team_members_data:
+    for team_member in asdict(team_members)['team_members']:
         profile_qs = Profile.objects.filter(
-            user__email=team_member['email']
+            user__email=team_member['email'],
         )
         if profile_qs and not profile_qs.unassigned_profiles():
-            raise ValidationError({'team_members': 'Team member is already assigned to company or startup.'})
+            raise ValidationError(
+                {
+                    'team_members': ugt(
+                        'Team member is already assigned to ' +
+                        'company or startup.',
+                    ),
+                },
+            )
         if profile_qs and profile_qs.unassigned_profiles():
-            profiles.append(update_profile(profile=profile_qs.first(), company=company))
+            profiles.append(
+                update_profile(profile=profile_qs[0], company=company),
+            )
 
     return profiles
 
 
 def create_company_profiles(
-    *, team_members: TeamMembersRepresentation, company: Company
-):
-    team_members_data = asdict(team_members)['team_members']
+    *, team_members: TeamMembersRepresentation, company: Company,
+) -> List[Profile]:
+    """Creates profiles assigned to specified company."""
     profiles = []
-    for team_member in team_members_data:
-        user = UserRepresentation(email=team_member['email'])
-        profile = ProfileRepresentation(
-            name=team_member['name'], company=company,
+    for team_member in asdict(team_members)['team_members']:
+        profile = create_inactive_profile(
+            user=UserRepresentation(email=team_member['email']),
+            profile=ProfileRepresentation(
+                name=team_member['name'], company=company,
+            ),
         )
-        profile_instance = create_inactive_profile(user=user, profile=profile)
-        profiles.append(profile_instance)
+        profiles.append(profile)
 
     return profiles
