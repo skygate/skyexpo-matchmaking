@@ -152,6 +152,8 @@ def create_company_profiles(
 ) -> List[Profile]:
     """Creates profiles assigned to specified company."""
     profiles = []
+    # tutaj jest błąd poniewaz nie sprawdzam czy takii profil
+    # o takim emailu istnieje
     for team_member in asdict(team_members)['team_members']:
         profile = create_inactive_profile(
             user=UserRepresentation(email=team_member['email']),

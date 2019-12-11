@@ -14,8 +14,26 @@ from typing_extensions import Final
 from server.apps.profile import constants
 from server.apps.profile.logic import managers, querysets
 
-MIN_INVESTMENT_VALUE: Final = 0
-MAX_INTEGER_FIELD_VALUE: Final = 2147483647
+MIN_INVESTMENT_VALUE: Final[int] = 0
+MAX_INTEGER_FIELD_VALUE: Final[int] = 2147483647
+
+
+def validate_profile_is_unassigned(*, profile: 'Profile', msg: str) -> None:
+    """Raise error if profile is already assigned."""
+    if profile not in Profile.objects.unassigned_profiles():
+        raise ValidationError({'profile': msg})
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    """The Custom user model used only for authentication purposes."""
+
+    email = models.EmailField(unique=True, db_index=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'  # noqa: WPS115
+
+    objects = managers.UserManager()
 
 
 class BaseInfo(models.Model):
@@ -86,29 +104,17 @@ class BaseMatchmakingInfo(models.Model):
         abstract = True
 
 
-class Company(BaseInfo, BaseMatchmakingInfo):
-    """Represents a company that want investing e.g an investment fund."""
+class Profile(models.Model):
+    """Represents the user's profile."""
 
-    name = models.CharField(max_length=255, unique=True)
-    # TODO: set 'default' attr on ImageField when I get the default logotype.
-    logotype = models.ImageField(blank=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    date_joined = models.DateTimeField(default=timezone.now)
 
-    class Meta:
-        verbose_name_plural = 'Companies'
-
-    def __str__(self) -> str:
-        return self.name
-
-
-class Startup(BaseInfo, BaseMatchmakingInfo):
-    """Represents a startup that is looking for investors."""
-
-    name = models.CharField(max_length=255, unique=True)
-    # TODO: set 'default' attr on ImageField when I get the default logotype.
-    logotype = models.ImageField(blank=True)
+    objects = querysets.ProfileQuerySet.as_manager()
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.user)
 
 
 class AngelInvestor(BaseInfo, BaseMatchmakingInfo):
@@ -117,57 +123,97 @@ class AngelInvestor(BaseInfo, BaseMatchmakingInfo):
     name = models.CharField(max_length=255)
     # TODO: set 'default' attr on ImageField when I get the default avatar.
     avatar = models.ImageField(blank=True)
+    profile = models.OneToOneField(
+        Profile, on_delete=models.CASCADE, related_name='angel_investor',
+    )
+
+    def clean(self):
+        validate_profile_is_unassigned(
+            profile=self.profile, msg=ugtl('This profile is already assigned.'),
+        )
 
     def __str__(self) -> str:
         return self.email
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    """The Custom user model used only for authentication purposes."""
+class Startup(BaseInfo, BaseMatchmakingInfo):
+    """Represents a startup that is looking for investors."""
 
-    email = models.EmailField(unique=True, db_index=True)
-    is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-
-    USERNAME_FIELD = 'email'  # noqa: WPS115
-
-    objects = managers.UserManager()
-
-
-class Profile(models.Model):
-    """Represents the user's profile."""
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    date_joined = models.DateTimeField(default=timezone.now)
-    company = models.ForeignKey(
-        Company,
-        on_delete=models.SET_NULL,
-        db_index=True,
-        null=True,
-        blank=True,
-        related_name='profiles',
-        default=None,
+    name = models.CharField(max_length=255, unique=True)
+    # TODO: set 'default' attr on ImageField when I get the default logotype.
+    logotype = models.ImageField(blank=True)
+    profiles = models.ManyToManyField(
+        Profile, through='StartupToProfile', related_name='startups',
     )
-    startup = models.ForeignKey(
-        Startup,
-        on_delete=models.SET_NULL,
-        db_index=True,
-        null=True,
-        blank=True,
-        related_name='profiles',
-        default=None,
-    )
-    angel_investor = models.OneToOneField(
-        AngelInvestor,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name='profile',
-        default=None,
-    )
-
-    objects = querysets.ProfileQuerySet.as_manager()
 
     def __str__(self) -> str:
-        return str(self.user)
+        return self.name
+
+
+class StartupToProfile(models.Model):
+    """M2M intermediary join table to represent startup-profiles relation."""
+
+    startup = models.ForeignKey(
+        Startup, on_delete=models.CASCADE, related_name='+',
+    )
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='+',
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('startup', 'profile'), name='startup_profile_unique',
+            ),
+        ]
+
+    def clean(self):
+        validate_profile_is_unassigned(
+            profile=self.profile, msg=ugtl('This profile is already assigned.'),
+        )
+
+    def __str__(self) -> str:
+        return f'{str(self.profile)} - {str(self.startup)}'
+
+
+class Company(BaseInfo, BaseMatchmakingInfo):
+    """Represents a company that want investing e.g an investment fund."""
+
+    name = models.CharField(max_length=255, unique=True)
+    # TODO: set 'default' attr on ImageField when I get the default logotype.
+    logotype = models.ImageField(blank=True)
+    profiles = models.ManyToManyField(
+        Profile, through='CompanyToProfile', related_name='companies',
+    )
+
+    class Meta:
+        verbose_name_plural = 'Companies'
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class CompanyToProfile(models.Model):
+    """M2M intermediary join table to represent company-profiles relation."""
+
+    company = models.ForeignKey(
+        Company, on_delete=models.CASCADE, related_name='+',
+    )
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='+',
+    )
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=('company', 'profile'), name='company_profile_unique',
+            ),
+        ]
+
+    def clean(self):
+        validate_profile_is_unassigned(
+            profile=self.profile, msg=ugtl('This profile is already assigned.'),
+        )
+
+    def __str__(self) -> str:
+        return f'{str(self.profile)} - {str(self.company)}'

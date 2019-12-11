@@ -22,7 +22,6 @@ def FixHMLHttpRequest(get_response):  # noqa: N802
         behavior of _not_ showing the toolbar when you POST from Javascript
         to obtain JSON data
         """
-        # pragma: no cover
         if 'text/html' in request.META.get('HTTP_ACCEPT', ''):
             if request.META.get('HTTP_X_REQUESTED_WITH', '') == 'XMLHttpRequest':  # noqa: E501
                 del request.META['HTTP_X_REQUESTED_WITH']  # noqa: WPS420

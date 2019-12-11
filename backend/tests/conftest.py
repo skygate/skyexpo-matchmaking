@@ -47,6 +47,12 @@ def company_data():
 
 
 @pytest.fixture()
+def company(db):
+    """Saves fake company to db and returns it."""
+    return CompanyFactory.create()
+
+
+@pytest.fixture()
 def company_step1_data(company_data):
     """Returns company fake data for step1 in registering form."""
     return {
