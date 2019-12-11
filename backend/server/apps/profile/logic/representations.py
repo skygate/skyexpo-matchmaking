@@ -8,7 +8,6 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from phonenumber_field.phonenumber import PhoneNumber
 
-
 User = get_user_model()
 
 
@@ -31,7 +30,7 @@ class ProfileRepresentation:
 
 @dataclass
 class TeamMembersRepresentation:
-    """Company/Startup's dteam members data"""
+    """Company/Startup's team members data"""
 
     team_members: List[Dict[str, str]]
 

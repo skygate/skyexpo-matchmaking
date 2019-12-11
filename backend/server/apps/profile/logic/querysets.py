@@ -21,7 +21,7 @@ class ProfileQuerySet(BaseQuerySetType):
         neither Company, Startup or AngelInvestor.
         """
         return self.filter(
-            models.Q(angel_investor__isnull=True) &
-            models.Q(companies__isnull=True) &
+            models.Q(angel_investor__isnull=True),
+            models.Q(companies__isnull=True),
             models.Q(startups__isnull=True),
         )

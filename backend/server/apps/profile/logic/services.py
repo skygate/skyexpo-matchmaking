@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import asdict
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -16,7 +16,7 @@ from server.apps.profile.logic.representations import (
   TeamMembersRepresentation,
   UserRepresentation,
 )
-from server.apps.profile.models import Company, Profile, CompanyToProfile
+from server.apps.profile.models import Company, CompanyToProfile, Profile
 
 User = get_user_model()
 
@@ -30,7 +30,7 @@ def check_for_duplicated_emails(*, emails: List[str]) -> None:
 
 
 def validate_company_form_step1(data: Dict[str, Any]) -> None:
-    """Run validation for company registering form step 2."""
+    """Run validation for company registering form step 1."""
     company = Company(**data)
     company.full_clean(
         exclude=[
@@ -46,10 +46,22 @@ def validate_company_form_step1(data: Dict[str, Any]) -> None:
     )
 
 
-def validate_company_form_step2(data: Dict[str, Any]) -> None:
-    """Run validation for company registering form step 1."""
-    emails = glom(data, ('team_members', ['email']))
+def validate_company_form_step2(
+    *, team_members: TeamMembersRepresentation,
+) -> None:
+    """Run validation for company registering form step 2."""
+    emails = glom(team_members.team_members, ['email'])
     check_for_duplicated_emails(emails=emails)
+    for email in emails:
+        try:
+            profile = Profile.objects.get(user__email=email)
+        except Profile.DoesNotExist:
+            continue
+        else:
+            if profile not in Profile.objects.unassigned_profiles():
+                raise ValidationError(
+                    {'team_members': ugt(f'{email} is already assigned.')},
+                )
 
 
 def validate_company_form_step3(data: Dict[str, Any]) -> None:
@@ -131,7 +143,7 @@ def create_team_members_profiles(
             profile = create_inactive_profile(
                 user=UserRepresentation(email=team_member['email']),
                 profile=ProfileRepresentation(
-                    name=team_member['name']
+                    name=team_member['name'],
                 ),
             )
         profiles.append(profile)
@@ -140,7 +152,7 @@ def create_team_members_profiles(
 
 
 def assign_profiles_to_company(
-    *, profiles: List[Profile], company: Company
+    *, profiles: List[Profile], company: Company,
 ) -> None:
     """Links specific profiles with a company."""
     for profile in profiles:

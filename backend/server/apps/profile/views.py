@@ -23,12 +23,13 @@ from server.apps.profile.logic.serializers import (
   CompanyValidateFormStep3Serializer,
 )
 from server.apps.profile.logic.services import (
-    create_company,
-    validate_company_form_step1,
-    validate_company_form_step2,
-    validate_company_form_step3,
-    create_team_members_profiles,
-    assign_profiles_to_company)
+  assign_profiles_to_company,
+  create_company,
+  create_team_members_profiles,
+  validate_company_form_step1,
+  validate_company_form_step2,
+  validate_company_form_step3,
+)
 from server.utils.exception_handler import ExceptionHandlerMixin
 
 
@@ -74,7 +75,10 @@ class CompanyValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
         serializer = CompanyValidateFormStep2Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        validate_company_form_step2(data=serializer.validated_data)
+        team_members = TeamMembersRepresentation(
+            serializer.validated_data['team_members'],
+        )
+        validate_company_form_step2(team_members=team_members)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -129,7 +133,7 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
             company_instance = create_company(company=company)
             profiles = create_team_members_profiles(team_members=team_members)
             assign_profiles_to_company(
-                profiles=profiles, company=company_instance
+                profiles=profiles, company=company_instance,
             )
 
         return Response(

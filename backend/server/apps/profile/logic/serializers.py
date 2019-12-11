@@ -24,7 +24,7 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     )
     phone_number = PhoneNumberField(
         help_text=f'We use {settings.PHONENUMBER_DB_FORMAT} format ' +
-        'for telephone numbers.', required=False,
+        'for telephone numbers.',
     )
     email = serializers.EmailField()
     country = CountryField(
@@ -32,7 +32,9 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
     )
     founding_date = serializers.DateField()
     description = serializers.CharField(allow_blank=True)
-    logotype = serializers.ImageField(required=False)
+    logotype = serializers.ImageField(
+        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
+    )
 
 
 class TeamMembersSerializer(serializers.Serializer):
