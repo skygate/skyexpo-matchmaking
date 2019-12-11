@@ -6,10 +6,8 @@ from typing import Dict, List, Optional
 
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.utils import timezone
 from phonenumber_field.phonenumber import PhoneNumber
 
-from server.apps.profile.models import Company
 
 User = get_user_model()
 
@@ -29,8 +27,6 @@ class ProfileRepresentation:
     """Profile data representation."""
 
     name: str
-    date_joined: datetime.datetime = timezone.now()
-    company: Optional[Company] = None
 
 
 @dataclass

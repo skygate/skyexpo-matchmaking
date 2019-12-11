@@ -16,7 +16,7 @@ from server.apps.profile.logic.representations import (
   TeamMembersRepresentation,
   UserRepresentation,
 )
-from server.apps.profile.models import Company, Profile
+from server.apps.profile.models import Company, Profile, CompanyToProfile
 
 User = get_user_model()
 
@@ -110,57 +110,38 @@ def create_inactive_profile(
     return profile_instance
 
 
-def update_profile(
-    *, profile: Profile, company: Optional[Company] = None,
-) -> Profile:
-    """Update existing profile with specified arguments."""
-    profile.company = company
-    profile.full_clean()
-    profile.save()
+def assign_profile_to_company(*, profile: Profile, company: Company) -> Profile:
+    """Add existing profile to company."""
+    relation = CompanyToProfile(profile=profile, company=company)
+    relation.full_clean()
+    relation.save()
 
-    return profile
+    return relation.profile
 
 
-def add_existing_profiles_to_company(
-    *, team_members: TeamMembersRepresentation, company: Company,
+def create_team_members_profiles(
+    *, team_members: TeamMembersRepresentation,
 ) -> List[Profile]:
-    """If profile exists - add it to specified company."""
+    """Creates inactive profiles if needed."""
     profiles = []
     for team_member in asdict(team_members)['team_members']:
-        profile_qs = Profile.objects.filter(
-            user__email=team_member['email'],
-        )
-        if profile_qs and not profile_qs.unassigned_profiles():
-            raise ValidationError(
-                {
-                    'team_members': ugt(
-                        'Team member is already assigned to ' +
-                        'company or startup.',
-                    ),
-                },
+        try:
+            profile = Profile.objects.get(user__email=team_member['email'])
+        except Profile.DoesNotExist:
+            profile = create_inactive_profile(
+                user=UserRepresentation(email=team_member['email']),
+                profile=ProfileRepresentation(
+                    name=team_member['name']
+                ),
             )
-        if profile_qs and profile_qs.unassigned_profiles():
-            profiles.append(
-                update_profile(profile=profile_qs[0], company=company),
-            )
-
-    return profiles
-
-
-def create_company_profiles(
-    *, team_members: TeamMembersRepresentation, company: Company,
-) -> List[Profile]:
-    """Creates profiles assigned to specified company."""
-    profiles = []
-    # tutaj jest błąd poniewaz nie sprawdzam czy takii profil
-    # o takim emailu istnieje
-    for team_member in asdict(team_members)['team_members']:
-        profile = create_inactive_profile(
-            user=UserRepresentation(email=team_member['email']),
-            profile=ProfileRepresentation(
-                name=team_member['name'], company=company,
-            ),
-        )
         profiles.append(profile)
 
     return profiles
+
+
+def assign_profiles_to_company(
+    *, profiles: List[Profile], company: Company
+) -> None:
+    """Links specific profiles with a company."""
+    for profile in profiles:
+        assign_profile_to_company(profile=profile, company=company)

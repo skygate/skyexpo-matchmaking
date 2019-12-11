@@ -23,13 +23,12 @@ from server.apps.profile.logic.serializers import (
   CompanyValidateFormStep3Serializer,
 )
 from server.apps.profile.logic.services import (
-  add_existing_profiles_to_company,
-  create_company,
-  create_company_profiles,
-  validate_company_form_step1,
-  validate_company_form_step2,
-  validate_company_form_step3,
-)
+    create_company,
+    validate_company_form_step1,
+    validate_company_form_step2,
+    validate_company_form_step3,
+    create_team_members_profiles,
+    assign_profiles_to_company)
 from server.utils.exception_handler import ExceptionHandlerMixin
 
 
@@ -128,13 +127,9 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
 
         with transaction.atomic():
             company_instance = create_company(company=company)
-            add_existing_profiles_to_company(
-                team_members=team_members,
-                company=company_instance,
-            )
-            create_company_profiles(
-                team_members=team_members,
-                company=company_instance,
+            profiles = create_team_members_profiles(team_members=team_members)
+            assign_profiles_to_company(
+                profiles=profiles, company=company_instance
             )
 
         return Response(
