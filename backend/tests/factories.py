@@ -75,7 +75,9 @@ class BaseMatchmakingInfoFactory(factory.Factory):
         abstract = True
 
 
-class CompanyFactory(BaseInfoFactory, BaseMatchmakingInfoFactory):
+class CompanyFactory(
+    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+):
     """Factory for Company model."""
 
     class Meta:
@@ -85,7 +87,9 @@ class CompanyFactory(BaseInfoFactory, BaseMatchmakingInfoFactory):
     logotype = factory.django.ImageField()
 
 
-class StartupFactory(BaseInfoFactory, BaseMatchmakingInfoFactory):
+class StartupFactory(
+    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+):
     """Factory for Startup model."""
 
     class Meta:
@@ -95,7 +99,9 @@ class StartupFactory(BaseInfoFactory, BaseMatchmakingInfoFactory):
     logotype = factory.django.ImageField()
 
 
-class AngelInvestorFactory(BaseInfoFactory, BaseMatchmakingInfoFactory):
+class AngelInvestorFactory(
+    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+):
     """Factory for AngelInvestor model."""
 
     class Meta:
@@ -103,6 +109,7 @@ class AngelInvestorFactory(BaseInfoFactory, BaseMatchmakingInfoFactory):
 
     name = factory.Faker('name')
     avatar = factory.django.ImageField()
+    profile = factory.SubFactory('tests.factories.ProfileFactory')
 
 
 class UserFactory(factory.DjangoModelFactory):

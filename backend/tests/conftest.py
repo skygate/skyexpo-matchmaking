@@ -13,7 +13,7 @@ from django.contrib.auth import get_user_model
 from django.test import Client
 from rest_framework.test import APIClient
 
-from tests.factories import CompanyFactory, ProfileFactory
+from tests.factories import CompanyFactory, ProfileFactory, StartupFactory
 
 User = get_user_model()
 
@@ -50,6 +50,12 @@ def company_data():
 def company(db):
     """Saves fake company to db and returns it."""
     return CompanyFactory.create()
+
+
+@pytest.fixture()
+def startup(db):
+    """Saves fake startup to db and returns it."""
+    return StartupFactory.create()
 
 
 @pytest.fixture()

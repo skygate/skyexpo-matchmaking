@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import asdict
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -16,7 +16,7 @@ from server.apps.profile.logic.representations import (
   TeamMembersRepresentation,
   UserRepresentation,
 )
-from server.apps.profile.models import Company, Profile, CompanyToProfile
+from server.apps.profile.models import Company, CompanyToProfile, Profile
 
 User = get_user_model()
 
@@ -131,7 +131,7 @@ def create_team_members_profiles(
             profile = create_inactive_profile(
                 user=UserRepresentation(email=team_member['email']),
                 profile=ProfileRepresentation(
-                    name=team_member['name']
+                    name=team_member['name'],
                 ),
             )
         profiles.append(profile)
@@ -140,7 +140,7 @@ def create_team_members_profiles(
 
 
 def assign_profiles_to_company(
-    *, profiles: List[Profile], company: Company
+    *, profiles: List[Profile], company: Company,
 ) -> None:
     """Links specific profiles with a company."""
     for profile in profiles:
