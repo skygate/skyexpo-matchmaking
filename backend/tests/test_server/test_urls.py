@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
+from rest_framework.reverse import reverse
 
 
 def test_admin_unauthorized(client):
@@ -14,6 +15,13 @@ def test_admin_unauthorized(client):
 def test_health_check(client):
     """This test ensures that health check is accessible."""
     response = client.get('/health/')
+
+    assert response.status_code == 200
+
+
+def test_documentation(client):
+    """This test ensures that ReDoc documentation is accessible."""
+    response = client.get(reverse('schema-redoc'))
 
     assert response.status_code == 200
 
