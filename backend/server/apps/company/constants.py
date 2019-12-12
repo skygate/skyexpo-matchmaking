@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from typing import List, Tuple
-
 from django.utils.translation import ugettext_lazy as ugtl
 from typing_extensions import Final
-
-ChoicesType = List[Tuple[str, str]]
 
 
 class Sector:
@@ -15,7 +11,7 @@ class Sector:
     IOT_AND_SENSORS = 'IOT_AND_SENSORS'
     AGRICULTURE = 'AGRICULTURE'
 
-    CHOICES: Final[ChoicesType] = [
+    CHOICES: Final = [
         (AI_AND_ROBOTICS, ugtl('AI and robotics')),
         (IOT_AND_SENSORS, ugtl('IoT and sensors')),
         (AGRICULTURE, ugtl('Agriculture')),
@@ -35,7 +31,7 @@ class Industry:
     MOBILITY = 'MOBILITY'
     ENERGY = 'ENERGY'
 
-    CHOICES: Final[ChoicesType] = [
+    CHOICES: Final = [
         (BUSINESS_ANALYTICS, ugtl('Business & Analytics')),
         (FINANCIAL_SERVICES, ugtl('Financial Services & Security')),
         (ENTERTAINMENT, ugtl('Entertainment and Mobile')),
@@ -56,7 +52,7 @@ class CompanyStage:
     EARLY_STAGE = 'EARLY_STAGE'
     SEED_STAGE = 'SEED_STAGE'
 
-    CHOICES: Final[ChoicesType] = [
+    CHOICES: Final = [
         (CONCEPT_STAGE, ugtl('Concept stage')),
         (GROWTH_STAGE, ugtl('Growth stage (generating revenue)')),
         (EARLY_STAGE, ugtl('Early stage (market launch)')),
@@ -71,7 +67,7 @@ class ProductType:
     HARDWARE = 'HARDWARE'
     OTHER = 'OTHER'
 
-    CHOICES: Final[ChoicesType] = [
+    CHOICES: Final = [
         (SOFTWARE, ugtl('Software')),
         (HARDWARE, ugtl('Hardware')),
         (OTHER, ugtl('Other')),
@@ -86,7 +82,7 @@ class InvestmentStage:
     VENTURE_CAPITAL = 'VENTURE_CAPITAL'
     ACCELERATOR = 'ACCELERATOR'
 
-    CHOICES: Final[ChoicesType] = [
+    CHOICES: Final = [
         (BUSINESS_ANGELS, ugtl('Business Angels')),
         (INCUBATOR, ugtl('Incubator')),
         (VENTURE_CAPITAL, ugtl('Venture Capital')),
@@ -100,7 +96,7 @@ class BusinessType:
     B2B = 'B2B'
     B2C = 'B2C'
 
-    CHOICES: Final[ChoicesType] = [
+    CHOICES: Final = [
         (B2B, ugtl('Business to Business')),
         (B2C, ugtl('Business to Customer')),
     ]

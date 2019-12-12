@@ -2,28 +2,16 @@
 
 import pytest
 
-from server.apps.profile.models import (
-  CompanyToProfile,
-  Profile,
-  StartupToProfile,
-)
+from server.apps.profile.models import Profile
 from tests.factories import ProfileFactory
 
 
 @pytest.mark.django_db
-def test_query_for_unassigned_profiles(company, startup):
-    """
-    Filters for unassigned profiles. Unassigned means that profile is not
-    linked with any Company / Startup or AngelInvestor.
-    """
-    unassigned_profiles = [ProfileFactory.create(), ProfileFactory.create()]
+def test_filter_active_profiles(django_assert_num_queries):
+    """Ensures that 'objects.active_profiles' returns only active profiles."""
+    ProfileFactory.create(company=None)
+    ProfileFactory.create()
 
-    profile_assigned1 = ProfileFactory.create()
-    CompanyToProfile.objects.create(profile=profile_assigned1, company=company)
-
-    assert list(Profile.objects.unassigned_profiles()) == unassigned_profiles
-
-    profile_assigned2 = ProfileFactory.create()
-    StartupToProfile.objects.create(profile=profile_assigned2, startup=startup)
-
-    assert list(Profile.objects.unassigned_profiles()) == unassigned_profiles
+    with django_assert_num_queries(1):
+        queryset = Profile.objects.active_profiles()
+        assert queryset.count() == 1

@@ -6,9 +6,9 @@ from typing import List, Tuple
 
 import factory.fuzzy  # noqa: WPS301
 from factory import LazyFunction
-from psycopg2.extras import NumericRange
+from psycopg2._range import NumericRange  # noqa: WPS436
 
-from server.apps.profile.constants import (
+from server.apps.company.constants import (
   BusinessType,
   CompanyStage,
   Industry,
@@ -16,15 +16,8 @@ from server.apps.profile.constants import (
   ProductType,
   Sector,
 )
-from server.apps.profile.models import (
-  MAX_INTEGER_FIELD_VALUE,
-  MIN_INVESTMENT_VALUE,
-  AngelInvestor,
-  Company,
-  Profile,
-  Startup,
-  User,
-)
+from server.apps.company.models import Company
+from server.apps.profile.models import Profile, User
 
 
 def get_multiple_choices(
@@ -35,23 +28,18 @@ def get_multiple_choices(
     return [choice[0] for choice in choices[:choices_len]]
 
 
-class BaseInfoFactory(factory.Factory):
-    """Factory for BaseInfo model."""
+class CompanyFactory(factory.DjangoModelFactory):  # noqa: D101
+    class Meta:
+        model = Company
 
+    name = factory.Faker('name')
     email = factory.Faker('safe_email')
     website = factory.Faker('uri')
+    description = factory.Faker('sentence')
+    founding_date = factory.Faker('date')
     phone_number = '+48 508223012'
     country = 'PL'
-    founding_date = factory.Faker('date')
-    description = factory.Faker('sentence')
-
-    class Meta:
-        abstract = True
-
-
-class BaseMatchmakingInfoFactory(factory.Factory):
-    """Factory for BaseMatchemakingInfo model."""
-
+    logotype = factory.django.ImageField()
     stage = factory.fuzzy.FuzzyChoice(
         choice[0] for choice in CompanyStage.CHOICES
     )
@@ -63,58 +51,14 @@ class BaseMatchmakingInfoFactory(factory.Factory):
     investment_stage = LazyFunction(
         partial(get_multiple_choices, InvestmentStage.CHOICES),
     )
-    investment_size = NumericRange(
-        MIN_INVESTMENT_VALUE, MAX_INTEGER_FIELD_VALUE,
-    )
+    investment_size = NumericRange(0, 100)
     is_product_on_market = True
     business_type = factory.fuzzy.FuzzyChoice(
         choice[0] for choice in BusinessType.CHOICES
     )
 
-    class Meta:
-        abstract = True
 
-
-class CompanyFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
-):
-    """Factory for Company model."""
-
-    class Meta:
-        model = Company
-
-    name = factory.Faker('name')
-    logotype = factory.django.ImageField()
-
-
-class StartupFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
-):
-    """Factory for Startup model."""
-
-    class Meta:
-        model = Startup
-
-    name = factory.Faker('name')
-    logotype = factory.django.ImageField()
-
-
-class AngelInvestorFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
-):
-    """Factory for AngelInvestor model."""
-
-    class Meta:
-        model = AngelInvestor
-
-    name = factory.Faker('name')
-    avatar = factory.django.ImageField()
-    profile = factory.SubFactory('tests.factories.ProfileFactory')
-
-
-class UserFactory(factory.DjangoModelFactory):
-    """Factory for User model."""
-
+class UserFactory(factory.DjangoModelFactory):  # noqa: D101
     class Meta:
         model = User
 
@@ -123,11 +67,10 @@ class UserFactory(factory.DjangoModelFactory):
     is_active = True
 
 
-class ProfileFactory(factory.DjangoModelFactory):
-    """Factory for Profile model."""
-
+class ProfileFactory(factory.DjangoModelFactory):  # noqa: D101
     class Meta:
         model = Profile
 
     user = factory.SubFactory(UserFactory)
     name = factory.Faker('name')
+    company = factory.SubFactory(CompanyFactory)

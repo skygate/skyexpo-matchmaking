@@ -13,7 +13,7 @@ from django.contrib.auth import get_user_model
 from django.test import Client
 from rest_framework.test import APIClient
 
-from tests.factories import CompanyFactory, ProfileFactory, StartupFactory
+from tests.factories import CompanyFactory, ProfileFactory
 
 User = get_user_model()
 
@@ -47,18 +47,6 @@ def company_data():
 
 
 @pytest.fixture()
-def company(db):
-    """Saves fake company to db and returns it."""
-    return CompanyFactory.create()
-
-
-@pytest.fixture()
-def startup(db):
-    """Saves fake startup to db and returns it."""
-    return StartupFactory.create()
-
-
-@pytest.fixture()
 def company_step1_data(company_data):
     """Returns company fake data for step1 in registering form."""
     return {
@@ -76,13 +64,13 @@ def company_step1_data(company_data):
 @pytest.fixture()
 def company_step2_data(user, company_data):
     """Returns company fake data for step2 in registering form."""
-    profile1 = ProfileFactory.build()
-    profile2 = ProfileFactory.build()
+    profile = ProfileFactory.build()
 
     return {
+        'founder_name': 'Founder name',
+        'founder_email': user.email,
         'team_members': [
-            {'name': profile1.name, 'email': profile1.user.email},
-            {'name': profile2.name, 'email': profile2.user.email},
+            {'name': profile.name, 'email': profile.user.email},
         ],
     }
 
@@ -94,7 +82,7 @@ def company_step3_data(company_data):
         'sectors': company_data['sectors'],
         'industries': company_data['industries'],
         'product_types': company_data['product_types'],
-        'stage': company_data['stage'],
+        'company_stage': company_data['stage'],
         'investment_stage': company_data['investment_stage'],
         'business_type': company_data['business_type'],
         'is_product_on_market': company_data['is_product_on_market'],
