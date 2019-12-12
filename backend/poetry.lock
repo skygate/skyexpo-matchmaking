@@ -407,7 +407,7 @@ description = "An international phone number field for django models."
 name = "django-phonenumber-field"
 optional = false
 python-versions = ">=3.5"
-version = "3.0.1"
+version = "4.0.0"
 
 [package.dependencies]
 Django = ">=1.11.3"
@@ -2149,7 +2149,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "a1033e1ca032674084a7cef0c673aea38a9a63ac0509bd97aae50771ba3889ff"
+content-hash = "c0d34f6d963f9e3ebbffbb8b65c2b13227e4a146eda9e1ec4d4da59cb5acf9bf"
 python-versions = "3.7.4"
 
 [metadata.hashes]
@@ -2193,7 +2193,7 @@ django-feature-policy = ["32cdd45521e77fbb2f8dc7a6fb984da98024abf9347bb94b6ad3d2
 django-health-check = ["06efac9dcd30eb83c3d0184b834d7d86467bdb710da361f20c2c28853d7e6a5e", "c9bcc1b3ef77db3a9ba2d33585916707963cbb958220689f77741235f5fa553a"]
 django-http-referrer-policy = ["3a867e2ac3f83b162a2bc1241dc2ed209e555e709e6566fef6bb1f716c733c00", "9847711f55991a9efd3a47e272370da0986c9dac4916e1ab1b4b6e1885b69365"]
 django-ipware = ["a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"]
-django-phonenumber-field = ["1ab19f723928582fed412bd9844221fa4ff466276d8526b8b4a9913ee1487c5e", "794ebbc3068a7af75aa72a80cb0cec67e714ff8409a965968040f1fd210b2d97"]
+django-phonenumber-field = ["d4580cc3352f4433962825f9927e6669852c1b40ec484fcb5a74064dabc1201a"]
 django-querycount = ["8f5123d78716ff0704f2373e746a7200b8d8417798ce4a99bf2de87e3768f9ce"]
 django-split-settings = ["db4d24a2da2f17e0aa97437f052eda7d043a3e2eaa9c8a85a171271e0f91852b", "f5a5c6431ab00a78959f7930a79faaf488b2fe8a4eddc4297ef8cd593e74868d"]
 django-stubs = ["cd6a7333d518b9168f001b8a31c4ea89a91dea40a9dd1535c798635f69a5f80a", "e3673348a42c7259e81a4ea141dae2b2e711220ec631a6215ba9dc23cdcabdf4"]
