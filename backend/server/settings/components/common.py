@@ -36,7 +36,6 @@ INSTALLED_APPS: Tuple[str, ...] = (
     'django.contrib.admin',
 
     # Your apps go here:
-    'server.apps.company',
     'server.apps.profile',
 
     # Security:
