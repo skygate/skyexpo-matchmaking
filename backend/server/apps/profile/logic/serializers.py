@@ -16,13 +16,12 @@ from server.apps.profile.models import Company, Profile
 User = get_user_model()
 
 
-class CompanyValidateFormStep1Serializer(serializers.Serializer):
+class MainInfoCommonSerializer(serializers.Serializer):
     """
-    Validates the input data schema in the first step of the form,
-    which registers company.
+    Common fields used in 'Main info' step in register forms
+    for Startup, Company and AngelInvestor.
     """
 
-    name = serializers.CharField(max_length=255)
     website = serializers.URLField(
         allow_blank=True, help_text='Should be prefixed with http(s)://',
     )
@@ -30,41 +29,17 @@ class CompanyValidateFormStep1Serializer(serializers.Serializer):
         help_text=f'We use {settings.PHONENUMBER_DB_FORMAT} format ' +
         'for telephone numbers.',
     )
-    email = serializers.EmailField()
     country = CountryField(
         help_text='We use ISO 3166-1 standard for country codes.',
     )
     founding_date = serializers.DateField()
     description = serializers.CharField(allow_blank=True)
-    logotype = serializers.ImageField(
-        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
-    )
 
 
-class TeamMembersSerializer(serializers.Serializer):
+class MatchmakingCommonSerializer(serializers.Serializer):
     """
-    Validates the input data schema for 'team members' in the second
-    step of the form, which registers company.
-    Intended to use in 'CompanyValidateFormStep2Serializer'.
-    """
-
-    name = serializers.CharField(max_length=255)
-    email = serializers.EmailField()
-
-
-class CompanyValidateFormStep2Serializer(serializers.Serializer):
-    """
-    Validates the input data schema in the second step of the form,
-    which registers company.
-    """
-
-    team_members = TeamMembersSerializer(many=True, required=True)
-
-
-class CompanyValidateFormStep3Serializer(serializers.Serializer):
-    """
-    Validates the input data schema in the third step of the form,
-    which registers company.
+    Common fields used in 'Matching parameters' step in register forms
+    for Startup, Company and AngelInvestor.
     """
 
     industries = serializers.ListField()
@@ -80,6 +55,49 @@ class CompanyValidateFormStep3Serializer(serializers.Serializer):
     )
     is_product_on_market = serializers.BooleanField()
     business_type = serializers.ChoiceField(choices=BusinessType.CHOICES)
+
+
+class CompanyValidateFormStep1Serializer(MainInfoCommonSerializer):
+    """
+    Validates the input data schema in the first step of the form,
+    which registers company.
+    """
+
+    name = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    logotype = serializers.ImageField(
+        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
+    )
+
+
+class TeamMembersSerializer(serializers.Serializer):
+    """
+    Validates the input data schema for 'team members' in the second
+    step of the form, which registers company.
+    Intended to use in 'CompanyValidateFormStep2Serializer' and
+    'StartupValidateFormStep2Serializer'.
+    """
+
+    name = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+
+
+class CompanyValidateFormStep2Serializer(serializers.Serializer):
+    """
+    Validates the input data schema in the second step of the form,
+    which registers company.
+    """
+
+    team_members = TeamMembersSerializer(many=True, required=True)
+
+
+class CompanyValidateFormStep3Serializer(MatchmakingCommonSerializer):
+    """
+    Validates the input data schema in the third step of the form,
+    which registers company.
+    """
+
+    pass  # noqa: WPS604, WPS420
 
 
 class CompanyCreateInputSerializer(
