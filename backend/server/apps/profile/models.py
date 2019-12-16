@@ -9,13 +9,13 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as ugtl
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
-from typing_extensions import Final
 
 from server.apps.profile import constants
+from server.apps.profile.constants import (
+  MAX_INTEGER_FIELD_VALUE,
+  MIN_INVESTMENT_VALUE,
+)
 from server.apps.profile.logic import managers, querysets
-
-MIN_INVESTMENT_VALUE: Final[int] = 0
-MAX_INTEGER_FIELD_VALUE: Final[int] = 2147483647
 
 
 def validate_profile_is_unassigned(*, profile: 'Profile', msg: str) -> None:
@@ -42,7 +42,6 @@ class BaseInfo(models.Model):
     We group their common fields in this model.
     """
 
-    email = models.EmailField(unique=True)
     website = models.URLField(blank=True)
     phone_number = PhoneNumberField()
     country = CountryField()
@@ -120,7 +119,6 @@ class Profile(models.Model):
 class AngelInvestor(BaseInfo, BaseMatchmakingInfo):
     """Represents an individual who provides financial backing for startups."""
 
-    name = models.CharField(max_length=255)
     # TODO: set 'default' attr on ImageField when I get the default avatar.
     avatar = models.ImageField(blank=True)
     profile = models.OneToOneField(
@@ -133,13 +131,14 @@ class AngelInvestor(BaseInfo, BaseMatchmakingInfo):
         )
 
     def __str__(self) -> str:
-        return self.email
+        return self.profile.user.email
 
 
 class Startup(BaseInfo, BaseMatchmakingInfo):
     """Represents a startup that is looking for investors."""
 
     name = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(unique=True)
     # TODO: set 'default' attr on ImageField when I get the default logotype.
     logotype = models.ImageField(blank=True)
     profiles = models.ManyToManyField(
@@ -180,6 +179,7 @@ class Company(BaseInfo, BaseMatchmakingInfo):
     """Represents a company that want investing e.g an investment fund."""
 
     name = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(unique=True)
     # TODO: set 'default' attr on ImageField when I get the default logotype.
     logotype = models.ImageField(blank=True)
     profiles = models.ManyToManyField(
@@ -191,6 +191,9 @@ class Company(BaseInfo, BaseMatchmakingInfo):
 
     def __str__(self) -> str:
         return self.name
+
+    def get_profiles(self):
+        return Profile.objects.filter(companies=self.pk).select_related('user')
 
 
 class CompanyToProfile(models.Model):

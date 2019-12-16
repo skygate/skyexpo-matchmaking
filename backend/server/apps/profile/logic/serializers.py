@@ -6,8 +6,12 @@ from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
 from rest_framework import serializers
 
-from server.apps.profile.constants import BusinessType, CompanyStage
-from server.apps.profile.models import MAX_INTEGER_FIELD_VALUE, Company
+from server.apps.profile.constants import (
+  MAX_INTEGER_FIELD_VALUE,
+  BusinessType,
+  CompanyStage,
+)
+from server.apps.profile.models import Company, Profile
 
 User = get_user_model()
 
@@ -92,8 +96,23 @@ class CompanyCreateInputSerializer(
     pass  # noqa: WPS604, WPS420
 
 
+class ProfileNestedOutputSerializer(serializers.ModelSerializer):
+    """Serializes nested read-only output for the Profile model."""
+
+    email = serializers.EmailField(source='user.email', read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'name', 'email']
+        read_only_fields = fields
+
+
 class CompanyCreateOutputSerializer(serializers.ModelSerializer):
     """Serializes read-only output for the Company model."""
+
+    profiles = ProfileNestedOutputSerializer(
+        source='get_profiles', many=True, read_only=True,
+    )
 
     class Meta:
         model = Company
@@ -118,4 +137,3 @@ class CompanyCreateOutputSerializer(serializers.ModelSerializer):
             'profiles',
         ]
         read_only_fields = fields
-        depth = 1  # TODO: Change to NestedSerializer

@@ -38,7 +38,6 @@ def get_multiple_choices(
 class BaseInfoFactory(factory.Factory):
     """Factory for BaseInfo model."""
 
-    email = factory.Faker('safe_email')
     website = factory.Faker('uri')
     phone_number = '+48 508223012'
     country = 'PL'
@@ -84,6 +83,7 @@ class CompanyFactory(
         model = Company
 
     name = factory.Faker('name')
+    email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
 
 
@@ -96,6 +96,7 @@ class StartupFactory(
         model = Startup
 
     name = factory.Faker('name')
+    email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
 
 
@@ -107,7 +108,6 @@ class AngelInvestorFactory(
     class Meta:
         model = AngelInvestor
 
-    name = factory.Faker('name')
     avatar = factory.django.ImageField()
     profile = factory.SubFactory('tests.factories.ProfileFactory')
 

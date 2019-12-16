@@ -7,6 +7,9 @@ from typing_extensions import Final
 
 ChoicesType = List[Tuple[str, str]]
 
+MIN_INVESTMENT_VALUE: Final[int] = 0
+MAX_INTEGER_FIELD_VALUE: Final[int] = 2147483647
+
 
 class Sector:
     """Company's sector choices."""
