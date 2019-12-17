@@ -10,6 +10,9 @@ from server.apps.profile.views import (
   CompanyValidateFormStep1View,
   CompanyValidateFormStep2View,
   CompanyValidateFormStep3View,
+  StartupValidateFormStep1View,
+  StartupValidateFormStep2View,
+  StartupValidateFormStep3View,
 )
 
 urlpatterns = [
@@ -24,6 +27,8 @@ urlpatterns = [
     path('profiles/', include('server.apps.profile.urls')),
 
     # Web-app forms
+
+    # Company
     path(
         'form/company/step-1/',
         CompanyValidateFormStep1View.as_view(),
@@ -38,5 +43,21 @@ urlpatterns = [
         'form/company/step-3/',
         CompanyValidateFormStep3View.as_view(),
         name='validate-form-company-step-3',
+    ),
+    # Startup
+    path(
+        'form/startup/step-1/',
+        StartupValidateFormStep1View.as_view(),
+        name='validate-form-startup-step-1',
+    ),
+    path(
+        'form/startup/step-2/',
+        StartupValidateFormStep2View.as_view(),
+        name='validate-form-startup-step-2',
+    ),
+    path(
+        'form/startup/step-3/',
+        StartupValidateFormStep3View.as_view(),
+        name='validate-form-startup-step-3',
     ),
 ]

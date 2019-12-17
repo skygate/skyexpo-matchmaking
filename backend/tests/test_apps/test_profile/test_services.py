@@ -6,19 +6,23 @@ from django.core.exceptions import ValidationError
 from server.apps.profile.logic.representations import (
   CompanyRepresentation,
   ProfileRepresentation,
+  StartupRepresentation,
   TeamMembersRepresentation,
   UserRepresentation,
 )
 from server.apps.profile.logic.services import (
   assign_profile_to_company,
+  assign_profile_to_startup,
   assign_profiles_to_company,
+  assign_profiles_to_startup,
   check_for_duplicated_emails,
   create_company,
   create_inactive_profile,
+  create_startup,
   create_team_members_profiles,
-  validate_company_form_step2,
+  validate_team_members_form,
 )
-from server.apps.profile.models import Company, Profile
+from server.apps.profile.models import Company, Profile, Startup
 from tests.factories import ProfileFactory
 
 
@@ -33,7 +37,7 @@ def test_check_for_duplicated_emails():
 
 
 @pytest.mark.django_db
-def test_validate_company_form_step2(company):
+def test_validate_team_members_form(company):
     """Checks if profiles are already assigned."""
     profile1 = ProfileFactory.create()
     profile2 = ProfileFactory.create()
@@ -48,7 +52,7 @@ def test_validate_company_form_step2(company):
     with pytest.raises(
         ValidationError, match=f'{profile1.user.email} is already assigned.',
     ):
-        validate_company_form_step2(team_members=team_members_repr)
+        validate_team_members_form(team_members=team_members_repr)
 
 
 @pytest.mark.django_db
@@ -132,3 +136,40 @@ def test_create_team_members_for_existing_profile():
 
     assert Profile.objects.count() == 2
     assert set(Profile.objects.all()) == set(profiles)
+
+
+@pytest.mark.django_db
+def test_create_startup(company_data):
+    """Ensures function creates startup from StartupRepresentation correctly."""
+    company_data.pop('investment_size')
+    startup_repr = StartupRepresentation(
+        **company_data, min_investment_size=1, max_investment_size=2,
+    )
+
+    startup = create_startup(startup=startup_repr)
+
+    assert Startup.objects.count() == 1
+    assert list(Startup.objects.all()) == [startup]
+
+
+@pytest.mark.django_db
+def test_assign_profile_to_startup(startup):
+    """Assigns existing profile to existing startup."""
+    profile = ProfileFactory.create()
+
+    assigned_profile = assign_profile_to_startup(
+        profile=profile, startup=startup,
+    )
+
+    assert assigned_profile.startups.first() == startup
+
+
+@pytest.mark.django_db
+def test_assign_profiles_to_startup(startup):
+    """Assigns many profiles to one startup."""
+    profiles = [ProfileFactory.create(), ProfileFactory.create()]
+
+    assign_profiles_to_startup(profiles=profiles, startup=startup)
+
+    assert profiles[0].startups.first() == startup
+    assert profiles[1].startups.first() == startup

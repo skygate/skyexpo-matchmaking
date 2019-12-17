@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from server.apps.profile.views import CompanyCreateView
+from server.apps.profile.views import CompanyCreateView, StartupCreateView
 
 app_name = 'profile'
 
@@ -11,5 +11,10 @@ urlpatterns = [
         'companies/',
         CompanyCreateView.as_view(),
         name='company-create',
+    ),
+    path(
+        'startups/',
+        StartupCreateView.as_view(),
+        name='startup-create',
     ),
 ]

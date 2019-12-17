@@ -155,3 +155,80 @@ class CompanyCreateOutputSerializer(serializers.ModelSerializer):
             'profiles',
         ]
         read_only_fields = fields
+
+
+class StartupValidateFormStep1Serializer(MainInfoCommonSerializer):
+    """
+    Validates the input data schema in the first step of the form,
+    which registers startup.
+    """
+
+    name = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    logotype = serializers.ImageField(
+        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
+    )
+
+
+class StartupValidateFormStep2Serializer(serializers.Serializer):
+    """
+    Validates the input data schema in the second step of the form,
+    which registers startup.
+    """
+
+    team_members = TeamMembersSerializer(many=True, required=True)
+
+
+class StartupValidateFormStep3Serializer(MatchmakingCommonSerializer):
+    """
+    Validates the input data schema in the third step of the form,
+    which registers startup.
+    """
+
+    pass  # noqa: WPS604, WPS420
+
+
+class StartupCreateInputSerializer(
+    StartupValidateFormStep1Serializer,
+    StartupValidateFormStep2Serializer,
+    StartupValidateFormStep3Serializer,
+):
+    """
+    In the last step of the form when the user triggers the 'Finish' button,
+    the client combines together every field from the previous steps and sends
+    it to the API. This serializer validates this input schema.
+    """
+
+    pass  # noqa: WPS604, WPS420
+
+
+class StartupCreateOutputSerializer(serializers.ModelSerializer):
+    """Serializes read-only output for the Startup model."""
+
+    profiles = ProfileNestedOutputSerializer(
+        source='get_profiles', many=True, read_only=True,
+    )
+
+    class Meta:
+        model = Company
+        fields = [
+            'id',
+            'name',
+            'email',
+            'logotype',
+            'website',
+            'phone_number',
+            'country',
+            'founding_date',
+            'description',
+            'stage',
+            'sectors',
+            'industries',
+            'product_types',
+            'investment_stage',
+            'is_product_on_market',
+            'business_type',
+            'investment_size',
+            'profiles',
+        ]
+        read_only_fields = fields

@@ -148,6 +148,9 @@ class Startup(BaseInfo, BaseMatchmakingInfo):
     def __str__(self) -> str:
         return self.name
 
+    def get_profiles(self):
+        return Profile.objects.filter(startups=self.pk).select_related('user')
+
 
 class StartupToProfile(models.Model):
     """M2M intermediary join table to represent startup-profiles relation."""
