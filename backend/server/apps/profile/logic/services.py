@@ -13,10 +13,18 @@ from psycopg2.extras import NumericRange
 from server.apps.profile.logic.representations import (
   CompanyRepresentation,
   ProfileRepresentation,
+  StartupRepresentation,
   TeamMembersRepresentation,
   UserRepresentation,
 )
-from server.apps.profile.models import Company, CompanyToProfile, Profile
+from server.apps.profile.models import (
+  BaseMatchmakingInfo,
+  Company,
+  CompanyToProfile,
+  Profile,
+  Startup,
+  StartupToProfile,
+)
 
 User = get_user_model()
 
@@ -46,10 +54,10 @@ def validate_company_form_step1(data: Dict[str, Any]) -> None:
     )
 
 
-def validate_company_form_step2(
+def validate_team_members_form(
     *, team_members: TeamMembersRepresentation,
 ) -> None:
-    """Run validation for company registering form step 2."""
+    """Run validation for company's/startup's team members form"""
     emails = glom(team_members.team_members, ['email'])
     check_for_duplicated_emails(emails=emails)
     for email in emails:
@@ -64,26 +72,15 @@ def validate_company_form_step2(
                 )
 
 
-def validate_company_form_step3(data: Dict[str, Any]) -> None:
-    """Run validation for company registering form step 3."""
+def validate_matchmaking_form_step3(data: Dict[str, Any]) -> None:
+    """Run validation for matchmaking fields in registering form step 3."""
     min_investment = data.pop('min_investment_size')
     max_investment = data.pop('max_investment_size')
 
     investment_size = NumericRange(min_investment, max_investment)
-    company = Company(**data, investment_size=investment_size)
+    match_info = BaseMatchmakingInfo(**data, investment_size=investment_size)
 
-    company.full_clean(
-        exclude=[
-            'name',
-            'email',
-            'website',
-            'phone_number',
-            'country',
-            'founding_date',
-            'description',
-            'logotype',
-        ],
-    )
+    match_info.full_clean()
 
 
 def create_company(*, company: CompanyRepresentation) -> Company:
@@ -157,3 +154,52 @@ def assign_profiles_to_company(
     """Links specific profiles with a company."""
     for profile in profiles:
         assign_profile_to_company(profile=profile, company=company)
+
+
+def validate_startup_form_step1(data: Dict[str, Any]) -> None:
+    """Run validation for startup registering form step 1."""
+    startup = Startup(**data)
+    startup.full_clean(
+        exclude=[
+            'industries',
+            'sectors',
+            'product_types',
+            'stage',
+            'investment_stage',
+            'investment_size',
+            'is_product_on_market',
+            'business_type',
+        ],
+    )
+
+
+def assign_profile_to_startup(*, profile: Profile, startup: Startup) -> Profile:
+    """Add existing profile to startup."""
+    relation = StartupToProfile(profile=profile, startup=startup)
+    relation.full_clean()
+    relation.save()
+
+    return relation.profile
+
+
+def assign_profiles_to_startup(
+    *, profiles: List[Profile], startup: Startup,
+) -> None:
+    """Links specific profiles with a startup."""
+    for profile in profiles:
+        assign_profile_to_startup(profile=profile, startup=startup)
+
+
+def create_startup(*, startup: StartupRepresentation) -> Startup:
+    """Creates startup."""
+    company_data = asdict(startup)
+    investment_size = NumericRange(
+        lower=company_data.pop('min_investment_size'),
+        upper=company_data.pop('max_investment_size'),
+    )
+
+    startup_instance = Startup(**company_data, investment_size=investment_size)
+    startup_instance.full_clean()
+    startup_instance.save()
+
+    return startup_instance

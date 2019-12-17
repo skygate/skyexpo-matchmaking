@@ -7,6 +7,10 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from psycopg2.extras import NumericRange
 
+from server.apps.profile.logic.services import (
+  assign_profiles_to_company,
+  assign_profiles_to_startup,
+)
 from server.apps.profile.models import (
   Company,
   CompanyToProfile,
@@ -42,7 +46,7 @@ def test_angel_investor_string_representation():
     """Ensures that the angel investor's email is its representation."""
     angel_investor = AngelInvestorFactory.build()
 
-    assert str(angel_investor) == angel_investor.email
+    assert str(angel_investor) == angel_investor.profile.user.email
 
 
 def test_company_string_representation():
@@ -148,3 +152,27 @@ def test_company_to_profile_clean(validate_profile_is_unassigned_mock):
 
     company_to_profile.clean()
     validate_profile_is_unassigned_mock.assert_called()
+
+
+@pytest.mark.django_db
+def test_company_get_profiles(company):
+    """Ensures that `get_profiles` method returns profiles."""
+    profiles = [
+        ProfileFactory.create(),
+        ProfileFactory.create(),
+    ]
+    assign_profiles_to_company(company=company, profiles=profiles)
+
+    assert list(company.get_profiles()) == profiles
+
+
+@pytest.mark.django_db
+def test_startup_get_profiles(startup):
+    """Ensures that `get_profiles` method returns profiles."""
+    profiles = [
+        ProfileFactory.create(),
+        ProfileFactory.create(),
+    ]
+    assign_profiles_to_startup(startup=startup, profiles=profiles)
+
+    assert list(startup.get_profiles()) == profiles

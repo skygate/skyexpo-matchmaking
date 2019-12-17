@@ -7,12 +7,12 @@ from django.db.models.query import QuerySet
 
 if TYPE_CHECKING:  # pragma: no cover
     from server.apps.profile.models import Profile  # noqa: WPS433
-    BaseQuerySetType = QuerySet[Profile]
+    ProfileQuerySetBaseType = QuerySet[Profile]
 else:
-    BaseQuerySetType = QuerySet
+    ProfileQuerySetBaseType = QuerySet
 
 
-class ProfileQuerySet(BaseQuerySetType):
+class ProfileQuerySet(ProfileQuerySetBaseType):
     """Custom QuerySet for Profile model."""
 
     def unassigned_profiles(self) -> 'QuerySet[Profile]':

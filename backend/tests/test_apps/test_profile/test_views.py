@@ -74,3 +74,71 @@ def test_company_create_view(
     create_company_mock.assert_called()
     create_team_members_profiles_mock.assert_called()
     assign_profiles_to_company_mock.assert_called()
+
+
+@pytest.mark.django_db
+def test_register_startup_step1(api_client, company_step1_data):
+    """
+    Ensures that ':validate-form-startup-step-1' endpoint validates,
+    the input data in the first step of the startup registration form.
+    """
+    response = api_client.post(
+        reverse('validate-form-startup-step-1'), data=company_step1_data,
+    )
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+def test_register_startup_step2(api_client, company_step2_data):
+    """
+    Ensures that 'validate-form-startup-step-2' endpoint validates,
+    the input data in the second step of the startup registration form.
+    """
+    response = api_client.post(
+        reverse('validate-form-startup-step-2'),
+        data=json.dumps(company_step2_data),
+        content_type='application/json',
+    )
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+def test_register_startup_step3(api_client, company_step3_data):
+    """
+    Ensures that 'validate-form-startup-step-3' endpoint validates,
+    the input data in the third step of the startup registration form.
+    """
+    response = api_client.post(
+        reverse('validate-form-startup-step-3'), data=company_step3_data,
+    )
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+@patch('server.apps.profile.views.create_startup')
+@patch('server.apps.profile.views.create_team_members_profiles')
+@patch('server.apps.profile.views.assign_profiles_to_startup')
+def test_startup_create_view(
+    assign_profiles_to_startup_mock,
+    create_team_members_profiles_mock,
+    create_company_mock,
+    api_client,
+    company_create_data,
+):
+    """
+    Ensures that 'profile:startup-create' endpoint calls desired functions
+    and creates startup correctly.
+    """
+    response = api_client.post(
+        reverse('profile:startup-create'),
+        data=json.dumps(company_create_data),
+        content_type='application/json',
+    )
+
+    assert response.status_code == status.HTTP_201_CREATED
+
+    create_company_mock.assert_called()
+    create_team_members_profiles_mock.assert_called()
+    assign_profiles_to_startup_mock.assert_called()

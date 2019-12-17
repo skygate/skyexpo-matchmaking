@@ -13,6 +13,7 @@ from rest_framework.response import Response
 
 from server.apps.profile.logic.representations import (
   CompanyRepresentation,
+  StartupRepresentation,
   TeamMembersRepresentation,
 )
 from server.apps.profile.logic.serializers import (
@@ -21,14 +22,22 @@ from server.apps.profile.logic.serializers import (
   CompanyValidateFormStep1Serializer,
   CompanyValidateFormStep2Serializer,
   CompanyValidateFormStep3Serializer,
+  StartupCreateInputSerializer,
+  StartupCreateOutputSerializer,
+  StartupValidateFormStep1Serializer,
+  StartupValidateFormStep2Serializer,
+  StartupValidateFormStep3Serializer,
 )
 from server.apps.profile.logic.services import (
   assign_profiles_to_company,
+  assign_profiles_to_startup,
   create_company,
+  create_startup,
   create_team_members_profiles,
   validate_company_form_step1,
-  validate_company_form_step2,
-  validate_company_form_step3,
+  validate_matchmaking_form_step3,
+  validate_startup_form_step1,
+  validate_team_members_form,
 )
 from server.utils.exception_handler import ExceptionHandlerMixin
 
@@ -78,7 +87,7 @@ class CompanyValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
         team_members = TeamMembersRepresentation(
             serializer.validated_data['team_members'],
         )
-        validate_company_form_step2(team_members=team_members)
+        validate_team_members_form(team_members=team_members)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -101,7 +110,7 @@ class CompanyValidateFormStep3View(ExceptionHandlerMixin, views.APIView):
         serializer = CompanyValidateFormStep3Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        validate_company_form_step3(data=serializer.validated_data)
+        validate_matchmaking_form_step3(data=serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -138,5 +147,114 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
 
         return Response(
             CompanyCreateOutputSerializer(company_instance).data,
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class StartupValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
+    """
+    Validates the data provided in the first step of the
+    startup registration form.
+    """
+
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [CamelCaseMultiPartParser]
+
+    @swagger_auto_schema(
+        request_body=StartupValidateFormStep1Serializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = StartupValidateFormStep1Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        validate_startup_form_step1(data=serializer.validated_data)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class StartupValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
+    """
+    Validates the data provided in the second step of the
+    startup registration form.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    @swagger_auto_schema(
+        request_body=StartupValidateFormStep2Serializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = StartupValidateFormStep2Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        team_members = TeamMembersRepresentation(
+            serializer.validated_data['team_members'],
+        )
+        validate_team_members_form(team_members=team_members)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class StartupValidateFormStep3View(ExceptionHandlerMixin, views.APIView):
+    """
+    Validates the data provided in the third step of the
+    startup registration form.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    @swagger_auto_schema(
+        request_body=StartupValidateFormStep3Serializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = StartupValidateFormStep3Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        validate_matchmaking_form_step3(data=serializer.validated_data)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class StartupCreateView(ExceptionHandlerMixin, views.APIView):
+    """
+    View used for registering a startup after filling out the form.
+    Firstly we create a new startup, then we assign existing profiles
+    to startup and if some profiles don't exist, we create new ones.
+    """
+
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]
+
+    @swagger_auto_schema(
+        request_body=StartupCreateInputSerializer,
+        responses={status.HTTP_201_CREATED: StartupCreateOutputSerializer},
+    )
+    def post(self, request):
+        serializer = StartupCreateInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        team_members = TeamMembersRepresentation(
+            serializer.validated_data.pop('team_members'),
+        )
+        startup = StartupRepresentation(**serializer.validated_data)
+
+        with transaction.atomic():
+            startup_instance = create_startup(startup=startup)
+            profiles = create_team_members_profiles(team_members=team_members)
+            assign_profiles_to_startup(
+                profiles=profiles, startup=startup_instance,
+            )
+
+        return Response(
+            StartupCreateOutputSerializer(startup_instance).data,
             status=status.HTTP_201_CREATED,
         )
