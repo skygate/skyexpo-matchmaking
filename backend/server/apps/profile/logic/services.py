@@ -11,20 +11,22 @@ from glom import glom
 from psycopg2.extras import NumericRange
 
 from server.apps.profile.logic.representations import (
-    CompanyRepresentation,
-    ProfileRepresentation,
-    StartupRepresentation,
-    TeamMembersRepresentation,
-    UserRepresentation,
-    AngelInvestorRepresentation)
+  AngelInvestorRepresentation,
+  CompanyRepresentation,
+  ProfileRepresentation,
+  StartupRepresentation,
+  TeamMembersRepresentation,
+  UserRepresentation,
+)
 from server.apps.profile.models import (
-    BaseMatchmakingInfo,
-    Company,
-    CompanyToProfile,
-    Profile,
-    Startup,
-    StartupToProfile,
-    AngelInvestor)
+  AngelInvestor,
+  BaseMatchmakingInfo,
+  Company,
+  CompanyToProfile,
+  Profile,
+  Startup,
+  StartupToProfile,
+)
 
 User = get_user_model()
 
@@ -180,15 +182,15 @@ def validate_angel_investor_form_step1(data: Dict[str, Any]) -> None:
     investor = AngelInvestor(**data)
 
     exclude = [
-            'industries',
-            'sectors',
-            'product_types',
-            'stage',
-            'investment_stage',
-            'investment_size',
-            'is_product_on_market',
-            'business_type',
-            'profile'
+        'industries',
+        'sectors',
+        'product_types',
+        'stage',
+        'investment_stage',
+        'investment_size',
+        'is_product_on_market',
+        'business_type',
+        'profile',
     ]
     investor.clean_fields(exclude=exclude)
     investor.validate_unique(exclude=exclude)

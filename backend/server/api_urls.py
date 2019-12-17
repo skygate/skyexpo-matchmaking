@@ -7,13 +7,15 @@ from rest_framework_simplejwt.views import (
 )
 
 from server.apps.profile.views import (
-    CompanyValidateFormStep1View,
-    CompanyValidateFormStep2View,
-    CompanyValidateFormStep3View,
-    StartupValidateFormStep1View,
-    StartupValidateFormStep2View,
-    StartupValidateFormStep3View,
-    AngelInvestorValidateFormStep1View, AngelInvestorValidateFormStep2View)
+  AngelInvestorValidateFormStep1View,
+  AngelInvestorValidateFormStep2View,
+  CompanyValidateFormStep1View,
+  CompanyValidateFormStep2View,
+  CompanyValidateFormStep3View,
+  StartupValidateFormStep1View,
+  StartupValidateFormStep2View,
+  StartupValidateFormStep3View,
+)
 
 urlpatterns = [
     # djangorestframework

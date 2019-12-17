@@ -86,7 +86,7 @@ class BaseMatchmakingInfo(models.Model):
         ],
     )
 
-    def clean_fields(self, exclude=None):
+    def clean_fields(self, exclude=None) -> None:
         super().clean_fields(exclude=exclude)
         if exclude and 'investment_size' in exclude:
             return

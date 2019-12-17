@@ -11,7 +11,7 @@ from server.apps.profile.constants import (
   BusinessType,
   CompanyStage,
 )
-from server.apps.profile.models import Company, Profile, AngelInvestor
+from server.apps.profile.models import AngelInvestor, Company, Profile
 
 User = get_user_model()
 

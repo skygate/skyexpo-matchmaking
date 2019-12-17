@@ -12,35 +12,40 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.profile.logic.representations import (
-    CompanyRepresentation,
-    StartupRepresentation,
-    TeamMembersRepresentation,
-    AngelInvestorRepresentation)
+  AngelInvestorRepresentation,
+  CompanyRepresentation,
+  StartupRepresentation,
+  TeamMembersRepresentation,
+)
 from server.apps.profile.logic.serializers import (
-    CompanyCreateInputSerializer,
-    CompanyCreateOutputSerializer,
-    CompanyValidateFormStep1Serializer,
-    CompanyValidateFormStep2Serializer,
-    CompanyValidateFormStep3Serializer,
-    StartupCreateInputSerializer,
-    StartupCreateOutputSerializer,
-    StartupValidateFormStep1Serializer,
-    StartupValidateFormStep2Serializer,
-    StartupValidateFormStep3Serializer,
-    AngelInvestorValidateFormStep1Serializer,
-    AngelInvestorValidateFormStep2Serializer,
-    AngelInvestorCreateOutputSerializer, AngelInvestorCreateInputSerializer)
+  AngelInvestorCreateInputSerializer,
+  AngelInvestorCreateOutputSerializer,
+  AngelInvestorValidateFormStep1Serializer,
+  AngelInvestorValidateFormStep2Serializer,
+  CompanyCreateInputSerializer,
+  CompanyCreateOutputSerializer,
+  CompanyValidateFormStep1Serializer,
+  CompanyValidateFormStep2Serializer,
+  CompanyValidateFormStep3Serializer,
+  StartupCreateInputSerializer,
+  StartupCreateOutputSerializer,
+  StartupValidateFormStep1Serializer,
+  StartupValidateFormStep2Serializer,
+  StartupValidateFormStep3Serializer,
+)
 from server.apps.profile.logic.services import (
-    assign_profiles_to_company,
-    assign_profiles_to_startup,
-    create_company,
-    create_startup,
-    create_team_members_profiles,
-    validate_company_form_step1,
-    validate_matchmaking_form,
-    validate_startup_form_step1,
-    validate_team_members_form,
-    validate_angel_investor_form_step1, create_angel_investor)
+  assign_profiles_to_company,
+  assign_profiles_to_startup,
+  create_angel_investor,
+  create_company,
+  create_startup,
+  create_team_members_profiles,
+  validate_angel_investor_form_step1,
+  validate_company_form_step1,
+  validate_matchmaking_form,
+  validate_startup_form_step1,
+  validate_team_members_form,
+)
 from server.utils.exception_handler import ExceptionHandlerMixin
 
 
@@ -310,9 +315,7 @@ class AngelInvestorValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
 
 
 class AngelInvestorCreateView(ExceptionHandlerMixin, views.APIView):
-    """
-    View used for registering an angel investor after filling out the form.
-    """
+    """View used for registering an AngelInvestor after filling out the form."""
 
     permission_classes = [permissions.AllowAny]
     parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]

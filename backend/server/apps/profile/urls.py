@@ -2,8 +2,11 @@
 
 from django.urls import path
 
-from server.apps.profile.views import CompanyCreateView, StartupCreateView, \
-    AngelInvestorCreateView
+from server.apps.profile.views import (
+  AngelInvestorCreateView,
+  CompanyCreateView,
+  StartupCreateView,
+)
 
 app_name = 'profile'
 
