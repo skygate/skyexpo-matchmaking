@@ -2,7 +2,8 @@
 
 from django.urls import path
 
-from server.apps.profile.views import CompanyCreateView, StartupCreateView
+from server.apps.profile.views import CompanyCreateView, StartupCreateView, \
+    AngelInvestorCreateView
 
 app_name = 'profile'
 
@@ -16,5 +17,10 @@ urlpatterns = [
         'startups/',
         StartupCreateView.as_view(),
         name='startup-create',
+    ),
+    path(
+        'investors/',
+        AngelInvestorCreateView.as_view(),
+        name='investor-create',
     ),
 ]
