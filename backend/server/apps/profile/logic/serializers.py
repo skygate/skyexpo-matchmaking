@@ -11,7 +11,7 @@ from server.apps.profile.constants import (
   BusinessType,
   CompanyStage,
 )
-from server.apps.profile.models import Company, Profile
+from server.apps.profile.models import AngelInvestor, Company, Profile
 
 User = get_user_model()
 
@@ -230,5 +230,68 @@ class StartupCreateOutputSerializer(serializers.ModelSerializer):
             'business_type',
             'investment_size',
             'profiles',
+        ]
+        read_only_fields = fields
+
+
+class AngelInvestorValidateFormStep1Serializer(MainInfoCommonSerializer):
+    """
+    Validates the input data schema in the first step of the form,
+    which registers AngelInvestor.
+    """
+
+    name = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    avatar = serializers.ImageField(
+        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
+    )
+
+
+class AngelInvestorValidateFormStep2Serializer(MatchmakingCommonSerializer):
+    """
+    Validates the input data schema in the second step of the form,
+    which registers AngelInvestor.
+    """
+
+    pass  # noqa: WPS604, WPS420
+
+
+class AngelInvestorCreateInputSerializer(
+    AngelInvestorValidateFormStep1Serializer,
+    AngelInvestorValidateFormStep2Serializer,
+):
+    """
+    In the last step of the form when the user triggers the 'Finish' button,
+    the client combines together every field from the previous steps and sends
+    it to the API. This serializer validates this input schema.
+    """
+
+    pass  # noqa: WPS604, WPS420
+
+
+class AngelInvestorCreateOutputSerializer(serializers.ModelSerializer):
+    """Serializes read-only output for the AngelInvestor model."""
+
+    profile = ProfileNestedOutputSerializer(read_only=True)
+
+    class Meta:
+        model = AngelInvestor
+        fields = [
+            'id',
+            'avatar',
+            'website',
+            'phone_number',
+            'country',
+            'founding_date',
+            'description',
+            'stage',
+            'sectors',
+            'industries',
+            'product_types',
+            'investment_stage',
+            'is_product_on_market',
+            'business_type',
+            'investment_size',
+            'profile',
         ]
         read_only_fields = fields

@@ -12,11 +12,16 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from server.apps.profile.logic.representations import (
+  AngelInvestorRepresentation,
   CompanyRepresentation,
   StartupRepresentation,
   TeamMembersRepresentation,
 )
 from server.apps.profile.logic.serializers import (
+  AngelInvestorCreateInputSerializer,
+  AngelInvestorCreateOutputSerializer,
+  AngelInvestorValidateFormStep1Serializer,
+  AngelInvestorValidateFormStep2Serializer,
   CompanyCreateInputSerializer,
   CompanyCreateOutputSerializer,
   CompanyValidateFormStep1Serializer,
@@ -31,11 +36,13 @@ from server.apps.profile.logic.serializers import (
 from server.apps.profile.logic.services import (
   assign_profiles_to_company,
   assign_profiles_to_startup,
+  create_angel_investor,
   create_company,
   create_startup,
   create_team_members_profiles,
+  validate_angel_investor_form_step1,
   validate_company_form_step1,
-  validate_matchmaking_form_step3,
+  validate_matchmaking_form,
   validate_startup_form_step1,
   validate_team_members_form,
 )
@@ -110,7 +117,7 @@ class CompanyValidateFormStep3View(ExceptionHandlerMixin, views.APIView):
         serializer = CompanyValidateFormStep3Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        validate_matchmaking_form_step3(data=serializer.validated_data)
+        validate_matchmaking_form(data=serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -219,7 +226,7 @@ class StartupValidateFormStep3View(ExceptionHandlerMixin, views.APIView):
         serializer = StartupValidateFormStep3Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        validate_matchmaking_form_step3(data=serializer.validated_data)
+        validate_matchmaking_form(data=serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -256,5 +263,78 @@ class StartupCreateView(ExceptionHandlerMixin, views.APIView):
 
         return Response(
             StartupCreateOutputSerializer(startup_instance).data,
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class AngelInvestorValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
+    """
+    Validates the data provided in the first step of the
+    AngelInvestor registration form.
+    """
+
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [CamelCaseMultiPartParser]
+
+    @swagger_auto_schema(
+        request_body=AngelInvestorValidateFormStep1Serializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = AngelInvestorValidateFormStep1Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        validate_angel_investor_form_step1(data=serializer.validated_data)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AngelInvestorValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
+    """
+    Validates the data provided in the second step of the
+    AngelInvestor registration form.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    @swagger_auto_schema(
+        request_body=AngelInvestorValidateFormStep2Serializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = AngelInvestorValidateFormStep2Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        validate_matchmaking_form(data=serializer.validated_data)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AngelInvestorCreateView(ExceptionHandlerMixin, views.APIView):
+    """View used for registering an AngelInvestor after filling out the form."""
+
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]
+
+    @swagger_auto_schema(
+        request_body=AngelInvestorCreateInputSerializer,
+        responses={
+            status.HTTP_201_CREATED: AngelInvestorCreateOutputSerializer,
+        },
+    )
+    def post(self, request):
+        serializer = AngelInvestorCreateInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        investor = AngelInvestorRepresentation(**serializer.validated_data)
+
+        investor_instance = create_angel_investor(angel_investor=investor)
+
+        return Response(
+            AngelInvestorCreateOutputSerializer(investor_instance).data,
             status=status.HTTP_201_CREATED,
         )

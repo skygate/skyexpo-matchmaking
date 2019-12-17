@@ -142,3 +142,52 @@ def test_startup_create_view(
     create_company_mock.assert_called()
     create_team_members_profiles_mock.assert_called()
     assign_profiles_to_startup_mock.assert_called()
+
+
+@pytest.mark.django_db
+def test_register_angel_investor_step1(api_client, company_step1_data):
+    """
+    Ensures that ':validate-form-investor-step-1' endpoint validates,
+    the input data in the first step of the startup registration form.
+    """
+    response = api_client.post(
+        reverse('validate-form-investor-step-1'), data=company_step1_data,
+    )
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+def test_register_angel_investor_step2(api_client, company_step3_data):
+    """
+    Ensures that ':validate-form-investor-step-2' endpoint validates,
+    the input data in the first step of the startup registration form.
+    """
+    response = api_client.post(
+        reverse('validate-form-investor-step-2'), data=company_step3_data,
+    )
+
+    assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+@patch('server.apps.profile.views.create_angel_investor')
+def test_angel_investor_create_view(
+    create_angel_investor_mock,
+    api_client,
+    company_create_data,
+):
+    """
+    Ensures that 'profile:investor-create' endpoint calls desired functions
+    and creates investor correctly.
+    """
+    company_create_data.pop('team_members')
+    response = api_client.post(
+        reverse('profile:investor-create'),
+        data=json.dumps(company_create_data),
+        content_type='application/json',
+    )
+
+    assert response.status_code == status.HTTP_201_CREATED
+
+    create_angel_investor_mock.assert_called()

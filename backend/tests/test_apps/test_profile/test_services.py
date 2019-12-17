@@ -4,6 +4,7 @@ import pytest
 from django.core.exceptions import ValidationError
 
 from server.apps.profile.logic.representations import (
+  AngelInvestorRepresentation,
   CompanyRepresentation,
   ProfileRepresentation,
   StartupRepresentation,
@@ -16,13 +17,14 @@ from server.apps.profile.logic.services import (
   assign_profiles_to_company,
   assign_profiles_to_startup,
   check_for_duplicated_emails,
+  create_angel_investor,
   create_company,
   create_inactive_profile,
   create_startup,
   create_team_members_profiles,
   validate_team_members_form,
 )
-from server.apps.profile.models import Company, Profile, Startup
+from server.apps.profile.models import AngelInvestor, Company, Profile, Startup
 from tests.factories import ProfileFactory
 
 
@@ -173,3 +175,18 @@ def test_assign_profiles_to_startup(startup):
 
     assert profiles[0].startups.first() == startup
     assert profiles[1].startups.first() == startup
+
+
+@pytest.mark.django_db
+def test_create_angel_investor(company_data):
+    """Ensures function creates investor from AngelInvestorRepresentation."""
+    company_data.pop('investment_size')
+    company_data.pop('logotype')
+    investor_repr = AngelInvestorRepresentation(
+        **company_data, min_investment_size=1, max_investment_size=2,
+    )
+
+    investor = create_angel_investor(angel_investor=investor_repr)
+
+    assert AngelInvestor.objects.count() == 1
+    assert list(AngelInvestor.objects.all()) == [investor]

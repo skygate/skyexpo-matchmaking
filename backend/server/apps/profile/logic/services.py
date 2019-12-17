@@ -11,6 +11,7 @@ from glom import glom
 from psycopg2.extras import NumericRange
 
 from server.apps.profile.logic.representations import (
+  AngelInvestorRepresentation,
   CompanyRepresentation,
   ProfileRepresentation,
   StartupRepresentation,
@@ -18,6 +19,7 @@ from server.apps.profile.logic.representations import (
   UserRepresentation,
 )
 from server.apps.profile.models import (
+  AngelInvestor,
   BaseMatchmakingInfo,
   Company,
   CompanyToProfile,
@@ -72,7 +74,7 @@ def validate_team_members_form(
                 )
 
 
-def validate_matchmaking_form_step3(data: Dict[str, Any]) -> None:
+def validate_matchmaking_form(data: Dict[str, Any]) -> None:
     """Run validation for matchmaking fields in registering form step 3."""
     min_investment = data.pop('min_investment_size')
     max_investment = data.pop('max_investment_size')
@@ -173,6 +175,27 @@ def validate_startup_form_step1(data: Dict[str, Any]) -> None:
     )
 
 
+def validate_angel_investor_form_step1(data: Dict[str, Any]) -> None:
+    """Run validation for AngelInvestor registering form step 1."""
+    data.pop('name')
+    data.pop('email')
+    investor = AngelInvestor(**data)
+
+    exclude = [
+        'industries',
+        'sectors',
+        'product_types',
+        'stage',
+        'investment_stage',
+        'investment_size',
+        'is_product_on_market',
+        'business_type',
+        'profile',
+    ]
+    investor.clean_fields(exclude=exclude)
+    investor.validate_unique(exclude=exclude)
+
+
 def assign_profile_to_startup(*, profile: Profile, startup: Startup) -> Profile:
     """Add existing profile to startup."""
     relation = StartupToProfile(profile=profile, startup=startup)
@@ -192,14 +215,42 @@ def assign_profiles_to_startup(
 
 def create_startup(*, startup: StartupRepresentation) -> Startup:
     """Creates startup."""
-    company_data = asdict(startup)
+    startup_data = asdict(startup)
     investment_size = NumericRange(
-        lower=company_data.pop('min_investment_size'),
-        upper=company_data.pop('max_investment_size'),
+        lower=startup_data.pop('min_investment_size'),
+        upper=startup_data.pop('max_investment_size'),
     )
 
-    startup_instance = Startup(**company_data, investment_size=investment_size)
+    startup_instance = Startup(**startup_data, investment_size=investment_size)
     startup_instance.full_clean()
     startup_instance.save()
 
     return startup_instance
+
+
+@transaction.atomic()
+def create_angel_investor(
+    *, angel_investor: AngelInvestorRepresentation,
+) -> AngelInvestor:
+    """Creates AngelInvestor."""
+    investor_data = asdict(angel_investor)
+    investment_size = NumericRange(
+        lower=investor_data.pop('min_investment_size'),
+        upper=investor_data.pop('max_investment_size'),
+    )
+
+    profile = create_inactive_profile(
+        user=UserRepresentation(email=investor_data.pop('email')),
+        profile=ProfileRepresentation(name=investor_data.pop('name')),
+    )
+
+    investor_instance = AngelInvestor(
+        **investor_data,
+        investment_size=investment_size,
+        profile=profile,
+    )
+
+    investor_instance.full_clean()
+    investor_instance.save()
+
+    return investor_instance
