@@ -12,23 +12,6 @@ User = get_user_model()
 
 
 @dataclass
-class UserRepresentation:
-    """User data representation."""
-
-    email: str
-    is_staff: bool = False
-    is_active: bool = True
-    password: str = ''
-
-
-@dataclass
-class ProfileRepresentation:
-    """Profile data representation."""
-
-    name: str
-
-
-@dataclass
 class TeamMembersRepresentation:
     """Company/Startup's team members data"""
 

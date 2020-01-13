@@ -13,10 +13,8 @@ from psycopg2.extras import NumericRange
 from server.apps.profile.logic.representations import (
   AngelInvestorRepresentation,
   CompanyRepresentation,
-  ProfileRepresentation,
   StartupRepresentation,
   TeamMembersRepresentation,
-  UserRepresentation,
 )
 from server.apps.profile.models import (
   AngelInvestor,
@@ -101,19 +99,16 @@ def create_company(*, company: CompanyRepresentation) -> Company:
 
 
 @transaction.atomic()
-def create_inactive_profile(
-    *, user: UserRepresentation, profile: ProfileRepresentation,
-) -> Profile:
+def create_inactive_profile(*, email: str, name: str) -> Profile:
     """
     Creates inactive profile. User has to sign up, assign password
     and then we can activate profile.
     """
-    user.is_active = False
-    user_instance = User(**asdict(user))
+    user_instance = User(email=email, is_active=False)
     user_instance.full_clean(exclude=['password'])
     user_instance.save()
 
-    profile_instance = Profile(user=user_instance, **asdict(profile))
+    profile_instance = Profile(user=user_instance, name=name)
 
     profile_instance.full_clean()
     profile_instance.save()
@@ -140,10 +135,8 @@ def create_team_members_profiles(
             profile = Profile.objects.get(user__email=team_member['email'])
         except Profile.DoesNotExist:
             profile = create_inactive_profile(
-                user=UserRepresentation(email=team_member['email']),
-                profile=ProfileRepresentation(
-                    name=team_member['name'],
-                ),
+                email=team_member['email'],
+                name=team_member['name'],
             )
         profiles.append(profile)
 
@@ -240,8 +233,8 @@ def create_angel_investor(
     )
 
     profile = create_inactive_profile(
-        user=UserRepresentation(email=investor_data.pop('email')),
-        profile=ProfileRepresentation(name=investor_data.pop('name')),
+        email=investor_data.pop('email'),
+        name=investor_data.pop('name'),
     )
 
     investor_instance = AngelInvestor(

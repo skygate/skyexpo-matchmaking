@@ -6,10 +6,8 @@ from django.core.exceptions import ValidationError
 from server.apps.profile.logic.representations import (
   AngelInvestorRepresentation,
   CompanyRepresentation,
-  ProfileRepresentation,
   StartupRepresentation,
   TeamMembersRepresentation,
-  UserRepresentation,
 )
 from server.apps.profile.logic.services import (
   assign_profile_to_company,
@@ -73,12 +71,9 @@ def test_create_company(company_data):
 
 @pytest.mark.django_db
 def test_create_inactive_profile():
-    """Creates inactive profile from given User and Profile representations."""
-    user_repr = UserRepresentation(email='test@email.com')
-    profile_repr = ProfileRepresentation(name='Marcin')
-
+    profile = ProfileFactory.build()
     inactive_profile = create_inactive_profile(
-        user=user_repr, profile=profile_repr,
+        email=profile.user.email, name=profile.name,
     )
 
     assert Profile.objects.count() == 1
