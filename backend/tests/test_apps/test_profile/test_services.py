@@ -6,10 +6,7 @@ from django.core.exceptions import ValidationError
 from server.apps.profile.logic.representations import (
   AngelInvestorRepresentation,
   CompanyRepresentation,
-  ProfileRepresentation,
   StartupRepresentation,
-  TeamMembersRepresentation,
-  UserRepresentation,
 )
 from server.apps.profile.logic.services import (
   assign_profile_to_company,
@@ -44,17 +41,15 @@ def test_validate_team_members_form(company):
     profile1 = ProfileFactory.create()
     profile2 = ProfileFactory.create()
     assign_profile_to_company(profile=profile1, company=company)
-    team_members_repr = TeamMembersRepresentation(
-        team_members=[
-            {'name': profile2.name, 'email': profile2.user.email},
-            {'name': profile1.name, 'email': profile1.user.email},
-        ],
-    )
+    team_members = [
+        {'name': profile2.name, 'email': profile2.user.email},
+        {'name': profile1.name, 'email': profile1.user.email},
+    ]
 
     with pytest.raises(
         ValidationError, match=f'{profile1.user.email} is already assigned.',
     ):
-        validate_team_members_form(team_members=team_members_repr)
+        validate_team_members_form(team_members=team_members)
 
 
 @pytest.mark.django_db
@@ -73,12 +68,9 @@ def test_create_company(company_data):
 
 @pytest.mark.django_db
 def test_create_inactive_profile():
-    """Creates inactive profile from given User and Profile representations."""
-    user_repr = UserRepresentation(email='test@email.com')
-    profile_repr = ProfileRepresentation(name='Marcin')
-
+    profile = ProfileFactory.build()
     inactive_profile = create_inactive_profile(
-        user=user_repr, profile=profile_repr,
+        email=profile.user.email, name=profile.name,
     )
 
     assert Profile.objects.count() == 1
@@ -111,13 +103,12 @@ def test_assign_profiles_to_company(company):
 
 @pytest.mark.django_db
 def test_create_team_members_profiles():
-    """Register new profiles from TeamMembersRepresentation."""
-    team_members_repr = TeamMembersRepresentation(team_members=[
+    team_members = [
         {'name': 'Marcin', 'email': 'marcin@email.com'},
         {'name': 'Karolina', 'email': 'karolina@email.com'},
-    ])
+    ]
 
-    profiles = create_team_members_profiles(team_members=team_members_repr)
+    profiles = create_team_members_profiles(team_members=team_members)
 
     assert Profile.objects.count() == 2
     assert set(Profile.objects.all()) == set(profiles)
@@ -125,16 +116,15 @@ def test_create_team_members_profiles():
 
 @pytest.mark.django_db
 def test_create_team_members_for_existing_profile():
-    """If the profile in TeamMembersRepresentation exists, just return it."""
+    """If the profile exists just go on."""
     profile1 = ProfileFactory.create()
     profile1_name, profile1_email = profile1.name, profile1.user.email
-
-    team_members_repr = TeamMembersRepresentation(team_members=[
+    team_members = [
         {'name': 'Marcin', 'email': 'marcin@email.com'},
         {'name': profile1_name, 'email': profile1_email},
-    ])
+    ]
 
-    profiles = create_team_members_profiles(team_members=team_members_repr)
+    profiles = create_team_members_profiles(team_members=team_members)
 
     assert Profile.objects.count() == 2
     assert set(Profile.objects.all()) == set(profiles)

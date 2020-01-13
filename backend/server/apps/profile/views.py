@@ -15,7 +15,6 @@ from server.apps.profile.logic.representations import (
   AngelInvestorRepresentation,
   CompanyRepresentation,
   StartupRepresentation,
-  TeamMembersRepresentation,
 )
 from server.apps.profile.logic.serializers import (
   AngelInvestorCreateInputSerializer,
@@ -91,10 +90,9 @@ class CompanyValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
         serializer = CompanyValidateFormStep2Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        team_members = TeamMembersRepresentation(
-            serializer.validated_data['team_members'],
+        validate_team_members_form(
+            team_members=serializer.validated_data['team_members'],
         )
-        validate_team_members_form(team_members=team_members)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -140,9 +138,7 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
         serializer = CompanyCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        team_members = TeamMembersRepresentation(
-            serializer.validated_data.pop('team_members'),
-        )
+        team_members = serializer.validated_data.pop('team_members')
         company = CompanyRepresentation(**serializer.validated_data)
 
         with transaction.atomic():
@@ -200,10 +196,9 @@ class StartupValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
         serializer = StartupValidateFormStep2Serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        team_members = TeamMembersRepresentation(
-            serializer.validated_data['team_members'],
+        validate_team_members_form(
+            team_members=serializer.validated_data['team_members'],
         )
-        validate_team_members_form(team_members=team_members)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -249,9 +244,7 @@ class StartupCreateView(ExceptionHandlerMixin, views.APIView):
         serializer = StartupCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        team_members = TeamMembersRepresentation(
-            serializer.validated_data.pop('team_members'),
-        )
+        team_members = serializer.validated_data.pop('team_members')
         startup = StartupRepresentation(**serializer.validated_data)
 
         with transaction.atomic():
