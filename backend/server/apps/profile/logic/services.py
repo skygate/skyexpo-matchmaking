@@ -14,7 +14,7 @@ from server.apps.profile.logic.representations import (
   AngelInvestorRepresentation,
   CompanyRepresentation,
   StartupRepresentation,
-  TeamMembersRepresentation,
+  TeamMember,
 )
 from server.apps.profile.models import (
   AngelInvestor,
@@ -55,10 +55,10 @@ def validate_company_form_step1(data: Dict[str, Any]) -> None:
 
 
 def validate_team_members_form(
-    *, team_members: TeamMembersRepresentation,
+    *, team_members: List[TeamMember],
 ) -> None:
     """Run validation for company's/startup's team members form"""
-    emails = glom(team_members.team_members, ['email'])
+    emails = glom(team_members, ['email'])
     check_for_duplicated_emails(emails=emails)
     for email in emails:
         try:
@@ -126,11 +126,11 @@ def assign_profile_to_company(*, profile: Profile, company: Company) -> Profile:
 
 
 def create_team_members_profiles(
-    *, team_members: TeamMembersRepresentation,
+    *, team_members: List[TeamMember],
 ) -> List[Profile]:
     """Creates inactive profiles if needed."""
     profiles = []
-    for team_member in asdict(team_members)['team_members']:
+    for team_member in team_members:
         try:
             profile = Profile.objects.get(user__email=team_member['email'])
         except Profile.DoesNotExist:
