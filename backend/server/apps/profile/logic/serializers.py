@@ -295,3 +295,28 @@ class AngelInvestorCreateOutputSerializer(serializers.ModelSerializer):
             'profile',
         ]
         read_only_fields = fields
+
+
+class ProfileCreateInputSerializer(serializers.Serializer):
+    """Serializes input for the ProfileCreate View."""
+
+    name = serializers.CharField(max_length=255)
+    email = serializers.EmailField()
+    password = serializers.CharField(
+        write_only=True,
+        style={'input_type': 'password'},
+    )
+
+
+class ProfileCreateOutputSerializer(serializers.ModelSerializer):
+    """Serializes output for the ProfileCreate View."""
+
+    email = serializers.EmailField(source='user.email', read_only=True)
+    is_active = serializers.BooleanField(
+        source='user.is_active', read_only=True,
+    )
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'name', 'email', 'is_active']
+        read_only_fields = fields

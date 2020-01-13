@@ -16,6 +16,7 @@ from server.apps.profile.logic.representations import (
   StartupRepresentation,
   TeamMember,
 )
+from server.apps.profile.logic.selectors import is_assigned
 from server.apps.profile.models import (
   AngelInvestor,
   BaseMatchmakingInfo,
@@ -247,3 +248,23 @@ def create_angel_investor(
     investor_instance.save()
 
     return investor_instance
+
+
+def register_user(*, email: str, name: str, password: str) -> Profile:
+    profile = Profile.objects.filter(
+        user__email=email, user__is_active=False,
+    ).first()
+
+    if profile and is_assigned(profile=profile):
+        profile.user.set_password(password)
+        profile.user.is_active = True
+        profile.user.save()
+        return profile
+
+    profile = create_inactive_profile(
+        name=name, email=email,
+    )
+
+    profile.user.set_password(password)
+    profile.user.save()
+    return profile
