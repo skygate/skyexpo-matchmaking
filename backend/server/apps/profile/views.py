@@ -26,6 +26,8 @@ from server.apps.profile.logic.serializers import (
   CompanyValidateFormStep1Serializer,
   CompanyValidateFormStep2Serializer,
   CompanyValidateFormStep3Serializer,
+  ProfileCreateInputSerializer,
+  ProfileCreateOutputSerializer,
   StartupCreateInputSerializer,
   StartupCreateOutputSerializer,
   StartupValidateFormStep1Serializer,
@@ -39,6 +41,7 @@ from server.apps.profile.logic.services import (
   create_company,
   create_startup,
   create_team_members_profiles,
+  register_user,
   validate_angel_investor_form_step1,
   validate_company_form_step1,
   validate_matchmaking_form,
@@ -329,5 +332,31 @@ class AngelInvestorCreateView(ExceptionHandlerMixin, views.APIView):
 
         return Response(
             AngelInvestorCreateOutputSerializer(investor_instance).data,
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class ProfileCreateView(ExceptionHandlerMixin, views.APIView):
+    """
+    Registers user's profile. If a profile has been assigned to a company
+    in the registration form, the account details are linked.
+    """
+
+    permission_classes = [permissions.AllowAny]
+
+    @swagger_auto_schema(
+        request_body=ProfileCreateInputSerializer,
+        responses={
+            status.HTTP_204_NO_CONTENT: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = ProfileCreateInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        profile = register_user(**serializer.validated_data)
+
+        return Response(
+            ProfileCreateOutputSerializer(profile).data,
             status=status.HTTP_201_CREATED,
         )

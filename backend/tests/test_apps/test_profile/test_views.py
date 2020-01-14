@@ -7,6 +7,8 @@ import pytest
 from rest_framework import status
 from rest_framework.reverse import reverse
 
+from tests.factories import ProfileFactory
+
 
 @pytest.mark.django_db
 def test_register_company_step1(api_client, company_step1_data):
@@ -191,3 +193,19 @@ def test_angel_investor_create_view(
     assert response.status_code == status.HTTP_201_CREATED
 
     create_angel_investor_mock.assert_called()
+
+
+@pytest.mark.django_db
+def test_profile_create_view(api_client):
+    """Ensures that 'profile:profile' endpoint creates new user's profile."""
+    profile = ProfileFactory.build()
+
+    response = api_client.post(
+        reverse('profile:profile'), data={
+            'email': profile.user.email,
+            'name': profile.name,
+            'password': 'password',
+        },
+    )
+
+    assert response.status_code == status.HTTP_201_CREATED

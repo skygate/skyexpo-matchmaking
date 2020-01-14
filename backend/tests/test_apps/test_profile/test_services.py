@@ -8,6 +8,7 @@ from server.apps.profile.logic.representations import (
   CompanyRepresentation,
   StartupRepresentation,
 )
+from server.apps.profile.logic.selectors import is_assigned
 from server.apps.profile.logic.services import (
   assign_profile_to_company,
   assign_profile_to_startup,
@@ -19,10 +20,11 @@ from server.apps.profile.logic.services import (
   create_inactive_profile,
   create_startup,
   create_team_members_profiles,
+  register_user,
   validate_team_members_form,
 )
 from server.apps.profile.models import AngelInvestor, Company, Profile, Startup
-from tests.factories import ProfileFactory
+from tests.factories import ProfileFactory, UserFactory
 
 
 def test_check_for_duplicated_emails():
@@ -180,3 +182,52 @@ def test_create_angel_investor(company_data):
 
     assert AngelInvestor.objects.count() == 1
     assert list(AngelInvestor.objects.all()) == [investor]
+
+
+@pytest.mark.django_db
+def test_register_new_user():
+    user = UserFactory.build(is_active=False)
+    profile = register_user(
+        email=user.email,
+        name='Name',
+        password='password',
+    )
+
+    assert Profile.objects.count() == 1
+    assert Profile.objects.first() == profile
+    assert not profile.user.is_active
+    assert not is_assigned(profile=profile)
+
+
+@pytest.mark.django_db
+def test_register_user_with_assigned_email(startup, inactive_user):
+    profile = ProfileFactory.create(user=inactive_user)
+
+    assigned_profile = assign_profile_to_startup(
+        profile=profile, startup=startup,
+    )
+
+    assert not assigned_profile.user.is_active
+
+    profile = register_user(
+        email=assigned_profile.user.email,
+        name=assigned_profile.name,
+        password='password',
+    )
+
+    assert profile.user.is_active
+    assert is_assigned(profile=profile)
+
+
+@pytest.mark.django_db
+def test_register_user_with_taken_email():
+    profile = ProfileFactory.create()
+
+    with pytest.raises(
+        ValidationError, match='User with this Email already exists.',
+    ):
+        register_user(
+            email=profile.user.email,
+            name=profile.name,
+            password=profile.user.password,
+        )
