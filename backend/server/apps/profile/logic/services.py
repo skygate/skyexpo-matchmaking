@@ -251,15 +251,15 @@ def create_angel_investor(
 
 
 def register_user(*, email: str, name: str, password: str) -> Profile:
-    profile = Profile.objects.filter(
+    inactive_profile = Profile.objects.filter(
         user__email=email, user__is_active=False,
     ).first()
 
-    if profile and is_assigned(profile=profile):
-        profile.user.set_password(password)
-        profile.user.is_active = True
-        profile.user.save()
-        return profile
+    if inactive_profile and is_assigned(profile=inactive_profile):
+        inactive_profile.user.set_password(password)
+        inactive_profile.user.is_active = True
+        inactive_profile.user.save()
+        return inactive_profile
 
     profile = create_inactive_profile(
         name=name, email=email,

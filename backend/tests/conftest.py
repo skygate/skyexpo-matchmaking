@@ -141,6 +141,15 @@ def user(db):
 
 
 @pytest.fixture()
+def inactive_user(db):
+    """Returns an example inactive user."""
+    user = User.objects.create_user('user@example.com', 'password')
+    user.is_active = False
+    user.save()
+    return user
+
+
+@pytest.fixture()
 def api_client(user):
     """Returns DjangoRestFramework ApiClient"""
     client = APIClient()
