@@ -380,7 +380,7 @@ description = "Run checks on services like databases, queue servers, celery proc
 name = "django-health-check"
 optional = false
 python-versions = "*"
-version = "3.12.1"
+version = "3.11.1"
 
 [package.dependencies]
 django = ">=1.11"
@@ -1668,7 +1668,7 @@ description = "A Django plugin for pytest."
 name = "pytest-django"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.8.0"
+version = "3.7.0"
 
 [package.dependencies]
 pytest = ">=3.6"
@@ -2155,7 +2155,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "d754d34dc7e5ea4fc824669c6108d32f864d9fe4035f21c2ee392c9c124d608e"
+content-hash = "96bb427062332b4386b4ba47b6e9aa9a079ba051aa4e0062f52e44c90109d30d"
 python-versions = "3.7.4"
 
 [metadata.hashes]
@@ -2196,7 +2196,7 @@ django-csp = ["0a38aa9618c675cbf5f5e517e20d5846a3e100ef7b307e32e7fb18c58aa47723"
 django-debug-toolbar = ["24c157bc6c0e1648e0a6587511ecb1b007a00a354ce716950bff2de12693e7a8", "77cfba1d6e91b9bc3d36dc7dc74a9bb80be351948db5f880f2562a0cbf20b6c5"]
 django-extensions = ["a9db7c56a556d244184f589f2437b4228de86ee45e5ebb837fb20c6d54e95ea5", "b58320d3fe3d6ae7d1d8e38959713fa92272f4921e662d689058d942a5b444f7"]
 django-feature-policy = ["32cdd45521e77fbb2f8dc7a6fb984da98024abf9347bb94b6ad3d242d5d57676", "3ecacae01322abbc8c3313d8c6e46840d2ec045f2854ffa2bb91607daba9c4c1"]
-django-health-check = ["0563827e003d25fd4d9ebbd7467dea5f390435628d645aaa63f8889deaded73a", "9e6b7d93d4902901474efd4e25d31b5aaea7563b570c0260adce52cd3c3a9e36"]
+django-health-check = ["06efac9dcd30eb83c3d0184b834d7d86467bdb710da361f20c2c28853d7e6a5e", "c9bcc1b3ef77db3a9ba2d33585916707963cbb958220689f77741235f5fa553a"]
 django-http-referrer-policy = ["3a867e2ac3f83b162a2bc1241dc2ed209e555e709e6566fef6bb1f716c733c00", "9847711f55991a9efd3a47e272370da0986c9dac4916e1ab1b4b6e1885b69365"]
 django-ipware = ["a7c7a8fd019dbdc9c357e6e582f65034e897572fc79a7e467674efa8aef9d00b"]
 django-phonenumber-field = ["2ca3bb0ada0ebc164bd903a981a34f1202a4294006e520b0da961bd7ce9f20a4", "d4580cc3352f4433962825f9927e6669852c1b40ec484fcb5a74064dabc1201a"]
@@ -2311,7 +2311,7 @@ pyrsistent = ["6c00001d98dbf5e07edff7c414801c8efefe342e34209965918d38f7851c4c6b"
 pytest = ["6b571215b5a790f9b41f19f3531c53a45cf6bb8ef2988bc1ff9afb38270b25fa", "e41d489ff43948babd0fad7ad5e49b8735d5d55e26628a58673c39ff61d95de4"]
 pytest-cov = ["cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b", "cdbdef4f870408ebdbfeb44e63e07eb18bb4619fae852f6e760645fa36172626"]
 pytest-deadfixtures = ["458b2314862696af11223d869c97814e63db8a7b9f61dcf42fe07a72a7ff9bd8", "61e34fb0f777bc0f321c7d45f39447e965fb1a6d2de243e47aa034387229d9d3"]
-pytest-django = ["456fa6854d04ee625d6bbb8b38ca2259e7040a6f93333bfe8bc8159b7e987203", "489b904f695f9fb880ce591cf5a4979880afb467763b1f180c07574554bdfd26"]
+pytest-django = ["17592f06d51c2ef4b7a0fb24aa32c8b6998506a03c8439606cb96db160106659", "ef3d15b35ed7e46293475e6f282e71a53bcd8c6f87bdc5d5e7ad0f4d49352127"]
 pytest-randomly = ["8282a5a2066ed93d8d3eca6290538f34d09be05b7256ba94dba6fe3d2b1c514f", "d9273db715bc7f8945cdb3efb994a9d15596a6087fb71a2e87030c5f2677317e"]
 pytest-testmon = ["8f048b90763bf16c957539c96bcf2d08492ea1b9d8056df1293da8fd73df2bf0", "b823b03faf5778d1e15fb9f52e104df4da9c1021daeb313b339fccbbfb8dbd5f"]
 pytest-timeout = ["80faa19cd245a42b87a51699d640c00d937c02b749052bfca6bae8bdbe12c48e", "95ca727d4a1dace6ec5f0534d2940b8417ff8b782f7eef0ea09240bdd94d95c2"]
