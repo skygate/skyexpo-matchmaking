@@ -43,6 +43,13 @@ services:
     stdin_open: true
     tty: true
 
+  celery-flower:
+    volumes:
+      # We only mount source code in development:
+      - ./backend:/code
+    stdin_open: true
+    tty: true
+
   rabbitmq:
     ports:
       - 5672:5672

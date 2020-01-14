@@ -66,6 +66,19 @@ services:
       - rabbitmq
     command: celery -A server worker -l info
 
+  celery-flower:
+    <<: *web
+    container_name: skyexpo-flower
+    depends_on:
+      - web
+      - db
+      - rabbitmq
+    environment:
+     - FLOWER_PORT=8080
+    ports:
+      - 8080:8080
+    command: celery -A server flower
+
   web-app:
     container_name: skyexpo-webapp
     build:
