@@ -61,16 +61,13 @@ def validate_team_members_form(
     """Run validation for company's/startup's team members form"""
     emails = glom(team_members, ['email'])
     check_for_duplicated_emails(emails=emails)
-    for email in emails:
-        try:
-            profile = Profile.objects.get(user__email=email)
-        except Profile.DoesNotExist:
-            continue
-        else:
-            if profile not in Profile.objects.unassigned_profiles():
-                raise ValidationError(
-                    {'team_members': ugt(f'{email} is already assigned.')},
-                )
+
+    users: List[str] = User.objects.active_users().filter(
+        email__in=emails,
+    ).values_list('email', flat=True)
+    if users:
+        exception_msg = {user: ugt('is already assigned.') for user in users}
+        raise ValidationError(exception_msg)
 
 
 def validate_matchmaking_form(data: Dict[str, Any]) -> None:

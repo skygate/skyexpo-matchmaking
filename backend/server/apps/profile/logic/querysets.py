@@ -7,9 +7,12 @@ from django.db.models.query import QuerySet
 
 if TYPE_CHECKING:  # pragma: no cover
     from server.apps.profile.models import Profile  # noqa: WPS433
+    from server.apps.profile.models import User  # noqa: WPS433
     ProfileQuerySetBaseType = QuerySet[Profile]
+    UserQuerySetBaseType = QuerySet[User]
 else:
     ProfileQuerySetBaseType = QuerySet
+    UserQuerySetBaseType = QuerySet
 
 
 class ProfileQuerySet(ProfileQuerySetBaseType):
@@ -25,3 +28,14 @@ class ProfileQuerySet(ProfileQuerySetBaseType):
             models.Q(companies__isnull=True),
             models.Q(startups__isnull=True),
         )
+
+
+class UserQuerySet(UserQuerySetBaseType):
+    """Custom QuerySet for User model."""
+
+    def active_users(self) -> 'QuerySet[User]':
+        """
+        The active user is the user that is registered and his
+        profile is assigned.
+        """
+        return self.filter(is_active=True)
