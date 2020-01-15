@@ -1668,7 +1668,7 @@ description = "A Django plugin for pytest."
 name = "pytest-django"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "3.7.0"
+version = "3.8.0"
 
 [package.dependencies]
 pytest = ">=3.6"
@@ -2155,7 +2155,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "2b148d40b88c4b476c735d487eca2cb72bac4975b045e12041fd0babee36e59e"
+content-hash = "d754d34dc7e5ea4fc824669c6108d32f864d9fe4035f21c2ee392c9c124d608e"
 python-versions = "3.7.4"
 
 [metadata.hashes]
@@ -2311,7 +2311,7 @@ pyrsistent = ["6c00001d98dbf5e07edff7c414801c8efefe342e34209965918d38f7851c4c6b"
 pytest = ["6b571215b5a790f9b41f19f3531c53a45cf6bb8ef2988bc1ff9afb38270b25fa", "e41d489ff43948babd0fad7ad5e49b8735d5d55e26628a58673c39ff61d95de4"]
 pytest-cov = ["cc6742d8bac45070217169f5f72ceee1e0e55b0221f54bcf24845972d3a47f2b", "cdbdef4f870408ebdbfeb44e63e07eb18bb4619fae852f6e760645fa36172626"]
 pytest-deadfixtures = ["458b2314862696af11223d869c97814e63db8a7b9f61dcf42fe07a72a7ff9bd8", "61e34fb0f777bc0f321c7d45f39447e965fb1a6d2de243e47aa034387229d9d3"]
-pytest-django = ["17592f06d51c2ef4b7a0fb24aa32c8b6998506a03c8439606cb96db160106659", "ef3d15b35ed7e46293475e6f282e71a53bcd8c6f87bdc5d5e7ad0f4d49352127"]
+pytest-django = ["456fa6854d04ee625d6bbb8b38ca2259e7040a6f93333bfe8bc8159b7e987203", "489b904f695f9fb880ce591cf5a4979880afb467763b1f180c07574554bdfd26"]
 pytest-randomly = ["8282a5a2066ed93d8d3eca6290538f34d09be05b7256ba94dba6fe3d2b1c514f", "d9273db715bc7f8945cdb3efb994a9d15596a6087fb71a2e87030c5f2677317e"]
 pytest-testmon = ["8f048b90763bf16c957539c96bcf2d08492ea1b9d8056df1293da8fd73df2bf0", "b823b03faf5778d1e15fb9f52e104df4da9c1021daeb313b339fccbbfb8dbd5f"]
 pytest-timeout = ["80faa19cd245a42b87a51699d640c00d937c02b749052bfca6bae8bdbe12c48e", "95ca727d4a1dace6ec5f0534d2940b8417ff8b782f7eef0ea09240bdd94d95c2"]
