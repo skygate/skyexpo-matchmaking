@@ -25,6 +25,7 @@ base_settings = [
     'components/drf.py',
     'components/caches.py',
     'components/ddt.py',
+    'components/celery.py',
 
     # You can even use glob:
     # 'components/*.py'

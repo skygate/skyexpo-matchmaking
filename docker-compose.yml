@@ -19,13 +19,21 @@ services:
       - webnet
     env_file: ./backend/config/.env
 
+  rabbitmq:
+    image: "bitnami/rabbitmq"
+    container_name: skyexpo-rabbitmq
+    restart: unless-stopped
+    networks:
+      - webnet
+    env_file: ./backend/config/.env
+
   web:
     <<: &web
       build:
         target: development_build
         context: ./backend
         dockerfile: ./docker/django/Dockerfile
-        cache_from: 
+        cache_from:
           - registry.hal.skygate.io/skyexpo-web
         args:
           DJANGO_ENV: development
@@ -49,10 +57,27 @@ services:
       retries: 2
       start_period: 1m
 
-# This task is an example of how to extend existing ones:
-# some_worker:
-#   <<: *web
-#   command: python manage.py worker_process
+  celery-worker:
+    <<: *web
+    container_name: skyexpo-celery
+    depends_on:
+      - web
+      - db
+      - rabbitmq
+    command: celery -A server worker -l info
+
+  celery-flower:
+    <<: *web
+    container_name: skyexpo-flower
+    depends_on:
+      - web
+      - db
+      - rabbitmq
+    environment:
+     - FLOWER_PORT=8080
+    ports:
+      - 8080:8080
+    command: celery -A server flower
 
   web-app:
     container_name: skyexpo-webapp
