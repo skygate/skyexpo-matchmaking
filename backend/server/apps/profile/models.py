@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'  # noqa: WPS115
 
-    objects = managers.UserManager()
+    objects = managers.UserManager.from_queryset(querysets.UserQuerySet)()
 
 
 class BaseInfo(models.Model):

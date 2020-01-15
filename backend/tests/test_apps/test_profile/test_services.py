@@ -41,16 +41,15 @@ def test_check_for_duplicated_emails():
 def test_validate_team_members_form(company):
     """Checks if profiles are already assigned."""
     profile1 = ProfileFactory.create()
-    profile2 = ProfileFactory.create()
+    profile2 = ProfileFactory.create(user=UserFactory(is_active=False))
     assign_profile_to_company(profile=profile1, company=company)
+
     team_members = [
         {'name': profile2.name, 'email': profile2.user.email},
         {'name': profile1.name, 'email': profile1.user.email},
     ]
 
-    with pytest.raises(
-        ValidationError, match=f'{profile1.user.email} is already assigned.',
-    ):
+    with pytest.raises(ValidationError):
         validate_team_members_form(team_members=team_members)
 
 

@@ -104,10 +104,6 @@ REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] += [
     'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
 ]
 
-REST_FRAMEWORK['DEFAULT_PARSER_CLASSES'] += [
-    'djangorestframework_camel_case.parser.CamelCaseFormParser',
-]
-
 
 # drf-yasg documentation settings
 
