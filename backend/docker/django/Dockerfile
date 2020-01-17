@@ -15,7 +15,7 @@ ENV \
   # dockerize:
   DOCKERIZE_VERSION=v0.6.1 \
   # poetry:
-  POETRY_VERSION=1.0.0
+  POETRY_VERSION=0.12.17
 
 # Build deps:
 RUN apk add --no-cache --virtual .build-deps \
@@ -58,7 +58,7 @@ ARG DJANGO_ENV
 ENV DJANGO_ENV=${DJANGO_ENV}
 
 RUN chmod +x "/docker-entrypoint.sh" \
-  && poetry config virtualenvs.create false \
+  && poetry config settings.virtualenvs.create false \
   && poetry install $(test "$DJANGO_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
 
 RUN apk del .build-deps

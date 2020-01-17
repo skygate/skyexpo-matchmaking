@@ -80,11 +80,11 @@ services:
     command: celery -A server flower
 
   web-app:
+    image: registry.hal.skygate.io/skyexpo-web-app
     container_name: skyexpo-webapp
     build:
       context: ./web-app
     restart: unless-stopped
-    image: skyexpo_web-app
     networks:
       - webnet
       - proxynet

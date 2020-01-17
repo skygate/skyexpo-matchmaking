@@ -39,6 +39,20 @@ steps:
       - docker pull registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-} || docker pull registry.hal.skygate.io/skyexpo-web || true
       - docker tag registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-} registry.hal.skygate.io/skyexpo-web || true
 
+  - name: build nginx
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    pull: if-not-exists
+    commands:
+      - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build nginx
+
+  - name: build frontend
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    pull: if-not-exists
+    commands:
+      - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web-app
+
   - name: run backend CI
     image: *docker-compose-image
     volumes: *docker-compose-volumes
@@ -60,7 +74,28 @@ steps:
     commands:
       - echo $DOCKER_REGISTRY_PWD | docker login -u $DOCKER_REGISTRY_USR --password-stdin registry.hal.skygate.io
       - docker tag registry.hal.skygate.io/skyexpo-web registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
+      - docker tag registry.hal.skygate.io/skyexpo-web-app registry.hal.skygate.io/skyexpo-web-app:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
+      - docker tag registry.hal.skygate.io/skyexpo-nginx registry.hal.skygate.io/skyexpo-nginx:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
       - docker push registry.hal.skygate.io/skyexpo-web:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
+      - docker push registry.hal.skygate.io/skyexpo-web-app:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
+      - docker push registry.hal.skygate.io/skyexpo-nginx:${DRONE_SOURCE_BRANCH//\//-}-${DRONE_TARGET_BRANCH//\//-}
+
+  - name: build and push prod
+    image: *docker-compose-image
+    volumes: *docker-compose-volumes
+    pull: if-not-exists
+    environment:
+      DOCKER_REGISTRY_USR:
+        from_secret: DOCKER_REGISTRY_USR
+      DOCKER_REGISTRY_PWD:
+        from_secret: DOCKER_REGISTRY_PWD
+    commands:
+      - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build web
+      - ./scripts/push_deployment_images.sh
+    when:
+      branch:
+        - develop
+      event: { exclude: [pull_request] }
 
   - name: deploy to staging
     image: *docker-compose-image
@@ -69,6 +104,7 @@ steps:
     environment:
       SSH_PRIVATE_KEY:
         from_secret: SSH_PRIVATE_KEY
+      SSH_HOST: ubuntu@app-skyexpo
     commands:
       - "which ssh-agent || ( apk add --no-cache openssh-client )"
       - "which rsync || ( apk add --no-cache rsync )"
@@ -77,8 +113,7 @@ steps:
       - mkdir -p ~/.ssh
       - chmod 700 ~/.ssh
       - "rsync -e 'ssh -o StrictHostKeyChecking=no' -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:/home/ubuntu/skyexpo"
-      - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml build'
-      - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
+      - ssh -A $SSH_HOST "export DRONE_COMMIT_SHA=${DRONE_COMMIT_SHA}; cd /home/ubuntu/skyexpo; ./scripts/deploy.sh"
     when:
       branch:
         - develop

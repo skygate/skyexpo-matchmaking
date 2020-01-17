@@ -10,6 +10,7 @@ services:
     build:
       context: ./backend
       dockerfile: ./docker/nginx/Dockerfile
+    image: registry.hal.skygate.io/skyexpo-nginx
     container_name: skyexpo-nginx
     restart: unless-stopped
     volumes:
