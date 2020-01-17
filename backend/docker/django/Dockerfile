@@ -3,9 +3,7 @@
 
 FROM python:3.7.4-alpine3.9 as development_build
 
-ARG DJANGO_ENV
-
-ENV DJANGO_ENV=${DJANGO_ENV} \
+ENV \
   # python:
   PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
@@ -17,38 +15,31 @@ ENV DJANGO_ENV=${DJANGO_ENV} \
   # dockerize:
   DOCKERIZE_VERSION=v0.6.1 \
   # poetry:
-  POETRY_VERSION=0.12.17
+  POETRY_VERSION=1.0.0
 
+# Build deps:
+RUN apk add --no-cache --virtual .build-deps \
+  build-base \
+  gcc \
+  git \
+  libffi-dev \
+  linux-headers \
+  openssl \
+  musl-dev \
+  postgresql-dev
 
-# System deps:
-RUN apk --no-cache add \
-    bash \
-    build-base \
-    curl \
-    gcc \
-    gettext \
-    git \
-    libffi-dev \
-    linux-headers \
-    openssl \
-    musl-dev \
-    postgresql-dev \
-    tini \
-    # Pillow dependencies
-    jpeg-dev \
-    zlib-dev \
-    freetype-dev \
-    lcms2-dev \
-    openjpeg-dev \
-    tiff-dev \
-    tk-dev \
-    tcl-dev \
-    harfbuzz-dev \
-    fribidi-dev \
-  # Installing `poetry` package manager:
-  # https://github.com/sdispater/poetry
-  && pip install -U "pip<19.0" \
-  && pip install "poetry==$POETRY_VERSION" \
+# Pillow dependencies
+RUN apk add --no-cache \
+  jpeg-dev \
+  zlib-dev \
+  libjpeg \
+  libpq \
+  gettext \
+  tini 
+
+# Installing `poetry` package manager:
+# https://github.com/sdispater/poetry
+RUN pip install "poetry==$POETRY_VERSION" \
   # Installing `dockerize` utility:
   # https://github.com/jwilder/dockerize
   && wget "https://github.com/jwilder/dockerize/releases/download/${DOCKERIZE_VERSION}/dockerize-alpine-linux-amd64-${DOCKERIZE_VERSION}.tar.gz" \
@@ -63,9 +54,14 @@ COPY ./poetry.lock ./pyproject.toml /pysetup/
 COPY ./docker/django/entrypoint.sh /docker-entrypoint.sh
 
 # Project initialization:
+ARG DJANGO_ENV
+ENV DJANGO_ENV=${DJANGO_ENV}
+
 RUN chmod +x "/docker-entrypoint.sh" \
-  && poetry config settings.virtualenvs.create false \
+  && poetry config virtualenvs.create false \
   && poetry install $(test "$DJANGO_ENV" == production && echo "--no-dev") --no-interaction --no-ansi
+
+RUN apk del .build-deps
 
 # This dir will become the mountpoint of development code:
 WORKDIR /code
