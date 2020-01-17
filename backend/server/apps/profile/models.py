@@ -103,6 +103,10 @@ class BaseMatchmakingInfo(models.Model):
         abstract = True
 
 
+class InvestorProfile(models.Model):
+    pass
+
+
 class Profile(models.Model):
     """Represents the user's profile."""
 
@@ -116,7 +120,7 @@ class Profile(models.Model):
         return str(self.user)
 
 
-class AngelInvestor(BaseInfo, BaseMatchmakingInfo):
+class AngelInvestor(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
     """Represents an individual who provides financial backing for startups."""
 
     # TODO: set 'default' attr on ImageField when I get the default avatar.
@@ -178,7 +182,7 @@ class StartupToProfile(models.Model):
         return f'{str(self.profile)} - {str(self.startup)}'
 
 
-class Company(BaseInfo, BaseMatchmakingInfo):
+class Company(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
     """Represents a company that want investing e.g an investment fund."""
 
     name = models.CharField(max_length=255, unique=True)

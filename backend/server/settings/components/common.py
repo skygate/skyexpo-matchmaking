@@ -37,6 +37,7 @@ INSTALLED_APPS: Tuple[str, ...] = (
 
     # Your apps go here:
     'server.apps.profile',
+    'server.apps.matchmaking',
 
     # Security:
     'axes',
