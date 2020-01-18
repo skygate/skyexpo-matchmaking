@@ -3,7 +3,7 @@ from typing import List
 
 from celery import shared_task
 
-from server.apps.matchmaking.logic.services import calculate_matches_for_startup
+from server.apps.matchmaking.logic.services import create_matches_for_startup
 from server.apps.matchmaking.models import Match
 from server.apps.profile.models import InvestorProfile, Startup
 
@@ -13,4 +13,4 @@ def match_startup_with_investors(*, startup_id: int) -> List[Match]:
     startup = Startup.objects.get(id=startup_id)
     investors = InvestorProfile.objects.all()
 
-    return calculate_matches_for_startup(startup=startup, investors=investors)
+    return create_matches_for_startup(startup=startup, investors=investors)
