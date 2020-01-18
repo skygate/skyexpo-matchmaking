@@ -104,7 +104,12 @@ class BaseMatchmakingInfo(models.Model):
 
 
 class InvestorProfile(models.Model):
-    pass
+    """
+
+    """
+    ...
+    # def __str__(self):
+    #     return ...
 
 
 class Profile(models.Model):
