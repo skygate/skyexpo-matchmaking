@@ -3,7 +3,7 @@
 from django.core import validators
 from django.db import models
 
-from server.apps.profile.models import Startup, InvestorProfile
+from server.apps.profile.models import InvestorProfile, Startup
 
 
 class Match(models.Model):

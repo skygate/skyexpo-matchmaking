@@ -7,8 +7,13 @@ from psycopg2.extras import NumericRange
 from typing_extensions import Final
 
 from server.apps.matchmaking.models import Match
-from server.apps.profile.models import Startup, InvestorProfile, AngelInvestor, \
-    Company, BaseMatchmakingInfo
+from server.apps.profile.models import (
+  AngelInvestor,
+  BaseMatchmakingInfo,
+  Company,
+  InvestorProfile,
+  Startup,
+)
 
 
 class Matchmaking:
@@ -17,15 +22,20 @@ class Matchmaking:
         self.investor = investor
 
     MATCHING_ARGS: Final = [
-        'stage', 'sectors', 'industries', 'product_types', 'investment_stage',
-        'is_product_on_market', 'investment_size',
+        'stage',
+        'sectors',
+        'industries',
+        'product_types',
+        'investment_stage',
+        'is_product_on_market',
+        'business_type',
+        'investment_size',
     ]
 
     def _get_investor_child_obj(self) -> Union[Company, AngelInvestor]:
         if hasattr(self.investor, 'company'):
             return getattr(self.investor, 'company')
-        elif hasattr(self.investor, 'angelinvestor'):
-            return getattr(self.investor, 'angelinvestor')
+        return getattr(self.investor, 'angelinvestor')
 
     def _get_matching_values(
         self, obj: BaseMatchmakingInfo,
@@ -47,11 +57,13 @@ class Matchmaking:
         return int(same / len(self.MATCHING_ARGS) * 100)
 
     def calculate_result(self) -> int:
-        investor = self._get_investor_child_obj()
-        investor_values = self._get_matching_values(investor)
+        investor_child = self._get_investor_child_obj()
+        investor_child_values = self._get_matching_values(investor_child)
         startup_values = self._get_matching_values(self.startup)
 
-        return self._run_matchmaking_algorithm(investor_values, startup_values)
+        return self._run_matchmaking_algorithm(
+            investor_child_values, startup_values,
+        )
 
 
 def create_matches_for_startup(

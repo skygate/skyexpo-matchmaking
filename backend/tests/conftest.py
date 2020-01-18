@@ -13,8 +13,12 @@ from django.contrib.auth import get_user_model
 from django.test import Client
 from rest_framework.test import APIClient
 
-from tests.factories import CompanyFactory, ProfileFactory, StartupFactory, \
-    AngelInvestorFactory
+from tests.factories import (
+  AngelInvestorFactory,
+  CompanyFactory,
+  ProfileFactory,
+  StartupFactory,
+)
 
 User = get_user_model()
 
