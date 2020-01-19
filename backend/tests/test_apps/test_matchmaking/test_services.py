@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+# flake8: noqa
+
 import pytest
 from psycopg2.extras import NumericRange
 
@@ -19,7 +22,9 @@ from server.apps.profile.models import AngelInvestor, Company, InvestorProfile
 
 
 class TestMatchmaking:
-    MATCHING_VALUES_1 = [
+    """Test matchmaking process."""
+
+    MATCHING_VALUES1 = [
         CompanyStage.CONCEPT_STAGE,
         [Sector.AI_AND_ROBOTICS],
         [Industry.FINANCIAL_SERVICES],
@@ -29,7 +34,7 @@ class TestMatchmaking:
         BusinessType.B2B,
         NumericRange(2, 1),
     ]
-    MATCHING_VALUES_2 = [
+    MATCHING_VALUES2 = [
         CompanyStage.SEED_STAGE,
         [Sector.IOT_AND_SENSORS],
         [Industry.HEALTH_CARE],
@@ -52,11 +57,11 @@ class TestMatchmaking:
         assert isinstance(match_investor_child, AngelInvestor)
 
     @pytest.mark.parametrize('investor_values, startup_values, expected', [
-                                 (MATCHING_VALUES_1, MATCHING_VALUES_1, 100),
-                                 (MATCHING_VALUES_1, MATCHING_VALUES_2, 0)
+        (MATCHING_VALUES1, MATCHING_VALUES1, 100),
+        (MATCHING_VALUES1, MATCHING_VALUES2, 0),
     ])
     def test_run_matchmaking_algorithm(
-        self, investor_values, startup_values, expected, startup, company
+        self, investor_values, startup_values, expected, startup, company,
     ):
         result = Matchmaking(startup, company)._run_matchmaking_algorithm(
             investor_values, startup_values,

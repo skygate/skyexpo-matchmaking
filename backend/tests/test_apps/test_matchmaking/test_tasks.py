@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from unittest.mock import patch
 
 from server.apps.matchmaking.logic.tasks import match_startup_with_investors

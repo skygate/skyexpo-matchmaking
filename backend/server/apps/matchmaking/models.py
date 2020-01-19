@@ -7,9 +7,7 @@ from server.apps.profile.models import InvestorProfile, Startup
 
 
 class Match(models.Model):
-    """
-
-    """
+    """Represents matching scale between a startup and an investor."""
 
     startup = models.ForeignKey(Startup, on_delete=models.CASCADE)
     investor = models.ForeignKey(InvestorProfile, on_delete=models.CASCADE)
@@ -25,4 +23,8 @@ class Match(models.Model):
         verbose_name_plural = 'Matches'
 
     def __str__(self) -> str:
-        return f'{str(self.startup)} - {str(self.investor)}: {self.result}'
+        return '{startup}, {investor}, {result}'.format(
+            startup=str(self.startup),
+            investor=str(self.investor),
+            result=self.result,
+        )

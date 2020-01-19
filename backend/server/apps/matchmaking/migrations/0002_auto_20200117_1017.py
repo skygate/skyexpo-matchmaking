@@ -11,19 +11,24 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('profile', '0001_initial'),
-        ('matchmaking', '0001_initial'),
+        ('profile', '0001_initial'), ('matchmaking', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='match',
             name='investor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profile.InvestorProfile'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='profile.InvestorProfile',
+            ),
         ),
         migrations.AddField(
             model_name='match',
             name='startup',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profile.Startup'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='profile.Startup',
+            ),
         ),
     ]

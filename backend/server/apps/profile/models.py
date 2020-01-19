@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.postgres import fields, validators
@@ -104,12 +106,16 @@ class BaseMatchmakingInfo(models.Model):
 
 
 class InvestorProfile(models.Model):
-    """
+    """Marks model as investor."""
 
-    """
-    ...
-    # def __str__(self):
-    #     return ...
+    def get_child(self) -> Union['Company', 'AngelInvestor']:
+        try:
+            return self.company
+        except AttributeError:
+            return self.angelinvestor
+
+    def __str__(self) -> str:
+        return str(self.get_child())
 
 
 class Profile(models.Model):
@@ -157,7 +163,7 @@ class Startup(BaseInfo, BaseMatchmakingInfo):
     def __str__(self) -> str:
         return self.name
 
-    def get_profiles(self):
+    def get_profiles(self) -> 'models.QuerySet[Profile]':
         return Profile.objects.filter(startups=self.pk).select_related('user')
 
 
@@ -204,7 +210,7 @@ class Company(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
     def __str__(self) -> str:
         return self.name
 
-    def get_profiles(self):
+    def get_profiles(self) -> 'models.QuerySet[Profile]':
         return Profile.objects.filter(companies=self.pk).select_related('user')
 
 

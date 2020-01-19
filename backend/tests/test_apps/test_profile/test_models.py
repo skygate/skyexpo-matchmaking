@@ -14,6 +14,7 @@ from server.apps.profile.logic.services import (
 from server.apps.profile.models import (
   Company,
   CompanyToProfile,
+  InvestorProfile,
   Profile,
   StartupToProfile,
   validate_profile_is_unassigned,
@@ -54,6 +55,14 @@ def test_company_string_representation():
     company = CompanyFactory.build()
 
     assert str(company) == company.name
+
+
+def test_company_investor_profile_string_repr(company):
+    assert str(InvestorProfile.objects.first()) == str(company)
+
+
+def test_angelinvestor_profile_string_repr(angel_investor):
+    assert str(InvestorProfile.objects.first()) == str(angel_investor)
 
 
 def test_startup_to_profile_string_representation():
