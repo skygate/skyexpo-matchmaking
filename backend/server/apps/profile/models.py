@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.postgres import fields, validators
@@ -103,6 +105,19 @@ class BaseMatchmakingInfo(models.Model):
         abstract = True
 
 
+class InvestorProfile(models.Model):
+    """Marks model as investor."""
+
+    def get_child(self) -> Union['Company', 'AngelInvestor']:
+        try:
+            return self.company
+        except AttributeError:
+            return self.angelinvestor
+
+    def __str__(self) -> str:
+        return str(self.get_child())
+
+
 class Profile(models.Model):
     """Represents the user's profile."""
 
@@ -116,7 +131,7 @@ class Profile(models.Model):
         return str(self.user)
 
 
-class AngelInvestor(BaseInfo, BaseMatchmakingInfo):
+class AngelInvestor(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
     """Represents an individual who provides financial backing for startups."""
 
     # TODO: set 'default' attr on ImageField when I get the default avatar.
@@ -148,7 +163,7 @@ class Startup(BaseInfo, BaseMatchmakingInfo):
     def __str__(self) -> str:
         return self.name
 
-    def get_profiles(self):
+    def get_profiles(self) -> 'models.QuerySet[Profile]':
         return Profile.objects.filter(startups=self.pk).select_related('user')
 
 
@@ -178,7 +193,7 @@ class StartupToProfile(models.Model):
         return f'{str(self.profile)} - {str(self.startup)}'
 
 
-class Company(BaseInfo, BaseMatchmakingInfo):
+class Company(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
     """Represents a company that want investing e.g an investment fund."""
 
     name = models.CharField(max_length=255, unique=True)
@@ -195,7 +210,7 @@ class Company(BaseInfo, BaseMatchmakingInfo):
     def __str__(self) -> str:
         return self.name
 
-    def get_profiles(self):
+    def get_profiles(self) -> 'models.QuerySet[Profile]':
         return Profile.objects.filter(companies=self.pk).select_related('user')
 
 
