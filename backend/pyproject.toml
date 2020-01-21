@@ -41,6 +41,7 @@ bcrypt = "^3.1"
 sentry-sdk = "^0.14"
 pyrsistent = "0.14.2"
 celery = "^4.4"
+redis = "^3.3"
 flower = "^0.9"
 # TODO: drf-yasg should be in dev-dependecies but views currently need decorator from this package
 # Try to resolve it somehow so we can move drf-yasg into dev-dependencies.
