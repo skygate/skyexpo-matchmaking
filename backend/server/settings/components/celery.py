@@ -2,10 +2,10 @@
 
 from server.settings.components import config
 
-CELERY_BROKER_URL = 'amqp://{username}:{password}@{host}:{port}'.format(
-    username=config('RABBITMQ_USERNAME'),
-    password=config('RABBITMQ_PASSWORD'),
-    host=config('RABBITMQ_HOST'),
-    port=config('RABBITMQ_PORT'),
+
+CELERY_BROKER_URL = 'redis://:{password}@{hostname}:{port}/0'.format(
+    password=config('REDIS_PASSWORD'),
+    hostname=config('REDIS_HOSTNAME'),
+    port=config('REDIS_PORT'),
 )
-# TODO: setup result_backend i inne
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL

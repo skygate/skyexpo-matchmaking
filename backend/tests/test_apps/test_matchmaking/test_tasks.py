@@ -2,10 +2,10 @@
 
 from unittest.mock import patch
 
-from server.apps.matchmaking.logic.tasks import match_startup_with_investors
+from server.apps.matchmaking.tasks import match_startup_with_investors
 
 
-@patch('server.apps.matchmaking.logic.tasks.create_matches_for_startup')
+@patch('server.apps.matchmaking.tasks.create_matches_for_startup')
 def test_match_startup_with_investors(
     create_matches_for_startup, startup, company,
 ):

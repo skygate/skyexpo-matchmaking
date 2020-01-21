@@ -19,9 +19,9 @@ services:
       - webnet
     env_file: ./backend/config/.env
 
-  rabbitmq:
-    image: "bitnami/rabbitmq"
-    container_name: skyexpo-rabbitmq
+  redis:
+    image: "bitnami/redis:5.0.7"
+    container_name: skyexpo-redis
     restart: unless-stopped
     networks:
       - webnet
@@ -63,7 +63,7 @@ services:
     depends_on:
       - web
       - db
-      - rabbitmq
+      - redis
     command: celery -A server worker -l info
 
   celery-flower:
@@ -72,7 +72,7 @@ services:
     depends_on:
       - web
       - db
-      - rabbitmq
+      - redis
     environment:
      - FLOWER_PORT=8080
     ports:
