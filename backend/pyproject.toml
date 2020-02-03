@@ -49,7 +49,7 @@ drf-yasg = "^1.17"
 typing-extensions = "^3.7"
 
 [tool.poetry.dev-dependencies]
-django-debug-toolbar = "^2.1"
+django-debug-toolbar = "^2.2"
 django-querycount = "^0.7"
 django-extensions = "^2.2"
 nplusone = "^1.0"
