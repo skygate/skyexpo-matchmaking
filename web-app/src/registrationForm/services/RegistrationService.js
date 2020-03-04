@@ -3,7 +3,9 @@ export class RegistrationService {
         this.http = http;
     }
 
-    async validateFirstStep(data) {
-        return this.http.POST('companies/form/step-1/', data).catch(Promise.reject);
+    async validateStepOfForm(data) {
+        const path = `form/${data.userType}/step-${data.step}/`;
+
+        return this.http.POST(path, data.formValues);
     }
 }

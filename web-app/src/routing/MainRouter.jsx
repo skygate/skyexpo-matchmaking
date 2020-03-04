@@ -32,6 +32,7 @@ export const MainRouter = () => (
                     formSteps={startupFormSteps}
                     initialValues={startupInitialValues}
                     validationSchemas={startupValidationSchemas}
+                    userType="startup"
                 />
             </Route>
             <Route exact path="/investor">
@@ -43,6 +44,7 @@ export const MainRouter = () => (
                     formSteps={companyInvestorFormSteps}
                     initialValues={companyInvestorInitialValues}
                     validationSchemas={companyInvestorValidationSchemas}
+                    userType="company"
                 />
             </Route>
             <Route exact path="/investor/individual">
@@ -51,6 +53,7 @@ export const MainRouter = () => (
                     formSteps={individualInvestorFormSteps}
                     initialValues={individualInvestorInitialValues}
                     validationSchemas={individualInvestorValidationSchemas}
+                    userType="investor"
                 />
             </Route>
             <Redirect to="/" />
