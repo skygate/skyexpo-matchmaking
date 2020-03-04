@@ -20,5 +20,17 @@ export function registrationEpicFactory(registrationService) {
             ),
         );
 
-    return combineEpics(validateStepOfFormEpic);
+    const saveStepFormAnswersEpic = action$ =>
+        action$.pipe(
+            ofType(action.SAVE_STEP_FORM_ANSWERS_REQUESTED),
+            pluck('payload'),
+            switchMap(answers =>
+                registrationService
+                    .saveStepFormAnswers(answers)
+                    .then(action.saveStepFormAnswersSuccess)
+                    .catch(action.saveStepFormAnswersFail),
+            ),
+        );
+
+    return combineEpics(validateStepOfFormEpic, saveStepFormAnswersEpic);
 }

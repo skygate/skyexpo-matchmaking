@@ -18,13 +18,13 @@ export class HttpService {
     }
 
     makeRequest(method, path, body = null, options = {}) {
-        const formData = new FormData();
-
-        Object.keys(body).forEach(fieldName => formData.append(fieldName, body[fieldName]));
-
+        console.log(options);
         const params = {
             method,
-            body: formData,
+            body: this.getBody(options.isFormData, body),
+            ...(options.isFormData
+                ? {}
+                : { headers: new Headers({ 'content-type': 'application/json' }) }),
         };
 
         return fetch(BASE_URL + path, params).then(async response => {
@@ -37,5 +37,14 @@ export class HttpService {
             err.code = response.status;
             throw err;
         });
+    }
+
+    getBody(isFormData, body) {
+        if (isFormData) {
+            const formData = new FormData();
+            Object.keys(body).forEach(fieldName => formData.append(fieldName, body[fieldName]));
+            return formData;
+        }
+        return JSON.stringify(body);
     }
 }

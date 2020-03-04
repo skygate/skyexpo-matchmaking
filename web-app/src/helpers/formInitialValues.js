@@ -9,8 +9,8 @@ export const startupInitialValues = {
     logotype: '',
     teamMembers: [
         {
-            name0: '',
-            email0: '',
+            name: '',
+            email: '',
         },
     ],
     industries: [''],
@@ -36,8 +36,8 @@ export const companyInvestorInitialValues = {
     logotype: '',
     teamMembers: [
         {
-            name0: '',
-            email0: '',
+            name: '',
+            email: '',
         },
     ],
     industries: [''],

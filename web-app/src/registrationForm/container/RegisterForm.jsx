@@ -38,6 +38,7 @@ const RegisterForm = ({
                 }),
                 {},
             );
+
         validateStepOfFormRequest(stepValues, userType, currentStep + 1);
 
         props.submitForm().then(() => {
