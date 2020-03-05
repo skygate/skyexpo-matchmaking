@@ -18,7 +18,6 @@ export class HttpService {
     }
 
     makeRequest(method, path, body = null, options = {}) {
-        console.log(options);
         const params = {
             method,
             body: this.getBody(options.isFormData, body),

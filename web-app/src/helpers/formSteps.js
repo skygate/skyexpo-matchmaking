@@ -56,13 +56,13 @@ export const startupFormSteps = [
                 tags: 'companyStageTags',
             },
             {
-                name: 'productType',
+                name: 'productTypes',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
             },
             {
-                name: 'productOnMarket',
+                name: 'isProductOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
                 options: [
@@ -92,12 +92,12 @@ export const startupFormSteps = [
                 ],
             },
             {
-                name: 'minimumInvest',
+                name: 'minInvestmentSize',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
             },
             {
-                name: 'maximumInvest',
+                name: 'maxInvestmentSize',
                 placeholder: 'Maximum investment size (EUR)',
                 type: 'number',
             },
@@ -163,13 +163,13 @@ export const companyInvestorFormSteps = [
                 tags: 'companyStageTags',
             },
             {
-                name: 'productType',
+                name: 'productTypes',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
             },
             {
-                name: 'productOnMarket',
+                name: 'isProductOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
                 options: [
@@ -199,12 +199,12 @@ export const companyInvestorFormSteps = [
                 ],
             },
             {
-                name: 'minimumInvest',
+                name: 'minInvestmentSize',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
             },
             {
-                name: 'maximumInvest',
+                name: 'maxInvestmentSize',
                 placeholder: 'Maximum investment size (EUR)',
                 type: 'number',
             },
@@ -249,13 +249,13 @@ export const individualInvestorFormSteps = [
                 tags: 'companyStageTags',
             },
             {
-                name: 'productType',
+                name: 'productTypes',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
             },
             {
-                name: 'productOnMarket',
+                name: 'isProductOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
                 options: [
@@ -285,12 +285,12 @@ export const individualInvestorFormSteps = [
                 ],
             },
             {
-                name: 'minimumInvest',
+                name: 'minInvestmentSize',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
             },
             {
-                name: 'maximumInvest',
+                name: 'maxInvestmentSize',
                 placeholder: 'Maximum investment size (EUR)',
                 type: 'number',
             },

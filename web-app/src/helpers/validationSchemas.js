@@ -128,12 +128,12 @@ const validationPage3 = Yup.object().shape({
     companyStage: Yup.string()
         .trim()
         .required('Company stage is required'),
-    productType: Yup.array().of(
+    productTypes: Yup.array().of(
         Yup.string()
             .trim()
             .required('Product types are required'),
     ),
-    productOnMarket: Yup.boolean().required('Please define if your product is on marekt'),
+    isProductOnMarket: Yup.boolean().required('Please define if your product is on market'),
     targetMarket: Yup.array().of(
         Yup.string()
             .trim()
@@ -144,8 +144,8 @@ const validationPage3 = Yup.object().shape({
             .trim()
             .required('Business type is required'),
     ),
-    minimumInvest: Yup.number().required('Minimum investment is required'),
-    maximumInvest: Yup.number().required('Maximum investment required'),
+    minInvestmentSize: Yup.number().required('Minimum investment is required'),
+    maxInvestmentSize: Yup.number().required('Maximum investment required'),
 });
 
 export const startupValidationSchemas = [startupValidationPage1, validationPage2, validationPage3];

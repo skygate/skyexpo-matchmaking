@@ -17,12 +17,12 @@ export const startupInitialValues = {
     sectors: [''],
     investmentStage: [''],
     companyStage: [''],
-    productType: [''],
-    productOnMarket: '',
+    productTypes: [''],
+    isProductOnMarket: '',
     targetMarket: [''],
     businessType: [''],
-    minimumInvest: '',
-    maximumInvest: '',
+    minInvestmentSize: '',
+    maxInvestmentSize: '',
 };
 
 export const companyInvestorInitialValues = {
@@ -44,12 +44,12 @@ export const companyInvestorInitialValues = {
     sectors: [''],
     investmentStage: [''],
     companyStage: [''],
-    productType: [''],
-    productOnMarket: '',
+    productTypes: [''],
+    isProductOnMarket: '',
     targetMarket: [''],
     businessType: [''],
-    minimumInvest: '',
-    maximumInvest: '',
+    minInvestmentSize: '',
+    maxInvestmentSize: '',
 };
 
 export const individualInvestorInitialValues = {
@@ -65,10 +65,10 @@ export const individualInvestorInitialValues = {
     sectors: [''],
     investmentStage: [''],
     companyStage: [''],
-    productType: [''],
-    productOnMarket: '',
+    productTypes: [''],
+    isProductOnMarket: '',
     targetMarket: [''],
     businessType: [''],
-    minimumInvest: '',
-    maximumInvest: '',
+    minInvestmentSize: '',
+    maxInvestmentSize: '',
 };
