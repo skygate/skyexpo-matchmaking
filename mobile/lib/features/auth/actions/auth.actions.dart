@@ -12,13 +12,13 @@ class LogInRequestAction {
 }
 
 class LogInSucceedAction {
-  final Credentials userData;
+  final String userData;
 
   LogInSucceedAction(this.userData);
 
   @override
   String toString() {
-    return 'LogInRequestAction{userData: $userData}';
+    return 'LogInSucceedAction{userData: $userData}';
   }
 }
 

@@ -21,8 +21,12 @@ final authReducer = combineReducers<AuthState>([
 
 AuthState getTokenSucceedReducer(
     AuthState authState, LogInSucceedAction action) {
+  print('sdfhjkljsdhfkjsdhf');
+  print(action.userData);
+  print('jsdlkfjklsdf');
+
   return new AuthState(
-      email: action.userData.email,
+      email: action.userData,
       token: 'token',
       isAuthenticated: true,
       authIsChecked: authState.authIsChecked);

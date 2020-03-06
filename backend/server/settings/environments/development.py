@@ -17,6 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     config('DOMAIN_NAME'),
+    '192.168.0.109',
+    '10.0.0.25',
     'localhost',
     '127.0.0.1',
     '[::1]',

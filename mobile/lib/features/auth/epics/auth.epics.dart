@@ -8,10 +8,16 @@ import 'package:mobile/store/app-state.dart';
 
 Stream<dynamic> logInEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
   return actions.where((action) => action is LogInRequestAction).asyncMap(
-      (action) => authService
-          .getToken(action)
-          .then((results) => LogInSucceedAction(results))
-          .catchError((error) => LogInFailedAction()));
+      (action) => authService.getToken(action.credentials).then((results) {
+            print(results);
+            return LogInSucceedAction(results);
+          }).catchError((error) {
+            print('lafdjhhlsakdfhkjslhdflksjdhflksdjhflkjsdhf');
+            print(error);
+            print('lafdjhhlsakdfhkjslhdflksjdhflksdjhflkjsdhf');
+
+            return LogInFailedAction();
+          }));
 }
 
 final authEpics = combineEpics<AppState>([logInEpic]);
