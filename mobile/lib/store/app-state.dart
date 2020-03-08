@@ -1,7 +1,7 @@
 import 'package:mobile/features/auth/reducers/auth.reducer.dart';
 
 class AppState {
-  AppState({this.auth}) {}
+  AppState({this.auth});
   final AuthState auth;
 }
 

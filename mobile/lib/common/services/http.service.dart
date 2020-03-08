@@ -15,6 +15,8 @@ post(String path, body) async {
   var response = await http.post(apiConfig.apiBase + path + '/',
       body: json.encode(body.toJson()),
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-
+  if (response.statusCode != 200) {
+    throw (response);
+  }
   return response.body;
 }

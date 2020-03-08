@@ -16,6 +16,7 @@ class AuthState {
 
 final authReducer = combineReducers<AuthState>([
   TypedReducer<AuthState, LogInSucceedAction>(getTokenSucceedReducer),
+  TypedReducer<AuthState, LogInFailedAction>(getTokenFailedReducer),
 ]);
 
 AuthState getTokenSucceedReducer(
@@ -24,5 +25,13 @@ AuthState getTokenSucceedReducer(
       email: action.userData,
       token: 'token',
       isAuthenticated: true,
+      authIsChecked: authState.authIsChecked);
+}
+
+AuthState getTokenFailedReducer(AuthState authState, LogInFailedAction action) {
+  return new AuthState(
+      email: 'wwywallo sie',
+      token: 'token',
+      isAuthenticated: false,
       authIsChecked: authState.authIsChecked);
 }
