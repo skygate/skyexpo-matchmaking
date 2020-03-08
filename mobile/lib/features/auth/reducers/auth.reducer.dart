@@ -8,7 +8,6 @@ class AuthState {
       this.token = '',
       this.isAuthenticated = false,
       this.authIsChecked = false});
-
   final String email;
   final String token;
   final bool isAuthenticated;
@@ -21,10 +20,6 @@ final authReducer = combineReducers<AuthState>([
 
 AuthState getTokenSucceedReducer(
     AuthState authState, LogInSucceedAction action) {
-  print('sdfhjkljsdhfkjsdhf');
-  print(action.userData);
-  print('jsdlkfjklsdf');
-
   return new AuthState(
       email: action.userData,
       token: 'token',

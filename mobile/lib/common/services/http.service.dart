@@ -13,9 +13,8 @@ get(String path) async {
 
 post(String path, body) async {
   var response = await http.post(apiConfig.apiBase + path + '/',
-      body: json.encode(body),
+      body: json.encode(body.toJson()),
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-  print(response);
 
   return response.body;
 }
