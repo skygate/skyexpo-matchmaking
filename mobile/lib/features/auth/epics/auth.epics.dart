@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:mobile/config/routes.config.dart';
 import 'package:redux_epics/redux_epics.dart';
 
 import 'package:mobile/features/auth/actions/auth.actions.dart';
@@ -11,6 +12,7 @@ Stream<dynamic> logInEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
       (action) => authService.getToken(action.credentials).then((results) {
             return LogInSucceedAction(results);
           }, onError: (error) {
+            navigatorKey.currentState.pushNamed(routes["afterAuth"]);
             return LogInFailedAction();
           }));
 }

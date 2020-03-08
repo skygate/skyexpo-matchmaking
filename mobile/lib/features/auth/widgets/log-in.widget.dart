@@ -23,42 +23,45 @@ class LogInForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Container(
-            width: MediaQuery.of(context).size.width * 0.5,
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(title, style: TextStyle(fontSize: 20)),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Email'),
-                    onSaved: (String value) {
-                      this._formData.email = value;
-                    },
-                    validator: (value) => composeValidators(
-                        [isNotEmptyValidator, isValidEmailValidator], value),
+    return Scaffold(
+        body: Center(
+            child: Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(title, style: TextStyle(fontSize: 20)),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Email'),
+                        onSaved: (String value) {
+                          this._formData.email = value;
+                        },
+                        validator: (value) => composeValidators(
+                            [isNotEmptyValidator, isValidEmailValidator],
+                            value),
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Password'),
+                        onSaved: (String value) {
+                          this._formData.password = value;
+                        },
+                        obscureText: true,
+                        validator: (value) => composeValidators(
+                            [isNotEmptyValidator, isValidPasswordValidator],
+                            value),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: RaisedButton(
+                          onPressed: this.submitForm,
+                          child: Text('Submit'),
+                        ),
+                      ),
+                    ],
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Password'),
-                    onSaved: (String value) {
-                      this._formData.password = value;
-                    },
-                    obscureText: true,
-                    validator: (value) => composeValidators(
-                        [isNotEmptyValidator, isValidPasswordValidator], value),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: RaisedButton(
-                      onPressed: this.submitForm,
-                      child: Text('Submit'),
-                    ),
-                  ),
-                ],
-              ),
-            )));
+                ))));
   }
 }
