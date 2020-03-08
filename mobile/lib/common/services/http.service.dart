@@ -12,10 +12,10 @@ get(String path) async {
 }
 
 post(String path, body) async {
-  var response = await http.post(apiConfig.apiBase + path + '/',
+  final http.Response response = await http.post(apiConfig.apiBase + path + '/',
       body: json.encode(body.toJson()),
       headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-  if (response.statusCode != 200) {
+  if (response.statusCode != 200 || response.statusCode != 201) {
     throw (response);
   }
   return response.body;

@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile/config/routes.config.dart';
 
 class AfterAuth extends StatelessWidget {
-  AfterAuth({Key key}) : super(key: key);
+  final String email;
+
+  AfterAuth({Key key, @required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,11 @@ class AfterAuth extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text('After auth screen'),
+          Text('Store says your email is: $email'),
           RaisedButton(
-            onPressed: () => Navigator.pushNamed(context, routes["home"]),
+            onPressed: () {
+              Navigator.pushNamed(context, routes["home"]);
+            },
             child: Text('Go to home screen'),
           )
         ],

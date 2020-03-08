@@ -1,4 +1,5 @@
 import 'package:mobile/features/auth/models/credentails.model.dart';
+import 'package:mobile/features/auth/models/user.model.dart';
 
 class LogInRequestAction {
   final Credentials credentials;
@@ -12,13 +13,13 @@ class LogInRequestAction {
 }
 
 class LogInSucceedAction {
-  final String userData;
+  final User user;
 
-  LogInSucceedAction(this.userData);
+  LogInSucceedAction(this.user);
 
   @override
   String toString() {
-    return 'LogInSucceedAction{userData: $userData}';
+    return 'LogInSucceedAction{userData: $user}';
   }
 }
 
