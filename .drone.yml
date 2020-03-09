@@ -17,8 +17,7 @@ steps:
     commands:
       - python -m pip install --upgrade pip
       - pip install dump-env
-      - dump-env -t ./backend/config/.env.template -p 'SECRET_'
-        --strict=SECRET_DJANGO_SECRET_KEY > ./backend/config/.env
+      - dump-env -t ./backend/config/.env.template -p 'SECRET_' --strict=SECRET_DJANGO_SECRET_KEY > ./backend/config/.env
     environment:
       SECRET_DJANGO_SECRET_KEY:
         from_secret: SECRET_DJANGO_SECRET_KEY
@@ -82,7 +81,8 @@ steps:
     when:
       branch:
         - develop
-      event: { exclude: [pull_request] }
+      event:
+        - push
 
 services:
   - name: run docker service
@@ -100,3 +100,8 @@ volumes:
   - name: hosts
     host:
       path: /etc/hosts
+
+trigger:
+  event:
+    exclude:
+      - pull_request

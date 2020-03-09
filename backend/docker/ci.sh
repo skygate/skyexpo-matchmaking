@@ -2,6 +2,7 @@
 
 set -o errexit
 set -o nounset
+set -x
 
 # Initializing global variables and functions:
 : "${DJANGO_ENV:=development}"
