@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/config/colors.config.dart';
 
 import 'bottom-navigation.widget.dart';
 
@@ -12,6 +13,14 @@ class Layout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: child, bottomNavigationBar: BottomNavigation());
+    return Scaffold(
+        backgroundColor: colors['background'],
+        drawerScrimColor: colors['background'],
+        appBar: AppBar(
+          backgroundColor: colors['background'],
+          elevation: 0.0,
+        ),
+        body: child,
+        bottomNavigationBar: BottomNavigation());
   }
 }

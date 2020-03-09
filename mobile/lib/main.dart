@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:mobile/config/colors.config.dart';
 import 'package:redux/redux.dart';
 
 import 'package:mobile/config/routes.config.dart';
 import 'package:mobile/store/app-state.dart';
 import 'package:mobile/store/root-epic.dart';
 
-import 'core/widgets/bottom-navigation.widget.dart';
 import 'features/auth/reducers/auth.reducer.dart';
 
 import 'features/auth/containers/after-auth.container.dart';
 import 'features/auth/containers/log-in.container.dart';
 import 'features/auth/widgets/home.widget.dart';
+import 'features/matching/mock/match.dart';
+import 'features/matching/widgets/matching-list.widget.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,14 +38,16 @@ class Main extends StatelessWidget {
         child: MaterialApp(
             title: 'Sky expo',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            initialRoute: routes['home'],
+                primarySwatch: Colors.blue,
+                backgroundColor: colors["background"]),
+            initialRoute: routes['matchingList'],
             navigatorKey: navigatorKey,
             routes: {
               routes['home']: (context) => Home(),
               routes['logIn']: (context) => LogInContainer(),
               routes['afterAuth']: (context) => AfterAuthContainer(),
+              routes['matchingList']: (context) =>
+                  MatchingList(matchingLis: matchingList),
             }));
   }
 }
