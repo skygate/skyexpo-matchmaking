@@ -1,6 +1,5 @@
-import 'package:mobile/common/services/http.service.dart' as api;
+import 'package:mobile/core/services/http.service.dart' as api;
 import 'package:http/http.dart' as http;
-import 'dart:io';
 import 'dart:convert';
 
 import 'package:mobile/config/api.config.dart';

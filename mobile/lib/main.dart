@@ -6,6 +6,7 @@ import 'package:mobile/config/routes.config.dart';
 import 'package:mobile/store/app-state.dart';
 import 'package:mobile/store/root-epic.dart';
 
+import 'core/widgets/bottom-navigation.widget.dart';
 import 'features/auth/reducers/auth.reducer.dart';
 
 import 'features/auth/containers/after-auth.container.dart';

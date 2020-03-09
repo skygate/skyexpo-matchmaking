@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:mobile/common/validators/getValidators.validator.dart';
 import 'package:mobile/common/validators/isNotEmpty.validator.dart';
 import 'package:mobile/common/validators/isValidEmail.validator.dart';
 import 'package:mobile/common/validators/isValidPassword.validator.dart';
+
 import 'package:mobile/features/auth/models/credentails.model.dart';
 
 class LogInForm extends StatelessWidget {
