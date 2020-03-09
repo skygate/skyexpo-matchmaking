@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile/common/widgets/top-header.widget.dart';
 
 import 'package:mobile/core/widgets/layout.widget.dart';
+import 'package:mobile/features/matching/widgets/matching-card.widget.dart';
 
 class MatchingList extends StatelessWidget {
-  final dynamic matchingLis;
-
-  MatchingList({Key key, @required this.matchingLis}) : super(key: key);
+  MatchingList({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +16,20 @@ class MatchingList extends StatelessWidget {
       children: [
         TopHeader(
             title: 'Matching list', subTitle: '98 proposal of connection'),
-        ListView(
+        Flexible(
+            child: ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
           children: [
-            Text('1'),
-            Text('2'),
+            MatchingCard(),
+            MatchingCard(),
+            MatchingCard(),
+            MatchingCard(),
+            MatchingCard(),
+            MatchingCard(),
+            MatchingCard(),
           ],
-        )
+        ))
       ],
     ));
   }

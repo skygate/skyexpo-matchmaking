@@ -46,8 +46,7 @@ class Main extends StatelessWidget {
               routes['home']: (context) => Home(),
               routes['logIn']: (context) => LogInContainer(),
               routes['afterAuth']: (context) => AfterAuthContainer(),
-              routes['matchingList']: (context) =>
-                  MatchingList(matchingLis: matchingList),
+              routes['matchingList']: (context) => MatchingList(),
             }));
   }
 }

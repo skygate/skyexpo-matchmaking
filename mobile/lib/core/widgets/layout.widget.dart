@@ -14,13 +14,14 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: colors['background'],
-        drawerScrimColor: colors['background'],
-        appBar: AppBar(
-          backgroundColor: colors['background'],
-          elevation: 0.0,
-        ),
-        body: child,
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(30.0),
+            child: AppBar(
+              backgroundColor: colors['background'],
+              elevation: 0.0,
+            )),
+        body: Padding(
+            padding: EdgeInsets.only(left: 20, right: 20), child: child),
         bottomNavigationBar: BottomNavigation());
   }
 }
