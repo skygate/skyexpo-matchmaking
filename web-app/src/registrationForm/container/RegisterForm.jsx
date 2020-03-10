@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
-import { Progress } from 'antd';
 import styled from '@emotion/styled';
-import * as R from 'ramda';
 
 import { FormQuestions } from '../components/FormQuestions';
+import { TopHeader } from '../components/TopHeader';
+
+import { BackButton, NextButton, ButtonsWrapper } from '../styled/buttons';
+
 import { handleRedirect } from '../../history';
 import { validateStepOfFormRequest } from '../actions/registrationActions';
+import { getStepValues } from '../../helpers/getStepValues';
 
 const SectionWrapper = styled.div`
-    max-width: 400px;
-    margin: 10rem auto;
+    padding: 0 1.5rem;
 `;
 
 const RegisterForm = ({
@@ -25,19 +27,7 @@ const RegisterForm = ({
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = props => {
-        const currentStepFormInputs = formSteps[currentStep].inputsFields;
-        const condition = currentStepFormInputs.map(a => a.name);
-        const data = props.values;
-
-        const stepValues = Object.keys(data)
-            .filter(value => condition.includes(value))
-            .reduce(
-                (obj, key) => ({
-                    ...obj,
-                    [key]: data[key],
-                }),
-                {},
-            );
+        const stepValues = getStepValues(formSteps[currentStep].inputsFields, props.initialValues);
 
         validateStepOfFormRequest(stepValues, userType, currentStep + 1);
 
@@ -84,8 +74,10 @@ const RegisterForm = ({
                 <h1>Thank you</h1>
             ) : (
                 <>
-                    <h1>Registration step {currentStep + 1}</h1>
-                    <Progress type="circle" percent={completionProgress} width={80} />
+                    <TopHeader
+                        completionProgress={completionProgress}
+                        step={currentStep}
+                    ></TopHeader>
                     <div>
                         <Formik
                             onSubmit={handleSubmit}
@@ -101,18 +93,28 @@ const RegisterForm = ({
                                         nextPage={() => handleNextPage(props)}
                                         countProgress={countCompletionProgress}
                                     />
-                                    {currentStep ? (
-                                        <button type="button" onClick={() => handleBackPage(props)}>
-                                            back
-                                        </button>
-                                    ) : (
-                                        <button onClick={() => handleRedirect('/')}>back</button>
-                                    )}
-                                    <button type="button" onClick={() => handleNextPage(props)}>
-                                        {currentStep === formSteps.length - 1
-                                            ? 'submit'
-                                            : 'next page'}
-                                    </button>
+                                    <ButtonsWrapper>
+                                        {currentStep ? (
+                                            <BackButton
+                                                type="button"
+                                                onClick={() => handleBackPage(props)}
+                                            >
+                                                Back
+                                            </BackButton>
+                                        ) : (
+                                            <BackButton onClick={() => handleRedirect('/')}>
+                                                Back
+                                            </BackButton>
+                                        )}
+                                        <NextButton
+                                            type="button"
+                                            onClick={() => handleNextPage(props)}
+                                        >
+                                            {currentStep === formSteps.length - 1
+                                                ? 'Finish'
+                                                : 'Next'}
+                                        </NextButton>
+                                    </ButtonsWrapper>
                                 </Form>
                             )}
                         </Formik>

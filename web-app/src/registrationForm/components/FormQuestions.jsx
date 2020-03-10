@@ -1,9 +1,14 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 import { Radio, Checkbox } from 'antd';
+import styled from '@emotion/styled';
 
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput } from './SelectTagsInput';
+
+const FormQuestionsWrapper = styled.div`
+    min-height: calc(100vh - 12.5rem);
+`;
 
 export const FormQuestions = ({
     handleChange,
@@ -43,7 +48,7 @@ export const FormQuestions = ({
     };
 
     return (
-        <>
+        <FormQuestionsWrapper>
             <h1>{pageProps.title}</h1>
             {pageProps.subtitle && <h2>{pageProps.subtitle}</h2>}
             {pageProps.inputsFields.map(input => (
@@ -207,6 +212,6 @@ export const FormQuestions = ({
                     )}
                 </div>
             ))}
-        </>
+        </FormQuestionsWrapper>
     );
 };
