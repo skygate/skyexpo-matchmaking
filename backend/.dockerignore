@@ -40,6 +40,8 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+.mypy_cache
+.pytest_cache
 nosetests.xml
 coverage.xml
 *,cover
@@ -65,3 +67,6 @@ docker/docker-compose.prod.yml
 
 # JetBrains
 .idea/
+
+# Jupyter Notebooks
+*.ipnyb
