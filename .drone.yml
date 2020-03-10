@@ -75,14 +75,14 @@ steps:
       - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
       - mkdir -p ~/.ssh
       - chmod 700 ~/.ssh
-      - "rsync -e 'ssh -o StrictHostKeyChecking=no' -rlptgDvz --exclude=node_modules --exclude=__pycache__ --exclude=/htmlcov . ubuntu@app-skyexpo:/home/ubuntu/skyexpo"
+      - "rsync -e 'ssh -o StrictHostKeyChecking=no' -rlptgDvz --exclude-from 'exclude-list-rsync.txt' . ubuntu@app-skyexpo:/home/ubuntu/skyexpo"
       - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml build'
       - ssh -A ubuntu@app-skyexpo 'cd /home/ubuntu/skyexpo; docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d'
-    when:
-      branch:
-        - develop
-      event:
-        - push
+#    when:
+#      branch:
+#        - develop
+#      event:
+#        - push
 
 services:
   - name: run docker service
