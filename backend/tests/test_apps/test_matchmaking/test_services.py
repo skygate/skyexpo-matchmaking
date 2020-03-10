@@ -45,17 +45,6 @@ class TestMatchmaking:
         NumericRange(5, 6),
     ]
 
-    def test_get_investor_child_obj(self, startup, company, angel_investor):
-        # GIVEN company and angelinvestor as investors
-        match_company = Matchmaking(startup, company)
-        match_investor = Matchmaking(startup, angel_investor)
-        # WHEN func is triggered
-        match_company_child = match_company._get_investor_child_obj()
-        match_investor_child = match_investor._get_investor_child_obj()
-        # THEN return appropriate child object
-        assert isinstance(match_company_child, Company)
-        assert isinstance(match_investor_child, AngelInvestor)
-
     @pytest.mark.parametrize('investor_values, startup_values, expected', [
         (MATCHING_VALUES1, MATCHING_VALUES1, 100),
         (MATCHING_VALUES1, MATCHING_VALUES2, 0),

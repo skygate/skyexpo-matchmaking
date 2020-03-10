@@ -108,14 +108,14 @@ class BaseMatchmakingInfo(models.Model):
 class InvestorProfile(models.Model):
     """Marks model as investor."""
 
-    def get_child(self) -> Union['Company', 'AngelInvestor']:
+    def get_child_instance(self) -> Union['Company', 'AngelInvestor']:
         try:
             return self.company
         except AttributeError:
             return self.angelinvestor
 
     def __str__(self) -> str:
-        return str(self.get_child())
+        return str(self.get_child_instance())
 
 
 class Profile(models.Model):

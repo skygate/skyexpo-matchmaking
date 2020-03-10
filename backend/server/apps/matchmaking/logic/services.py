@@ -8,9 +8,7 @@ from typing_extensions import Final
 
 from server.apps.matchmaking.models import Match
 from server.apps.profile.models import (
-  AngelInvestor,
   BaseMatchmakingInfo,
-  Company,
   InvestorProfile,
   Startup,
 )
@@ -25,32 +23,26 @@ class Matchmaking:
         self.startup = startup
         self.investor = investor
 
-    MATCHING_ARGS: Final = [
-        'stage',
-        'sectors',
-        'industries',
-        'product_types',
-        'investment_stage',
-        'is_product_on_market',
-        'business_type',
-        'investment_size',
-    ]
+        self.MATCHING_ARGS: Final = [
+            'stage',
+            'sectors',
+            'industries',
+            'product_types',
+            'investment_stage',
+            'is_product_on_market',
+            'business_type',
+            'investment_size',
+        ]
 
     def calculate_result(self) -> int:
         """Calculate investor's match to startup."""
-        investor_child = self._get_investor_child_obj()
-        investor_child_values = self._get_matching_values(investor_child)
+        investor = self.investor.get_child_instance()
+        investor_values = self._get_matching_values(investor)
         startup_values = self._get_matching_values(self.startup)
 
         return self._run_matchmaking_algorithm(
-            investor_child_values, startup_values,
+            investor_values, startup_values,
         )
-
-    def _get_investor_child_obj(self) -> Union[Company, AngelInvestor]:
-        try:
-            return self.investor.company
-        except AttributeError:
-            return self.investor.angelinvestor
 
     def _get_matching_values(
         self, obj: BaseMatchmakingInfo,
