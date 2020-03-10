@@ -2,7 +2,6 @@
 
 set -o errexit
 set -o nounset
-set -x
 
 # Initializing global variables and functions:
 : "${DJANGO_ENV:=development}"
@@ -17,11 +16,15 @@ fi
 : "${PYTHONPATH:=''}"
 
 pyclean () {
+  set +x
+
   # Cleaning cache:
   find . | grep -E '(__pycache__|\.static|\.py[cod]$)' | xargs rm -rf
 }
 
 run_ci () {
+  set -x
+
   # Running linting for all python files in the project:
   flake8 .
 
