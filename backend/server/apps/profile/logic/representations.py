@@ -6,8 +6,8 @@ from typing import List, Optional
 
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from mypy_extensions import TypedDict
 from phonenumber_field.phonenumber import PhoneNumber
+from typing_extensions import TypedDict
 
 User = get_user_model()
 
