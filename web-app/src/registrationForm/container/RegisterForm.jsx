@@ -6,15 +6,16 @@ import styled from '@emotion/styled';
 import { FormQuestions } from '../components/FormQuestions';
 import { TopHeader } from '../components/TopHeader';
 import { countProgress } from '../../helpers/countProgress';
-
 import { BackButton, NextButton, ButtonsWrapper } from '../styled/buttons';
-
 import { handleRedirect } from '../../history';
 import { validateStepOfFormRequest } from '../actions/registrationActions';
 import { getStepValues } from '../../helpers/getStepValues';
+import { color } from '../../config/values';
 
 const SectionWrapper = styled.div`
-    padding: 0 1.5rem;
+    padding: 3rem 1.5rem;
+    max-width: 1200px;
+    color: ${color.primaryFont};
 `;
 
 const RegisterForm = ({
@@ -65,6 +66,7 @@ const RegisterForm = ({
                     <TopHeader
                         completionProgress={completionProgress}
                         step={currentStep}
+                        title={formSteps[currentStep].title}
                     ></TopHeader>
                     <div>
                         <Formik

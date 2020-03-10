@@ -5,9 +5,12 @@ import styled from '@emotion/styled';
 
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput } from './SelectTagsInput';
+import { Input } from '../styled/input';
+import { Label } from '../styled/label';
 
 const FormQuestionsWrapper = styled.div`
-    min-height: calc(100vh - 12.5rem);
+    margin-top: 1.5rem;
+    min-height: calc(100vh - 14rem);
 `;
 
 export const FormQuestions = ({
@@ -35,10 +38,10 @@ export const FormQuestions = ({
 
     return (
         <FormQuestionsWrapper>
-            <h1>{pageProps.title}</h1>
             {pageProps.subtitle && <h2>{pageProps.subtitle}</h2>}
             {pageProps.inputsFields.map(input => (
                 <div key={input.name}>
+                    <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
                         <>
                             <select onChange={handleChange} name={input.name}>
@@ -52,7 +55,7 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'text' && (
                         <>
-                            <input
+                            <Input
                                 onChange={handleChange}
                                 value={values[input.name]}
                                 name={input.name}
@@ -65,7 +68,7 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'textarea' && (
                         <>
-                            <input
+                            <Input
                                 onChange={handleChange}
                                 value={values[input.name]}
                                 name={input.name}
@@ -76,7 +79,7 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'image' && (
                         <>
-                            <input
+                            <Input
                                 onChange={event =>
                                     setFieldValue('logotype', event.currentTarget.files[0])
                                 }
