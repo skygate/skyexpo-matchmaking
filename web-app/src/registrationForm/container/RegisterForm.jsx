@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { TopHeader } from '../components/TopHeader';
+import { countProgress } from '../../helpers/countProgress';
 
 import { BackButton, NextButton, ButtonsWrapper } from '../styled/buttons';
 
@@ -50,22 +51,9 @@ const RegisterForm = ({
     };
 
     const countCompletionProgress = questions => {
-        const allQuestions = Object.values(questions).flat();
-        const questionsWithoutTeamMembers = allQuestions.filter(
-            question => typeof question !== 'object',
-        );
-        const questionsAboutTeamMembers = allQuestions
-            .flat()
-            .filter(question => typeof question === 'object')
-            .map(question => Object.values(question))
-            .flat();
-        const allQuestionsNumber = questionsAboutTeamMembers.concat(questionsWithoutTeamMembers)
-            .length;
-        const answeredQuestion = questionsAboutTeamMembers
-            .concat(questionsWithoutTeamMembers)
-            .filter(a => a !== '').length;
+        const progress = countProgress(questions);
 
-        setCompletionProgress(Math.round((answeredQuestion / allQuestionsNumber) * 100));
+        setCompletionProgress(progress);
     };
 
     return (

@@ -21,20 +21,6 @@ export const FormQuestions = ({
 }) => {
     countProgress(values);
 
-    const condition = pageProps.inputsFields.map(a => a.name);
-
-    const data = values;
-
-    const stepValues = Object.keys(data)
-        .filter(value => condition.includes(value))
-        .reduce(
-            (obj, key) => ({
-                ...obj,
-                [key]: data[key],
-            }),
-            {},
-        );
-
     const addHttpsPrefix = inputName => {
         inputName === 'website' && !values[inputName] && setFieldValue(inputName, 'https://');
     };
