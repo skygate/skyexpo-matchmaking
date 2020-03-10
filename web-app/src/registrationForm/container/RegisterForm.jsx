@@ -7,7 +7,7 @@ import * as R from 'ramda';
 
 import { FormQuestions } from '../components/FormQuestions';
 import { handleRedirect } from '../../history';
-import { validateFirstStepRequest } from '../actions/registrationActions';
+import { validateStepOfFormRequest } from '../actions/registrationActions';
 
 const SectionWrapper = styled.div`
     max-width: 400px;
@@ -18,7 +18,8 @@ const RegisterForm = ({
     formSteps,
     initialValues,
     validationSchemas,
-    validateFirstStepRequest,
+    userType,
+    validateStepOfFormRequest,
 }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
@@ -38,7 +39,7 @@ const RegisterForm = ({
                 {},
             );
 
-        validateFirstStepRequest(stepValues);
+        validateStepOfFormRequest(stepValues, userType, currentStep + 1);
 
         props.submitForm().then(() => {
             if (!props.isValid) return;
@@ -122,4 +123,4 @@ const RegisterForm = ({
     );
 };
 
-export default connect(null, { validateFirstStepRequest })(RegisterForm);
+export default connect(null, { validateStepOfFormRequest })(RegisterForm);

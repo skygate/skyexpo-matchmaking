@@ -107,7 +107,7 @@ export const FormQuestions = ({
                                             </h2>
                                             <input
                                                 onChange={handleChange}
-                                                name={`teamMembers.${index}.name${index}`}
+                                                name={`teamMembers.${index}.name`}
                                                 type="text"
                                                 placeholder="name"
                                             />
@@ -117,14 +117,12 @@ export const FormQuestions = ({
                                                 errors.teamMembers[index] &&
                                                 touched.teamMembers &&
                                                 touched.teamMembers[index] &&
-                                                touched.teamMembers[index][`name${index}`] && (
-                                                    <span>
-                                                        {errors.teamMembers[index][`name${index}`]}
-                                                    </span>
+                                                touched.teamMembers[index][`name`] && (
+                                                    <span>{errors.teamMembers[index][`name`]}</span>
                                                 )}
                                             <input
                                                 onChange={handleChange}
-                                                name={`teamMembers.${index}.email${index}`}
+                                                name={`teamMembers.${index}.email`}
                                                 type="text"
                                                 placeholder="email"
                                             />
@@ -134,9 +132,9 @@ export const FormQuestions = ({
                                                 errors.teamMembers[index] &&
                                                 touched.teamMembers &&
                                                 touched.teamMembers[index] &&
-                                                touched.teamMembers[index][`email${index}`] && (
+                                                touched.teamMembers[index][`email`] && (
                                                     <span>
-                                                        {errors.teamMembers[index][`email${index}`]}
+                                                        {errors.teamMembers[index][`email`]}
                                                     </span>
                                                 )}
                                             {index > 0 && (
@@ -153,8 +151,8 @@ export const FormQuestions = ({
                                         type="button"
                                         onClick={() =>
                                             arrayOfMembers.push({
-                                                [`name${values.teamMembers.length}`]: '',
-                                                [`email${values.teamMembers.length}`]: '',
+                                                [`name`]: '',
+                                                [`email`]: '',
                                             })
                                         }
                                     >

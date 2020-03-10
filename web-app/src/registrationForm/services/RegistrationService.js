@@ -3,7 +3,19 @@ export class RegistrationService {
         this.http = http;
     }
 
-    async validateFirstStep(data) {
-        return this.http.POST('companies/form/step-1/', data).catch(Promise.reject);
+    async validateStepOfForm(data) {
+        const path = `form/${data.userType}/step-${data.step}/`;
+        //We use formData because in first step we have image and it is faster to send it in formData
+        const isFormData = data.step === 1;
+
+        return this.http.POST(path, data.formValues, {
+            isFormData,
+        });
+    }
+
+    async saveStepFormAnswers(data) {
+        const path = `profiles/${data.userType}s/`;
+
+        return this.http.POST(path, data.formValues);
     }
 }
