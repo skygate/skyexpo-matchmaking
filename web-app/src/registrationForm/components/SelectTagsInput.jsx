@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Select } from 'antd';
+import styled from '@emotion/styled';
 
 import {
     productTags,
@@ -10,6 +11,9 @@ import {
     targetMarketTags,
 } from '../../helpers/tags';
 
+export const StyledSelect = styled(Select)`
+    max-width: 100%;
+`;
 export const SelectTagsInput = ({ input, setFieldValue }) => {
     const [selectedTags, setSelectedTags] = useState([]);
 
@@ -30,12 +34,11 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
     const filteredOptions = tags[input.tags].filter(tag => !selectedTags.includes(tag));
 
     return (
-        <Select
+        <StyledSelect
             mode="multiple"
             placeholder="Inserted are removed"
             value={selectedTags}
             onChange={handleTagSelect}
-            style={{ width: '100%' }}
             type="text"
             name={input.name}
         >
@@ -44,6 +47,6 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
                     {item}
                 </Select.Option>
             ))}
-        </Select>
+        </StyledSelect>
     );
 };

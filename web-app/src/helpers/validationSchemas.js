@@ -22,7 +22,7 @@ const startupValidationPage1 = Yup.object().shape({
     country: Yup.string()
         .trim()
         .required('Country is required'),
-    logotype: Yup.mixed().required(),
+    logotype: Yup.mixed().required('Logo is required'),
     foundingDate: Yup.string()
         .trim()
         .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')

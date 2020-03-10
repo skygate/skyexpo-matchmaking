@@ -5,7 +5,6 @@ export const Input = styled.input`
     width: 100%;
     padding: 0.8rem 2rem;
     margin-top: 0.5rem;
-    margin-bottom: 1rem;
     border-radius: 0.3rem;
     background-color: ${color.elementBackground};
     opacity: 0.75;
