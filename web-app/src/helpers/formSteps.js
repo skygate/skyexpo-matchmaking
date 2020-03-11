@@ -12,7 +12,7 @@ export const startupFormSteps = [
             },
             { name: 'email', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logotype', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Upload profile logo', type: 'image' },
             {
                 name: 'foundingDate',
                 label: 'Founding date',
@@ -129,7 +129,7 @@ export const companyInvestorFormSteps = [
             },
             { name: 'email', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logotype', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Upload profile logo', type: 'image' },
             {
                 name: 'foundingDate',
                 label: 'Founding date',
@@ -246,7 +246,7 @@ export const individualInvestorFormSteps = [
             },
             { name: 'email', placeholder: 'Your email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logotype', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Upload profile logo', type: 'image' },
             { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
             { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],

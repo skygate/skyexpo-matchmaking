@@ -5,6 +5,8 @@ import Radio from 'antd/lib/radio';
 import Checkbox from 'antd/lib/checkbox';
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput, StyledSelect } from './SelectTagsInput';
+import { UploadButton } from './UploadButton';
+
 import { Input } from '../styled/input';
 import { Label } from '../styled/label';
 import { Error } from '../styled/error';
@@ -84,14 +86,11 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'image' && (
                         <>
-                            <Input
+                            <UploadButton
                                 onChange={event =>
                                     setFieldValue('logotype', event.currentTarget.files[0])
                                 }
-                                name={input.name}
-                                type="file"
-                                placeholder={input.placeholder}
-                            />
+                            ></UploadButton>
                         </>
                     )}
                     {input.type === 'team' && (
