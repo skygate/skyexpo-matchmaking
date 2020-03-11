@@ -1,9 +1,22 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 import { Radio, Checkbox } from 'antd';
+import styled from '@emotion/styled';
 
 import { countryList } from '../../helpers/countryList';
-import { SelectTagsInput } from './SelectTagsInput';
+import { SelectTagsInput, StyledSelect } from './SelectTagsInput';
+import { Input } from '../styled/input';
+import { Label } from '../styled/label';
+import { Error } from '../styled/error';
+
+const FormQuestionsWrapper = styled.div`
+    margin-top: 1.5rem;
+    min-height: calc(100vh - 14rem);
+`;
+
+const QuestionWrapper = styled.div`
+    margin-bottom: 1rem;
+`;
 
 export const FormQuestions = ({
     handleChange,
@@ -15,20 +28,6 @@ export const FormQuestions = ({
     setFieldValue,
 }) => {
     countProgress(values);
-
-    const condition = pageProps.inputsFields.map(a => a.name);
-
-    const data = values;
-
-    const stepValues = Object.keys(data)
-        .filter(value => condition.includes(value))
-        .reduce(
-            (obj, key) => ({
-                ...obj,
-                [key]: data[key],
-            }),
-            {},
-        );
 
     const addHttpsPrefix = inputName => {
         inputName === 'website' && !values[inputName] && setFieldValue(inputName, 'https://');
@@ -43,25 +42,25 @@ export const FormQuestions = ({
     };
 
     return (
-        <>
-            <h1>{pageProps.title}</h1>
+        <FormQuestionsWrapper>
             {pageProps.subtitle && <h2>{pageProps.subtitle}</h2>}
             {pageProps.inputsFields.map(input => (
-                <div key={input.name}>
+                <QuestionWrapper key={input.name}>
+                    <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
                         <>
-                            <select onChange={handleChange} name={input.name}>
+                            <StyledSelect onChange={handleChange} name={input.name}>
                                 {countryList.map(country => (
                                     <option key={country.code} value={country.code}>
                                         {country.name}
                                     </option>
                                 ))}
-                            </select>
+                            </StyledSelect>
                         </>
                     )}
                     {input.type === 'text' && (
                         <>
-                            <input
+                            <Input
                                 onChange={handleChange}
                                 value={values[input.name]}
                                 name={input.name}
@@ -74,7 +73,7 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'textarea' && (
                         <>
-                            <input
+                            <Input
                                 onChange={handleChange}
                                 value={values[input.name]}
                                 name={input.name}
@@ -85,7 +84,7 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'image' && (
                         <>
-                            <input
+                            <Input
                                 onChange={event =>
                                     setFieldValue('logotype', event.currentTarget.files[0])
                                 }
@@ -203,10 +202,10 @@ export const FormQuestions = ({
                         </div>
                     )}
                     {input.type !== 'team' && errors && errors && touched[input.name] && (
-                        <span>{errors[input.name]} </span>
+                        <Error>{errors[input.name]} </Error>
                     )}
-                </div>
+                </QuestionWrapper>
             ))}
-        </>
+        </FormQuestionsWrapper>
     );
 };
