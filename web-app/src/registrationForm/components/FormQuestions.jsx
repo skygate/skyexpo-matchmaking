@@ -1,8 +1,8 @@
 import React from 'react';
 import { FieldArray } from 'formik';
-import { Radio, Checkbox } from 'antd';
 import styled from '@emotion/styled';
-
+import Radio from 'antd/lib/radio';
+import Checkbox from 'antd/lib/checkbox';
 import { countryList } from '../../helpers/countryList';
 import { SelectTagsInput, StyledSelect } from './SelectTagsInput';
 import { Input } from '../styled/input';
