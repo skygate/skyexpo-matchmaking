@@ -1,5 +1,5 @@
 import React from 'react';
-import { Progress } from 'antd';
+import Progress from 'antd/lib/progress';
 import styled from '@emotion/styled';
 
 import { SpaceBetweenWrapper } from '../styled/space-between-wrapper';
