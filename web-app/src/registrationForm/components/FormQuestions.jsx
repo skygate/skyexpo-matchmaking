@@ -9,7 +9,7 @@ import { selectStyles } from '../../config/selectStyles';
 
 import { SelectTagsInput } from './SelectTagsInput';
 import { UploadButton } from './UploadButton';
-import { Input, Label, Error, Select } from '../styled';
+import { Input, Label, Error } from '../styled';
 import ReactSelect from 'react-select';
 
 const FormQuestionsWrapper = styled.div`
@@ -52,7 +52,7 @@ export const FormQuestions = ({
                     <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
                         <ReactSelect
-                            onChange={handleChange}
+                            onChange={option => handleChange(option.value)}
                             options={countryOptions}
                             name={input.name}
                             styles={selectStyles}
