@@ -1,16 +1,15 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 import styled from '@emotion/styled';
-import Radio from 'antd/lib/radio';
 import Checkbox from 'antd/lib/checkbox';
+import ReactSelect from 'react-select';
 
 import { countryOptions } from '../../helpers/countryOptions';
 import { selectStyles } from '../../config/selectStyles';
-
 import { SelectTagsInput } from './SelectTagsInput';
 import { UploadButton } from './UploadButton';
 import { Input, Label, Error } from '../styled';
-import ReactSelect from 'react-select';
+import { RadioGroup } from './RadioGroup';
 
 const FormQuestionsWrapper = styled.div`
     margin-top: 1.5rem;
@@ -40,10 +39,6 @@ export const FormQuestions = ({
         inputName === 'website' && values[inputName] === 'https://' && setFieldValue(inputName, '');
     };
 
-    const handleCheckboxClick = checkedValues => {
-        setFieldValue('businessType', checkedValues);
-    };
-
     return (
         <FormQuestionsWrapper>
             {pageProps.subtitle && <h2>{pageProps.subtitle}</h2>}
@@ -52,7 +47,9 @@ export const FormQuestions = ({
                     <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
                         <ReactSelect
-                            onChange={option => handleChange(option.value)}
+                            onChange={option => {
+                                setFieldValue(input.name, option.value);
+                            }}
                             options={countryOptions}
                             name={input.name}
                             styles={selectStyles}
@@ -177,24 +174,18 @@ export const FormQuestions = ({
                         </>
                     )}
                     {input.type === 'radio' && (
-                        <Radio.Group
-                            onChange={handleChange}
+                        <RadioGroup
+                            input={input}
                             value={values[input.name]}
-                            name={input.name}
-                        >
-                            {input.options.map(option => (
-                                <Radio key={option.optionName} value={option.optionValue}>
-                                    {option.optionName}
-                                </Radio>
-                            ))}
-                        </Radio.Group>
+                            setFieldValue={setFieldValue}
+                        />
                     )}
                     {input.type === 'checkboxGroup' && (
                         <div name={input.name}>
                             <Checkbox.Group
                                 name={input.name}
                                 options={input.options}
-                                onChange={handleCheckboxClick}
+                                onChange={values => setFieldValue(input.name, values)}
                             />
                         </div>
                     )}
