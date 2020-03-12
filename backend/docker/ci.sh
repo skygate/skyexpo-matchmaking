@@ -16,7 +16,6 @@ fi
 : "${PYTHONPATH:=''}"
 
 pyclean () {
-  set +x
 
   # Cleaning cache:
   find . | grep -E '(__pycache__|\.static|\.py[cod]$)' | xargs rm -rf
