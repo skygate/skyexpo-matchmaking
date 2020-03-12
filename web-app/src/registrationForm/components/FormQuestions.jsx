@@ -3,13 +3,14 @@ import { FieldArray } from 'formik';
 import styled from '@emotion/styled';
 import Radio from 'antd/lib/radio';
 import Checkbox from 'antd/lib/checkbox';
-import { countryList } from '../../helpers/countryList';
-import { SelectTagsInput, StyledSelect } from './SelectTagsInput';
-import { UploadButton } from './UploadButton';
 
-import { Input } from '../styled/input';
-import { Label } from '../styled/label';
-import { Error } from '../styled/error';
+import { countryOptions } from '../../helpers/countryOptions';
+import { selectStyles } from '../../config/selectStyles';
+
+import { SelectTagsInput } from './SelectTagsInput';
+import { UploadButton } from './UploadButton';
+import { Input, Label, Error } from '../styled';
+import ReactSelect from 'react-select';
 
 const FormQuestionsWrapper = styled.div`
     margin-top: 1.5rem;
@@ -50,15 +51,12 @@ export const FormQuestions = ({
                 <QuestionWrapper key={input.name}>
                     <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
-                        <>
-                            <StyledSelect onChange={handleChange} name={input.name}>
-                                {countryList.map(country => (
-                                    <option key={country.code} value={country.code}>
-                                        {country.name}
-                                    </option>
-                                ))}
-                            </StyledSelect>
-                        </>
+                        <ReactSelect
+                            onChange={option => handleChange(option.value)}
+                            options={countryOptions}
+                            name={input.name}
+                            styles={selectStyles}
+                        />
                     )}
                     {input.type === 'text' && (
                         <>
