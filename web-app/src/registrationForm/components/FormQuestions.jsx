@@ -1,7 +1,6 @@
 import React from 'react';
 import { FieldArray } from 'formik';
 import styled from '@emotion/styled';
-import Checkbox from 'antd/lib/checkbox';
 import ReactSelect from 'react-select';
 
 import { countryOptions } from '../../helpers/countryOptions';

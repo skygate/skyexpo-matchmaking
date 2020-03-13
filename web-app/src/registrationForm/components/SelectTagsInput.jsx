@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import Select from 'antd/lib/select';
-import styled from '@emotion/styled';
 import ReactSelect from 'react-select';
 
 import {
@@ -14,9 +12,6 @@ import {
 import { getOptionsFromValues } from '../../helpers/getOptionsFromValues';
 import { selectStyles } from '../../config/selectStyles';
 
-export const StyledSelect = styled(Select)`
-    max-width: 100%;
-`;
 export const SelectTagsInput = ({ input, setFieldValue }) => {
     const [selectedTags, setSelectedTags] = useState([]);
 

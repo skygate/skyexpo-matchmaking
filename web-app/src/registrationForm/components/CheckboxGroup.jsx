@@ -25,8 +25,8 @@ const RadioInput = styled.input`
 export const CheckboxGroup = ({ input, values, setFieldValue }) => (
     <RadioGroupWrapper>
         {input.options.map(option => (
-            <RadioElementWrapper>
-                <RadioLabel key={option.optionName}>{option.label}</RadioLabel>
+            <RadioElementWrapper key={option.label}>
+                <RadioLabel>{option.label}</RadioLabel>
                 <RadioInput
                     key={option.name}
                     type="checkbox"
