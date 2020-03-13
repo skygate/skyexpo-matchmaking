@@ -24,7 +24,7 @@ const RegisterForm = ({
     userType,
     validateStepOfFormRequest,
 }) => {
-    const [currentStep, setCurrentStep] = useState(1);
+    const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = props => {
