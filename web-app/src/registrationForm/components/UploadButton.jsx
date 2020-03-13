@@ -6,6 +6,7 @@ import downloadIcon from '../../assets/download-icon.svg';
 
 export const UploadWrapper = styled.label`
     width: 100%;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
