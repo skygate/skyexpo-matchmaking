@@ -40,30 +40,18 @@ export const TeamMembers = ({ values, errors, touched, handleChange }) => (
                             type="text"
                             placeholder="name"
                         />
-                        {errors &&
-                            touched &&
-                            errors.teamMembers &&
-                            errors.teamMembers[index] &&
-                            touched.teamMembers &&
-                            touched.teamMembers[index] &&
-                            touched.teamMembers[index][`name`] && (
-                                <span>{errors.teamMembers[index][`name`]}</span>
-                            )}
+                        {touched?.teamMembers?.[index]?.[`name`] && (
+                            <span>{errors?.teamMembers?.[index]?.[`name`]}</span>
+                        )}
                         <Input
                             onChange={handleChange}
                             name={`teamMembers.${index}.email`}
                             type="text"
                             placeholder="email"
                         />
-                        {errors &&
-                            touched &&
-                            errors.teamMembers &&
-                            errors.teamMembers[index] &&
-                            touched.teamMembers &&
-                            touched.teamMembers[index] &&
-                            touched.teamMembers[index][`email`] && (
-                                <span>{errors.teamMembers[index][`email`]}</span>
-                            )}
+                        {touched?.teamMembers?.[index]?.[`email`] && (
+                            <span>{errors.teamMembers?.[index]?.[`email`]}</span>
+                        )}
                     </div>
                 ))}
                 <AddMemberWrapper>
