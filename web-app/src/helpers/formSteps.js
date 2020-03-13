@@ -24,11 +24,9 @@ export const startupFormSteps = [
     },
     {
         title: 'Team members',
-        subtitle: 'Participating on the skyexpo',
         inputsFields: [
             {
                 name: 'teamMembers',
-                placeholder: 'Team members',
                 type: 'team',
                 inputs: [
                     {
@@ -141,11 +139,9 @@ export const companyInvestorFormSteps = [
     },
     {
         title: 'Team members',
-        subtitle: 'Participating on the skyexpo',
         inputsFields: [
             {
                 name: 'teamMembers',
-                placeholder: 'Team members',
                 type: 'team',
                 inputs: [
                     {
