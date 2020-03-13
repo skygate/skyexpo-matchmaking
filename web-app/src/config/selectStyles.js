@@ -6,6 +6,10 @@ export const selectStyles = {
         color: color.primaryFont,
         backgroundColor: color.elementBackground,
         padding: '0.55rem 0 0.55rem 2rem',
+        transition: '0.5s',
+        '&:hover': {
+            backgroundColor: color.primaryBackground,
+        },
     }),
     valueContainer: provided => ({
         ...provided,
@@ -37,5 +41,13 @@ export const selectStyles = {
     indicatorSeparator: provided => ({
         ...provided,
         display: 'none',
+    }),
+    multiValue: provided => ({
+        ...provided,
+        backgroundColor: 'white',
+    }),
+    noOptionsMessage: provided => ({
+        ...provided,
+        backgroundColor: color.elementBackground,
     }),
 };

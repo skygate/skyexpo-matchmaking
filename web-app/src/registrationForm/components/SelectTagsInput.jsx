@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Select from 'antd/lib/select';
-import styled from '@emotion/styled';
+import ReactSelect from 'react-select';
 
 import {
     productTags,
@@ -10,10 +9,9 @@ import {
     companyStageTags,
     targetMarketTags,
 } from '../../helpers/tags';
+import { getOptionsFromValues } from '../../helpers/getOptionsFromValues';
+import { selectStyles } from '../../config/selectStyles';
 
-export const StyledSelect = styled(Select)`
-    max-width: 100%;
-`;
 export const SelectTagsInput = ({ input, setFieldValue }) => {
     const [selectedTags, setSelectedTags] = useState([]);
 
@@ -32,21 +30,17 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
     };
 
     const filteredOptions = tags[input.tags].filter(tag => !selectedTags.includes(tag));
-
+    const tagOptions = getOptionsFromValues(filteredOptions);
     return (
-        <StyledSelect
-            mode="multiple"
+        <ReactSelect
+            isMulti
             placeholder="Inserted are removed"
             value={selectedTags}
             onChange={handleTagSelect}
-            type="text"
+            closeMenuOnSelect={false}
             name={input.name}
-        >
-            {filteredOptions.map(item => (
-                <Select.Option key={item} value={item}>
-                    {item}
-                </Select.Option>
-            ))}
-        </StyledSelect>
+            styles={selectStyles}
+            options={tagOptions}
+        />
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import 'antd/dist/antd.css';
+import 'react-circular-progressbar/dist/styles.css';
 
 import { MainRouter } from './routing/MainRouter';
 import { store } from './configureStore';
