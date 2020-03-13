@@ -6,10 +6,8 @@ import ReactSelect from 'react-select';
 
 import { countryOptions } from '../../helpers/countryOptions';
 import { selectStyles } from '../../config/selectStyles';
-import { SelectTagsInput } from './SelectTagsInput';
-import { UploadButton } from './UploadButton';
 import { Input, Label, Error } from '../styled';
-import { RadioGroup } from './RadioGroup';
+import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup } from './';
 
 const FormQuestionsWrapper = styled.div`
     margin-top: 1.5rem;
@@ -164,11 +162,12 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'number' && (
                         <>
-                            <input
+                            <Input
                                 onChange={handleChange}
                                 value={values[input.name]}
                                 name={input.name}
                                 type="number"
+                                min="0"
                                 placeholder={input.placeholder}
                             />
                         </>
@@ -182,10 +181,10 @@ export const FormQuestions = ({
                     )}
                     {input.type === 'checkboxGroup' && (
                         <div name={input.name}>
-                            <Checkbox.Group
-                                name={input.name}
-                                options={input.options}
-                                onChange={values => setFieldValue(input.name, values)}
+                            <CheckboxGroup
+                                input={input}
+                                values={values[input.name]}
+                                setFieldValue={setFieldValue}
                             />
                         </div>
                     )}
