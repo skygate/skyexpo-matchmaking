@@ -21,11 +21,10 @@ export const FormQuestions = ({
     values,
     touched,
     errors,
-    pageProps,
-    countProgress,
     setFieldValue,
+    ...props
 }) => {
-    countProgress(values);
+    props.countProgress(values);
 
     const addHttpsPrefix = inputName => {
         inputName === 'website' && !values[inputName] && setFieldValue(inputName, 'https://');
@@ -37,7 +36,7 @@ export const FormQuestions = ({
 
     return (
         <FormQuestionsWrapper>
-            {pageProps.inputsFields.map(input => (
+            {props.pageProps.inputsFields.map(input => (
                 <QuestionWrapper key={input.name}>
                     <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
@@ -124,8 +123,10 @@ export const FormQuestions = ({
                             />
                         </div>
                     )}
-                    {input.type !== 'team' && errors && errors && touched[input.name] && (
-                        <Error>{errors[input.name]} </Error>
+                    {input.type !== 'team' && errors?.[input.name] && touched?.[input.name] && (
+                        <Error>
+                            {errors[input.name] || props.backendValidationErrors?.[input.name]}
+                        </Error>
                     )}
                 </QuestionWrapper>
             ))}
