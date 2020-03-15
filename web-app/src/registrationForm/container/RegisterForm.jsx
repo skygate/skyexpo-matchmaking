@@ -92,18 +92,16 @@ const RegisterForm = ({
                                     backendValidationErrors={props.backendValidationErrors}
                                 />
                                 <ButtonsWrapper>
-                                    {currentStep ? (
-                                        <BackButton
-                                            type="button"
-                                            onClick={() => handleBackPage(formProps)}
-                                        >
-                                            Back
-                                        </BackButton>
-                                    ) : (
-                                        <BackButton onClick={() => handleRedirect('/')}>
-                                            Back
-                                        </BackButton>
-                                    )}
+                                    <BackButton
+                                        type="button"
+                                        onClick={() =>
+                                            currentStep
+                                                ? handleBackPage(formProps)
+                                                : handleRedirect('/')
+                                        }
+                                    >
+                                        Back
+                                    </BackButton>
                                     <NextButton
                                         type="button"
                                         disabled={!R.isEmpty(formProps.errors)}
