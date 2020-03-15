@@ -28,7 +28,7 @@ export class HttpService {
 
         return fetch(BASE_URL + path, params).then(async response => {
             if (response.ok) {
-                return response.json();
+                return response.status !== 204 ? response.json() : response;
             }
 
             const err = new Error(response.statusText);

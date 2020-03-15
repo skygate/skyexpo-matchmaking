@@ -8,10 +8,13 @@ import { FormQuestions, TopHeader } from '../components';
 import { countProgress } from '../../helpers/countProgress';
 import { BackButton, NextButton, ButtonsWrapper } from '../styled/buttons';
 import { handleRedirect } from '../../history';
-import { validateStepOfFormRequest } from '../actions/registrationActions';
+import {
+    validateStepOfFormRequest,
+    setStepOfRegistrationForm,
+} from '../actions/registrationActions';
 import { getStepValues } from '../../helpers/getStepValues';
 import { color } from '../../config/values';
-import { getValidationErrorsForUserType } from '../selectors/registrationSelectors';
+import { getValidationErrorsForUserType, getStep } from '../selectors/registrationSelectors';
 
 const SectionWrapper = styled.div`
     padding: 3rem 1.5rem;
@@ -19,23 +22,25 @@ const SectionWrapper = styled.div`
     color: ${color.primaryFont};
 `;
 
-const RegisterForm = ({ formSteps, initialValues, validationSchemas, ...props }) => {
-    const [currentStep, setCurrentStep] = useState(0);
+const RegisterForm = ({
+    formSteps,
+    initialValues,
+    validationSchemas,
+    setCurrentStep,
+    currentStep,
+    ...props
+}) => {
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = formProps => {
-        const stepValues = getStepValues(
-            formSteps[currentStep].inputsFields,
-            formProps.initialValues,
-        );
+        const stepValues = getStepValues(formSteps[currentStep].inputsFields, formProps.values);
 
-        props.validateStepOfFormRequest(stepValues, props.userType, currentStep + 1);
+        props.validateStepOfFormRequest(stepValues, props.userType, currentStep, formProps.isValid);
 
         formProps.submitForm().then(() => {
             if (!formProps.isValid || props.backendValidationErrors) return;
 
             currentStep > 1 && handleSubmit(formProps);
-            setCurrentStep(currentStep + 1);
             formProps.validateForm();
             formProps.setTouched({});
         });
@@ -66,49 +71,45 @@ const RegisterForm = ({ formSteps, initialValues, validationSchemas, ...props })
                         step={currentStep}
                         title={formSteps[currentStep].title}
                     ></TopHeader>
-                    <div>
-                        <Formik
-                            onSubmit={handleSubmit}
-                            isInitialValid={false}
-                            initialValues={initialValues}
-                            validationSchema={validationSchemas[currentStep]}
-                        >
-                            {formProps => (
-                                <Form>
-                                    <FormQuestions
-                                        {...formProps}
-                                        pageProps={formSteps[currentStep]}
-                                        nextPage={() => handleNextPage(formProps)}
-                                        countProgress={countCompletionProgress}
-                                        backendValidationErrors={props.backendValidationErrors}
-                                    />
-                                    <ButtonsWrapper>
-                                        {currentStep ? (
-                                            <BackButton
-                                                type="button"
-                                                onClick={() => handleBackPage(formProps)}
-                                            >
-                                                Back
-                                            </BackButton>
-                                        ) : (
-                                            <BackButton onClick={() => handleRedirect('/')}>
-                                                Back
-                                            </BackButton>
-                                        )}
-                                        <NextButton
+                    <Formik
+                        onSubmit={handleSubmit}
+                        isInitialValid={false}
+                        initialValues={initialValues}
+                        validationSchema={validationSchemas[currentStep]}
+                    >
+                        {formProps => (
+                            <Form>
+                                <FormQuestions
+                                    {...formProps}
+                                    pageProps={formSteps[currentStep]}
+                                    nextPage={() => handleNextPage(formProps)}
+                                    countProgress={countCompletionProgress}
+                                    backendValidationErrors={props.backendValidationErrors}
+                                />
+                                <ButtonsWrapper>
+                                    {currentStep ? (
+                                        <BackButton
                                             type="button"
-                                            disabled={!R.isEmpty(formProps.errors)}
-                                            onClick={() => handleNextPage(formProps)}
+                                            onClick={() => handleBackPage(formProps)}
                                         >
-                                            {currentStep === formSteps.length - 1
-                                                ? 'Finish'
-                                                : 'Next'}
-                                        </NextButton>
-                                    </ButtonsWrapper>
-                                </Form>
-                            )}
-                        </Formik>
-                    </div>
+                                            Back
+                                        </BackButton>
+                                    ) : (
+                                        <BackButton onClick={() => handleRedirect('/')}>
+                                            Back
+                                        </BackButton>
+                                    )}
+                                    <NextButton
+                                        type="button"
+                                        disabled={!R.isEmpty(formProps.errors)}
+                                        onClick={() => handleNextPage(formProps)}
+                                    >
+                                        {currentStep === formSteps.length - 1 ? 'Finish' : 'Next'}
+                                    </NextButton>
+                                </ButtonsWrapper>
+                            </Form>
+                        )}
+                    </Formik>
                 </>
             )}
         </SectionWrapper>
@@ -116,7 +117,11 @@ const RegisterForm = ({ formSteps, initialValues, validationSchemas, ...props })
 };
 
 const mapStateToProps = (state, ownProps) => ({
+    currentStep: getStep(state),
     backendValidationErrors: getValidationErrorsForUserType(state, ownProps),
 });
 
-export default connect(mapStateToProps, { validateStepOfFormRequest })(RegisterForm);
+export default connect(mapStateToProps, {
+    validateStepOfFormRequest,
+    setCurrentStep: setStepOfRegistrationForm,
+})(RegisterForm);
