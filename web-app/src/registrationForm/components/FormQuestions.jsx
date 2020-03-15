@@ -4,8 +4,9 @@ import ReactSelect from 'react-select';
 
 import { countryOptions } from '../../helpers/countryOptions';
 import { selectStyles } from '../../config/selectStyles';
-import { Input, Label, Error } from '../styled';
+import { Input, Label } from '../styled';
 import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup, TeamMembers } from './';
+import { FormFieldError } from './FormFieldError';
 
 const FormQuestionsWrapper = styled.div`
     margin-top: 1.5rem;
@@ -22,6 +23,8 @@ export const FormQuestions = ({
     touched,
     errors,
     setFieldValue,
+    handleBlur,
+    setFieldTouched,
     ...props
 }) => {
     props.countProgress(values);
@@ -41,12 +44,11 @@ export const FormQuestions = ({
                     <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
                         <ReactSelect
-                            onChange={option => {
-                                setFieldValue(input.name, option.value);
-                            }}
+                            onChange={option => setFieldValue(input.name, option.value)}
                             options={countryOptions}
                             name={input.name}
                             styles={selectStyles}
+                            onBlur={() => setFieldTouched(input.name, true)}
                         />
                     )}
                     {input.type === 'text' && (
@@ -58,26 +60,30 @@ export const FormQuestions = ({
                                 type="text"
                                 placeholder={input.placeholder}
                                 onFocus={() => addHttpsPrefix(input.name)}
-                                onBlur={() => removeHttpsPrefix(input.name)}
+                                onBlur={event => {
+                                    handleBlur(event);
+                                    removeHttpsPrefix(input.name);
+                                }}
                             />
                         </>
                     )}
                     {input.type === 'textarea' && (
-                        <>
-                            <Input
-                                onChange={handleChange}
-                                value={values[input.name]}
-                                name={input.name}
-                                type="textarea"
-                                placeholder={input.placeholder}
-                            />
-                        </>
+                        <Input
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values[input.name]}
+                            name={input.name}
+                            type="textarea"
+                            onBlur={handleBlur}
+                            placeholder={input.placeholder}
+                        />
                     )}
                     {input.type === 'image' && (
                         <UploadButton
                             onChange={event =>
                                 setFieldValue('logotype', event.currentTarget.files[0])
                             }
+                            onBlur={handleBlur}
                         ></UploadButton>
                     )}
                     {input.type === 'team' && (
@@ -92,20 +98,20 @@ export const FormQuestions = ({
                         <SelectTagsInput
                             input={input}
                             setFieldValue={setFieldValue}
+                            onBlur={handleBlur}
                             values={values}
                         />
                     )}
                     {input.type === 'number' && (
-                        <>
-                            <Input
-                                onChange={handleChange}
-                                value={values[input.name]}
-                                name={input.name}
-                                type="number"
-                                min="0"
-                                placeholder={input.placeholder}
-                            />
-                        </>
+                        <Input
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values[input.name]}
+                            name={input.name}
+                            type="number"
+                            min="0"
+                            placeholder={input.placeholder}
+                        />
                     )}
                     {input.type === 'radio' && (
                         <RadioGroup
@@ -123,10 +129,15 @@ export const FormQuestions = ({
                             />
                         </div>
                     )}
-                    {input.type !== 'team' && errors?.[input.name] && touched?.[input.name] && (
-                        <Error>
-                            {errors[input.name] || props.backendValidationErrors?.[input.name]}
-                        </Error>
+
+                    {input.type !== 'team' && (
+                        <FormFieldError
+                            errors={errors?.[input.name]}
+                            backendErrors={props.backendValidationErrors?.[input.name]}
+                            touched={touched?.[input.name]}
+                            value={values[input.name]}
+                            status={props.status}
+                        ></FormFieldError>
                     )}
                 </QuestionWrapper>
             ))}

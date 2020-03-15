@@ -12,7 +12,7 @@ import {
 import { getOptionsFromValues } from '../../helpers/getOptionsFromValues';
 import { selectStyles } from '../../config/selectStyles';
 
-export const SelectTagsInput = ({ input, setFieldValue }) => {
+export const SelectTagsInput = ({ input, setFieldValue, ...props }) => {
     const [selectedTags, setSelectedTags] = useState([]);
 
     const tags = {
@@ -37,6 +37,7 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
             placeholder="Inserted are removed"
             value={selectedTags}
             onChange={handleTagSelect}
+            onBlur={props.handleBlur}
             closeMenuOnSelect={false}
             name={input.name}
             styles={selectStyles}

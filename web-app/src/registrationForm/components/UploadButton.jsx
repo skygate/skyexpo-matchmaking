@@ -41,6 +41,11 @@ export const UploadButton = props => (
             <span>Select a image</span>
             <SubTitle>PNG, JPG, or GIF file under 1 MB in size</SubTitle>
         </UploadWrapper>
-        <UploadInput id="file-upload" type="file" onChange={props.onChange} />
+        <UploadInput
+            id="file-upload"
+            type="file"
+            onChange={props.onChange}
+            onBlur={props.handleBlur}
+        />
     </>
 );

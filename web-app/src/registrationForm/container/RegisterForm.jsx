@@ -38,7 +38,12 @@ const RegisterForm = ({
         props.validateStepOfFormRequest(stepValues, props.userType, currentStep, formProps.isValid);
 
         formProps.submitForm().then(() => {
-            if (!formProps.isValid || props.backendValidationErrors) return;
+            if (!formProps.isValid || props.backendValidationErrors) {
+                formProps.setTouched({});
+                formProps.setStatus('validated');
+
+                return;
+            }
 
             currentStep > 1 && handleSubmit(formProps);
             formProps.validateForm();
