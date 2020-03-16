@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import styled from '@emotion/styled';
 
-import { FormQuestions } from '../components/FormQuestions';
-import { TopHeader } from '../components/TopHeader';
+import { FormQuestions, TopHeader } from '../components';
 import { countProgress } from '../../helpers/countProgress';
 import { BackButton, NextButton, ButtonsWrapper } from '../styled/buttons';
 import { handleRedirect } from '../../history';
@@ -25,7 +24,7 @@ const RegisterForm = ({
     userType,
     validateStepOfFormRequest,
 }) => {
-    const [currentStep, setCurrentStep] = useState(0);
+    const [currentStep, setCurrentStep] = useState(1);
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = props => {

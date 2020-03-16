@@ -1,12 +1,11 @@
 import React from 'react';
-import { FieldArray } from 'formik';
 import styled from '@emotion/styled';
 import ReactSelect from 'react-select';
 
 import { countryOptions } from '../../helpers/countryOptions';
 import { selectStyles } from '../../config/selectStyles';
 import { Input, Label, Error } from '../styled';
-import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup } from './';
+import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup, TeamMembers } from './';
 
 const FormQuestionsWrapper = styled.div`
     margin-top: 1.5rem;
@@ -38,7 +37,6 @@ export const FormQuestions = ({
 
     return (
         <FormQuestionsWrapper>
-            {pageProps.subtitle && <h2>{pageProps.subtitle}</h2>}
             {pageProps.inputsFields.map(input => (
                 <QuestionWrapper key={input.name}>
                     <Label>{input.label || input.placeholder}</Label>
@@ -77,80 +75,19 @@ export const FormQuestions = ({
                         </>
                     )}
                     {input.type === 'image' && (
-                        <>
-                            <UploadButton
-                                onChange={event =>
-                                    setFieldValue('logotype', event.currentTarget.files[0])
-                                }
-                            ></UploadButton>
-                        </>
+                        <UploadButton
+                            onChange={event =>
+                                setFieldValue('logotype', event.currentTarget.files[0])
+                            }
+                        ></UploadButton>
                     )}
                     {input.type === 'team' && (
-                        <FieldArray
-                            name="teamMembers"
-                            render={arrayOfMembers => (
-                                <div>
-                                    {values.teamMembers.map((_, index) => (
-                                        <div key={`name${index}`}>
-                                            <h2>
-                                                {index > 0 ? `Member ${index + 1}` : 'Your details'}
-                                            </h2>
-                                            <input
-                                                onChange={handleChange}
-                                                name={`teamMembers.${index}.name`}
-                                                type="text"
-                                                placeholder="name"
-                                            />
-                                            {errors &&
-                                                touched &&
-                                                errors.teamMembers &&
-                                                errors.teamMembers[index] &&
-                                                touched.teamMembers &&
-                                                touched.teamMembers[index] &&
-                                                touched.teamMembers[index][`name`] && (
-                                                    <span>{errors.teamMembers[index][`name`]}</span>
-                                                )}
-                                            <input
-                                                onChange={handleChange}
-                                                name={`teamMembers.${index}.email`}
-                                                type="text"
-                                                placeholder="email"
-                                            />
-                                            {errors &&
-                                                touched &&
-                                                errors.teamMembers &&
-                                                errors.teamMembers[index] &&
-                                                touched.teamMembers &&
-                                                touched.teamMembers[index] &&
-                                                touched.teamMembers[index][`email`] && (
-                                                    <span>
-                                                        {errors.teamMembers[index][`email`]}
-                                                    </span>
-                                                )}
-                                            {index > 0 && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => arrayOfMembers.remove(index)}
-                                                >
-                                                    remove
-                                                </button>
-                                            )}
-                                        </div>
-                                    ))}
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            arrayOfMembers.push({
-                                                [`name`]: '',
-                                                [`email`]: '',
-                                            })
-                                        }
-                                    >
-                                        add new member
-                                    </button>
-                                </div>
-                            )}
-                        />
+                        <TeamMembers
+                            errors={errors}
+                            handleChange={handleChange}
+                            values={values}
+                            touched={touched}
+                        ></TeamMembers>
                     )}
                     {input.type === 'selectTags' && (
                         <SelectTagsInput
