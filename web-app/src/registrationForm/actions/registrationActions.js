@@ -1,13 +1,18 @@
 export const VALIDATE_STEP_OF_FORM_REQUESTED = 'VALIDATE_STEP_OF_FORM_REQUESTED';
-export const validateStepOfFormRequest = (formValues, userType, step) => ({
+export const validateStepOfFormRequest = (
+    formValues,
+    userType,
+    step,
+    isPassingFrontValidation,
+) => ({
     type: VALIDATE_STEP_OF_FORM_REQUESTED,
-    payload: { formValues, userType, step },
+    payload: { formValues, userType, step, isPassingFrontValidation },
 });
 
 export const VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED';
-export const validateStepOfFormPassSuccess = (userType, step) => ({
+export const validateStepOfFormPassSuccess = (userType, isPassingFrontValidation) => ({
     type: VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED,
-    payload: { userType, step },
+    payload: { userType, isPassingFrontValidation },
 });
 
 export const VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED';
@@ -38,4 +43,10 @@ export const SAVE_STEP_FORM_ANSWERS_FAILED = 'SAVE_STEP_FORM_ANSWERS_FAILED';
 export const saveStepFormAnswersFail = (validationErrors, userType, step) => ({
     type: SAVE_STEP_FORM_ANSWERS_FAILED,
     payload: { validationErrors, userType },
+});
+
+export const SET_STEP_OF_REGISTRATION_FORM = 'SET_STEP_OF_REGISTRATION_FORM';
+export const setStepOfRegistrationForm = step => ({
+    type: SET_STEP_OF_REGISTRATION_FORM,
+    payload: { step },
 });

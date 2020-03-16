@@ -4,6 +4,7 @@ const defaultState = {
     name: '',
     isValidating: false,
     validationErrors: {},
+    step: 0,
 };
 
 export const registrationForm = (state = defaultState, action) => {
@@ -14,6 +15,12 @@ export const registrationForm = (state = defaultState, action) => {
                 isValidating: true,
             };
         case registrationActions.VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED:
+            const { isPassingFrontValidation } = action.payload;
+
+            return {
+                ...state,
+                step: isPassingFrontValidation ? state.step + 1 : state.step,
+            };
         case registrationActions.VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED:
             const { payload } = action;
             const { validationErrors } = state;
@@ -26,10 +33,15 @@ export const registrationForm = (state = defaultState, action) => {
                     ...{
                         [payload.userType]: {
                             ...validationErrors[payload.userType],
-                            ...{ [payload.step]: payload.validationErrors || {} },
+                            ...{ [state.step]: payload.validationErrors || {} },
                         },
                     },
                 },
+            };
+        case registrationActions.SET_STEP_OF_REGISTRATION_FORM:
+            return {
+                ...state,
+                step: action.payload.step,
             };
         default:
             return state;

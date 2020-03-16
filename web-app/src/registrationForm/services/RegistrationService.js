@@ -4,9 +4,9 @@ export class RegistrationService {
     }
 
     async validateStepOfForm(data) {
-        const path = `form/${data.userType}/step-${data.step}/`;
+        const path = `form/${data.userType}/step-${data.step + 1}/`;
         //We use formData because in first step we have image and it is faster to send it in formData
-        const isFormData = data.step === 1;
+        const isFormData = data.step === 0;
 
         return this.http.POST(path, data.formValues, {
             isFormData,

@@ -8,13 +8,15 @@ export function registrationEpicFactory(registrationService) {
         action$.pipe(
             ofType(action.VALIDATE_STEP_OF_FORM_REQUESTED),
             pluck('payload'),
-            switchMap(({ userType, step, formValues }) =>
+            switchMap(({ userType, step, formValues, isPassingFrontValidation }) =>
                 registrationService
                     .validateStepOfForm({ userType, step, formValues })
-                    .then(() => action.validateStepOfFormPassSuccess(userType, step))
+                    .then(() =>
+                        action.validateStepOfFormPassSuccess(userType, isPassingFrontValidation),
+                    )
                     .catch(response =>
                         response.code === 400
-                            ? action.validateStepOfFormErrorsSuccess(response.body, userType, step)
+                            ? action.validateStepOfFormErrorsSuccess(response.body, userType)
                             : action.validateStepOfFormFail(),
                     ),
             ),
