@@ -19,7 +19,7 @@ export function registrationEpicFactory(registrationService) {
                     )
                     .catch(response =>
                         response.code === 400
-                            ? action.validateStepOfFormErrorsSuccess({
+                            ? action.validateStepOfFormErrorsFail({
                                   validationErrors: response.body,
                                   userType,
                               })

@@ -15,9 +15,9 @@ export const validateStepOfFormPassSuccess = ({ userType, isPassingFrontValidati
     payload: { userType, isPassingFrontValidation },
 });
 
-export const VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED';
-export const validateStepOfFormErrorsSuccess = ({ validationErrors, userType }) => ({
-    type: VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED,
+export const VALIDATE_STEP_OF_FORM_ERRORS_FAILED = 'VALIDATE_STEP_OF_FORM_ERRORS_FAILED';
+export const validateStepOfFormErrorsFail = ({ validationErrors, userType }) => ({
+    type: VALIDATE_STEP_OF_FORM_ERRORS_FAILED,
     payload: { validationErrors, userType },
 });
 

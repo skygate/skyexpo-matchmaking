@@ -2,6 +2,7 @@ import * as R from 'ramda';
 
 import * as helpers from './';
 import { questionsMock } from '../mocks/questions';
+
 describe('Helpers', () => {
     it('Should count progress from given questions', () => {
         const progressPercent = helpers.countProgress(questionsMock);

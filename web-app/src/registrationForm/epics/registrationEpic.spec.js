@@ -9,6 +9,7 @@ import * as RegisterActions from '../actions/registrationActions';
 describe('RegistrationEpics', () => {
     let registrationService;
     const mockState = new StateObservable(new Subject(), {});
+    const requestPayload = { ...validateRequestPayload, isPassingFrontValidation: true };
 
     beforeEach(() => {
         jest.restoreAllMocks();
@@ -16,7 +17,6 @@ describe('RegistrationEpics', () => {
     });
 
     it('Should call registration service and return success without errors', done => {
-        const requestPayload = { ...validateRequestPayload, isPassingFrontValidation: true };
         const registrationServiceSpy = jest
             .spyOn(registrationService, 'validateStepOfForm')
             .mockImplementation(() => Promise.resolve());
@@ -40,8 +40,6 @@ describe('RegistrationEpics', () => {
 
     it('Should call registration service and return fail action for code different than 400', done => {
         const response = { code: 500 };
-
-        const requestPayload = { ...validateRequestPayload, isPassingFrontValidation: true };
         const registrationServiceSpy = jest
             .spyOn(registrationService, 'validateStepOfForm')
             .mockImplementation(() => Promise.reject(response));
@@ -64,8 +62,6 @@ describe('RegistrationEpics', () => {
             code: 400,
             body: nameError,
         };
-
-        const requestPayload = { ...validateRequestPayload, isPassingFrontValidation: true };
         const registrationServiceSpy = jest
             .spyOn(registrationService, 'validateStepOfForm')
             .mockImplementation(() => Promise.reject(response));
@@ -75,7 +71,7 @@ describe('RegistrationEpics', () => {
         registrationEpicInstance(new ActionsObservable(action$), mockState, null).subscribe(
             result => {
                 expect(result).toEqual(
-                    RegisterActions.validateStepOfFormErrorsSuccess({
+                    RegisterActions.validateStepOfFormErrorsFail({
                         userType: 'startup',
                         validationErrors: nameError,
                     }),

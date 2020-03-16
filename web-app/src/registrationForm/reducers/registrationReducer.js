@@ -21,7 +21,7 @@ export const registrationForm = (state = defaultState, action) => {
                 ...state,
                 step: isPassingFrontValidation ? state.step + 1 : state.step,
             };
-        case registrationActions.VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED:
+        case registrationActions.VALIDATE_STEP_OF_FORM_ERRORS_FAILED:
             const { payload } = action;
             const { validationErrors } = state;
 
