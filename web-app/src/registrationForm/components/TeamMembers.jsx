@@ -40,8 +40,8 @@ export const TeamMembers = ({ values, errors, touched, handleChange }) => (
                             type="text"
                             placeholder="name"
                         />
-                        {touched?.teamMembers?.[index]?.[`name`] && (
-                            <span>{errors?.teamMembers?.[index]?.[`name`]}</span>
+                        {touched?.teamMembers?.[index]?.name && (
+                            <span>{errors?.teamMembers?.[index]?.name}</span>
                         )}
                         <Input
                             onChange={handleChange}
@@ -49,8 +49,8 @@ export const TeamMembers = ({ values, errors, touched, handleChange }) => (
                             type="text"
                             placeholder="email"
                         />
-                        {touched?.teamMembers?.[index]?.[`email`] && (
-                            <span>{errors.teamMembers?.[index]?.[`email`]}</span>
+                        {touched?.teamMembers?.[index]?.email && (
+                            <span>{errors.teamMembers?.[index]?.email}</span>
                         )}
                     </div>
                 ))}
@@ -60,8 +60,8 @@ export const TeamMembers = ({ values, errors, touched, handleChange }) => (
                         type="button"
                         onClick={() =>
                             arrayOfMembers.push({
-                                [`name`]: '',
-                                [`email`]: '',
+                                name: '',
+                                email: '',
                             })
                         }
                     >
