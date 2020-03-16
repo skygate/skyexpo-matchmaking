@@ -1,16 +1,16 @@
 export const VALIDATE_STEP_OF_FORM_REQUESTED = 'VALIDATE_STEP_OF_FORM_REQUESTED';
-export const validateStepOfFormRequest = (
+export const validateStepOfFormRequest = ({
     formValues,
     userType,
     step,
     isPassingFrontValidation,
-) => ({
+}) => ({
     type: VALIDATE_STEP_OF_FORM_REQUESTED,
     payload: { formValues, userType, step, isPassingFrontValidation },
 });
 
 export const VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED';
-export const validateStepOfFormPassSuccess = (userType, isPassingFrontValidation) => ({
+export const validateStepOfFormPassSuccess = ({ userType, isPassingFrontValidation }) => ({
     type: VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED,
     payload: { userType, isPassingFrontValidation },
 });

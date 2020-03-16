@@ -12,7 +12,10 @@ export function registrationEpicFactory(registrationService) {
                 registrationService
                     .validateStepOfForm({ userType, step, formValues })
                     .then(() =>
-                        action.validateStepOfFormPassSuccess(userType, isPassingFrontValidation),
+                        action.validateStepOfFormPassSuccess({
+                            userType,
+                            isPassingFrontValidation,
+                        }),
                     )
                     .catch(response =>
                         response.code === 400
