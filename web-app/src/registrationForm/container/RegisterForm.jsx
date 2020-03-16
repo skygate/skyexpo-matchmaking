@@ -33,6 +33,8 @@ const RegisterForm = ({
     const [completionProgress, setCompletionProgress] = useState(0);
 
     const handleNextPage = formProps => {
+        console.log(formSteps[currentStep].inputsFields);
+        console.log(formProps.values);
         const stepValues = getStepValues(formSteps[currentStep].inputsFields, formProps.values);
 
         props.validateStepOfFormRequest(stepValues, props.userType, currentStep, formProps.isValid);
