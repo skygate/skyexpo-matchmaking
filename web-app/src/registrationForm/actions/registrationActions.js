@@ -16,15 +16,14 @@ export const validateStepOfFormPassSuccess = ({ userType, isPassingFrontValidati
 });
 
 export const VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED';
-export const validateStepOfFormErrorsSuccess = (validationErrors, userType, step) => ({
+export const validateStepOfFormErrorsSuccess = ({ validationErrors, userType }) => ({
     type: VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED,
-    payload: { validationErrors, userType, step },
+    payload: { validationErrors, userType },
 });
 
 export const VALIDATE_STEP_OF_FORM_FAILED = 'VALIDATE_STEP_OF_FORM_FAILED';
-export const validateStepOfFormFail = (validationErrors, userType, step) => ({
+export const validateStepOfFormFail = () => ({
     type: VALIDATE_STEP_OF_FORM_FAILED,
-    payload: { validationErrors, userType },
 });
 
 export const SAVE_STEP_FORM_ANSWERS_REQUESTED = 'SAVE_STEP_FORM_ANSWERS_REQUESTED';
