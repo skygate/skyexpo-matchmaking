@@ -1,15 +1,7 @@
 import React, { useState } from 'react';
 import ReactSelect from 'react-select';
 
-import {
-    productTags,
-    industriesTags,
-    sectorsTags,
-    investmentStageTags,
-    companyStageTags,
-    targetMarketTags,
-} from '../../helpers/tags';
-import { getOptionsFromValues } from '../../helpers/getOptionsFromValues';
+import { productTags, industriesTags, sectorsTags, investmentStageTags } from '../../helpers/tags';
 import { selectStyles } from '../../config/selectStyles';
 
 export const SelectTagsInput = ({ input, setFieldValue, ...props }) => {
@@ -20,17 +12,16 @@ export const SelectTagsInput = ({ input, setFieldValue, ...props }) => {
         industriesTags,
         sectorsTags,
         investmentStageTags,
-        companyStageTags,
-        targetMarketTags,
     };
 
-    const handleTagSelect = selectedItem => {
-        setSelectedTags(selectedItem);
-        setFieldValue(input.name, selectedItem);
+    const handleTagSelect = selectedOptions => {
+        setSelectedTags(selectedOptions);
+        const values = selectedOptions.map(option => option.value);
+        setFieldValue(input.name, values);
     };
 
-    const filteredOptions = tags[input.tags].filter(tag => !selectedTags.includes(tag));
-    const tagOptions = getOptionsFromValues(filteredOptions);
+    const tagOptions = tags[input.tags].filter(({ value }) => !selectedTags.includes(value));
+
     return (
         <ReactSelect
             isMulti

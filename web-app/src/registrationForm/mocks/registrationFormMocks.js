@@ -1,5 +1,9 @@
-export const validateRequestPayload = {
+export const saveStepFormRequestPayload = {
     userType: 'startup',
-    step: 1,
     formValues: { name: 'testName' },
+};
+
+export const validateRequestPayload = {
+    ...saveStepFormRequestPayload,
+    step: 1,
 };

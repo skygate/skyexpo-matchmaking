@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import ReactSelect from 'react-select';
 
-import { countryOptions } from '../../helpers/countryOptions';
-import { selectStyles } from '../../config/selectStyles';
 import { Input, Label } from '../styled';
-import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup, TeamMembers } from './';
+import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup, TeamMembers, Select } from './';
 import { FormFieldError } from './FormFieldError';
 
 const FormQuestionsWrapper = styled.div`
@@ -43,34 +40,29 @@ export const FormQuestions = ({
                 <QuestionWrapper key={input.name}>
                     <Label>{input.label || input.placeholder}</Label>
                     {input.type === 'select' && (
-                        <ReactSelect
-                            onChange={option => setFieldValue(input.name, option.value)}
-                            options={countryOptions}
+                        <Select
+                            setFieldValue={setFieldValue}
                             name={input.name}
-                            styles={selectStyles}
-                            onBlur={() => setFieldTouched(input.name, true)}
+                            setFieldTouched={setFieldTouched}
                         />
                     )}
                     {input.type === 'text' && (
-                        <>
-                            <Input
-                                onChange={handleChange}
-                                value={values[input.name]}
-                                name={input.name}
-                                type="text"
-                                placeholder={input.placeholder}
-                                onFocus={() => addHttpsPrefix(input.name)}
-                                onBlur={event => {
-                                    handleBlur(event);
-                                    removeHttpsPrefix(input.name);
-                                }}
-                            />
-                        </>
+                        <Input
+                            onChange={handleChange}
+                            value={values[input.name]}
+                            name={input.name}
+                            type="text"
+                            placeholder={input.placeholder}
+                            onFocus={() => addHttpsPrefix(input.name)}
+                            onBlur={event => {
+                                handleBlur(event);
+                                removeHttpsPrefix(input.name);
+                            }}
+                        />
                     )}
                     {input.type === 'textarea' && (
                         <Input
                             onChange={handleChange}
-                            onBlur={handleBlur}
                             value={values[input.name]}
                             name={input.name}
                             type="textarea"
@@ -92,6 +84,7 @@ export const FormQuestions = ({
                             handleChange={handleChange}
                             values={values}
                             touched={touched}
+                            status={props.status}
                         ></TeamMembers>
                     )}
                     {input.type === 'selectTags' && (

@@ -11,6 +11,7 @@ import { handleRedirect } from '../../history';
 import {
     validateStepOfFormRequest,
     setStepOfRegistrationForm,
+    saveStepFormAnswersRequest,
 } from '../actions/registrationActions';
 import { getStepValues } from '../../helpers/getStepValues';
 import { color } from '../../config/values';
@@ -32,7 +33,7 @@ const RegisterForm = ({
 }) => {
     const [completionProgress, setCompletionProgress] = useState(0);
 
-    const handleNextPage = formProps => {
+    const handleSubmit = formProps => {
         const stepValues = getStepValues(formSteps[currentStep].inputsFields, formProps.values);
 
         props.validateStepOfFormRequest({
@@ -50,7 +51,7 @@ const RegisterForm = ({
                 return;
             }
 
-            currentStep > 1 && handleSubmit(formProps);
+            currentStep > 1 && submitStepForm(formProps);
             formProps.validateForm();
             formProps.setTouched({});
         });
@@ -60,8 +61,8 @@ const RegisterForm = ({
         setCurrentStep(currentStep - 1);
     };
 
-    const handleSubmit = ({ values }) => {
-        console.log('Submitted values', values);
+    const submitStepForm = ({ values }) => {
+        props.saveStepFormAnswersRequest({ formValues: values, userType: props.userType });
     };
 
     const countCompletionProgress = questions => {
@@ -82,17 +83,17 @@ const RegisterForm = ({
                         title={formSteps[currentStep].title}
                     ></TopHeader>
                     <Formik
-                        onSubmit={handleSubmit}
                         isInitialValid={false}
                         initialValues={initialValues}
                         validationSchema={validationSchemas[currentStep]}
+                        //I don't have all props here and formik don't fire onSubmit with errors so I trigger submit from button.
+                        onSubmit={() => {}}
                     >
                         {formProps => (
                             <Form>
                                 <FormQuestions
                                     {...formProps}
                                     pageProps={formSteps[currentStep]}
-                                    nextPage={() => handleNextPage(formProps)}
                                     countProgress={countCompletionProgress}
                                     backendValidationErrors={props.backendValidationErrors}
                                 />
@@ -108,9 +109,8 @@ const RegisterForm = ({
                                         Back
                                     </BackButton>
                                     <NextButton
-                                        type="button"
-                                        disabled={!R.isEmpty(formProps.errors)}
-                                        onClick={() => handleNextPage(formProps)}
+                                        type="submit"
+                                        onClick={() => handleSubmit(formProps)}
                                     >
                                         {currentStep === formSteps.length - 1 ? 'Finish' : 'Next'}
                                     </NextButton>
@@ -131,5 +131,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
     validateStepOfFormRequest,
+    saveStepFormAnswersRequest,
     setCurrentStep: setStepOfRegistrationForm,
 })(RegisterForm);

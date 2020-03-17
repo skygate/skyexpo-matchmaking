@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { getNewCheckboxValues } from '../../helpers/getNewCheckboxValues';
-
 const RadioGroupWrapper = styled.div`
     margin-top: 1rem;
     display: flex;
@@ -34,8 +32,7 @@ export const CheckboxGroup = ({ input, values, setFieldValue }) => (
                     value={option.value}
                     checked={values.includes(option.value)}
                     onChange={event => {
-                        const newValues = getNewCheckboxValues(values, event.target.value);
-                        setFieldValue(input.name, newValues);
+                        setFieldValue(input.name, event.target.value);
                     }}
                 />
             </RadioElementWrapper>

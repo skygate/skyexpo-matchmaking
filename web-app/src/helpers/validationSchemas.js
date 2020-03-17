@@ -125,7 +125,7 @@ const validationPage3 = Yup.object().shape({
             .trim()
             .required('Sectors are required'),
     ),
-    companyStage: Yup.string()
+    stage: Yup.string()
         .trim()
         .required('Company stage is required'),
     productTypes: Yup.array().of(
@@ -134,16 +134,10 @@ const validationPage3 = Yup.object().shape({
             .required('Product types are required'),
     ),
     isProductOnMarket: Yup.boolean().required('Please define if your product is on market'),
-    targetMarket: Yup.array().of(
-        Yup.string()
-            .trim()
-            .required('Target market is required'),
-    ),
-    businessType: Yup.array().of(
-        Yup.string()
-            .trim()
-            .required('Business type is required'),
-    ),
+    businessType: Yup.string()
+        .trim()
+        .required('Business type is required'),
+
     minInvestmentSize: Yup.number().required('Minimum investment is required'),
     maxInvestmentSize: Yup.number().required('Maximum investment required'),
 });
