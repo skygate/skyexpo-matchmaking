@@ -110,7 +110,6 @@ const RegisterForm = ({
                                     </BackButton>
                                     <NextButton
                                         type="submit"
-                                        disabled={!R.isEmpty(formProps.errors)}
                                         onClick={() => handleSubmit(formProps)}
                                     >
                                         {currentStep === formSteps.length - 1 ? 'Finish' : 'Next'}

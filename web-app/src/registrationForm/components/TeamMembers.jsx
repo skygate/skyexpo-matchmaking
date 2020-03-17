@@ -12,8 +12,9 @@ import {
     AddIcon,
 } from '../styled';
 import addIcon from '../../assets/add-icon.svg';
+import { FormFieldError } from './FormFieldError';
 
-export const TeamMembers = ({ values, errors, touched, handleChange }) => (
+export const TeamMembers = ({ values, errors, touched, handleChange, status }) => (
     <FieldArray
         name="teamMembers"
         render={arrayOfMembers => (
@@ -40,18 +41,20 @@ export const TeamMembers = ({ values, errors, touched, handleChange }) => (
                             type="text"
                             placeholder="name"
                         />
-                        {touched?.teamMembers?.[index]?.name && (
-                            <span>{errors?.teamMembers?.[index]?.name}</span>
-                        )}
+                        <FormFieldError
+                            errors={errors?.teamMembers?.[index]?.name}
+                            status={status}
+                        />
                         <Input
                             onChange={handleChange}
                             name={`teamMembers.${index}.email`}
                             type="text"
                             placeholder="email"
                         />
-                        {touched?.teamMembers?.[index]?.email && (
-                            <span>{errors.teamMembers?.[index]?.email}</span>
-                        )}
+                        <FormFieldError
+                            errors={errors?.teamMembers?.[index]?.email}
+                            status={status}
+                        />
                     </div>
                 ))}
                 <AddMemberWrapper>

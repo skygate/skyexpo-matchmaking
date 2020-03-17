@@ -84,6 +84,7 @@ export const FormQuestions = ({
                             handleChange={handleChange}
                             values={values}
                             touched={touched}
+                            status={props.status}
                         ></TeamMembers>
                     )}
                     {input.type === 'selectTags' && (
