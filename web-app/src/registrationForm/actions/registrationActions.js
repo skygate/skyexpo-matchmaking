@@ -1,30 +1,29 @@
 export const VALIDATE_STEP_OF_FORM_REQUESTED = 'VALIDATE_STEP_OF_FORM_REQUESTED';
-export const validateStepOfFormRequest = (
+export const validateStepOfFormRequest = ({
     formValues,
     userType,
     step,
     isPassingFrontValidation,
-) => ({
+}) => ({
     type: VALIDATE_STEP_OF_FORM_REQUESTED,
     payload: { formValues, userType, step, isPassingFrontValidation },
 });
 
 export const VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED';
-export const validateStepOfFormPassSuccess = (userType, isPassingFrontValidation) => ({
+export const validateStepOfFormPassSuccess = ({ userType, isPassingFrontValidation }) => ({
     type: VALIDATE_STEP_OF_FORM_PASS_SUCCEEDED,
     payload: { userType, isPassingFrontValidation },
 });
 
-export const VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED = 'VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED';
-export const validateStepOfFormErrorsSuccess = (validationErrors, userType, step) => ({
-    type: VALIDATE_STEP_OF_FORM_ERRORS_SUCCEEDED,
-    payload: { validationErrors, userType, step },
+export const VALIDATE_STEP_OF_FORM_ERRORS_FAILED = 'VALIDATE_STEP_OF_FORM_ERRORS_FAILED';
+export const validateStepOfFormErrorsFail = ({ validationErrors, userType }) => ({
+    type: VALIDATE_STEP_OF_FORM_ERRORS_FAILED,
+    payload: { validationErrors, userType },
 });
 
 export const VALIDATE_STEP_OF_FORM_FAILED = 'VALIDATE_STEP_OF_FORM_FAILED';
-export const validateStepOfFormFail = (validationErrors, userType, step) => ({
+export const validateStepOfFormFail = () => ({
     type: VALIDATE_STEP_OF_FORM_FAILED,
-    payload: { validationErrors, userType },
 });
 
 export const SAVE_STEP_FORM_ANSWERS_REQUESTED = 'SAVE_STEP_FORM_ANSWERS_REQUESTED';

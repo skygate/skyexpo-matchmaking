@@ -35,7 +35,12 @@ const RegisterForm = ({
     const handleNextPage = formProps => {
         const stepValues = getStepValues(formSteps[currentStep].inputsFields, formProps.values);
 
-        props.validateStepOfFormRequest(stepValues, props.userType, currentStep, formProps.isValid);
+        props.validateStepOfFormRequest({
+            formValues: stepValues,
+            userType: props.userType,
+            step: currentStep,
+            isPassingFrontValidation: formProps.isValid,
+        });
 
         formProps.submitForm().then(() => {
             if (!formProps.isValid || props.backendValidationErrors) {
