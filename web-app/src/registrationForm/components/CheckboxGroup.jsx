@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { getNewCheckboxValues } from '../../helpers/getNewCheckboxValues';
-
 const RadioGroupWrapper = styled.div`
     margin-top: 1rem;
     display: flex;

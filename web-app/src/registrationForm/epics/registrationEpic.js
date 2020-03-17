@@ -32,9 +32,9 @@ export function registrationEpicFactory(registrationService) {
         action$.pipe(
             ofType(action.SAVE_STEP_FORM_ANSWERS_REQUESTED),
             pluck('payload'),
-            switchMap(answers =>
+            switchMap(data =>
                 registrationService
-                    .saveStepFormAnswers(answers)
+                    .saveStepFormAnswers(data)
                     .then(action.saveStepFormAnswersSuccess)
                     .catch(action.saveStepFormAnswersFail),
             ),

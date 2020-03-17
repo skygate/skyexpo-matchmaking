@@ -33,7 +33,7 @@ const RegisterForm = ({
 }) => {
     const [completionProgress, setCompletionProgress] = useState(0);
 
-    const handleNextPage = formProps => {
+    const handleSubmit = formProps => {
         const stepValues = getStepValues(formSteps[currentStep].inputsFields, formProps.values);
 
         props.validateStepOfFormRequest({
@@ -51,7 +51,7 @@ const RegisterForm = ({
                 return;
             }
 
-            currentStep > 1 && handleSubmit(formProps);
+            currentStep > 1 && submitStepForm(formProps);
             formProps.validateForm();
             formProps.setTouched({});
         });
@@ -61,7 +61,7 @@ const RegisterForm = ({
         setCurrentStep(currentStep - 1);
     };
 
-    const handleSubmit = ({ values }) => {
+    const submitStepForm = ({ values }) => {
         props.saveStepFormAnswersRequest({ formValues: values, userType: props.userType });
     };
 
@@ -83,17 +83,17 @@ const RegisterForm = ({
                         title={formSteps[currentStep].title}
                     ></TopHeader>
                     <Formik
-                        onSubmit={handleSubmit}
                         isInitialValid={false}
                         initialValues={initialValues}
                         validationSchema={validationSchemas[currentStep]}
+                        //I don't have all props here and formik don't fire onSubmit with errors so I trigger submit from button.
+                        onSubmit={() => {}}
                     >
                         {formProps => (
                             <Form>
                                 <FormQuestions
                                     {...formProps}
                                     pageProps={formSteps[currentStep]}
-                                    nextPage={() => handleNextPage(formProps)}
                                     countProgress={countCompletionProgress}
                                     backendValidationErrors={props.backendValidationErrors}
                                 />
@@ -109,9 +109,9 @@ const RegisterForm = ({
                                         Back
                                     </BackButton>
                                     <NextButton
-                                        type="button"
+                                        type="submit"
                                         disabled={!R.isEmpty(formProps.errors)}
-                                        onClick={() => handleNextPage(formProps)}
+                                        onClick={() => handleSubmit(formProps)}
                                     >
                                         {currentStep === formSteps.length - 1 ? 'Finish' : 'Next'}
                                     </NextButton>
