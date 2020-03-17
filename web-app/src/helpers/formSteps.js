@@ -78,12 +78,6 @@ export const startupFormSteps = [
                 ],
             },
             {
-                name: 'targetMarket',
-                placeholder: 'Target Market',
-                type: 'selectTags',
-                tags: 'targetMarketTags',
-            },
-            {
                 name: 'businessType',
                 placeholder: 'Business Type',
                 type: 'checkboxGroup',

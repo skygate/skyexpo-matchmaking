@@ -34,8 +34,7 @@ export const CheckboxGroup = ({ input, values, setFieldValue }) => (
                     value={option.value}
                     checked={values.includes(option.value)}
                     onChange={event => {
-                        const newValues = getNewCheckboxValues(values, event.target.value);
-                        setFieldValue(input.name, newValues);
+                        setFieldValue(input.name, event.target.value);
                     }}
                 />
             </RadioElementWrapper>

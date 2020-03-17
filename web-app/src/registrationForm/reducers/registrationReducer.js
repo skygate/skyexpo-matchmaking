@@ -4,7 +4,7 @@ const defaultState = {
     name: '',
     isValidating: false,
     validationErrors: {},
-    step: 0,
+    step: 2,
 };
 
 export const registrationForm = (state = defaultState, action) => {
