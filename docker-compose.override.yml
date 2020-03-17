@@ -9,6 +9,14 @@
 #  $ docker-compose up
 
 version: "3.7"
+
+x-devel-backend: &devel-backend
+  volumes:
+    # We only mount source code in development:
+    - ./backend:/code
+  stdin_open: true
+  tty: true
+
 services:
   web:
     ports:
@@ -16,11 +24,7 @@ services:
       - "8000:8000"
       # shell_plus --notebook
       - "8888:8888"
-    volumes:
-      # We only mount source code in development:
-      - ./backend:/code
-    stdin_open: true
-    tty: true
+    <<: *devel-backend
 
   web-app:
     build:
@@ -37,18 +41,10 @@ services:
       - 5432:5432
 
   celery-worker:
-    volumes:
-      # We only mount source code in development:
-      - ./backend:/code
-    stdin_open: true
-    tty: true
+    <<: *devel-backend
 
   celery-flower:
-    volumes:
-      # We only mount source code in development:
-      - ./backend:/code
-    stdin_open: true
-    tty: true
+    <<: *devel-backend
 
   mailhog:
     image: "mailhog/mailhog"

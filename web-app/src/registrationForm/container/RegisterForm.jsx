@@ -1,52 +1,59 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
-import { Progress } from 'antd';
 import styled from '@emotion/styled';
 import * as R from 'ramda';
 
-import { FormQuestions } from '../components/FormQuestions';
+import { FormQuestions, TopHeader } from '../components';
+import { countProgress } from '../../helpers/countProgress';
+import { BackButton, NextButton, ButtonsWrapper } from '../styled/buttons';
 import { handleRedirect } from '../../history';
-import { validateFirstStepRequest } from '../actions/registrationActions';
+import {
+    validateStepOfFormRequest,
+    setStepOfRegistrationForm,
+    saveStepFormAnswersRequest,
+} from '../actions/registrationActions';
+import { getStepValues } from '../../helpers/getStepValues';
+import { color } from '../../config/values';
+import { getValidationErrorsForUserType, getStep } from '../selectors/registrationSelectors';
 
 const SectionWrapper = styled.div`
-    max-width: 400px;
-    margin: 10rem auto;
+    padding: 3rem 1.5rem;
+    max-width: 1200px;
+    color: ${color.primaryFont};
 `;
 
 const RegisterForm = ({
     formSteps,
     initialValues,
     validationSchemas,
-    validateFirstStepRequest,
+    setCurrentStep,
+    currentStep,
+    ...props
 }) => {
-    const [currentStep, setCurrentStep] = useState(0);
     const [completionProgress, setCompletionProgress] = useState(0);
 
-    const handleNextPage = props => {
-        const currentStepFormInputs = formSteps[currentStep].inputsFields;
-        const condition = currentStepFormInputs.map(a => a.name);
-        const data = props.values;
+    const handleSubmit = formProps => {
+        const stepValues = getStepValues(formSteps[currentStep].inputsFields, formProps.values);
 
-        const stepValues = Object.keys(data)
-            .filter(value => condition.includes(value))
-            .reduce(
-                (obj, key) => ({
-                    ...obj,
-                    [key]: data[key],
-                }),
-                {},
-            );
+        props.validateStepOfFormRequest({
+            formValues: stepValues,
+            userType: props.userType,
+            step: currentStep,
+            isPassingFrontValidation: formProps.isValid,
+        });
 
-        validateFirstStepRequest(stepValues);
+        formProps.submitForm().then(() => {
+            if (!formProps.isValid || props.backendValidationErrors) {
+                formProps.setTouched({});
+                formProps.setStatus('validated');
 
-        props.submitForm().then(() => {
-            if (!props.isValid) return;
+                return;
+            }
 
-            currentStep > 1 && handleSubmit(props);
-            setCurrentStep(currentStep + 1);
-            props.validateForm();
-            props.setTouched({});
+            currentStep > 1 && submitStepForm(formProps);
+            formProps.validateForm();
+            formProps.setTouched({});
         });
     };
 
@@ -54,27 +61,14 @@ const RegisterForm = ({
         setCurrentStep(currentStep - 1);
     };
 
-    const handleSubmit = ({ values }) => {
-        console.log('Submitted values', values);
+    const submitStepForm = ({ values }) => {
+        props.saveStepFormAnswersRequest({ formValues: values, userType: props.userType });
     };
 
     const countCompletionProgress = questions => {
-        const allQuestions = Object.values(questions).flat();
-        const questionsWithoutTeamMembers = allQuestions.filter(
-            question => typeof question !== 'object',
-        );
-        const questionsAboutTeamMembers = allQuestions
-            .flat()
-            .filter(question => typeof question === 'object')
-            .map(question => Object.values(question))
-            .flat();
-        const allQuestionsNumber = questionsAboutTeamMembers.concat(questionsWithoutTeamMembers)
-            .length;
-        const answeredQuestion = questionsAboutTeamMembers
-            .concat(questionsWithoutTeamMembers)
-            .filter(a => a !== '').length;
+        const progress = countProgress(questions);
 
-        setCompletionProgress(Math.round((answeredQuestion / allQuestionsNumber) * 100));
+        setCompletionProgress(progress);
     };
 
     return (
@@ -83,43 +77,60 @@ const RegisterForm = ({
                 <h1>Thank you</h1>
             ) : (
                 <>
-                    <h1>Registration step {currentStep + 1}</h1>
-                    <Progress type="circle" percent={completionProgress} width={80} />
-                    <div>
-                        <Formik
-                            onSubmit={handleSubmit}
-                            isInitialValid={false}
-                            initialValues={initialValues}
-                            validationSchema={validationSchemas[currentStep]}
-                        >
-                            {props => (
-                                <Form>
-                                    <FormQuestions
-                                        {...props}
-                                        pageProps={formSteps[currentStep]}
-                                        nextPage={() => handleNextPage(props)}
-                                        countProgress={countCompletionProgress}
-                                    />
-                                    {currentStep ? (
-                                        <button type="button" onClick={() => handleBackPage(props)}>
-                                            back
-                                        </button>
-                                    ) : (
-                                        <button onClick={() => handleRedirect('/')}>back</button>
-                                    )}
-                                    <button type="button" onClick={() => handleNextPage(props)}>
-                                        {currentStep === formSteps.length - 1
-                                            ? 'submit'
-                                            : 'next page'}
-                                    </button>
-                                </Form>
-                            )}
-                        </Formik>
-                    </div>
+                    <TopHeader
+                        completionProgress={completionProgress}
+                        step={currentStep}
+                        title={formSteps[currentStep].title}
+                    ></TopHeader>
+                    <Formik
+                        isInitialValid={false}
+                        initialValues={initialValues}
+                        validationSchema={validationSchemas[currentStep]}
+                        //I don't have all props here and formik don't fire onSubmit with errors so I trigger submit from button.
+                        onSubmit={() => {}}
+                    >
+                        {formProps => (
+                            <Form>
+                                <FormQuestions
+                                    {...formProps}
+                                    pageProps={formSteps[currentStep]}
+                                    countProgress={countCompletionProgress}
+                                    backendValidationErrors={props.backendValidationErrors}
+                                />
+                                <ButtonsWrapper>
+                                    <BackButton
+                                        type="button"
+                                        onClick={() =>
+                                            currentStep
+                                                ? handleBackPage(formProps)
+                                                : handleRedirect('/')
+                                        }
+                                    >
+                                        Back
+                                    </BackButton>
+                                    <NextButton
+                                        type="submit"
+                                        onClick={() => handleSubmit(formProps)}
+                                    >
+                                        {currentStep === formSteps.length - 1 ? 'Finish' : 'Next'}
+                                    </NextButton>
+                                </ButtonsWrapper>
+                            </Form>
+                        )}
+                    </Formik>
                 </>
             )}
         </SectionWrapper>
     );
 };
 
-export default connect(null, { validateFirstStepRequest })(RegisterForm);
+const mapStateToProps = (state, ownProps) => ({
+    currentStep: getStep(state),
+    backendValidationErrors: getValidationErrorsForUserType(state, ownProps),
+});
+
+export default connect(mapStateToProps, {
+    validateStepOfFormRequest,
+    saveStepFormAnswersRequest,
+    setCurrentStep: setStepOfRegistrationForm,
+})(RegisterForm);

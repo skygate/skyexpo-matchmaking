@@ -2,7 +2,6 @@
 
 from server.settings.components import config
 
-
 CELERY_BROKER_URL = 'redis://:{password}@{hostname}:{port}/0'.format(
     password=config('REDIS_PASSWORD'),
     hostname=config('REDIS_HOSTNAME'),

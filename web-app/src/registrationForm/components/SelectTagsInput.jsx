@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { Select } from 'antd';
+import ReactSelect from 'react-select';
 
-import {
-    productTags,
-    industriesTags,
-    sectorsTags,
-    investmentStageTags,
-    companyStageTags,
-    targetMarketTags,
-} from '../../helpers/tags';
+import { productTags, industriesTags, sectorsTags, investmentStageTags } from '../../helpers/tags';
+import { selectStyles } from '../../config/selectStyles';
 
-export const SelectTagsInput = ({ input, setFieldValue }) => {
+export const SelectTagsInput = ({ input, setFieldValue, ...props }) => {
     const [selectedTags, setSelectedTags] = useState([]);
 
     const tags = {
@@ -18,32 +12,27 @@ export const SelectTagsInput = ({ input, setFieldValue }) => {
         industriesTags,
         sectorsTags,
         investmentStageTags,
-        companyStageTags,
-        targetMarketTags,
     };
 
-    const handleTagSelect = selectedItem => {
-        setSelectedTags(selectedItem);
-        setFieldValue(input.name, selectedItem);
+    const handleTagSelect = selectedOptions => {
+        setSelectedTags(selectedOptions);
+        const values = selectedOptions.map(option => option.value);
+        setFieldValue(input.name, values);
     };
 
-    const filteredOptions = tags[input.tags].filter(tag => !selectedTags.includes(tag));
+    const tagOptions = tags[input.tags].filter(({ value }) => !selectedTags.includes(value));
 
     return (
-        <Select
-            mode="multiple"
+        <ReactSelect
+            isMulti
             placeholder="Inserted are removed"
             value={selectedTags}
             onChange={handleTagSelect}
-            style={{ width: '100%' }}
-            type="text"
+            onBlur={props.handleBlur}
+            closeMenuOnSelect={false}
             name={input.name}
-        >
-            {filteredOptions.map(item => (
-                <Select.Option key={item} value={item}>
-                    {item}
-                </Select.Option>
-            ))}
-        </Select>
+            styles={selectStyles}
+            options={tagOptions}
+        />
     );
 };

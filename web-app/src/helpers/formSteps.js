@@ -4,21 +4,29 @@ export const startupFormSteps = [
         inputsFields: [
             { name: 'name', placeholder: 'Startup name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
-            { name: 'phoneNumber', placeholder: '+48 123 123 123', type: 'text' },
+            {
+                name: 'phoneNumber',
+                label: 'Phone number',
+                placeholder: '+48 123 123 123',
+                type: 'text',
+            },
             { name: 'email', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logotype', placeholder: 'Logo', type: 'image' },
-            { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
+            { name: 'logotype', placeholder: 'Upload profile logo', type: 'image' },
+            {
+                name: 'foundingDate',
+                label: 'Founding date',
+                placeholder: 'YYYY-MM-YY',
+                type: 'text',
+            },
             { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],
     },
     {
         title: 'Team members',
-        subtitle: 'Participating on the skyexpo',
         inputsFields: [
             {
                 name: 'teamMembers',
-                placeholder: 'Team members',
                 type: 'team',
                 inputs: [
                     {
@@ -50,19 +58,18 @@ export const startupFormSteps = [
                 tags: 'investmentStageTags',
             },
             {
-                name: 'companyStage',
+                name: 'stage',
                 placeholder: 'Company stage',
-                type: 'selectTags',
-                tags: 'companyStageTags',
+                type: 'select',
             },
             {
-                name: 'productType',
+                name: 'productTypes',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
             },
             {
-                name: 'productOnMarket',
+                name: 'isProductOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
                 options: [
@@ -71,33 +78,27 @@ export const startupFormSteps = [
                 ],
             },
             {
-                name: 'targetMarket',
-                placeholder: 'Target Market',
-                type: 'selectTags',
-                tags: 'targetMarketTags',
-            },
-            {
                 name: 'businessType',
                 placeholder: 'Business Type',
                 type: 'checkboxGroup',
                 options: [
                     {
                         label: 'B2B (Business to Business)',
-                        value: 'B2B (Business to Business)',
+                        value: 'B2B',
                     },
                     {
                         label: 'B2C (Business to Customer)',
-                        value: 'B2C (Business to Customer)',
+                        value: 'B2C',
                     },
                 ],
             },
             {
-                name: 'minimumInvest',
+                name: 'minInvestmentSize',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
             },
             {
-                name: 'maximumInvest',
+                name: 'maxInvestmentSize',
                 placeholder: 'Maximum investment size (EUR)',
                 type: 'number',
             },
@@ -111,21 +112,29 @@ export const companyInvestorFormSteps = [
         inputsFields: [
             { name: 'name', placeholder: 'Company name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
-            { name: 'phoneNumber', placeholder: '+48 123 123 123', type: 'text' },
+            {
+                name: 'phoneNumber',
+                label: 'Phone number',
+                placeholder: '+48 123 123 123',
+                type: 'text',
+            },
             { name: 'email', placeholder: 'Email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logotype', placeholder: 'Logo', type: 'image' },
-            { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
+            { name: 'logotype', placeholder: 'Upload profile logo', type: 'image' },
+            {
+                name: 'foundingDate',
+                label: 'Founding date',
+                placeholder: 'YYYY-MM-YY',
+                type: 'text',
+            },
             { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],
     },
     {
         title: 'Team members',
-        subtitle: 'Participating on the skyexpo',
         inputsFields: [
             {
                 name: 'teamMembers',
-                placeholder: 'Team members',
                 type: 'team',
                 inputs: [
                     {
@@ -157,19 +166,18 @@ export const companyInvestorFormSteps = [
                 tags: 'investmentStageTags',
             },
             {
-                name: 'companyStage',
+                name: 'stage',
                 placeholder: 'Company stage',
-                type: 'selectTags',
-                tags: 'companyStageTags',
+                type: 'select',
             },
             {
-                name: 'productType',
+                name: 'productTypes',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
             },
             {
-                name: 'productOnMarket',
+                name: 'isProductOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
                 options: [
@@ -199,12 +207,12 @@ export const companyInvestorFormSteps = [
                 ],
             },
             {
-                name: 'minimumInvest',
+                name: 'minInvestmentSize',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
             },
             {
-                name: 'maximumInvest',
+                name: 'maxInvestmentSize',
                 placeholder: 'Maximum investment size (EUR)',
                 type: 'number',
             },
@@ -218,10 +226,15 @@ export const individualInvestorFormSteps = [
         inputsFields: [
             { name: 'name', placeholder: 'Full name', type: 'text' },
             { name: 'website', placeholder: 'Website', type: 'text' },
-            { name: 'phoneNumber', placeholder: '+48 123 123 123', type: 'text' },
+            {
+                name: 'phoneNumber',
+                label: 'Phone number',
+                placeholder: '+48 123 123 123',
+                type: 'text',
+            },
             { name: 'email', placeholder: 'Your email', type: 'text' },
             { name: 'country', placeholder: 'Country', type: 'select' },
-            { name: 'logotype', placeholder: 'Logo', type: 'image' },
+            { name: 'logotype', placeholder: 'Upload profile logo', type: 'image' },
             { name: 'foundingDate', placeholder: 'YYYY-MM-YY', type: 'text' },
             { name: 'description', placeholder: 'Short description', type: 'textarea' },
         ],
@@ -243,19 +256,18 @@ export const individualInvestorFormSteps = [
                 tags: 'investmentStageTags',
             },
             {
-                name: 'companyStage',
+                name: 'stage',
                 placeholder: 'Company stage',
-                type: 'selectTags',
-                tags: 'companyStageTags',
+                type: 'select',
             },
             {
-                name: 'productType',
+                name: 'productTypes',
                 placeholder: 'Product type',
                 type: 'selectTags',
                 tags: 'productTags',
             },
             {
-                name: 'productOnMarket',
+                name: 'isProductOnMarket',
                 placeholder: 'Product on Market',
                 type: 'radio',
                 options: [
@@ -285,12 +297,12 @@ export const individualInvestorFormSteps = [
                 ],
             },
             {
-                name: 'minimumInvest',
+                name: 'minInvestmentSize',
                 placeholder: 'Minimum investment size (EUR)',
                 type: 'number',
             },
             {
-                name: 'maximumInvest',
+                name: 'maxInvestmentSize',
                 placeholder: 'Maximum investment size (EUR)',
                 type: 'number',
             },

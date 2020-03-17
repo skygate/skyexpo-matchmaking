@@ -22,7 +22,7 @@ const startupValidationPage1 = Yup.object().shape({
     country: Yup.string()
         .trim()
         .required('Country is required'),
-    logotype: Yup.mixed().required(),
+    logotype: Yup.mixed().required('Logo is required'),
     foundingDate: Yup.string()
         .trim()
         .matches(dateValidityRegex, 'Date must be YYYY-MM-DD format')
@@ -125,27 +125,21 @@ const validationPage3 = Yup.object().shape({
             .trim()
             .required('Sectors are required'),
     ),
-    companyStage: Yup.string()
+    stage: Yup.string()
         .trim()
         .required('Company stage is required'),
-    productType: Yup.array().of(
+    productTypes: Yup.array().of(
         Yup.string()
             .trim()
             .required('Product types are required'),
     ),
-    productOnMarket: Yup.boolean().required('Please define if your product is on marekt'),
-    targetMarket: Yup.array().of(
-        Yup.string()
-            .trim()
-            .required('Target market is required'),
-    ),
-    businessType: Yup.array().of(
-        Yup.string()
-            .trim()
-            .required('Business type is required'),
-    ),
-    minimumInvest: Yup.number().required('Minimum investment is required'),
-    maximumInvest: Yup.number().required('Maximum investment required'),
+    isProductOnMarket: Yup.boolean().required('Please define if your product is on market'),
+    businessType: Yup.string()
+        .trim()
+        .required('Business type is required'),
+
+    minInvestmentSize: Yup.number().required('Minimum investment is required'),
+    maxInvestmentSize: Yup.number().required('Maximum investment required'),
 });
 
 export const startupValidationSchemas = [startupValidationPage1, validationPage2, validationPage3];

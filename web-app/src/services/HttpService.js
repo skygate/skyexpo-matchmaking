@@ -18,18 +18,17 @@ export class HttpService {
     }
 
     makeRequest(method, path, body = null, options = {}) {
-        const formData = new FormData();
-
-        Object.keys(body).forEach(fieldName => formData.append(fieldName, body[fieldName]));
-
         const params = {
             method,
-            body: formData,
+            body: this.getBody(options.isFormData, body),
+            ...(options.isFormData
+                ? {}
+                : { headers: new Headers({ 'content-type': 'application/json' }) }),
         };
 
         return fetch(BASE_URL + path, params).then(async response => {
             if (response.ok) {
-                return response.json();
+                return response.status !== 204 ? response.json() : response;
             }
 
             const err = new Error(response.statusText);
@@ -37,5 +36,14 @@ export class HttpService {
             err.code = response.status;
             throw err;
         });
+    }
+
+    getBody(isFormData, body) {
+        if (isFormData) {
+            const formData = new FormData();
+            Object.keys(body).forEach(fieldName => formData.append(fieldName, body[fieldName]));
+            return formData;
+        }
+        return JSON.stringify(body);
     }
 }
