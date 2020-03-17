@@ -27,8 +27,6 @@ export const investmentStageTags = [
     'Accelerator',
 ];
 
-export const companyStageTags = ['Concept Stage', 'Seed Stage', 'Early Stage'];
-
 export const targetMarketTags = [
     'TargetMarket1',
     'TargetMarket2',

@@ -11,6 +11,7 @@ import { handleRedirect } from '../../history';
 import {
     validateStepOfFormRequest,
     setStepOfRegistrationForm,
+    saveStepFormAnswersRequest,
 } from '../actions/registrationActions';
 import { getStepValues } from '../../helpers/getStepValues';
 import { color } from '../../config/values';
@@ -61,7 +62,7 @@ const RegisterForm = ({
     };
 
     const handleSubmit = ({ values }) => {
-        console.log('Submitted values', values);
+        props.saveStepFormAnswersRequest({ formValues: values, userType: props.userType });
     };
 
     const countCompletionProgress = questions => {
@@ -131,5 +132,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
     validateStepOfFormRequest,
+    saveStepFormAnswersRequest,
     setCurrentStep: setStepOfRegistrationForm,
 })(RegisterForm);

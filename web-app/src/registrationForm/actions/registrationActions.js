@@ -27,7 +27,7 @@ export const validateStepOfFormFail = () => ({
 });
 
 export const SAVE_STEP_FORM_ANSWERS_REQUESTED = 'SAVE_STEP_FORM_ANSWERS_REQUESTED';
-export const saveStepFormAnswersRequest = (formValues, userType, step) => ({
+export const saveStepFormAnswersRequest = ({ formValues, userType, step }) => ({
     type: SAVE_STEP_FORM_ANSWERS_REQUESTED,
     payload: { formValues, userType, step },
 });

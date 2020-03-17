@@ -125,7 +125,7 @@ const validationPage3 = Yup.object().shape({
             .trim()
             .required('Sectors are required'),
     ),
-    companyStage: Yup.string()
+    stage: Yup.string()
         .trim()
         .required('Company stage is required'),
     productTypes: Yup.array().of(

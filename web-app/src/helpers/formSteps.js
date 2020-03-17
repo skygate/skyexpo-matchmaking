@@ -58,10 +58,9 @@ export const startupFormSteps = [
                 tags: 'investmentStageTags',
             },
             {
-                name: 'companyStage',
+                name: 'stage',
                 placeholder: 'Company stage',
-                type: 'selectTags',
-                tags: 'companyStageTags',
+                type: 'select',
             },
             {
                 name: 'productTypes',
@@ -91,11 +90,11 @@ export const startupFormSteps = [
                 options: [
                     {
                         label: 'B2B (Business to Business)',
-                        value: 'B2B (Business to Business)',
+                        value: 'B2B',
                     },
                     {
                         label: 'B2C (Business to Customer)',
-                        value: 'B2C (Business to Customer)',
+                        value: 'B2C',
                     },
                 ],
             },
@@ -173,10 +172,9 @@ export const companyInvestorFormSteps = [
                 tags: 'investmentStageTags',
             },
             {
-                name: 'companyStage',
+                name: 'stage',
                 placeholder: 'Company stage',
-                type: 'selectTags',
-                tags: 'companyStageTags',
+                type: 'select',
             },
             {
                 name: 'productTypes',
@@ -264,10 +262,9 @@ export const individualInvestorFormSteps = [
                 tags: 'investmentStageTags',
             },
             {
-                name: 'companyStage',
+                name: 'stage',
                 placeholder: 'Company stage',
-                type: 'selectTags',
-                tags: 'companyStageTags',
+                type: 'select',
             },
             {
                 name: 'productTypes',

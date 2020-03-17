@@ -6,7 +6,6 @@ import {
     industriesTags,
     sectorsTags,
     investmentStageTags,
-    companyStageTags,
     targetMarketTags,
 } from '../../helpers/tags';
 import { getOptionsFromValues } from '../../helpers/getOptionsFromValues';
@@ -20,7 +19,6 @@ export const SelectTagsInput = ({ input, setFieldValue, ...props }) => {
         industriesTags,
         sectorsTags,
         investmentStageTags,
-        companyStageTags,
         targetMarketTags,
     };
 
