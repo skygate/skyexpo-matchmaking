@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import styled from '@emotion/styled';
-import * as R from 'ramda';
 
 import { FormQuestions, TopHeader } from '../components';
 import { countProgress } from '../../helpers/countProgress';
@@ -19,7 +18,8 @@ import { getValidationErrorsForUserType, getStep } from '../selectors/registrati
 
 const SectionWrapper = styled.div`
     padding: 3rem 1.5rem;
-    max-width: 1200px;
+    margin: auto;
+    max-width: 1000px;
     color: ${color.primaryFont};
 `;
 

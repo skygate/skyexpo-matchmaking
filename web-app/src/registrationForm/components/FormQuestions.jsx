@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { Input, Label } from '../styled';
+import { Input, Label, Textarea } from '../styled';
 import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup, TeamMembers, Select } from './';
 import { FormFieldError } from './FormFieldError';
 
@@ -61,11 +61,10 @@ export const FormQuestions = ({
                         />
                     )}
                     {input.type === 'textarea' && (
-                        <Input
+                        <Textarea
                             onChange={handleChange}
                             value={values[input.name]}
                             name={input.name}
-                            type="textarea"
                             onBlur={handleBlur}
                             placeholder={input.placeholder}
                         />
