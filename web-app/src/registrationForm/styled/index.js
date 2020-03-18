@@ -4,3 +4,4 @@ export * from './input';
 export * from './label';
 export * from './space-between-wrapper';
 export * from './team-members';
+export * from './upload-button';

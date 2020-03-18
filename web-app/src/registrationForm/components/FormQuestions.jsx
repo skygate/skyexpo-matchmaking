@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-import { Input, Label } from '../styled';
-import { RadioGroup, SelectTagsInput, UploadButton, CheckboxGroup, TeamMembers, Select } from './';
+import { Input, Label, Textarea } from '../styled';
+import { RadioGroup, SelectTagsInput, UploadImage, CheckboxGroup, TeamMembers, Select } from './';
 import { FormFieldError } from './FormFieldError';
 
 const FormQuestionsWrapper = styled.div`
@@ -61,22 +61,22 @@ export const FormQuestions = ({
                         />
                     )}
                     {input.type === 'textarea' && (
-                        <Input
+                        <Textarea
                             onChange={handleChange}
                             value={values[input.name]}
                             name={input.name}
-                            type="textarea"
                             onBlur={handleBlur}
                             placeholder={input.placeholder}
                         />
                     )}
                     {input.type === 'image' && (
-                        <UploadButton
+                        <UploadImage
                             onChange={event =>
                                 setFieldValue('logotype', event.currentTarget.files[0])
                             }
                             onBlur={handleBlur}
-                        ></UploadButton>
+                            value={values[input.name]}
+                        />
                     )}
                     {input.type === 'team' && (
                         <TeamMembers
@@ -122,7 +122,6 @@ export const FormQuestions = ({
                             />
                         </div>
                     )}
-
                     {input.type !== 'team' && (
                         <FormFieldError
                             errors={errors?.[input.name]}

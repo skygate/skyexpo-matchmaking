@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from '@emotion/styled';
 
 import { color, fontSize } from '../../config/values';
-import downloadIcon from '../../assets/download-icon.svg';
 
 export const UploadWrapper = styled.label`
     width: 100%;
@@ -34,18 +32,7 @@ export const UploadIcon = styled.img`
     margin: 1rem 0;
 `;
 
-export const UploadButton = props => (
-    <>
-        <UploadWrapper htmlFor="file-upload">
-            <UploadIcon src={downloadIcon}></UploadIcon>
-            <span>Select a image</span>
-            <SubTitle>PNG, JPG, or GIF file under 1 MB in size</SubTitle>
-        </UploadWrapper>
-        <UploadInput
-            id="file-upload"
-            type="file"
-            onChange={props.onChange}
-            onBlur={props.handleBlur}
-        />
-    </>
-);
+export const PreviewImage = styled.img`
+    max-height: 8rem;
+    margin: 1rem 0;
+`;

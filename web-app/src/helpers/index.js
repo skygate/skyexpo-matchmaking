@@ -7,5 +7,6 @@ export * from './getNewCheckboxValues';
 export * from './getOptionsFromValues';
 export * from './getStepValues';
 export * from './phoneNumberValidation';
+export * from './readFile';
 export * from './tags';
 export * from './validationSchemas';

@@ -9,4 +9,5 @@ export const color = {
     primaryBackground: '#FFFFFF',
     elementBackground: '#F5F5F5',
     error: '#D8000C',
+    inputOutline: '#bfbfbf',
 };

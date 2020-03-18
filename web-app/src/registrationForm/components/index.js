@@ -5,4 +5,4 @@ export * from './Select';
 export * from './SelectTagsInput';
 export * from './TeamMembers';
 export * from './TopHeader';
-export * from './UploadButton';
+export * from './UploadImage';
