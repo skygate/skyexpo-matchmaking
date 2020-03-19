@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 
 export class RootErrorBoundary extends Component {
-    state = { error: '' };
+    state = { hasErrorOcurred: false };
 
-    static getDerivedStateFromError(error) {
-        return { error };
+    static getDerivedStateFromError() {
+        return { hasErrorOcurred: true };
     }
 
     render() {
-        if (this.state.error) {
+        if (this.state.hasErrorOcurred) {
             return (
                 <>
                     <h1>Something went wrong. You should contact with site administrator</h1>
-                    <p>{this.state.error}</p>
                 </>
             );
         }
