@@ -1,7 +1,11 @@
 import 'package:redux/redux.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'package:mobile/features/auth/actions/auth.actions.dart';
 
+part 'auth.reducer.g.dart';
+
+@JsonSerializable()
 class AuthState {
   AuthState(
       {this.email = '',
@@ -12,6 +16,10 @@ class AuthState {
   final String token;
   final bool isAuthenticated;
   final bool authIsChecked;
+
+  factory AuthState.fromJson(Map<String, dynamic> json) =>
+      _$AuthStateFromJson(json);
+  Map<String, dynamic> toJson() => _$AuthStateToJson(this);
 }
 
 final authReducer = combineReducers<AuthState>([

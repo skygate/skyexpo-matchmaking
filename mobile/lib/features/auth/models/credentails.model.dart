@@ -1,11 +1,15 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'credentails.model.g.dart';
+
+@JsonSerializable()
 class Credentials {
   String email;
   String password;
 
   Credentials({this.email, this.password});
 
-  Map<String, dynamic> toJson() => {
-        'email': email,
-        'password': password,
-      };
+  factory Credentials.fromJson(Map<String, dynamic> json) =>
+      _$CredentialsFromJson(json);
+  Map<String, dynamic> toJson() => _$CredentialsToJson(this);
 }
