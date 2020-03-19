@@ -1,6 +1,3 @@
 String isNotEmptyValidator(String value) {
-  if (value.isEmpty) {
-    return 'This field is required';
-  }
-  return null;
+  return value.isEmpty ? 'This field is required' : null;
 }

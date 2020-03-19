@@ -12,7 +12,6 @@ import 'features/auth/reducers/auth.reducer.dart';
 import 'features/auth/containers/after-auth.container.dart';
 import 'features/auth/containers/log-in.container.dart';
 import 'features/auth/widgets/home.widget.dart';
-import 'features/matching/mock/match.dart';
 import 'features/matching/widgets/matching-list.widget.dart';
 
 void main() {
@@ -40,7 +39,7 @@ class Main extends StatelessWidget {
             theme: ThemeData(
                 primarySwatch: Colors.blue,
                 backgroundColor: colors["background"]),
-            initialRoute: routes['matchingList'],
+            initialRoute: routes['home'],
             navigatorKey: navigatorKey,
             routes: {
               routes['home']: (context) => Home(),
