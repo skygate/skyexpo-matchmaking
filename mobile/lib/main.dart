@@ -4,6 +4,7 @@ import 'package:mobile/config/colors.config.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
+import 'package:flutter_flipperkit/flutter_flipperkit.dart';
 
 import 'package:mobile/config/routes.config.dart';
 import 'package:mobile/store/app-state.dart';
@@ -27,6 +28,17 @@ void main() async {
       middleware: [remoteDevtools, epicMiddleware]);
 
   remoteDevtools.store = store;
+
+  ///
+  FlipperClient flipperClient = FlipperClient.getDefault();
+
+  flipperClient.addPlugin(new FlipperNetworkPlugin(
+    // If you use http library, you must set it to false
+    useHttpOverrides: false,
+  ));
+  flipperClient.start();
+
+  ///
 
   runApp(Main(store: store));
 }
