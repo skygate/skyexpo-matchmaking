@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:mobile/config/colors.config.dart';
+import 'package:mobile/core/helpers/set_up_network_debugger_helper.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
@@ -27,6 +28,8 @@ void main() async {
       middleware: [remoteDevtools, epicMiddleware]);
 
   remoteDevtools.store = store;
+
+  setUpNetworkDebugger();
 
   runApp(Main(store: store));
 }
