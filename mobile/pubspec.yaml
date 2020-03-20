@@ -28,5 +28,5 @@ dev_dependencies:
 
 flutter:
   assets:
-    - ../backend/config/.env
+    - .env
   uses-material-design: true
