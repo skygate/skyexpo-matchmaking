@@ -1,3 +1,5 @@
-const apiBase = "http://10.0.0.25:8000/api/";
+import 'env_variables_config.dart' as env;
 
-const apiRoutes = {"token": "token"};
+final apiBase = 'http://${env.emulatorHost}:${env.backendPort}/api/';
+
+final apiRoutes = {"token": "token"};
