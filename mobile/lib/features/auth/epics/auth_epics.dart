@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:redux_epics/redux_epics.dart'
     show EpicStore, TypedEpic, combineEpics;
 
-import 'package:mobile/config/routes.config.dart' show navigatorKey, routes;
+import 'package:mobile/config/routes_config.dart' show navigatorKey, Route;
 import 'package:mobile/features/auth/services/auth_service.dart'
     show AuthService;
 import 'package:mobile/features/auth/actions/auth.actions.dart';
@@ -16,7 +16,7 @@ authEpicsFactory(AuthService authService) {
               return LogInSucceedAction(results);
             }, onError: (error) {
               //For POC I redirect from here because I can't create account on backend and always get 401
-              navigatorKey.currentState.pushNamed(routes["afterAuth"]);
+              navigatorKey.currentState.pushNamed(Route.afterAuth.toString());
 
               return LogInFailedAction();
             }));
