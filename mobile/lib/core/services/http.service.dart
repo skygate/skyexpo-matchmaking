@@ -1,26 +1,28 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:http/http.dart' as dart_http;
+import 'package:http/http.dart' show Response;
 import 'package:flipperkit_http_interceptor/flipperkit_http_interceptor.dart'
-    as interceptor;
+    show HttpClientWithInterceptor;
 
-import 'package:mobile/config/api.config.dart' as api_config;
+class HttpService {
+  final String apiUrl;
+  final HttpClientWithInterceptor http;
 
-final http = new interceptor.HttpClientWithInterceptor();
+  HttpService(this.apiUrl, this.http);
 
-get(String path) async {
-  final response = await http.get(api_config.apiBase + path + '/');
+  get(String path) async {
+    final response = await http.get(apiUrl + path + '/');
 
-  return response.body;
-}
-
-post(String path, body) async {
-  final dart_http.Response response = await http.post(
-      api_config.apiBase + path + '/',
-      body: json.encode(body.toJson()),
-      headers: {HttpHeaders.contentTypeHeader: 'application/json'});
-  if (response.statusCode != 200 || response.statusCode != 201) {
-    throw (response);
+    return response.body;
   }
-  return response.body;
+
+  post(String path, body) async {
+    final Response response = await http.post(apiUrl + path + '/',
+        body: json.encode(body.toJson()),
+        headers: {HttpHeaders.contentTypeHeader: 'application/json'});
+    if (response.statusCode != 200 || response.statusCode != 201) {
+      throw (response);
+    }
+    return response.body;
+  }
 }

@@ -29,7 +29,7 @@ final authReducer = combineReducers<AuthState>([
 
 AuthState getTokenSucceedReducer(
     AuthState authState, LogInSucceedAction action) {
-  return new AuthState(
+  return AuthState(
       email: action.user.email,
       token: action.user.token,
       isAuthenticated: true,
@@ -37,7 +37,7 @@ AuthState getTokenSucceedReducer(
 }
 
 AuthState getTokenFailedReducer(AuthState authState, LogInFailedAction action) {
-  return new AuthState(
+  return AuthState(
       email: 'testemail',
       token: authState.token,
       isAuthenticated: false,

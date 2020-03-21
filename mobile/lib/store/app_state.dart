@@ -2,7 +2,7 @@ import 'package:mobile/features/auth/reducers/auth.reducer.dart';
 
 import 'package:json_annotation/json_annotation.dart';
 
-part 'app-state.g.dart';
+part 'app_state.g.dart';
 
 @JsonSerializable()
 class AppState {

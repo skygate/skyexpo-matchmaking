@@ -11,7 +11,7 @@ class LogInForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final String title;
   final Function(Credentials) onFormSubmit;
-  final Credentials _formData = new Credentials();
+  final Credentials _formData = Credentials();
 
   LogInForm({Key key, @required this.title, @required this.onFormSubmit})
       : super(key: key);

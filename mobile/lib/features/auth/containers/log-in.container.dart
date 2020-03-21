@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:mobile/features/auth/actions/auth.actions.dart';
-import 'package:mobile/store/app-state.dart';
+import 'package:mobile/store/app_state.dart';
 
 class LogInContainer extends StatelessWidget {
   LogInContainer({Key key}) : super(key: key);
