@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/colors.config.dart';
+import 'package:mobile/config/colors.config.dart' show AppColor;
 
 class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: colors['background'],
+      backgroundColor: AppColor.background.value,
       currentIndex: 0,
       items: [
         BottomNavigationBarItem(
