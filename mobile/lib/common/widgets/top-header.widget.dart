@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile/config/colors.config.dart' show AppColor;
-import 'package:mobile/config/fonts.config.dart';
+import 'package:mobile/config/fonts.config.dart' show FontSize;
 
 class TopHeader extends StatelessWidget {
   final String title;
@@ -20,11 +20,12 @@ class TopHeader extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                fontSize: fontSizes["veryBig"], color: AppColor.primary.value),
+                fontSize: FontSize.veryBig.value,
+                color: AppColor.primary.value),
           ),
           Text(subTitle,
               style: TextStyle(
-                  fontSize: fontSizes["big"], color: AppColor.primary.value))
+                  fontSize: FontSize.big.value, color: AppColor.primary.value))
         ]));
   }
 }
