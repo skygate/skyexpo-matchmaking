@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_redux/flutter_redux.dart' show StoreProvider;
+import 'package:redux/redux.dart' show Store;
 
-import 'package:redux/redux.dart';
-
-import 'package:mobile/config/routes_config.dart' as routes;
+import 'main.reflectable.dart' show initializeReflectable;
+import 'package:mobile/config/routes_config.dart' show AppRoute, navigatorKey;
 import 'package:mobile/store/app_state.dart' show AppState;
-import 'package:mobile/config/colors.config.dart';
+import 'package:mobile/config/colors.config.dart' show colors;
 import 'package:mobile/core/helpers/load_env_file_helper.dart' show loadEnvFile;
 import 'package:mobile/core/helpers/set_up_network_debugger_helper.dart'
     show setUpNetworkDebugger;
@@ -15,10 +15,10 @@ import 'package:mobile/core/helpers/set_up_redux_store.dart'
 import 'routes.dart' show appRoutes;
 
 Future main() async {
+  initializeReflectable();
   await loadEnvFile();
   setUpNetworkDebugger();
   final store = await setUpReduxStore();
-
   runApp(Main(store: store));
 }
 
@@ -36,8 +36,8 @@ class Main extends StatelessWidget {
             theme: ThemeData(
                 primarySwatch: Colors.blue,
                 backgroundColor: colors["background"]),
-            initialRoute: routes.Route.home.toString(),
-            navigatorKey: routes.navigatorKey,
+            initialRoute: AppRoute.home.toString(),
+            navigatorKey: navigatorKey,
             routes: appRoutes));
   }
 }

@@ -93,16 +93,9 @@ packages:
     source: hosted
     version: "4.3.2"
   built_value:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: built_value
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.0.9"
-  built_value_generator:
-    dependency: "direct dev"
-    description:
-      name: built_value_generator
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.9"
@@ -438,6 +431,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  reflectable:
+    dependency: "direct dev"
+    description:
+      name: reflectable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.3"
   reselect:
     dependency: "direct main"
     description:
@@ -562,6 +562,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
+  vnum:
+    dependency: "direct main"
+    description:
+      name: vnum
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.4"
   watcher:
     dependency: transitive
     description:

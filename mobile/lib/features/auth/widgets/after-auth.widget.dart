@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/routes_config.dart' as routes;
+import 'package:mobile/config/routes_config.dart' show AppRoute;
 import 'package:mobile/core/widgets/layout.widget.dart';
 
 class AfterAuth extends StatelessWidget {
@@ -21,7 +21,7 @@ class AfterAuth extends StatelessWidget {
           Text('Store says your email is: $email'),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, routes.Route.home.toString());
+              Navigator.pushNamed(context, AppRoute.home.toString());
             },
             child: Text('Go to home screen'),
           )

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/routes_config.dart' as routes;
+import 'package:mobile/config/routes_config.dart' show AppRoute;
 
 class Home extends StatelessWidget {
   Home({Key key}) : super(key: key);
@@ -17,7 +17,7 @@ class Home extends StatelessWidget {
           Text('Home screen'),
           RaisedButton(
             onPressed: () =>
-                Navigator.pushNamed(context, routes.Route.logIn.toString()),
+                Navigator.pushNamed(context, AppRoute.logIn.toString()),
             child: Text('Go to login page'),
           )
         ],

@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
-import 'package:built_value/built_value.dart' show EnumClass;
-import 'package:built_collection/built_collection.dart' show BuiltSet;
-
-part 'routes_config.g.dart';
+import 'package:vnum/vnum.dart' show Vnum, VnumDefinition;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-class Route extends EnumClass {
-  static const Route home = _$home;
-  static const Route logIn = _$logIn;
-  static const Route afterAuth = _$afterAuth;
-  static const Route matchingList = _$matchingList;
+@VnumDefinition
+class AppRoute extends Vnum<String> {
+  static const AppRoute home = const AppRoute.define("/");
+  static const AppRoute logIn = const AppRoute.define("log-in");
+  static const AppRoute afterAuth = const AppRoute.define("after-auth");
+  static const AppRoute matchingList = const AppRoute.define("matching-list");
 
-  const Route._(String name) : super(name);
-
-  static BuiltSet<Route> get values => _$values;
-  static Route valueOf(String name) => _$valueOf(name);
+  const AppRoute.define(String fromValue) : super.define(fromValue);
+  factory AppRoute(String value) => Vnum.fromValue(value, AppRoute);
 }
