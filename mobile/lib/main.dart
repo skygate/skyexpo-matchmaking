@@ -5,7 +5,7 @@ import 'package:redux/redux.dart' show Store;
 import 'main.reflectable.dart' show initializeReflectable;
 import 'package:mobile/config/routes_config.dart' show AppRoute, navigatorKey;
 import 'package:mobile/store/app_state.dart' show AppState;
-import 'package:mobile/config/colors.config.dart' show colors;
+import 'package:mobile/config/colors.config.dart' show AppColor;
 import 'package:mobile/core/helpers/load_env_file_helper.dart' show loadEnvFile;
 import 'package:mobile/core/helpers/set_up_network_debugger_helper.dart'
     show setUpNetworkDebugger;
@@ -35,8 +35,8 @@ class Main extends StatelessWidget {
             title: 'Sky expo',
             theme: ThemeData(
                 primarySwatch: Colors.blue,
-                backgroundColor: colors["background"]),
-            initialRoute: AppRoute.home.toString(),
+                backgroundColor: AppColor.background.value),
+            initialRoute: AppRoute.home.value,
             navigatorKey: navigatorKey,
             routes: appRoutes));
   }

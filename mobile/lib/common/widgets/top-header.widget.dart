@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:mobile/config/colors.config.dart';
+import 'package:mobile/config/colors.config.dart' show AppColor;
 import 'package:mobile/config/fonts.config.dart';
 
 class TopHeader extends StatelessWidget {
@@ -20,11 +20,11 @@ class TopHeader extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                fontSize: fontSizes["veryBig"], color: colors["primary"]),
+                fontSize: fontSizes["veryBig"], color: AppColor.primary.value),
           ),
           Text(subTitle,
               style: TextStyle(
-                  fontSize: fontSizes["big"], color: colors["primary"]))
+                  fontSize: fontSizes["big"], color: AppColor.primary.value))
         ]));
   }
 }

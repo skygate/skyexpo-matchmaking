@@ -16,8 +16,7 @@ authEpicsFactory(AuthService authService) {
               return LogInSucceedAction(results);
             }, onError: (error) {
               //For POC I redirect from here because I can't create account on backend and always get 401
-              navigatorKey.currentState
-                  .pushNamed(AppRoute.afterAuth.toString());
+              navigatorKey.currentState.pushNamed(AppRoute.afterAuth.value);
 
               return LogInFailedAction();
             }));

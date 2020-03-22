@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/colors.config.dart';
+import 'package:mobile/config/colors.config.dart' show AppColor;
 
 import 'bottom-navigation.widget.dart';
 
@@ -17,7 +17,7 @@ class Layout extends StatelessWidget {
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(30.0),
             child: AppBar(
-              backgroundColor: colors['background'],
+              backgroundColor: AppColor.background.value,
               elevation: 0.0,
             )),
         body: Padding(

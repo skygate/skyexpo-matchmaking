@@ -6,8 +6,8 @@ import 'features/auth/widgets/home.widget.dart' show Home;
 import 'features/matching/widgets/matching-list.widget.dart' show MatchingList;
 
 final appRoutes = {
-  AppRoute.home.toString(): (context) => Home(),
-  AppRoute.logIn.toString(): (context) => LogInContainer(),
-  AppRoute.afterAuth.toString(): (context) => AfterAuthContainer(),
-  AppRoute.matchingList.toString(): (context) => MatchingList(),
+  AppRoute.home.value: (context) => Home(),
+  AppRoute.logIn.value: (context) => LogInContainer(),
+  AppRoute.afterAuth.value: (context) => AfterAuthContainer(),
+  AppRoute.matchingList.value: (context) => MatchingList(),
 };
