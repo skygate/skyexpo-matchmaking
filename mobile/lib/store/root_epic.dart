@@ -4,9 +4,8 @@ import 'package:mobile/features/auth/epics/auth_epics.dart'
     show authEpicsFactory;
 import 'package:mobile/root_services.dart' show authService;
 import 'package:mobile/store/app_state.dart' show AppState;
-import 'package:mobile/config/routes_config.dart' show navigatorKey;
+import 'package:mobile/config/routes_config.dart' show redirect;
 
-final authEpics = authEpicsFactory<AppState>(
-    authService, navigatorKey.currentState.pushNamed);
+final authEpics = authEpicsFactory<AppState>(authService, redirect);
 
-final epicMiddleware = EpicMiddleware<AppState>(authEpics as dynamic);
+final epicMiddleware = EpicMiddleware<AppState>(authEpics);

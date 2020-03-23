@@ -28,8 +28,7 @@ void main() {
       when(authService.getToken(credentials: credentailsMock))
           .thenAnswer((_) async => Future.value(userMock));
 
-      final authEpics =
-          authEpicsFactory<String>(authService, (String route) => {});
+      final authEpics = authEpicsFactory<String>(authService, testRedirect);
 
       final epicMiddleware = EpicMiddleware<String>(authEpics);
       final store = Store<String>(
@@ -51,14 +50,11 @@ void main() {
 
     test('Should call AuthService and return success action', () async {
       authService = AuthServiceMock();
-      // I will move redirect to success later so I don't check now if redirect was called
-      final redirect = RedirectMock();
 
       when(authService.getToken(credentials: credentailsMock))
           .thenAnswer((_) async => Future.error('error'));
 
-      final authEpics =
-          authEpicsFactory<String>(authService, redirect.redirect);
+      final authEpics = authEpicsFactory<String>(authService, testRedirect);
 
       final epicMiddleware = EpicMiddleware<String>(authEpics);
       final store = Store<String>(
