@@ -16,8 +16,14 @@ class AuthServiceMock extends Mock implements AuthService {}
 
 void main() {
   group('Auth Epic', () {
+    AuthServiceMock authService;
+
+    tearDown(() {
+      authService = AuthServiceMock();
+    });
+
     test('Should call AuthService and return success action', () async {
-      final authService = AuthServiceMock();
+      authService = AuthServiceMock();
 
       when(authService.getToken(credentials: credentailsMock))
           .thenAnswer((_) async => Future.value(userMock));
@@ -44,7 +50,7 @@ void main() {
     });
 
     test('Should call AuthService and return success action', () async {
-      final authService = AuthServiceMock();
+      authService = AuthServiceMock();
       // I will move redirect to success later so I don't check now if redirect was called
       final redirect = RedirectMock();
 
