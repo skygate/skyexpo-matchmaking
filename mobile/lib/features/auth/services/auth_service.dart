@@ -11,7 +11,7 @@ class AuthService {
 
   AuthService(this.http);
 
-  Future<User> getToken(Credentials credentials) async {
+  Future<User> getToken({Credentials credentials}) async {
     final String response =
         await http.post(path: ApiRoute.token.value, body: credentials);
 

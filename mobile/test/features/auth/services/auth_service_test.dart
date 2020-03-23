@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' show Response;
 import 'package:mobile/config/api.config.dart' show ApiRoute;
 
 import 'package:mobile/core/services/http.service.dart';
@@ -20,8 +19,7 @@ void main() {
           .thenAnswer((_) async => Future.value(userResponseMock));
 
       final authService = AuthService(http);
-
-      final response = await authService.getToken(credentailsMock);
+      final response = await authService.getToken(credentials: credentailsMock);
 
       expect(userMock == response, equals(true));
     });
@@ -35,7 +33,8 @@ void main() {
 
       final authService = AuthService(http);
 
-      expect(authService.getToken(credentailsMock), throwsException);
+      expect(
+          authService.getToken(credentials: credentailsMock), throwsException);
     });
   });
 }
