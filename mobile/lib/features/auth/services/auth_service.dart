@@ -1,4 +1,3 @@
-import 'package:http/http.dart' show Response;
 import 'dart:convert' show json;
 
 import 'package:mobile/config/api.config.dart' show ApiRoute;
@@ -13,9 +12,9 @@ class AuthService {
   AuthService(this.http);
 
   Future<User> getToken(Credentials credentials) async {
-    final Response response =
-        await http.post(ApiRoute.token.value, credentials);
+    final String response =
+        await http.post(path: ApiRoute.token.value, body: credentials);
 
-    return User.fromJson(json.decode(response.body));
+    return User.fromJson(json.decode(response));
   }
 }
