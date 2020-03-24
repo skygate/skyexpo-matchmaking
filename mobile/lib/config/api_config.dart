@@ -1,5 +1,4 @@
 import 'env_variables_config.dart' as env;
-import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
 import 'package:vnum/vnum.dart' show Vnum, VnumDefinition;
 
 final apiBase = 'http://${env.emulatorHost}:${env.backendPort}/api/';
