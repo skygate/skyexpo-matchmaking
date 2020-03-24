@@ -1,9 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/config/api.config.dart' show ApiRoute;
+import 'package:mockito/mockito.dart' show Mock, when;
 
-import 'package:mobile/core/services/http.service.dart';
-import 'package:mobile/features/auth/services/auth_service.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mobile/config/api_config.dart' show ApiRoute;
+import 'package:mobile/core/services/http_service.dart' show HttpService;
+import 'package:mobile/features/auth/services/auth_service.dart'
+    show AuthService;
 
 import '../mocks/user_mock.dart'
     show userMock, userResponseMock, credentailsMock;

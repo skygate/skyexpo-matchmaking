@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/colors.config.dart' show AppColor;
 
-import 'bottom-navigation.widget.dart';
+import 'package:mobile/config/colors_config.dart' show AppColor;
+import 'bottom_navigation_widget.dart';
 
 class Layout extends StatelessWidget {
   final Widget child;

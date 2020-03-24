@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth.reducer.dart';
+part of 'auth_reducer.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

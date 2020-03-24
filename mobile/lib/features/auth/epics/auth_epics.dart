@@ -5,7 +5,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:mobile/config/routes_config.dart' show AppRoute, Redirect;
 import 'package:mobile/features/auth/services/auth_service.dart'
     show AuthService;
-import 'package:mobile/features/auth/actions/auth.actions.dart';
+import 'package:mobile/features/auth/actions/auth_actions.dart'
+    show LogInRequestAction, LogInSucceedAction, LogInFailedAction;
 
 authEpicsFactory<T>(AuthService authService, Redirect redirect) {
   Stream<dynamic> logInEpic(Stream<dynamic> actions, EpicStore<T> store) {

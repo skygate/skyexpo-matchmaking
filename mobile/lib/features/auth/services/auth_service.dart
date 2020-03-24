@@ -1,10 +1,10 @@
 import 'dart:convert' show json;
 
-import 'package:mobile/config/api.config.dart' show ApiRoute;
-import 'package:mobile/core/services/http.service.dart' show HttpService;
-import 'package:mobile/features/auth/models/credentails.model.dart'
+import 'package:mobile/config/api_config.dart' show ApiRoute;
+import 'package:mobile/core/services/http_service.dart' show HttpService;
+import 'package:mobile/features/auth/models/credentails_model.dart'
     show Credentials;
-import 'package:mobile/features/auth/models/user.model.dart' show User;
+import 'package:mobile/features/auth/models/user_model.dart' show User;
 
 class AuthService {
   final HttpService http;

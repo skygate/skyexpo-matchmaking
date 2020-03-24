@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/common/validators/getValidators.validator.dart';
-import 'package:mobile/common/validators/isNotEmpty.validator.dart';
-import 'package:mobile/common/validators/isValidEmail.validator.dart';
-import 'package:mobile/common/validators/isValidPassword.validator.dart';
-
-import 'package:mobile/features/auth/models/credentails.model.dart';
+import 'package:mobile/common/helpers/compose_validators_helper.dart'
+    show composeValidators;
+import 'package:mobile/common/validators/id_valid_password_validator.dart'
+    show isValidPasswordValidator;
+import 'package:mobile/common/validators/is_not_empty_validator.dart'
+    show isNotEmptyValidator;
+import 'package:mobile/common/validators/is_valid_email_validator.dart'
+    show isValidEmailValidator;
+import 'package:mobile/features/auth/models/credentails_model.dart'
+    show Credentials;
 
 class LogInForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();

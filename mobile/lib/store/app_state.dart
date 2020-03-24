@@ -1,6 +1,6 @@
-import 'package:mobile/features/auth/reducers/auth.reducer.dart';
-
 import 'package:json_annotation/json_annotation.dart';
+
+import 'package:mobile/features/auth/reducers/auth_reducer.dart';
 
 part 'app_state.g.dart';
 

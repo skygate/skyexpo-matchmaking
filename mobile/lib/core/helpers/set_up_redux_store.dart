@@ -3,7 +3,7 @@ import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
 
 import 'package:mobile/config/env_variables_config.dart' as env;
-import 'package:mobile/features/auth/reducers/auth.reducer.dart';
+import 'package:mobile/features/auth/reducers/auth_reducer.dart';
 import 'package:mobile/store/app_state.dart';
 import 'package:mobile/store/root_epic.dart';
 

@@ -5,13 +5,12 @@ import 'package:redux/redux.dart' show Store;
 import 'main.reflectable.dart' show initializeReflectable;
 import 'package:mobile/config/routes_config.dart' show AppRoute, navigatorKey;
 import 'package:mobile/store/app_state.dart' show AppState;
-import 'package:mobile/config/colors.config.dart' show AppColor;
+import 'package:mobile/config/colors_config.dart' show AppColor;
 import 'package:mobile/core/helpers/load_env_file_helper.dart' show loadEnvFile;
 import 'package:mobile/core/helpers/set_up_network_debugger_helper.dart'
     show setUpNetworkDebugger;
 import 'package:mobile/core/helpers/set_up_redux_store.dart'
     show setUpReduxStore;
-
 import 'routes.dart' show appRoutes;
 
 Future main() async {
