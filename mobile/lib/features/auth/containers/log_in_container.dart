@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:mobile/features/auth/widgets/log-in.widget.dart';
+import 'package:mobile/features/auth/widgets/log_in_form_widget.dart'
+    show LogInForm;
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:mobile/features/auth/actions/auth.actions.dart';
+import 'package:mobile/features/auth/actions/auth_actions.dart'
+    show LogInRequestAction;
 import 'package:mobile/store/app_state.dart';
 
 class LogInContainer extends StatelessWidget {

@@ -1,15 +1,18 @@
 import 'dart:async';
-
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:mobile/features/auth/actions/auth.actions.dart';
-import 'package:mobile/features/auth/epics/auth_epics.dart';
-import 'package:mobile/features/auth/services/auth_service.dart';
 import 'package:mockito/mockito.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 
-import '../../../test_utills/epics_test_utils.dart';
+import 'package:mobile/features/auth/actions/auth_actions.dart'
+    show LogInRequestAction, LogInSucceedAction, LogInFailedAction;
+import 'package:mobile/features/auth/epics/auth_epics.dart'
+    show authEpicsFactory;
+import 'package:mobile/features/auth/services/auth_service.dart'
+    show AuthService;
+
+import '../../../test_utills/epics_test_utils.dart'
+    show testActionReducer, testRedirect;
 import '../mocks/user_mock.dart' show userMock, credentailsMock;
 
 class AuthServiceMock extends Mock implements AuthService {}

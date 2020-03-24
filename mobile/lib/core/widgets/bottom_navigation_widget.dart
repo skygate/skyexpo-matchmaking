@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/colors.config.dart' show AppColor;
+import 'package:mobile/config/colors_config.dart' show AppColor;
 
 class BottomNavigation extends StatelessWidget {
   @override

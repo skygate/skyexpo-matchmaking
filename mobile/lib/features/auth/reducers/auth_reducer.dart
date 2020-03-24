@@ -1,9 +1,9 @@
 import 'package:redux/redux.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:mobile/features/auth/actions/auth.actions.dart';
+import 'package:mobile/features/auth/actions/auth_actions.dart' as actions;
 
-part 'auth.reducer.g.dart';
+part 'auth_reducer.g.dart';
 
 @JsonSerializable()
 class AuthState {
@@ -23,12 +23,12 @@ class AuthState {
 }
 
 final authReducer = combineReducers<AuthState>([
-  TypedReducer<AuthState, LogInSucceedAction>(getTokenSucceedReducer),
-  TypedReducer<AuthState, LogInFailedAction>(getTokenFailedReducer),
+  TypedReducer<AuthState, actions.LogInSucceedAction>(getTokenSucceedReducer),
+  TypedReducer<AuthState, actions.LogInFailedAction>(getTokenFailedReducer),
 ]);
 
 AuthState getTokenSucceedReducer(
-    AuthState authState, LogInSucceedAction action) {
+    AuthState authState, actions.LogInSucceedAction action) {
   return AuthState(
       email: action.user.email,
       token: action.user.token,
@@ -36,7 +36,8 @@ AuthState getTokenSucceedReducer(
       authIsChecked: authState.authIsChecked);
 }
 
-AuthState getTokenFailedReducer(AuthState authState, LogInFailedAction action) {
+AuthState getTokenFailedReducer(
+    AuthState authState, actions.LogInFailedAction action) {
   return AuthState(
       email: 'testemail',
       token: authState.token,

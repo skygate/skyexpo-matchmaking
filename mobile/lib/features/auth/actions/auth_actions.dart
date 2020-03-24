@@ -1,8 +1,10 @@
-import 'package:mobile/features/auth/models/credentails.model.dart';
-import 'package:mobile/features/auth/models/user.model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'auth.actions.g.dart';
+import 'package:mobile/features/auth/models/credentails_model.dart'
+    show Credentials;
+import 'package:mobile/features/auth/models/user_model.dart' show User;
+
+part 'auth_actions.g.dart';
 
 @JsonSerializable()
 class LogInRequestAction {

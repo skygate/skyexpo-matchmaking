@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import "package:equatable/equatable.dart";
 
-part 'credentails.model.g.dart';
+part 'credentails_model.g.dart';
 
 @JsonSerializable()
 class Credentials extends Equatable {

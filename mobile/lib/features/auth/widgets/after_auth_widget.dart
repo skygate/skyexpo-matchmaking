@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:mobile/config/routes_config.dart' show AppRoute;
-import 'package:mobile/core/widgets/layout.widget.dart';
+import 'package:mobile/core/widgets/layout_widget.dart';
 
 class AfterAuth extends StatelessWidget {
   final String email;
