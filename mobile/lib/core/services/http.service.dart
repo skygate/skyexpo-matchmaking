@@ -16,13 +16,15 @@ class HttpService {
     return response.body;
   }
 
-  post(String path, body) async {
+  post({String path, dynamic body}) async {
     final Response response = await http.post(apiUrl + path + '/',
         body: json.encode(body.toJson()),
         headers: {HttpHeaders.contentTypeHeader: 'application/json'});
     if (response.statusCode != 200 || response.statusCode != 201) {
       throw (response);
     }
+
+    print(response.body);
     return response.body;
   }
 }

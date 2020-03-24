@@ -3,6 +3,12 @@ import 'package:vnum/vnum.dart' show Vnum, VnumDefinition;
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
+redirect(AppRoute route) {
+  navigatorKey.currentState.pushNamed(route.value);
+}
+
+typedef void Redirect(AppRoute route);
+
 @VnumDefinition
 class AppRoute extends Vnum<String> {
   static const AppRoute home = const AppRoute.define("/");
