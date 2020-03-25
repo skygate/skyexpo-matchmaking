@@ -24,7 +24,6 @@ class HttpService {
       throw (response);
     }
 
-    print(response.body);
     return response.body;
   }
 }
