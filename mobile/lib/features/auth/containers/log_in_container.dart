@@ -3,10 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import 'package:mobile/features/auth/actions/auth_actions.dart'
-    show LogInRequestAction;
 import 'package:mobile/store/app_state.dart' show AppState;
-import '../widgets/log_in_widget.dart' show LogInForm;
+import '../widgets/log_in_form_widget.dart' show LogInForm;
+import '../actions/auth_actions.dart' show LogInRequestAction;
 
 class LogInContainer extends StatelessWidget {
   LogInContainer({Key key}) : super(key: key);

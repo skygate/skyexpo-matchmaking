@@ -12,17 +12,15 @@ class LogInForm extends StatelessWidget {
   LogInForm({Key key, @required this.onFormSubmit}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return AuthLayout(
-        child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        AuthFormHeader(
-            title: "Sign up", subTitle: "skyexpo matchmaking platform"),
-        LogInFormFields(
-          onFormSubmit: onFormSubmit,
-        ),
-      ],
-    ));
-  }
+  Widget build(BuildContext context) => AuthLayout(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          AuthFormHeader(
+              title: "Sign up", subTitle: "skyexpo matchmaking platform"),
+          LogInFormFields(
+            onFormSubmit: onFormSubmit,
+          ),
+        ],
+      ));
 }

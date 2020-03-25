@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/common/validators/index.dart'
     show isNotEmptyValidator, isValidEmailValidator, isValidPasswordValidator;
+import 'package:mobile/features/auth/models/credentails_model.dart'
+    show Credentials;
 import 'form_text_field_widget.dart' show FormTextField;
 import 'submit_button_widget.dart' show SubmitButton;
 
 class LogInFormFields extends StatefulWidget {
   final Function onFormSubmit;
-  LogInFormFields({Key key, this.onFormSubmit}) : super(key: key);
+  LogInFormFields({Key key, @required this.onFormSubmit}) : super(key: key);
 
   @override
-  _LogInFormFieldsState createState() => new _LogInFormFieldsState();
+  _LogInFormFieldsState createState() =>
+      new _LogInFormFieldsState(onFormSubmit: onFormSubmit);
 }
 
 class _LogInFormFieldsState extends State<LogInFormFields> {
@@ -18,7 +21,7 @@ class _LogInFormFieldsState extends State<LogInFormFields> {
   final Function onFormSubmit;
   Map<String, String> loginFormData;
 
-  _LogInFormFieldsState({this.onFormSubmit, this.loginFormData});
+  _LogInFormFieldsState({@required this.onFormSubmit});
 
   @override
   void initState() {
@@ -33,7 +36,9 @@ class _LogInFormFieldsState extends State<LogInFormFields> {
   void submitForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      onFormSubmit();
+
+      onFormSubmit(Credentials(
+          email: loginFormData['email'], password: loginFormData['password']));
     }
   }
 
