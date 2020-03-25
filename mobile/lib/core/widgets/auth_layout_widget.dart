@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/config/colors_config.dart';
-
-import 'package:mobile/config/values_config.dart' show appPadding;
+import 'package:mobile/config/index.dart' show appPadding, AppColor;
 
 class AuthLayout extends StatelessWidget {
   final Widget child;
@@ -18,7 +16,7 @@ class AuthLayout extends StatelessWidget {
         body: Container(
             margin: new EdgeInsets.only(top: 80.0),
             child: Padding(
-                padding: EdgeInsets.only(left: appPadding, right: appPadding),
+                padding: EdgeInsets.symmetric(horizontal: appPadding),
                 child: child)));
   }
 }

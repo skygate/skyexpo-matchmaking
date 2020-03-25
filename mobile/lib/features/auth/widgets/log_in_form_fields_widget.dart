@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/common/validators/index.dart'
     show isNotEmptyValidator, isValidEmailValidator, isValidPasswordValidator;
 import 'form_text_field_widget.dart' show FormTextField;
-import 'submit_button_widgt.dart';
+import 'submit_button_widget.dart' show SubmitButton;
 
 class LogInFormFields extends StatefulWidget {
   final Function onFormSubmit;

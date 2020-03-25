@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart' show GlobalKey, NavigatorState;
 import 'package:vnum/vnum.dart' show Vnum, VnumDefinition;
-
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 @VnumDefinition
 class FontSize extends Vnum<double> {

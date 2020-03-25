@@ -31,7 +31,7 @@ class FormTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: new EdgeInsets.only(bottom: 24.0),
+        margin: new EdgeInsets.only(bottom: 24),
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class FormTextField extends StatelessWidget {
             Container(
               child: Text(label,
                   style: TextStyle(fontSize: FontSize.normal.value)),
-              margin: EdgeInsets.only(bottom: 12.0),
+              margin: EdgeInsets.only(bottom: 12),
             ),
             TextFormField(
               decoration: inputDecorator,

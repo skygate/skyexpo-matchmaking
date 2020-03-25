@@ -22,7 +22,7 @@ class Layout extends StatelessWidget {
               elevation: 0.0,
             )),
         body: Padding(
-            padding: EdgeInsets.only(left: appPadding, right: appPadding),
+            padding: EdgeInsets.symmetric(horizontal: appPadding),
             child: child),
         bottomNavigationBar: BottomNavigation());
   }
