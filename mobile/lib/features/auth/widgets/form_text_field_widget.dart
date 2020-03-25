@@ -18,30 +18,35 @@ class FormTextField extends StatelessWidget {
   final Function setFormFieldValue;
   final Iterable<Function> validators;
   final bool isObscureText;
+  final Map<String, String> formValues;
 
   FormTextField(
       {@required this.label,
       @required this.fieldId,
       @required this.setFormFieldValue,
+      @required this.formValues,
       this.isObscureText = false,
       this.validators});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: new EdgeInsets.only(bottom: 50.0),
+        margin: new EdgeInsets.only(bottom: 24.0),
         width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: TextStyle(fontSize: FontSize.normal.value)),
+            Container(
+              child: Text(label,
+                  style: TextStyle(fontSize: FontSize.normal.value)),
+              margin: EdgeInsets.only(bottom: 12.0),
+            ),
             TextFormField(
               decoration: inputDecorator,
               obscureText: isObscureText,
               onChanged: (value) => setFormFieldValue(fieldId, value),
-              validator: (value) {
-                return composeValidators(validators, value);
-              },
+              validator: (_) =>
+                  composeValidators(validators, formValues[fieldId]),
             ),
           ],
         ));

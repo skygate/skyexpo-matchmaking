@@ -16,7 +16,7 @@ class AuthLayout extends StatelessWidget {
     return Scaffold(
         backgroundColor: AppColor.background.value,
         body: Container(
-            margin: new EdgeInsets.only(top: 50.0),
+            margin: new EdgeInsets.only(top: 80.0),
             child: Padding(
                 padding: EdgeInsets.only(left: appPadding, right: appPadding),
                 child: child)));

@@ -10,16 +10,20 @@ class AuthFormHeader extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: new EdgeInsets.only(bottom: 50.0),
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: TextStyle(fontSize: FontSize.veryBig.value)),
-            Text(subTitle, style: TextStyle(fontSize: FontSize.normal.value)),
-          ],
-        ));
-  }
+  Widget build(BuildContext context) => Container(
+      margin: EdgeInsets.only(bottom: 50),
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title,
+              style: TextStyle(
+                  fontSize: FontSize.veryBig.value,
+                  fontWeight: FontWeight.w800)),
+          Container(
+              margin: EdgeInsets.only(top: 10),
+              child: Text(subTitle,
+                  style: TextStyle(fontSize: FontSize.normal.value))),
+        ],
+      ));
 }

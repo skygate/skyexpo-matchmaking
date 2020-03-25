@@ -7,28 +7,22 @@ import 'auth_form_header_widget.dart' show AuthFormHeader;
 typedef void Redirect({String name, String value});
 
 class LogInForm extends StatelessWidget {
-  final Function() onFormSubmit;
-  final Function(String, String) setFormFieldValue;
+  final Function(dynamic) onFormSubmit;
 
-  LogInForm(
-      {Key key, @required this.onFormSubmit, @required this.setFormFieldValue})
-      : super(key: key);
+  LogInForm({Key key, @required this.onFormSubmit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AuthLayout(
-        child: Center(
-            child: Container(
-                child: Form(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          AuthFormHeader(
-              title: "Sign up", subTitle: "skyexpo matchmaking platform"),
-          LogInFormFields(
-              onFormSubmit: onFormSubmit, setFormFieldValue: setFormFieldValue),
-        ],
-      ),
-    ))));
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        AuthFormHeader(
+            title: "Sign up", subTitle: "skyexpo matchmaking platform"),
+        LogInFormFields(
+          onFormSubmit: onFormSubmit,
+        ),
+      ],
+    ));
   }
 }
