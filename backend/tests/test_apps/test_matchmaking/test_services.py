@@ -6,6 +6,7 @@ import pytest
 from psycopg2.extras import NumericRange
 
 from server.apps.matchmaking.logic.services import (
+  MatchingData,
   Matchmaking,
   create_matches_for_startup,
 )
@@ -24,7 +25,7 @@ from server.apps.profile.models import AngelInvestor, Company, InvestorProfile
 class TestMatchmaking:
     """Test matchmaking process."""
 
-    MATCHING_VALUES1 = [
+    MATCHING_DATA1 = MatchingData(
         CompanyStage.CONCEPT_STAGE,
         [Sector.AI_AND_ROBOTICS],
         [Industry.FINANCIAL_SERVICES],
@@ -33,8 +34,8 @@ class TestMatchmaking:
         False,
         BusinessType.B2B,
         NumericRange(2, 1),
-    ]
-    MATCHING_VALUES2 = [
+    )
+    MATCHING_DATA2 = MatchingData(
         CompanyStage.SEED_STAGE,
         [Sector.IOT_AND_SENSORS],
         [Industry.HEALTH_CARE],
@@ -43,17 +44,17 @@ class TestMatchmaking:
         True,
         BusinessType.B2C,
         NumericRange(5, 6),
-    ]
+    )
 
-    @pytest.mark.parametrize('investor_values, startup_values, expected', [
-        (MATCHING_VALUES1, MATCHING_VALUES1, 100),
-        (MATCHING_VALUES1, MATCHING_VALUES2, 0),
+    @pytest.mark.parametrize('investor_data, startup_data, expected', [
+        (MATCHING_DATA1, MATCHING_DATA1, 100),
+        (MATCHING_DATA1, MATCHING_DATA2, 0),
     ])
     def test_run_matchmaking_algorithm(
-        self, investor_values, startup_values, expected, startup, company,
+        self, investor_data, startup_data, expected, startup, company,
     ):
         result = Matchmaking(startup, company)._run_matchmaking_algorithm(
-            investor_values, startup_values,
+            investor_data, startup_data,
         )
         assert result == expected
 
