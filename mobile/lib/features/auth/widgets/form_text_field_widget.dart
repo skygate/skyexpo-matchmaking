@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile/common/helpers/compose_validators_helper.dart';
+
+import 'package:mobile/common/helpers/compose_validators_helper.dart'
+    show composeValidators;
 import 'package:mobile/config/index.dart' show AppColor, FontSize;
 
 final inputDecorator = InputDecoration(
