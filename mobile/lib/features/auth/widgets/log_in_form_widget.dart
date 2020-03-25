@@ -40,7 +40,8 @@ class _LogInFormFieldsState extends State<LogInForm> {
       _formKey.currentState.save();
 
       onFormSubmit(Credentials(
-          email: _loginFormData['email'], password: _loginFormData['password']));
+          email: _loginFormData['email'],
+          password: _loginFormData['password']));
     }
   }
 
@@ -69,7 +70,7 @@ class _LogInFormFieldsState extends State<LogInForm> {
           GestureDetector(
               onTap: () => redirect(AppRoute.home),
               child: Container(
-                margin: EdgeInsets.only(bottom: 20),
+                margin: EdgeInsets.only(bottom: 10),
                 child: Center(
                     child: Text(
                   "Don't have account? Sign in.",

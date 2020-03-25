@@ -11,7 +11,7 @@ class AuthFormHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-      margin: EdgeInsets.only(bottom: 50),
+      margin: EdgeInsets.only(bottom: 40),
       width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
