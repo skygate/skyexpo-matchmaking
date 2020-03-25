@@ -61,10 +61,10 @@ class Matchmaking:
         )
 
     def _get_matching_data(
-        self, obj: BaseMatchmakingInfo,
+        self, model_instance: BaseMatchmakingInfo,
     ) -> MatchingData:
         return MatchingData(
-            **{arg: getattr(obj, arg) for arg in self.MATCHING_ARGS},
+            **{arg: getattr(model_instance, arg) for arg in self.MATCHING_ARGS},
         )
 
     def _run_matchmaking_algorithm(
