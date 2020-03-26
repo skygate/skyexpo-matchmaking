@@ -5,7 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:mobile/store/app_state.dart' show AppState;
 import '../widgets/log_in_form_widget.dart' show LogInForm;
-import '../actions/auth_actions.dart' show LogInRequestAction;
+import '../actions/auth_actions.dart' show RegisterRequestAction;
 
 class RegisterContainer extends StatelessWidget {
   @override
@@ -22,6 +22,6 @@ class _ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) =>
       _ViewModel(logInRequestAction: (credentails) {
-        store.dispatch(LogInRequestAction(credentails));
+        store.dispatch(RegisterRequestAction(credentails));
       });
 }

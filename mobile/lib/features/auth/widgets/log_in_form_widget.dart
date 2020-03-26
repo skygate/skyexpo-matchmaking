@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/config/index.dart' show AppRoute, FontSize, redirect;
+import 'package:mobile/config/index.dart' show AppRoute;
 import 'package:mobile/core/widgets/auth_layout_widget.dart' show AuthLayout;
+import 'package:mobile/features/auth/widgets/auth_switch_link_widget.dart';
 import '../models/index.dart' show Credentials;
 import 'log_in_form_fields_widget.dart' show LogInFormFields;
 import 'auth_form_header_widget.dart' show AuthFormHeader;
@@ -59,23 +60,12 @@ class _LogInFormFieldsState extends State<LogInForm> {
           Expanded(
             child: Container(),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: SubmitButton(
-              label: 'Sign in',
-              onPressed: _submitForm,
-            ),
+          SubmitButton(
+            label: 'Sign in',
+            onPressed: _submitForm,
           ),
-          GestureDetector(
-              onTap: () => redirect(AppRoute.home),
-              child: Container(
-                margin: EdgeInsets.only(bottom: 10),
-                child: Center(
-                    child: Text(
-                  "Don't have account? Sign in.",
-                  style: TextStyle(fontSize: FontSize.small.value),
-                )),
-              ))
+          AuthSwitchLink(
+              title: "Don't have account? Sign in.", path: AppRoute.register)
         ],
       ));
 }

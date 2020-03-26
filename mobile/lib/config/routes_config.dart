@@ -13,6 +13,8 @@ typedef void Redirect(AppRoute route);
 class AppRoute extends Vnum<String> {
   static const AppRoute home = const AppRoute.define("/");
   static const AppRoute logIn = const AppRoute.define("log-in");
+  static const AppRoute register = const AppRoute.define("register");
+
   static const AppRoute afterAuth = const AppRoute.define("after-auth");
   static const AppRoute matchingList = const AppRoute.define("matching-list");
 

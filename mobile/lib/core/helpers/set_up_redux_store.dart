@@ -9,7 +9,7 @@ import 'package:mobile/store/root_epic.dart';
 
 Future<Store<AppState>> setUpReduxStore() async {
   final remoteDevtools =
-      RemoteDevToolsMiddleware(env.emulatorHost + ':' + env.backendPort);
+      RemoteDevToolsMiddleware(env.emulatorHost + ':' + env.reduDevtoolsPort);
   await remoteDevtools.connect();
 
   final store = DevToolsStore<AppState>(appReducer,

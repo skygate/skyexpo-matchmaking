@@ -15,20 +15,22 @@ class SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        child: RaisedButton(
-          padding: EdgeInsets.symmetric(vertical: 15),
-          onPressed: onPressed,
-          color: AppColor.buttonBackground.value,
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5)),
-          child: Text(
-            label,
-            style: TextStyle(
-                fontSize: FontSize.normal.value,
-                color: AppColor.buttonText.value),
-          ),
-        ));
+    return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: RaisedButton(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              onPressed: onPressed,
+              color: AppColor.buttonBackground.value,
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(5)),
+              child: Text(
+                label,
+                style: TextStyle(
+                    fontSize: FontSize.normal.value,
+                    color: AppColor.buttonText.value),
+              ),
+            )));
   }
 }
