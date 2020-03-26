@@ -22,7 +22,7 @@ class AfterAuth extends StatelessWidget {
           Text('Store says your email is: $email'),
           RaisedButton(
             onPressed: () {
-              Navigator.pushNamed(context, AppRoute.home.toString());
+              Navigator.pushNamed(context, AppRoute.home.value);
             },
             child: Text('Go to home screen'),
           )

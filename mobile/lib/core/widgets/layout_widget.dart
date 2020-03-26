@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile/config/colors_config.dart' show AppColor;
-import 'bottom_navigation_widget.dart';
+import 'package:mobile/config/values_config.dart' show appPadding;
+import 'bottom_navigation_widget.dart' show BottomNavigation;
 
 class Layout extends StatelessWidget {
   final Widget child;
@@ -21,7 +22,8 @@ class Layout extends StatelessWidget {
               elevation: 0.0,
             )),
         body: Padding(
-            padding: EdgeInsets.only(left: 20, right: 20), child: child),
+            padding: EdgeInsets.symmetric(horizontal: appPadding),
+            child: child),
         bottomNavigationBar: BottomNavigation());
   }
 }
