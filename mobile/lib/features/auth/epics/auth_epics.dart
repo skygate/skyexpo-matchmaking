@@ -34,7 +34,7 @@ authEpicsFactory<T>(AuthService authService, Redirect redirect) {
           redirect(AppRoute.afterAuth);
           final registerRequest = action.registerRequest;
           final credentials = Credentials(
-              email: registerRequest.email, password: registerRequest.email);
+              email: registerRequest.email, password: registerRequest.password);
 
           return Stream.fromIterable(
               [RegisterSucceedAction(user), LogInRequestAction(credentials)]);
