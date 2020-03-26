@@ -5,18 +5,18 @@ import 'package:mobile/config/index.dart' show AppRoute, FontSize;
 import 'package:mobile/config/routes_config.dart' show redirect;
 
 class AuthSwitchLink extends StatelessWidget {
-  final AppRoute path;
+  final AppRoute route;
   final String title;
 
   AuthSwitchLink({
-    @required this.path,
+    @required this.route,
     @required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => redirect(AppRoute.home),
+        onTap: () => redirect(route),
         child: Container(
           margin: EdgeInsets.only(bottom: 10),
           child: Center(
