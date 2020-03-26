@@ -426,15 +426,12 @@ description = "Provides a country field for Django models."
 name = "django-countries"
 optional = false
 python-versions = "*"
-version = "5.5"
-
-[package.dependencies]
-six = "*"
+version = "6.1.2"
 
 [package.extras]
-dev = ["tox", "django", "pytest", "pytest-django", "djangorestframework", "mock"]
+dev = ["tox", "black", "django", "pytest", "pytest-django", "djangorestframework", "graphene-django"]
 maintainer = ["transifex-client", "zest.releaser", "django"]
-test = ["pytest", "pytest-django", "pytest-cov", "mock"]
+test = ["pytest", "pytest-django", "pytest-cov", "graphene-django"]
 
 [[package]]
 category = "main"
@@ -1820,7 +1817,7 @@ version = "2.8.4"
 [[package]]
 category = "dev"
 description = "Run a subprocess in a pseudo terminal"
-marker = "sys_platform != \"win32\" or os_name != \"nt\" or python_version >= \"3.3\" and sys_platform != \"win32\""
+marker = "python_version >= \"3.3\" and sys_platform != \"win32\" or sys_platform != \"win32\" or os_name != \"nt\" or python_version >= \"3.3\" and sys_platform != \"win32\" and (python_version >= \"3.3\" and sys_platform != \"win32\" or sys_platform != \"win32\")"
 name = "ptyprocess"
 optional = false
 python-versions = "*"
@@ -2545,7 +2542,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "bb829fd812673aec52989ea0a977536db2089bce265879cb02c6f046dd7ee9db"
+content-hash = "e895bcd9037f0a069e76708391699394943ca3861a77ffe15841d854b8409675"
 python-versions = "3.7.6"
 
 [metadata.files]
@@ -2765,8 +2762,8 @@ django-cors-headers = [
     {file = "django_cors_headers-3.2.1-py3-none-any.whl", hash = "sha256:a785b5f446f6635810776d9f5f5d23e6a2a2f728ea982648370afaf0dfdf2627"},
 ]
 django-countries = [
-    {file = "django-countries-5.5.tar.gz", hash = "sha256:1cefad9ec804d6a0318b91c5394b5aef00336755928f44d0a6420507719d65c8"},
-    {file = "django_countries-5.5-py2.py3-none-any.whl", hash = "sha256:22e96236101783cfe5222ef5174972242a7e8176336d119a4dc111aedce35897"},
+    {file = "django-countries-6.1.2.tar.gz", hash = "sha256:e2ae9b76f9a0b5f3f365b5b81fe4972df0a5878c930139586f43f7d6d50a9594"},
+    {file = "django_countries-6.1.2-py3-none-any.whl", hash = "sha256:2e852c9693818d64d28758a720a0cb8277673ac495af8b855c4dc64940703bd2"},
 ]
 django-csp = [
     {file = "django_csp-3.6-py2.py3-none-any.whl", hash = "sha256:d9ee5a8c6442aa54854e8de627c2826786208ed38fb4ea8ced08c42332673eb1"},
