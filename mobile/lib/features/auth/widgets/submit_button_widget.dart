@@ -18,6 +18,7 @@ class SubmitButton extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Container(
+            color: AppColor.primary.value,
             width: MediaQuery.of(context).size.width,
             child: RaisedButton(
               padding: EdgeInsets.symmetric(vertical: 15),

@@ -13,10 +13,16 @@ class AuthLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.background.value,
-        body: Container(
-            margin: new EdgeInsets.only(top: 60.0),
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: appPadding),
-                child: child)));
+        body: SingleChildScrollView(
+            child: ConstrainedBox(
+                constraints: new BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: Container(
+                    margin: new EdgeInsets.only(top: 60.0),
+                    child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: appPadding),
+                        child: child)))));
   }
 }
