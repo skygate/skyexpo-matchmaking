@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/config/index.dart' show AppRoute, FontSize, redirect;
 import 'package:mobile/core/widgets/auth_layout_widget.dart' show AuthLayout;
-import 'package:mobile/features/auth/models/credentails_model.dart'
-    show Credentials;
+import '../models/index.dart' show Credentials;
 import 'log_in_form_fields_widget.dart' show LogInFormFields;
 import 'auth_form_header_widget.dart' show AuthFormHeader;
 import 'submit_button_widget.dart' show SubmitButton;
