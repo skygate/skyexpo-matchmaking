@@ -9,7 +9,7 @@ final inputDecorator = InputDecoration(
   filled: true,
   border: InputBorder.none,
   focusedBorder: InputBorder.none,
-  fillColor: AppColor.iputBackground.value,
+  fillColor: AppColor.inputBackground.value,
 );
 
 class FormTextField extends StatelessWidget {
