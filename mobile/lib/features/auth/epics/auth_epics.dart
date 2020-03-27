@@ -36,8 +36,7 @@ authEpicsFactory<T>(AuthService authService, Redirect redirect) {
           final credentials = Credentials(
               email: registerRequest.email, password: registerRequest.password);
 
-          return Stream.fromIterable(
-              [RegisterSucceedAction(user), LogInRequestAction(credentials)]);
+          return [RegisterSucceedAction(user), LogInRequestAction(credentials)];
         }, onError: (error) => RegisterFailedAction()));
   }
 
