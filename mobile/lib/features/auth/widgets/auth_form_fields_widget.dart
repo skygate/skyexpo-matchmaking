@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/common/validators/index.dart'
     show isNotEmptyValidator, isValidEmailValidator, isValidPasswordValidator;
+import 'form_password_field.dart';
 import 'form_text_field_widget.dart' show FormTextField;
 
 class AuthFormFields extends StatelessWidget {
@@ -37,13 +38,13 @@ class AuthFormFields extends StatelessWidget {
             formValues: formData,
             validators: [isNotEmptyValidator, isValidEmailValidator],
           ),
-          FormTextField(
-              fieldId: 'password',
-              label: "Password",
-              setFormFieldValue: setFormFieldValue,
-              formValues: formData,
-              validators: [isNotEmptyValidator, isValidPasswordValidator],
-              isObscureText: true),
+          FormPasswordField(
+            fieldId: 'password',
+            label: "Password",
+            setFormFieldValue: setFormFieldValue,
+            formValues: formData,
+            validators: [isNotEmptyValidator, isValidPasswordValidator],
+          ),
         ],
       ),
     );
