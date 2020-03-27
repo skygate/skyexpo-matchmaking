@@ -13,7 +13,7 @@ import 'package:mobile/features/auth/services/auth_service.dart'
 
 import '../../../test_utills/epics_test_utils.dart'
     show testActionReducer, testRedirect;
-import '../mocks/user_mock.dart' show userMock, credentailsMock;
+import '../mocks/auth_mocks.dart' show userMock, credentailsMock;
 
 class AuthServiceMock extends Mock implements AuthService {}
 
