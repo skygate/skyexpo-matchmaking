@@ -20,7 +20,7 @@ class AuthService {
   Future<User> register({RegisterRequest registerRequest}) async {
     final String response =
         await http.post(path: ApiRoute.register.value, body: registerRequest);
-    print('response');
+
     return User.fromJson(json.decode(response));
   }
 }
