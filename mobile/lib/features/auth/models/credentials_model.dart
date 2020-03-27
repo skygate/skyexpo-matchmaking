@@ -1,12 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import "package:equatable/equatable.dart";
 
-part 'credentails_model.g.dart';
+part 'credentials_model.g.dart';
 
 @JsonSerializable()
 class Credentials extends Equatable {
-  String email;
-  String password;
+  final String email;
+  final String password;
 
   Credentials({this.email, this.password});
 

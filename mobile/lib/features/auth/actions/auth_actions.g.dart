@@ -31,3 +31,34 @@ Map<String, dynamic> _$LogInSucceedActionToJson(LogInSucceedAction instance) =>
     <String, dynamic>{
       'user': instance.user,
     };
+
+RegisterRequestAction _$RegisterRequestActionFromJson(
+    Map<String, dynamic> json) {
+  return RegisterRequestAction(
+    json['registerRequest'] == null
+        ? null
+        : RegisterRequest.fromJson(
+            json['registerRequest'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$RegisterRequestActionToJson(
+        RegisterRequestAction instance) =>
+    <String, dynamic>{
+      'registerRequest': instance.registerRequest,
+    };
+
+RegisterSucceedAction _$RegisterSucceedActionFromJson(
+    Map<String, dynamic> json) {
+  return RegisterSucceedAction(
+    json['user'] == null
+        ? null
+        : User.fromJson(json['user'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$RegisterSucceedActionToJson(
+        RegisterSucceedAction instance) =>
+    <String, dynamic>{
+      'user': instance.user,
+    };

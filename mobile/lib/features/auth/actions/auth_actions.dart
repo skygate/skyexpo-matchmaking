@@ -1,8 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:mobile/features/auth/models/credentails_model.dart'
-    show Credentials;
-import 'package:mobile/features/auth/models/user_model.dart' show User;
+import '../models/index.dart' show Credentials, RegisterRequest, User;
 
 part 'auth_actions.g.dart';
 
@@ -29,3 +27,27 @@ class LogInSucceedAction {
 }
 
 class LogInFailedAction {}
+
+@JsonSerializable()
+class RegisterRequestAction {
+  final RegisterRequest registerRequest;
+
+  RegisterRequestAction(this.registerRequest);
+
+  factory RegisterRequestAction.fromJson(Map<String, dynamic> json) =>
+      _$RegisterRequestActionFromJson(json);
+  Map<String, dynamic> toJson() => _$RegisterRequestActionToJson(this);
+}
+
+@JsonSerializable()
+class RegisterSucceedAction {
+  final User user;
+
+  RegisterSucceedAction(this.user);
+
+  factory RegisterSucceedAction.fromJson(Map<String, dynamic> json) =>
+      _$RegisterSucceedActionFromJson(json);
+  Map<String, dynamic> toJson() => _$RegisterSucceedActionToJson(this);
+}
+
+class RegisterFailedAction {}

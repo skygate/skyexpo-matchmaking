@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'credentails_model.dart';
+part of 'credentials_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
