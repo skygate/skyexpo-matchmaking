@@ -14,24 +14,25 @@ from server.apps.profile.logic.services import (
 from server.apps.profile.models import (
   Company,
   CompanyToProfile,
-  InvestorProfile,
-  Profile,
   StartupToProfile,
   validate_profile_is_unassigned,
 )
 from tests.factories import (
   AngelInvestorFactory,
   CompanyFactory,
+  InvestorProfileFactory,
   ProfileFactory,
   StartupFactory,
+  UserFactory,
 )
 
 User = get_user_model()
 
 
-def test_profile_string_representation(user):
+def test_profile_string_representation():
     """Ensures that Profile and User models representations are the same."""
-    profile = Profile(user=user)
+    user = UserFactory.build()
+    profile = ProfileFactory.build(user=user)
 
     assert str(profile) == str(user)
 
@@ -57,12 +58,20 @@ def test_company_string_representation():
     assert str(company) == company.name
 
 
-def test_company_investor_profile_string_repr(company):
-    assert str(InvestorProfile.objects.first()) == str(company)
+def test_company_investor_profile_string_repr():
+    company = CompanyFactory.build()
+    company_investor_profile = InvestorProfileFactory.build(
+        company=company,
+    )
+    assert str(company_investor_profile.company) == str(company)
 
 
-def test_angelinvestor_profile_string_repr(angel_investor):
-    assert str(InvestorProfile.objects.first()) == str(angel_investor)
+def test_angel_investor_profile_string_repr():
+    angel_investor = AngelInvestorFactory.build()
+    angel_investor_profile = InvestorProfileFactory.build(
+        angelinvestor=angel_investor,
+    )
+    assert str(angel_investor_profile) == str(angel_investor)
 
 
 def test_startup_to_profile_string_representation():
@@ -89,7 +98,7 @@ def test_company_to_profile_string_representation():
 def test_company_investment_size_constraint(company_data):
     """
     We represent the company's investment_size as IntegerRangeField so,
-    there should be a constraint: where NumericRange(X, Y) => X < Y.
+    there should be a constraint: NumericRange(X, Y) => X < Y.
     """
     company_data['investment_size'] = NumericRange(2, 1)
 

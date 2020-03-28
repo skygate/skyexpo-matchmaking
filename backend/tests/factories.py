@@ -21,6 +21,7 @@ from server.apps.profile.models import (
   MIN_INVESTMENT_VALUE,
   AngelInvestor,
   Company,
+  InvestorProfile,
   Profile,
   Startup,
   User,
@@ -74,8 +75,17 @@ class BaseMatchmakingInfoFactory(factory.Factory):
         abstract = True
 
 
+class InvestorProfileFactory(factory.DjangoModelFactory):
+    """Factory for InvestorProfile model."""
+
+    class Meta:
+        model = InvestorProfile
+
+
 class CompanyFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+    BaseInfoFactory,
+    BaseMatchmakingInfoFactory,
+    InvestorProfileFactory,
 ):
     """Factory for Company model."""
 
@@ -101,7 +111,9 @@ class StartupFactory(
 
 
 class AngelInvestorFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+    BaseInfoFactory,
+    BaseMatchmakingInfoFactory,
+    InvestorProfileFactory,
 ):
     """Factory for AngelInvestor model."""
 

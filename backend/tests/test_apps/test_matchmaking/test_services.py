@@ -19,7 +19,8 @@ from server.apps.profile.constants import (
   ProductType,
   Sector,
 )
-from server.apps.profile.models import AngelInvestor, Company, InvestorProfile
+from server.apps.profile.models import InvestorProfile
+from tests.factories import InvestorProfileFactory, CompanyFactory
 
 
 class TestMatchmaking:
@@ -58,9 +59,9 @@ class TestMatchmaking:
         )
         assert result == expected
 
-    def test_calculate_result(self, startup, company):
+    def test_calculate_result(self, startup):
         # GIVEN a startup and an investor
-        investor = InvestorProfile.objects.first()
+        investor = InvestorProfileFactory.create(company=CompanyFactory.build())
         # WHEN calculate_result is triggered
         # THEN run algorithm which returns matchmaking result as value <0;100>
         result = Matchmaking(startup, investor).calculate_result()
@@ -69,7 +70,7 @@ class TestMatchmaking:
 
 
 def test_create_matches_for_startup(startup, company, angel_investor):
-    # GIVEN a startup and investors
+    # GIVEN a startup and two investors
     investors = InvestorProfile.objects.all()
     # WHEN create_matches_for_startup is triggered
     # THEN match given startup with given investors

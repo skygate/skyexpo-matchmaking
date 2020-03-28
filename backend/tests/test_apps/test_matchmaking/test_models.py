@@ -2,12 +2,14 @@
 
 from server.apps.matchmaking.logic.services import Matchmaking
 from server.apps.matchmaking.models import Match
-from server.apps.profile.models import InvestorProfile
+from tests.factories import AngelInvestorFactory, InvestorProfileFactory
 
 
-def test_match_string_representation(startup, angel_investor):
+def test_match_string_representation(startup):
     # GIVEN Match model
-    investor = InvestorProfile.objects.first()
+    investor = InvestorProfileFactory.create(
+        angelinvestor=AngelInvestorFactory.build(),
+    )
     result = Matchmaking(startup, investor).calculate_result()
     match = Match(startup=startup, investor=investor, result=result)
     match.save()
