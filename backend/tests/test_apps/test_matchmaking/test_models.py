@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from server.apps.matchmaking.logic.services import Matchmaking
-from server.apps.matchmaking.models import Match
-from tests.factories import AngelInvestorFactory, InvestorProfileFactory
+from tests.factories import (
+  AngelInvestorFactory,
+  InvestorProfileFactory,
+  MatchFactory,
+)
 
 
-def test_match_string_representation(startup):
+def test_match_string_representation():
     # GIVEN Match model
-    investor = InvestorProfileFactory.create(
+    investor = InvestorProfileFactory.build(
         angelinvestor=AngelInvestorFactory.build(),
     )
-    result = Matchmaking(startup, investor).calculate_result()
-    match = Match(startup=startup, investor=investor, result=result)
-    match.save()
+    match = MatchFactory.build(investor=investor)
 
     expected = '{startup}, {investor}, {result}'.format(
         startup=str(match.startup),

@@ -5,9 +5,11 @@ from functools import partial
 from typing import List, Tuple
 
 import factory.fuzzy  # noqa: WPS301
+from django.utils import timezone
 from factory import LazyFunction
 from psycopg2.extras import NumericRange
 
+from server.apps.matchmaking.models import Match
 from server.apps.profile.constants import (
   BusinessType,
   CompanyStage,
@@ -143,3 +145,18 @@ class ProfileFactory(factory.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     name = factory.Faker('name')
+
+
+class MatchFactory(factory.DjangoModelFactory):
+    """
+    Factory for Match model.
+    If you want to add investor to this factory, you have to set him explicitly,
+    e.g: MatchFactory.create(investor=AngelInvestorFactory.create())
+    """
+
+    class Meta:
+        model = Match
+
+    startup = factory.SubFactory(StartupFactory)
+    result = factory.fuzzy.FuzzyInteger(0, 100)
+    created_at = factory.LazyFunction(timezone.now)

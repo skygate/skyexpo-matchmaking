@@ -20,7 +20,7 @@ from server.apps.profile.constants import (
   Sector,
 )
 from server.apps.profile.models import InvestorProfile
-from tests.factories import InvestorProfileFactory, CompanyFactory
+from tests.factories import CompanyFactory, InvestorProfileFactory
 
 
 class TestMatchmaking:
