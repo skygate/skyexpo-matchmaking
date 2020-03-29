@@ -45,7 +45,7 @@ final matchingList = [
   }
 ];
 
-final List<MatchingPair> matchingListWithoutRepeats = matchingList
+final List<MatchingPair> matchingListItems = matchingList
     .map((pair) => MatchingPair(
         id: pair['id'],
         name: pair['name'],
@@ -53,5 +53,3 @@ final List<MatchingPair> matchingListWithoutRepeats = matchingList
         percent: pair['percent'],
         avatarUrl: pair['avatar']))
     .toList();
-
-final List<MatchingPair> matchingListItems = matchingListWithoutRepeats;
