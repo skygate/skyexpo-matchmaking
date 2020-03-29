@@ -21,7 +21,7 @@ authEpicsFactory<T>(AuthService authService, Redirect redirect) {
             .getToken(credentials: action.credentials)
             .then((user) => LogInSucceedAction(user), onError: (error) {
           //For POC I redirect from here because I can't create account on backend and always get 401
-          redirect(AppRoute.afterAuth);
+          redirect(AppRoute.matchingList);
 
           return LogInFailedAction();
         }));

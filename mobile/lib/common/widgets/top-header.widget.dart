@@ -20,12 +20,12 @@ class TopHeader extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                fontSize: FontSize.veryBig.value,
-                color: AppColor.primary.value),
+                fontSize: FontSize.big.value, color: AppColor.primary.value),
           ),
           Text(subTitle,
               style: TextStyle(
-                  fontSize: FontSize.big.value, color: AppColor.primary.value))
+                  fontSize: FontSize.small.value,
+                  color: AppColor.primary.value))
         ]));
   }
 }

@@ -1,37 +1,53 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+
+import 'package:mobile/config/fonts_config.dart';
+import '../models/match_pair_model.dart';
 
 class MatchingCard extends StatelessWidget {
-  MatchingCard({Key key}) : super(key: key);
+  final MatchingPair matchingPair;
+  MatchingCard({@required this.matchingPair});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const ListTile(
-              leading: Icon(Icons.album),
-              title: Text('The Enchanted Nightingale'),
-              subtitle: Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
+    return Card(
+        margin: EdgeInsets.symmetric(vertical: 5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: CircleAvatar(
+                  radius: 35,
+                  backgroundImage: NetworkImage(
+                    matchingPair.avatarUrl,
+                  )),
             ),
-            ButtonBar(
-              children: <Widget>[
-                FlatButton(
-                  child: const Text('BUY TICKETS'),
-                  onPressed: () {/* ... */},
-                ),
-                FlatButton(
-                  child: const Text('LISTEN'),
-                  onPressed: () {/* ... */},
-                ),
-              ],
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                matchingPair.name,
+                style: TextStyle(
+                    fontSize: FontSize.normal.value,
+                    fontWeight: FontWeight.w800),
+              ),
+              Text(matchingPair.tags)
+            ]),
+            Spacer(),
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: CircularPercentIndicator(
+                radius: 60.0,
+                lineWidth: 6.0,
+                percent: matchingPair.percent / 100,
+                center: new Text(matchingPair.percent.toString() + '%',
+                    style: TextStyle(fontWeight: FontWeight.w800)),
+                progressColor: Colors.green,
+              ),
             ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
