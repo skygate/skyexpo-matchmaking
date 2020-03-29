@@ -4,5 +4,6 @@ class MatchingPair {
   String tags;
   int percent;
   String avatarUrl;
+
   MatchingPair({this.id, this.name, this.tags, this.percent, this.avatarUrl});
 }

@@ -1,4 +1,4 @@
-import 'package:mobile/features/matching/models/match_pair_model.dart';
+import 'package:mobile/features/matching/models/matching_pair_model.dart';
 
 final matchingList = [
   {
@@ -35,6 +35,13 @@ final matchingList = [
     "tags": "Executive | inEnergy ",
     "percent": 74,
     "avatar": "https://i.pravatar.cc/150?img=28",
+  },
+  {
+    "id": 6,
+    "name": "Edwart Willson",
+    "tags": "Executive | inEnergy ",
+    "percent": 20,
+    "avatar": "https://i.pravatar.cc/150?img=28",
   }
 ];
 
@@ -47,8 +54,4 @@ final List<MatchingPair> matchingListWithoutRepeats = matchingList
         avatarUrl: pair['avatar']))
     .toList();
 
-final List<MatchingPair> matchingListItems = [
-  ...matchingListWithoutRepeats,
-  ...matchingListWithoutRepeats,
-  ...matchingListWithoutRepeats
-];
+final List<MatchingPair> matchingListItems = matchingListWithoutRepeats;
