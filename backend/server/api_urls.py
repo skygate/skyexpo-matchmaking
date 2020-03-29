@@ -27,6 +27,7 @@ urlpatterns = [
 
     # Local apps
     path('profiles/', include('server.apps.profile.urls')),
+    path('matches/', include('server.apps.matchmaking.urls')),
 
     # Web-app forms
 
