@@ -7,12 +7,6 @@ import 'package:mobile/core/widgets/solid_tab_indicator_widget.dart'
     show SolidIndicator;
 import 'bottom_navigation_widget.dart';
 
-final tabsPadding = EdgeInsets.only(
-  left: appPadding,
-  right: appPadding,
-  top: 25,
-);
-
 class TabsLayout extends StatefulWidget {
   final String title;
   final String subTitle;
@@ -72,28 +66,35 @@ class _TabsLayoutState extends State<TabsLayout>
         child: Scaffold(
             backgroundColor: AppColor.background.value,
             appBar: AppBar(
-              titleSpacing: 0.0,
-              backgroundColor: AppColor.background.value,
-              elevation: 0.0,
-              bottom: PreferredSize(
-                  preferredSize: Size(60, 80),
+                titleSpacing: 0.0,
+                backgroundColor: AppColor.background.value,
+                elevation: 0.0,
+                bottom: PreferredSize(
+                  preferredSize: Size(
+                      0, 100), // first param don't have impact on anything here
                   child: Padding(
-                      padding: tabsPadding,
-                      child: TabBar(
-                        indicator: SolidIndicator(),
-                        controller: _tabController,
-                        isScrollable: true,
-                        indicatorColor: Colors.transparent,
-                        tabs: tabs,
-                      ))),
-              title: Padding(
-                  padding: tabsPadding,
-                  child: TopHeader(
-                    title: title,
-                    subTitle: subTitle,
-                    avatarUrl: avatarUrl,
-                  )),
-            ),
+                    padding: EdgeInsets.only(
+                      left: appPadding,
+                      right: appPadding,
+                    ),
+                    child: Column(children: [
+                      TopHeader(
+                        title: title,
+                        subTitle: subTitle,
+                        avatarUrl: avatarUrl,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: TabBar(
+                            indicator: SolidIndicator(),
+                            controller: _tabController,
+                            isScrollable: true,
+                            indicatorColor: Colors.transparent,
+                            tabs: tabs,
+                          )),
+                    ]),
+                  ),
+                )),
             body: TabBarView(
               controller: _tabController,
               children: tabsBody,

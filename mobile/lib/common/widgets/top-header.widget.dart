@@ -17,7 +17,7 @@ class TopHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.only(bottom: 20),
+        margin: EdgeInsets.only(bottom: 10),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -32,7 +32,7 @@ class TopHeader extends StatelessWidget {
                     color: AppColor.primary.value))
           ]),
           CircleAvatar(
-              radius: 25,
+              radius: 30,
               backgroundImage: NetworkImage(
                 avatarUrl,
               ))
