@@ -1,45 +1,66 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/config/colors_config.dart' show AppColor;
+import 'package:mobile/config/index.dart' show AppColor, boxShadow, redirect;
+import 'package:mobile/core/widgets/bottom_navigation_element_widget.dart'
+    show getBottomNavigationElement;
 import '../configs/bottom_navigation_elements_config.dart'
     show bottomNavigationElementsConfig;
 
 final radius = Radius.circular(30);
 final bordeRadius = BorderRadius.only(topRight: radius, topLeft: radius);
 
-class BottomNavigation extends StatelessWidget {
+class BottomNavigation extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-          borderRadius: bordeRadius,
-          boxShadow: [
-            BoxShadow(color: Colors.grey[400], spreadRadius: 0, blurRadius: 1),
-          ],
-        ),
-        child: ClipRRect(
-            borderRadius: bordeRadius,
-            child: Container(
-                color: Colors.white,
-                child: BottomNavigationBar(
-                    backgroundColor: AppColor.elementsBackground.value,
-                    currentIndex: 1,
-                    iconSize: 30,
-                    unselectedIconTheme: IconThemeData(color: Colors.grey),
-                    showUnselectedLabels: true,
-                    items: bottomNavigationElementsConfig
-                        .map(
-                          (element) => BottomNavigationBarItem(
-                            icon: Padding(
-                              padding: EdgeInsets.only(top: 20),
-                              child: Icon(
-                                element['icon'],
-                                color: element['color'],
-                              ),
-                            ),
-                            title: Text(''),
-                          ),
-                        )
-                        .toList()))));
+  _BottomNavigationState createState() => _BottomNavigationState();
+}
+
+class _BottomNavigationState extends State<BottomNavigation> {
+  int navIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    navIndex = 0;
   }
+
+  void onNavigationButtonTap(index) {
+    setState(() {
+      navIndex = index;
+    });
+
+    final newRoute = bottomNavigationElementsConfig[index]["route"];
+    redirect(newRoute);
+  }
+
+  @override
+  Widget build(BuildContext context) => Container(
+      decoration: BoxDecoration(
+        borderRadius: bordeRadius,
+        boxShadow: [
+          boxShadow,
+        ],
+      ),
+      child: ClipRRect(
+          borderRadius: bordeRadius,
+          child: Container(
+              color: Colors.white,
+              child: BottomNavigationBar(
+                  onTap: onNavigationButtonTap,
+                  backgroundColor: AppColor.elementsBackground.value,
+                  currentIndex: navIndex,
+                  iconSize: 30,
+                  unselectedIconTheme: IconThemeData(color: Colors.grey),
+                  showUnselectedLabels: true,
+                  type: BottomNavigationBarType.fixed,
+                  items: bottomNavigationElementsConfig
+                      .asMap()
+                      .entries
+                      .map(
+                        (entry) => getBottomNavigationElement(
+                            entry.value['icon'],
+                            navIndex == entry.key
+                                ? entry.value['color']
+                                : Colors.grey),
+                      )
+                      .toList()))));
 }
