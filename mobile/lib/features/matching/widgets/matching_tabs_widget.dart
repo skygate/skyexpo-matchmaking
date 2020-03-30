@@ -16,7 +16,7 @@ class MatchingTabs extends StatelessWidget {
   Widget build(BuildContext context) => TabsLayout(
         title: 'Matching list',
         subTitle:
-            matchingListItems.length.toString() + 'proposal of connections',
+            matchingListItems.length.toString() + ' proposal of connections',
         avatarUrl: avatarUrl,
         tabs: matchingTabsList
             .map((tab) => MatchingTab(

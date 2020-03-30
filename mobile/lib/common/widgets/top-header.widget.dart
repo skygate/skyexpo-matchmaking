@@ -24,7 +24,9 @@ class TopHeader extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                  fontSize: FontSize.big.value, color: AppColor.primary.value),
+                  fontSize: FontSize.big.value,
+                  color: AppColor.primary.value,
+                  fontWeight: FontWeight.w800),
             ),
             Text(subTitle,
                 style: TextStyle(
