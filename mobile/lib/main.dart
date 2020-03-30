@@ -34,8 +34,8 @@ class Main extends StatelessWidget {
             title: 'Sky expo',
             theme: ThemeData(
                 primarySwatch: Colors.blue,
-                backgroundColor: AppColor.background.value),
-            initialRoute: AppRoute.home.value,
+                backgroundColor: AppColor.primary.value),
+            initialRoute: AppRoute.matchingList.value,
             navigatorKey: navigatorKey,
             routes: appRoutes));
   }
