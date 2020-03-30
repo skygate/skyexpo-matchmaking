@@ -7,12 +7,16 @@ import 'package:mobile/core/widgets/solid_tab_indicator_widget.dart'
     show SolidIndicator;
 import 'bottom_navigation_widget.dart';
 
-final tabsPadding =
-    EdgeInsets.only(left: appPadding, right: appPadding, top: 25);
+final tabsPadding = EdgeInsets.only(
+  left: appPadding,
+  right: appPadding,
+  top: 25,
+);
 
 class TabsLayout extends StatefulWidget {
   final String title;
   final String subTitle;
+  final String avatarUrl;
   final List<Widget> tabs;
   final List<Widget> tabsBody;
 
@@ -20,18 +24,24 @@ class TabsLayout extends StatefulWidget {
       {@required this.tabs,
       @required this.tabsBody,
       @required this.title,
-      @required this.subTitle})
+      @required this.subTitle,
+      @required this.avatarUrl})
       : assert(tabs.length == tabsBody.length);
 
   @override
   _TabsLayoutState createState() => _TabsLayoutState(
-      title: title, subTitle: subTitle, tabs: tabs, tabsBody: tabsBody);
+      title: title,
+      subTitle: subTitle,
+      tabs: tabs,
+      tabsBody: tabsBody,
+      avatarUrl: avatarUrl);
 }
 
 class _TabsLayoutState extends State<TabsLayout>
     with SingleTickerProviderStateMixin {
   final String title;
   final String subTitle;
+  final String avatarUrl;
   final List<Widget> tabs;
   final List<Widget> tabsBody;
   TabController _tabController;
@@ -40,7 +50,8 @@ class _TabsLayoutState extends State<TabsLayout>
       {@required this.tabs,
       @required this.tabsBody,
       @required this.title,
-      @required this.subTitle})
+      @required this.subTitle,
+      @required this.avatarUrl})
       : assert(tabs.length == tabsBody.length);
 
   @override
@@ -77,7 +88,11 @@ class _TabsLayoutState extends State<TabsLayout>
                       ))),
               title: Padding(
                   padding: tabsPadding,
-                  child: TopHeader(title: title, subTitle: subTitle)),
+                  child: TopHeader(
+                    title: title,
+                    subTitle: subTitle,
+                    avatarUrl: avatarUrl,
+                  )),
             ),
             body: TabBarView(
               controller: _tabController,
