@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/config/index.dart' show AppRoute;
+import 'package:mobile/config/index.dart';
 
 final List<Map> bottomNavigationElementsConfig = [
   {
     'icon': Icons.people_outline,
     'color': Colors.purple,
-    "route": AppRoute.matchingList
+    "route": BottomNavigationRoute.matchingList
   },
   {
     'icon': Icons.calendar_today,
     'color': Colors.pink,
-    "route": AppRoute.calendar
+    "route": BottomNavigationRoute.calendar
   },
   {
     'icon': Icons.mail_outline,
     'color': Colors.blue,
-    "route": AppRoute.notifications
+    "route": BottomNavigationRoute.notifications
   },
-  {'icon': Icons.settings, 'color': Colors.orange, "route": AppRoute.settings}
+  {
+    'icon': Icons.settings,
+    'color': Colors.orange,
+    "route": BottomNavigationRoute.settings
+  }
 ];
