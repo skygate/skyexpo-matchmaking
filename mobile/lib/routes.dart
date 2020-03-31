@@ -4,8 +4,6 @@ import 'config/routes_config.dart' show AppRoute, BottomNavigationRoute;
 import 'core/widgets/bottom_navigation_layout_widget.dart'
     show BottomNavigationLayout;
 
-import 'features/auth/containers/after_auth_container.dart'
-    show AfterAuthContainer;
 import 'features/auth/containers/log_in_container.dart' show LogInContainer;
 import 'features/auth/containers/register_container.dart'
     show RegisterContainer;
@@ -17,11 +15,10 @@ final appRoutes = {
   AppRoute.home.value: (context) => Home(),
   AppRoute.logIn.value: (context) => LogInContainer(),
   AppRoute.register.value: (context) => RegisterContainer(),
-  AppRoute.afterAuth.value: (context) => AfterAuthContainer(),
   AppRoute.bottomNavigation.value: (context) => BottomNavigationLayout(),
 };
 
-// This is nested routing made with tabs
+// This is for nested routing made with tabs
 final bottomNavigationRoutes = {
   BottomNavigationRoute.matchingList.value: MatchingListContainer(),
   BottomNavigationRoute.calendar.value: MatchingListContainer(),

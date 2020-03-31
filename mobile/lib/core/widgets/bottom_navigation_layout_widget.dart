@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/config/index.dart' show AppColor;
 import 'package:mobile/routes.dart' show bottomNavigationTabsBodyList;
-import 'bottom_navigation_widget.dart';
+import 'bottom_navigation_widget.dart' show BottomNavigation;
+
+final int numberOfTabs = bottomNavigationTabsBodyList.length;
 
 class BottomNavigationLayout extends StatefulWidget {
   @override
@@ -16,8 +18,7 @@ class _TabsLayoutState extends State<BottomNavigationLayout>
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(vsync: this, length: bottomNavigationTabsBodyList.length);
+    _tabController = TabController(vsync: this, length: numberOfTabs);
   }
 
   @override
@@ -30,7 +31,7 @@ class _TabsLayoutState extends State<BottomNavigationLayout>
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
-        length: 4,
+        length: numberOfTabs,
         child: Scaffold(
             backgroundColor: AppColor.background.value,
             body: TabBarView(
