@@ -7,7 +7,7 @@ import '../configs/bottom_navigation_elements_config.dart'
     show bottomNavigationElementsConfig;
 
 final radius = Radius.circular(30);
-final bordeRadius = BorderRadius.only(topRight: radius, topLeft: radius);
+final borderRadius = BorderRadius.only(topRight: radius, topLeft: radius);
 
 class BottomNavigation extends StatefulWidget {
   @override
@@ -35,13 +35,13 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) => Container(
       decoration: BoxDecoration(
-        borderRadius: bordeRadius,
+        borderRadius: borderRadius,
         boxShadow: [
           boxShadow,
         ],
       ),
       child: ClipRRect(
-          borderRadius: bordeRadius,
+          borderRadius: borderRadius,
           child: Container(
               color: Colors.white,
               child: BottomNavigationBar(
