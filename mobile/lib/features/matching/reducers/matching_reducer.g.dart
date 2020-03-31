@@ -12,10 +12,12 @@ MatchingState _$MatchingStateFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : MatchingPair.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    isLoading: json['isLoading'] as bool,
   );
 }
 
 Map<String, dynamic> _$MatchingStateToJson(MatchingState instance) =>
     <String, dynamic>{
       'matchingPairs': instance.matchingPairs,
+      'isLoading': instance.isLoading,
     };

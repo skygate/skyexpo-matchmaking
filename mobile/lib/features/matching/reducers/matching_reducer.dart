@@ -1,3 +1,4 @@
+import 'package:mobile/features/matching/mocks/marching_pairs.dart';
 import 'package:redux/redux.dart' show TypedReducer, combineReducers;
 import 'package:json_annotation/json_annotation.dart' show JsonSerializable;
 
@@ -12,7 +13,7 @@ class MatchingState {
   final List<MatchingPair> matchingPairs;
   final bool isLoading;
 
-  MatchingState({this.matchingPairs, this.isLoading = false});
+  MatchingState({this.matchingPairs = const [], this.isLoading = false});
 
   factory MatchingState.fromJson(Map<String, dynamic> json) =>
       _$MatchingStateFromJson(json);
@@ -26,4 +27,4 @@ final matchingReducer = combineReducers<MatchingState>([
 
 MatchingState getMatchingPairsSuccedReducer(
         matchingState, actions.GetMatchingPairsSucceedAction action) =>
-    MatchingState(matchingPairs: action.matchingPairs);
+    MatchingState(matchingPairs: matchingListItems);

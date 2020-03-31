@@ -22,3 +22,5 @@ AppState appReducer(AppState state, action) {
       auth: authReducer(state.auth, action),
       matching: matchingReducer(state.matching, action));
 }
+
+final initState = AppState(auth: AuthState(), matching: MatchingState());
