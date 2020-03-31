@@ -8,6 +8,7 @@ class ApiRoute extends Vnum<String> {
   static const ApiRoute token = const ApiRoute.define("token");
   static const ApiRoute refreshToken = const ApiRoute.define("token/refresh");
   static const ApiRoute register = const ApiRoute.define("profiles");
+  static const ApiRoute matchingPairs = const ApiRoute.define("matching-paris");
 
   const ApiRoute.define(String fromValue) : super.define(fromValue);
   factory ApiRoute(String value) => Vnum.fromValue(value, ApiRoute);
