@@ -14,4 +14,7 @@ final appRoutes = {
   AppRoute.register.value: (context) => RegisterContainer(),
   AppRoute.afterAuth.value: (context) => AfterAuthContainer(),
   AppRoute.matchingList.value: (context) => MatchingListContainer(),
+  AppRoute.calendar.value: (context) => MatchingListContainer(),
+  AppRoute.notifications.value: (context) => MatchingListContainer(),
+  AppRoute.settings.value: (context) => MatchingListContainer(),
 };

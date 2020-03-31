@@ -5,6 +5,8 @@ import '../mocks/marching_pairs.dart' show matchingListItems;
 
 class MatchingListContainer extends StatelessWidget {
   @override
-  Widget build(BuildContext context) =>
-      MatchingTabs(matchingListItems: matchingListItems);
+  Widget build(BuildContext context) => MatchingTabs(
+        matchingListItems: matchingListItems,
+        avatarUrl: 'https://randomuser.me/api/portraits/men/32.jpg',
+      );
 }

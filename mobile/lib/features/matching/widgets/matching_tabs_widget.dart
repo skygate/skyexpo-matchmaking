@@ -7,12 +7,17 @@ import 'matching_list_widget.dart';
 import 'matching_tab_widget.dart';
 
 class MatchingTabs extends StatelessWidget {
+  final String avatarUrl;
   final List<MatchingPair> matchingListItems;
 
-  MatchingTabs({@required this.matchingListItems});
+  MatchingTabs({@required this.avatarUrl, @required this.matchingListItems});
 
   @override
   Widget build(BuildContext context) => TabsLayout(
+        title: 'Matching list',
+        subTitle:
+            matchingListItems.length.toString() + ' proposal of connections',
+        avatarUrl: avatarUrl,
         tabs: matchingTabsList
             .map((tab) => MatchingTab(
                   title: tab['name'],
@@ -26,8 +31,5 @@ class MatchingTabs extends StatelessWidget {
           MatchingList(matchingListItems: matchingListItems),
           MatchingList(matchingListItems: matchingListItems),
         ],
-        title: 'Matching list',
-        subTitle:
-            matchingListItems.length.toString() + 'proposal of connections',
       );
 }
