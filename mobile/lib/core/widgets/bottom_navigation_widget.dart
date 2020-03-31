@@ -10,12 +10,20 @@ final radius = Radius.circular(30);
 final borderRadius = BorderRadius.only(topRight: radius, topLeft: radius);
 
 class BottomNavigation extends StatefulWidget {
+  final Function changeTab;
+
+  BottomNavigation({@required this.changeTab});
+
   @override
-  _BottomNavigationState createState() => _BottomNavigationState();
+  _BottomNavigationState createState() =>
+      _BottomNavigationState(changeTab: changeTab);
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
+  final Function changeTab;
   int navIndex;
+
+  _BottomNavigationState({@required this.changeTab});
 
   @override
   void initState() {
@@ -28,8 +36,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       navIndex = index;
     });
 
-    final newRoute = bottomNavigationElementsConfig[index]["route"];
-    redirect(newRoute);
+    changeTab(index);
   }
 
   @override

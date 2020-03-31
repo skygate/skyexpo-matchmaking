@@ -15,11 +15,26 @@ class AppRoute extends Vnum<String> {
   static const AppRoute logIn = const AppRoute.define("log-in");
   static const AppRoute register = const AppRoute.define("register");
   static const AppRoute afterAuth = const AppRoute.define("after-auth");
-  static const AppRoute matchingList = const AppRoute.define("matching-list");
-  static const AppRoute calendar = const AppRoute.define("calendar");
-  static const AppRoute notifications = const AppRoute.define("notifications");
-  static const AppRoute settings = const AppRoute.define("settings");
+  static const AppRoute bottomNavigation =
+      const AppRoute.define("bottom-navigation");
 
   const AppRoute.define(String fromValue) : super.define(fromValue);
   factory AppRoute(String value) => Vnum.fromValue(value, AppRoute);
+}
+
+@VnumDefinition
+class BottomNavigationRoute extends Vnum<String> {
+  static const BottomNavigationRoute matchingList =
+      const BottomNavigationRoute.define("matching-list");
+  static const BottomNavigationRoute calendar =
+      const BottomNavigationRoute.define("calendar");
+  static const BottomNavigationRoute notifications =
+      const BottomNavigationRoute.define("notifications");
+  static const BottomNavigationRoute settings =
+      const BottomNavigationRoute.define("settings");
+
+  const BottomNavigationRoute.define(String fromValue)
+      : super.define(fromValue);
+  factory BottomNavigationRoute(String value) =>
+      Vnum.fromValue(value, BottomNavigationRoute);
 }
