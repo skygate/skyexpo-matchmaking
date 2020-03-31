@@ -98,6 +98,15 @@ class CompanyFactory(
     email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
 
+    @factory.post_generation
+    def profiles(self, create, profiles):
+        if not create:
+            return
+
+        if profiles:
+            for profile in profiles:
+                self.profiles.add(profile)
+
 
 class StartupFactory(
     factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
@@ -110,6 +119,15 @@ class StartupFactory(
     name = factory.Faker('name')
     email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
+
+    @factory.post_generation
+    def profiles(self, create, profiles):
+        if not create:
+            return
+
+        if profiles:
+            for profile in profiles:
+                self.profiles.add(profile)
 
 
 class AngelInvestorFactory(
