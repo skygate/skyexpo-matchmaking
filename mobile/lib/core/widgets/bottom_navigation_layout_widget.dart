@@ -16,7 +16,8 @@ class _TabsLayoutState extends State<BottomNavigationLayout>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController =
+        TabController(vsync: this, length: bottomNavigationTabsBodyList.length);
   }
 
   @override
@@ -24,6 +25,8 @@ class _TabsLayoutState extends State<BottomNavigationLayout>
     _tabController.dispose();
     super.dispose();
   }
+
+  void changeTab(index) => _tabController.animateTo(index);
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
@@ -34,6 +37,6 @@ class _TabsLayoutState extends State<BottomNavigationLayout>
               controller: _tabController,
               children: bottomNavigationTabsBodyList,
             ),
-            bottomNavigationBar: BottomNavigation()),
+            bottomNavigationBar: BottomNavigation(changeTab: changeTab)),
       );
 }

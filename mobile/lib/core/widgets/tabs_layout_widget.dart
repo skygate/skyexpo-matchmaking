@@ -5,7 +5,6 @@ import 'package:mobile/config/colors_config.dart' show AppColor;
 import 'package:mobile/config/values_config.dart' show appPadding;
 import 'package:mobile/core/widgets/solid_tab_indicator_widget.dart'
     show SolidIndicator;
-import 'bottom_navigation_widget.dart';
 
 class TabsLayout extends StatefulWidget {
   final String title;
@@ -62,43 +61,42 @@ class _TabsLayoutState extends State<TabsLayout>
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
-        length: tabs.length,
-        child: Scaffold(
+      length: tabs.length,
+      child: Scaffold(
+        backgroundColor: AppColor.background.value,
+        appBar: AppBar(
+            titleSpacing: 0.0,
             backgroundColor: AppColor.background.value,
-            appBar: AppBar(
-                titleSpacing: 0.0,
-                backgroundColor: AppColor.background.value,
-                elevation: 0.0,
-                bottom: PreferredSize(
-                  preferredSize: Size(
-                      0, 100), // first param don't have impact on anything here
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: appPadding,
-                      right: appPadding,
-                    ),
-                    child: Column(children: [
-                      TopHeader(
-                        title: title,
-                        subTitle: subTitle,
-                        avatarUrl: avatarUrl,
-                      ),
-                      Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                          child: TabBar(
-                            indicator: SolidIndicator(),
-                            controller: _tabController,
-                            isScrollable: true,
-                            indicatorColor: Colors.transparent,
-                            tabs: tabs,
-                          )),
-                    ]),
+            elevation: 0.0,
+            bottom: PreferredSize(
+              preferredSize: Size(
+                  0, 100), // first param don't have impact on anything here
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: appPadding,
+                  right: appPadding,
+                ),
+                child: Column(children: [
+                  TopHeader(
+                    title: title,
+                    subTitle: subTitle,
+                    avatarUrl: avatarUrl,
                   ),
-                )),
-            body: TabBarView(
-              controller: _tabController,
-              children: tabsBody,
-            ),
-            bottomNavigationBar: BottomNavigation()),
-      );
+                  Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: TabBar(
+                        indicator: SolidIndicator(),
+                        controller: _tabController,
+                        isScrollable: true,
+                        indicatorColor: Colors.transparent,
+                        tabs: tabs,
+                      )),
+                ]),
+              ),
+            )),
+        body: TabBarView(
+          controller: _tabController,
+          children: tabsBody,
+        ),
+      ));
 }

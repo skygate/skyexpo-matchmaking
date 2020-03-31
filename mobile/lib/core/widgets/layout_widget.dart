@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/config/colors_config.dart' show AppColor;
 import 'package:mobile/config/values_config.dart' show appPadding;
-import 'bottom_navigation_widget.dart' show BottomNavigation;
 
 class Layout extends StatelessWidget {
   final Widget child;
@@ -23,7 +22,6 @@ class Layout extends StatelessWidget {
             )),
         body: Padding(
             padding: EdgeInsets.symmetric(horizontal: appPadding),
-            child: child),
-        bottomNavigationBar: BottomNavigation());
+            child: child));
   }
 }

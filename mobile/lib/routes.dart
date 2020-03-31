@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'config/routes_config.dart' show AppRoute, BottomNavigationRoute;
-import 'core/widgets/bottom_navigation_layout_widget.dart';
+import 'core/widgets/bottom_navigation_layout_widget.dart'
+    show BottomNavigationLayout;
 
 import 'features/auth/containers/after_auth_container.dart'
     show AfterAuthContainer;
@@ -20,11 +23,11 @@ final appRoutes = {
 
 // This is nested routing made with tabs
 final bottomNavigationRoutes = {
-  BottomNavigationRoute.matchingList.value: MatchingListContainer,
-  BottomNavigationRoute.calendar.value: MatchingListContainer,
-  BottomNavigationRoute.notifications.value: MatchingListContainer,
-  BottomNavigationRoute.settings.value: MatchingListContainer,
+  BottomNavigationRoute.matchingList.value: MatchingListContainer(),
+  BottomNavigationRoute.calendar.value: MatchingListContainer(),
+  BottomNavigationRoute.notifications.value: MatchingListContainer(),
+  BottomNavigationRoute.settings.value: MatchingListContainer(),
 };
 
-final List bottomNavigationTabsBodyList =
+final List<Widget> bottomNavigationTabsBodyList =
     bottomNavigationRoutes.values.toList();
