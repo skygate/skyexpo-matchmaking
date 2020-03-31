@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:mobile/common/widgets/on_init_widget.dart';
-import 'package:mobile/features/matching/actions/matching_actions.dart';
-import 'package:mobile/features/matching/models/matching_pair_model.dart';
-import 'package:mobile/features/matching/selectors/matching_selectors.dart';
-import 'package:mobile/store/app_state.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import 'package:mobile/store/app_state.dart' show AppState;
+import 'package:mobile/common/widgets/on_init_widget.dart' show OnInitWrapper;
+import '../actions/matching_actions.dart' show GetMatchingPairsRequestAction;
+import '../models/matching_pair_model.dart' show MatchingPair;
+import '../selectors/matching_selectors.dart' show getMatchingPairs;
 import '../widgets/matching_tabs_widget.dart' show MatchingTabs;
 
 class MatchingListContainer extends StatelessWidget {

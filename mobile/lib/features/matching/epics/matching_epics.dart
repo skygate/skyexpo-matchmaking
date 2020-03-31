@@ -15,7 +15,7 @@ matchigEpicsFactory<T>(MatchingService matchingService) {
       actions.whereType<GetMatchingPairsRequestAction>().asyncMap((action) =>
           matchingService.getMatchingParis(userId: action.userId).then(
               (matchingPairs) => GetMatchingPairsSucceedAction(matchingPairs),
-              onError: (error) => GetMatchingPairsFailedAction));
+              onError: (error) => GetMatchingPairsFailedAction()));
 
   return combineEpics<T>([getMatchingPairsEpic]);
 }
