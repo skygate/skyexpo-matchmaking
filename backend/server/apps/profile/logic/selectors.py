@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from typing import Optional
+import contextlib
 
-from server.apps.profile.models import (
-  AngelInvestor,
-  InvestorProfile,
-  Profile,
-  Startup,
-)
+from server.apps.profile.models import AngelInvestor, InvestorProfile, Profile
 
 
 def is_assigned(*, profile: Profile):
-    # może lepiej try except?
     investor = AngelInvestor.objects.filter(profile=profile).exists()
     if (
         investor or
@@ -23,14 +17,9 @@ def is_assigned(*, profile: Profile):
 
 
 def get_investor(*, profile: Profile) -> InvestorProfile:
-    try:
+    with contextlib.suppress(AngelInvestor.DoesNotExist):
         return AngelInvestor.objects.get(profile=profile)
-    except AngelInvestor.DoesNotExist:
-        # tutaj zamienić na try except też??
-        return profile.companies.first()
-
-
-def get_startup(*, profile) -> Optional[Startup]:
-    # tutaj zamienić na try except?
-    # do smth with mypy types
-    return profile.startups.first()
+    try:
+        return profile.company
+    except AttributeError:
+        raise ValueError(f'Profile {profile.name} is not investor.')

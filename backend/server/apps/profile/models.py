@@ -8,6 +8,7 @@ from django.contrib.postgres import fields, validators
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as ugtl
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -129,6 +130,20 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return str(self.user)
+
+    @cached_property
+    def startup(self) -> 'Startup':
+        startup = self.startups.first()  # type: ignore
+        if startup is None:
+            raise AttributeError('This profile does not belong to any startup.')
+        return startup
+
+    @cached_property
+    def company(self) -> 'Company':
+        company = self.companies.first()  # type: ignore
+        if company is None:
+            raise AttributeError('This profile does not belong to any company.')
+        return company
 
 
 class AngelInvestor(BaseInfo, BaseMatchmakingInfo, InvestorProfile):

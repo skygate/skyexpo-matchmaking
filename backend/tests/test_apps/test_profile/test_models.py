@@ -194,3 +194,43 @@ def test_startup_get_profiles(startup):
     assign_profiles_to_startup(startup=startup, profiles=profiles)
 
     assert list(startup.get_profiles()) == profiles
+
+
+@pytest.mark.django_db
+def test_profile_startup_property():
+    # GIVEN profile assigned to startup
+    profile = ProfileFactory.create()
+    startup = StartupFactory.create(profiles=[profile])
+    # WHEN profile.startup property triggered
+    # THEN return startup where a profile is assigned to
+    assert profile.startup == startup
+
+    # GIVEN profile not assigned to startup
+    profile = ProfileFactory.create()
+    # WHEN profile.startup property triggered
+    # THEN raise error
+    with pytest.raises(
+        AttributeError,
+        match='This profile does not belong to any startup.',
+    ):
+        assert profile.startup
+
+
+@pytest.mark.django_db
+def test_profile_company_property():
+    # GIVEN profile assigned to company
+    profile = ProfileFactory.create()
+    company = CompanyFactory.create(profiles=[profile])
+    # WHEN profile.company property triggered
+    # THEN return company where a profile is assigned to
+    assert profile.company == company
+
+    # GIVEN profile not assigned to company
+    profile = ProfileFactory.create()
+    # WHEN profile.company property triggered
+    # THEN raise error
+    with pytest.raises(
+        AttributeError,
+        match='This profile does not belong to any company.',
+    ):
+        assert profile.company
