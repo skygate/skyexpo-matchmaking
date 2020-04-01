@@ -67,7 +67,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
               r'home': () => prefix2.AppRoute.home,
               r'logIn': () => prefix2.AppRoute.logIn,
               r'register': () => prefix2.AppRoute.register,
-              r'afterAuth': () => prefix2.AppRoute.afterAuth,
+              r'profileForm': () => prefix2.AppRoute.profileForm,
               r'bottomNavigation': () => prefix2.AppRoute.bottomNavigation
             },
             {},
@@ -214,7 +214,7 @@ final _data = <r.Reflectable, r.ReflectorData>{
             const prefix0.VnumTypeReflectable(), 1, 1, 1, null, null),
         r.VariableMirrorImpl(r'register', 33941, 1,
             const prefix0.VnumTypeReflectable(), 1, 1, 1, null, null),
-        r.VariableMirrorImpl(r'afterAuth', 33941, 1,
+        r.VariableMirrorImpl(r'profileForm', 33941, 1,
             const prefix0.VnumTypeReflectable(), 1, 1, 1, null, null),
         r.VariableMirrorImpl(r'bottomNavigation', 33941, 1,
             const prefix0.VnumTypeReflectable(), 1, 1, 1, null, null),
