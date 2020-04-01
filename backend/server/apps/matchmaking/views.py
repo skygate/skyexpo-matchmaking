@@ -26,10 +26,20 @@ class MatchmakingListView(ExceptionHandlerMixin, views.APIView):
     )
     def get(self, request: Request) -> Response:
         # do smth with mypy types
+        # there we should return last match!
         matches = Match.objects.get_matches(profile=request.user.profile)
         # "Name"
         # "Title" | "Company" -> if exists or None
         # Result
-        serializer = MatchmakingListOutputSerializer(matches, many=True)
+        serializer = MatchmakingListOutputSerializer(
+            matches.select_related(
+                'startup',
+                'investor',
+                'investor__angelinvestor',
+                'investor__angelinvestor__profile',
+                'investor__company',
+            ),
+            many=True,
+        )
 
         return Response(serializer.data)
