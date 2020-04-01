@@ -18,7 +18,16 @@ class MatchQuerySet(MatchQuerySetBaseType):
 
     def get_matches(self, *, profile) -> 'QuerySet[Match]':
         try:
-            return self.filter(startup=profile.startup)
+            top_results = (
+                self.filter(startup=profile.startup)
+                    .order_by('investor', '-result')
+                    .distinct('investor')
+            )
         except AttributeError:
             # else must be an investor
-            return self.filter(investor=get_investor(profile=profile))
+            top_results = (
+                self.filter(investor=get_investor(profile=profile))
+                    .order_by('startup', '-result')
+                    .distinct('startup')
+            )
+        return self.filter(pk__in=top_results).order_by('-result')
