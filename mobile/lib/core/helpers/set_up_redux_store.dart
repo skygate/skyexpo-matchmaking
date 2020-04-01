@@ -1,11 +1,12 @@
-import 'package:redux/redux.dart';
-import 'package:redux_remote_devtools/redux_remote_devtools.dart';
-import 'package:redux_dev_tools/redux_dev_tools.dart';
+import 'package:redux/redux.dart' show Store;
+import 'package:redux_remote_devtools/redux_remote_devtools.dart'
+    show RemoteDevToolsMiddleware;
+import 'package:redux_dev_tools/redux_dev_tools.dart' show DevToolsStore;
 
 import 'package:mobile/config/env_variables_config.dart' as env;
-import 'package:mobile/features/auth/reducers/auth_reducer.dart';
-import 'package:mobile/store/app_state.dart';
-import 'package:mobile/store/root_epic.dart';
+import 'package:mobile/store/app_state.dart'
+    show AppState, initState, appReducer;
+import 'package:mobile/store/root_epic.dart' show epicMiddleware;
 
 Future<Store<AppState>> setUpReduxStore() async {
   final remoteDevtools =
@@ -13,8 +14,7 @@ Future<Store<AppState>> setUpReduxStore() async {
   await remoteDevtools.connect();
 
   final store = DevToolsStore<AppState>(appReducer,
-      initialState: AppState(auth: AuthState()),
-      middleware: [remoteDevtools, epicMiddleware]);
+      initialState: initState, middleware: [remoteDevtools, epicMiddleware]);
 
   remoteDevtools.store = store;
 
