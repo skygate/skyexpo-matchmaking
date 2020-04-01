@@ -15,15 +15,11 @@ class BottomNavigation extends StatefulWidget {
   BottomNavigation({@required this.changeTab});
 
   @override
-  _BottomNavigationState createState() =>
-      _BottomNavigationState(changeTab: changeTab);
+  _BottomNavigationState createState() => _BottomNavigationState();
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  final Function changeTab;
   int navIndex;
-
-  _BottomNavigationState({@required this.changeTab});
 
   @override
   void initState() {
@@ -36,7 +32,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       navIndex = index;
     });
 
-    changeTab(index);
+    widget.changeTab(index);
   }
 
   @override

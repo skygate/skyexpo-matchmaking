@@ -22,35 +22,17 @@ class TabsLayout extends StatefulWidget {
       : assert(tabs.length == tabsBody.length);
 
   @override
-  _TabsLayoutState createState() => _TabsLayoutState(
-      title: title,
-      subTitle: subTitle,
-      tabs: tabs,
-      tabsBody: tabsBody,
-      avatarUrl: avatarUrl);
+  _TabsLayoutState createState() => _TabsLayoutState();
 }
 
 class _TabsLayoutState extends State<TabsLayout>
     with SingleTickerProviderStateMixin {
-  final String title;
-  final String subTitle;
-  final String avatarUrl;
-  final List<Widget> tabs;
-  final List<Widget> tabsBody;
   TabController _tabController;
-
-  _TabsLayoutState(
-      {@required this.tabs,
-      @required this.tabsBody,
-      @required this.title,
-      @required this.subTitle,
-      @required this.avatarUrl})
-      : assert(tabs.length == tabsBody.length);
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: tabs.length);
+    _tabController = TabController(vsync: this, length: widget.tabs.length);
   }
 
   @override
@@ -61,7 +43,7 @@ class _TabsLayoutState extends State<TabsLayout>
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
-      length: tabs.length,
+      length: widget.tabs.length,
       child: Scaffold(
         backgroundColor: AppColor.background.value,
         appBar: AppBar(
@@ -72,15 +54,14 @@ class _TabsLayoutState extends State<TabsLayout>
               preferredSize: Size(
                   0, 100), // first param don't have impact on anything here
               child: Padding(
-                padding: EdgeInsets.only(
-                  left: appPadding,
-                  right: appPadding,
+                padding: EdgeInsets.symmetric(
+                  horizontal: appPadding,
                 ),
                 child: Column(children: [
                   TopHeader(
-                    title: title,
-                    subTitle: subTitle,
-                    avatarUrl: avatarUrl,
+                    title: widget.title,
+                    subTitle: widget.subTitle,
+                    avatarUrl: widget.avatarUrl,
                   ),
                   Padding(
                       padding: EdgeInsets.only(bottom: 10),
@@ -89,14 +70,14 @@ class _TabsLayoutState extends State<TabsLayout>
                         controller: _tabController,
                         isScrollable: true,
                         indicatorColor: Colors.transparent,
-                        tabs: tabs,
+                        tabs: widget.tabs,
                       )),
                 ]),
               ),
             )),
         body: TabBarView(
           controller: _tabController,
-          children: tabsBody,
+          children: widget.tabsBody,
         ),
       ));
 }

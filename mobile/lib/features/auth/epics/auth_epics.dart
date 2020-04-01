@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:redux_epics/redux_epics.dart' show EpicStore, combineEpics;
 import 'package:rxdart/rxdart.dart';
+import 'package:redux_epics/redux_epics.dart' show EpicStore, combineEpics;
 
 import 'package:mobile/config/routes_config.dart' show AppRoute, Redirect;
 import '../services/auth_service.dart' show AuthService;
@@ -21,7 +21,7 @@ authEpicsFactory<T>(AuthService authService, Redirect redirect) {
             .getToken(credentials: action.credentials)
             .then((user) => LogInSucceedAction(user), onError: (error) {
           //For POC I redirect from here because I can't create account on backend and always get 401
-          redirect(AppRoute.afterAuth);
+          redirect(AppRoute.bottomNavigation);
 
           return LogInFailedAction();
         }));
@@ -31,7 +31,6 @@ authEpicsFactory<T>(AuthService authService, Redirect redirect) {
     return actions.whereType<RegisterRequestAction>().asyncMap((action) =>
         authService.register(registerRequest: action.registerRequest).then(
             (user) {
-          redirect(AppRoute.afterAuth);
           final registerRequest = action.registerRequest;
           final credentials = Credentials(
               email: registerRequest.email, password: registerRequest.password);
