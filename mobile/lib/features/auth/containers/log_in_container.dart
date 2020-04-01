@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:mobile/config/index.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile/config/index.dart' show AppRoute;
+import 'package:redux/redux.dart' show Store;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 
 import 'package:mobile/store/app_state.dart' show AppState;
 import '../models/index.dart' show Credentials;
@@ -24,15 +23,12 @@ class _LogInContainerWithStateAndProps extends StatefulWidget {
   _LogInContainerWithStateAndProps({@required this.logInRequestAction});
 
   @override
-  _LogInContainerState createState() =>
-      new _LogInContainerState(logInRequestAction: logInRequestAction);
+  _LogInContainerState createState() => _LogInContainerState();
 }
 
 class _LogInContainerState extends State<_LogInContainerWithStateAndProps> {
-  final Function logInRequestAction;
   final formKey = GlobalKey<FormState>();
   Map<String, String> loginFormData;
-  _LogInContainerState({@required this.logInRequestAction});
 
   @override
   void initState() {
@@ -48,7 +44,7 @@ class _LogInContainerState extends State<_LogInContainerWithStateAndProps> {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
 
-      logInRequestAction(Credentials(
+      widget.logInRequestAction(Credentials(
           email: loginFormData['email'], password: loginFormData['password']));
     }
   }

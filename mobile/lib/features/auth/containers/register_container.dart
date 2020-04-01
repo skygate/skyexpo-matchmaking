@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:mobile/config/index.dart';
-import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile/config/index.dart' show AppRoute;
+import 'package:redux/redux.dart' show Store;
+import 'package:flutter_redux/flutter_redux.dart' show StoreConnector;
 
 import 'package:mobile/store/app_state.dart' show AppState;
 import '../models/index.dart' show RegisterRequest;
@@ -24,16 +23,13 @@ class _RegisterContainerWithStateAndProps extends StatefulWidget {
   _RegisterContainerWithStateAndProps({@required this.registerRequestAction});
 
   @override
-  _RegisterContainerState createState() =>
-      new _RegisterContainerState(registerRequestAction: registerRequestAction);
+  _RegisterContainerState createState() => _RegisterContainerState();
 }
 
 class _RegisterContainerState
     extends State<_RegisterContainerWithStateAndProps> {
-  final Function registerRequestAction;
   final formKey = GlobalKey<FormState>();
   Map<String, String> registerFormData;
-  _RegisterContainerState({@required this.registerRequestAction});
 
   @override
   void initState() {
@@ -49,7 +45,7 @@ class _RegisterContainerState
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
 
-      RegisterRequestAction(RegisterRequest(
+      widget.registerRequestAction(RegisterRequest(
           name: registerFormData["name"],
           email: registerFormData['email'],
           password: registerFormData['password']));
@@ -57,21 +53,19 @@ class _RegisterContainerState
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AuthForm(
-      title: 'Sign in',
-      subTitle: 'skyexpo matchmaking platform',
-      switchLinkTitle: "Already have acount? Sign up.",
-      swichLinkRoute: AppRoute.logIn,
-      onFormSubmit: submitForm,
-      formWidget: AuthFormFields(
-        formKey: formKey,
-        setFormFieldValue: setFormFieldValue,
-        formData: registerFormData,
-        isRegisterForm: true,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => AuthForm(
+        title: 'Sign in',
+        subTitle: 'skyexpo matchmaking platform',
+        switchLinkTitle: "Already have acount? Sign up.",
+        swichLinkRoute: AppRoute.logIn,
+        onFormSubmit: submitForm,
+        formWidget: AuthFormFields(
+          formKey: formKey,
+          setFormFieldValue: setFormFieldValue,
+          formData: registerFormData,
+          isRegisterForm: true,
+        ),
+      );
 }
 
 class _ViewModel {
