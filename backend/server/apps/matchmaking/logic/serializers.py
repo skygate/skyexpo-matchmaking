@@ -7,6 +7,8 @@ from server.apps.profile.models import InvestorProfile, Startup
 
 
 class StartupNestedOutputSerializer(serializers.ModelSerializer):
+    """Serializes Startup instances in a MatchmakingList view."""
+
     class Meta:
         model = Startup
         fields = ['id', 'name', 'logotype']
@@ -14,6 +16,8 @@ class StartupNestedOutputSerializer(serializers.ModelSerializer):
 
 
 class AngelInvestorNestedOutputSerializer(serializers.ModelSerializer):
+    """Serializes AngelInvestor instances in a MatchmakingList view."""
+
     name = serializers.CharField(
         source='angelinvestor.profile.name',
         read_only=True,
@@ -30,6 +34,8 @@ class AngelInvestorNestedOutputSerializer(serializers.ModelSerializer):
 
 
 class CompanyNestedOutputSerializer(serializers.ModelSerializer):
+    """Serializes Company instances in a MatchmakingList view."""
+
     name = serializers.CharField(source='company.name', read_only=True)
     logotype = serializers.CharField(source='company.logotype', read_only=True)
 
@@ -40,13 +46,16 @@ class CompanyNestedOutputSerializer(serializers.ModelSerializer):
 
 
 class InvestorProfileObjectRelatedField(serializers.RelatedField):
+    """
+    Decides whom serializer use to serialize InvestorProfile.
+    It is needed because we implement Multi-Table Inheritance there.
+    """
 
-    def to_representation(self, value: InvestorProfile):
-        # move to another function this logic
-        if hasattr(value, 'angelinvestor'):
-            return AngelInvestorNestedOutputSerializer(instance=value).data
-        if hasattr(value, 'company'):
-            return CompanyNestedOutputSerializer(instance=value).data
+    def to_representation(self, instance: InvestorProfile):
+        if instance.is_angel_investor:
+            return AngelInvestorNestedOutputSerializer(instance=instance).data
+        if instance.is_company:
+            return CompanyNestedOutputSerializer(instance=instance).data
 
 
 class MatchmakingListOutputSerializer(serializers.ModelSerializer):

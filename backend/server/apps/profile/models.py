@@ -115,6 +115,14 @@ class InvestorProfile(models.Model):
         except AttributeError:
             return self.angelinvestor
 
+    @cached_property
+    def is_company(self) -> bool:
+        return hasattr(self, 'company')  # noqa: WPS421
+
+    @cached_property
+    def is_angel_investor(self) -> bool:
+        return hasattr(self, 'angelinvestor')  # noqa: WPS421
+
     def __str__(self) -> str:
         return str(self.get_child_instance())
 

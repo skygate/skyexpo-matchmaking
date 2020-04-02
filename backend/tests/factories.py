@@ -177,4 +177,3 @@ class MatchFactory(factory.DjangoModelFactory):
 
     startup = factory.SubFactory(StartupFactory)
     result = factory.fuzzy.FuzzyInteger(0, 100)
-    created_at = factory.LazyFunction(timezone.now)

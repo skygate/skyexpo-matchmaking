@@ -23,7 +23,7 @@ def test_get_matches_for_investor(django_assert_max_num_queries):
         matches = Match.objects.get_matches(profile=profile)
     # THEN return 100 matches objects ordered by the highest value
     assert list(matches) == list(
-        Match.objects.filter(investor=company).order_by('-result')
+        Match.objects.filter(investor=company).order_by('-result'),
     )
     assert matches.count() == Match.objects.filter(investor=company).count()
 
