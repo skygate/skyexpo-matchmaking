@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'form_text_field_widget.dart' show FormTextField;
+import 'package:mobile/common/widgets/form_text_field_widget.dart';
 
 class FormPasswordField extends StatefulWidget {
   final String label;

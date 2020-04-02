@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile/config/colors_config.dart' show AppColor;
-import 'package:mobile/config/fonts_config.dart' show FontSize;
+import 'package:mobile/config/fonts_config.dart' show FontSize, boldFontWeight;
 
 class TopHeader extends StatelessWidget {
   final String title;
@@ -26,7 +26,7 @@ class TopHeader extends StatelessWidget {
               style: TextStyle(
                   fontSize: FontSize.big.value,
                   color: AppColor.primary.value,
-                  fontWeight: FontWeight.w800),
+                  fontWeight: boldFontWeight),
             ),
             Text(subTitle,
                 style: TextStyle(

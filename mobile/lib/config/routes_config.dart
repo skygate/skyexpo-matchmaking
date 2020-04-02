@@ -14,7 +14,7 @@ class AppRoute extends Vnum<String> {
   static const AppRoute home = const AppRoute.define("/");
   static const AppRoute logIn = const AppRoute.define("log-in");
   static const AppRoute register = const AppRoute.define("register");
-  static const AppRoute afterAuth = const AppRoute.define("after-auth");
+  static const AppRoute profileForm = const AppRoute.define("profile-form");
   static const AppRoute bottomNavigation =
       const AppRoute.define("bottom-navigation");
 

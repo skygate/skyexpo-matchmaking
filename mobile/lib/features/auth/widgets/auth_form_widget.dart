@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:mobile/config/index.dart' show AppRoute;
-import 'package:mobile/core/widgets/auth_layout_widget.dart' show AuthLayout;
+import 'package:mobile/core/widgets/sliver_layout_widget.dart'
+    show SliverLayout;
 import 'auth_switch_link_widget.dart' show AuthSwitchLink;
 import 'auth_form_header_widget.dart' show AuthFormHeader;
-import 'submit_button_widget.dart' show SubmitButton;
+import 'package:mobile/common/widgets/submit_button_widget.dart'
+    show SubmitButton;
 
 class AuthForm extends StatelessWidget {
   final String title;
@@ -24,7 +26,7 @@ class AuthForm extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => AuthLayout(
+  Widget build(BuildContext context) => SliverLayout(
         topChild: Column(children: <Widget>[
           AuthFormHeader(title: title, subTitle: subTitle),
           formWidget,

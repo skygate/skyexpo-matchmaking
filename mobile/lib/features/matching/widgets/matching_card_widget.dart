@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-import 'package:mobile/config/fonts_config.dart';
+import 'package:mobile/config/index.dart' show FontSize, boldFontWeight;
 import '../models/matching_pair_model.dart';
 
 const cardElementPadding = EdgeInsets.all(16);
@@ -33,7 +33,7 @@ class MatchingCard extends StatelessWidget {
                 matchingPair.name,
                 style: TextStyle(
                     fontSize: FontSize.normal.value,
-                    fontWeight: FontWeight.w800),
+                    fontWeight: boldFontWeight),
               ),
               Text(matchingPair.tags)
             ]),
@@ -45,7 +45,7 @@ class MatchingCard extends StatelessWidget {
                 lineWidth: 6.0,
                 percent: matchingPair.percent / 100,
                 center: new Text(matchingPair.percent.toString() + '%',
-                    style: TextStyle(fontWeight: FontWeight.w800)),
+                    style: TextStyle(fontWeight: boldFontWeight)),
                 progressColor: Colors.purple,
               ),
             ),
