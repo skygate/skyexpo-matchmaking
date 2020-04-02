@@ -5,6 +5,8 @@ import 'package:mobile/common/validators/index.dart'
 import 'package:mobile/common/widgets/form_text_field_widget.dart'
     show FormTextField;
 
+import 'image_picker.dart';
+
 class ProfileFormFields extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final Function setFormFieldValue;
@@ -21,7 +23,8 @@ class ProfileFormFields extends StatelessWidget {
     return Form(
       key: formKey,
       child: Column(
-        children: <Widget>[
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
           FormTextField(
             fieldId: 'name',
             label: "Name",
@@ -29,6 +32,7 @@ class ProfileFormFields extends StatelessWidget {
             formValues: formData,
             validators: [isNotEmptyValidator],
           ),
+          ImagePicker(),
           FormTextField(
             fieldId: 'phone',
             label: "Phone (optional)",
