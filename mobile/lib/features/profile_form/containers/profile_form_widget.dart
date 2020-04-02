@@ -34,9 +34,10 @@ class _ProfileFormContainerState extends State<ProfileFormContainer> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return ProfileForm(
-      onFormSubmit: submitForm,
-    );
-  }
+  Widget build(BuildContext context) => ProfileForm(
+        formKey: formKey,
+        profileFormData: profileFormData,
+        setFormFieldValue: setFormFieldValue,
+        onFormSubmit: submitForm,
+      );
 }
