@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/config/index.dart' show appPadding, AppColor;
 
-class AuthLayout extends StatelessWidget {
+class SliverLayout extends StatelessWidget {
   final Widget topChild;
   final Widget bottomChild;
 
-  AuthLayout({this.topChild, this.bottomChild});
+  SliverLayout({this.topChild, this.bottomChild});
 
   @override
   Widget build(BuildContext context) {

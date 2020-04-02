@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/config/colors_config.dart';
 
-import 'package:mobile/core/widgets/auth_layout_widget.dart' show AuthLayout;
-import 'package:mobile/features/auth/widgets/submit_button_widget.dart'
+import 'package:mobile/core/widgets/sliver_layout_widget.dart'
+    show SliverLayout;
+import 'package:mobile/config/colors_config.dart' show AppColor;
+import 'package:mobile/common/widgets/submit_button_widget.dart'
     show SubmitButton;
 import '../models/team_model.dart' show Team;
 import 'profile_form_header.dart' show ProfileFormHeader;
@@ -23,13 +24,13 @@ class ProfileForm extends StatelessWidget {
       @required this.team});
 
   @override
-  Widget build(BuildContext context) => AuthLayout(
+  Widget build(BuildContext context) => SliverLayout(
         topChild: Column(children: [
           ProfileFormHeader(
             team: team,
           ),
           Container(
-              margin: EdgeInsets.symmetric(vertical: 36),
+              margin: EdgeInsets.symmetric(vertical: 30),
               child: Divider(
                 color: AppColor.divider.value,
                 thickness: 1,
