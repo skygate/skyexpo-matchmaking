@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:vnum/vnum.dart' show Vnum, VnumDefinition;
 
 @VnumDefinition
@@ -10,3 +11,5 @@ class FontSize extends Vnum<double> {
   const FontSize.define(double fromValue) : super.define(fromValue);
   factory FontSize(double value) => Vnum.fromValue(value, FontSize);
 }
+
+const FontWeight boldFontWeight = FontWeight.w800;

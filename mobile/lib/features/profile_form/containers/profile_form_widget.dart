@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/features/profile_form/mocks/team_avatars_mock.dart';
 import 'package:mobile/features/profile_form/widgets/profile_form_widget.dart';
 
 class ProfileFormContainer extends StatefulWidget {
@@ -39,5 +40,6 @@ class _ProfileFormContainerState extends State<ProfileFormContainer> {
         profileFormData: profileFormData,
         setFormFieldValue: setFormFieldValue,
         onFormSubmit: submitForm,
+        team: teamMock,
       );
 }
