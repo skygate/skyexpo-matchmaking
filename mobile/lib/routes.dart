@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/profile_form/containers/profile_form_widget.dart';
 
 import 'config/routes_config.dart' show AppRoute, BottomNavigationRoute;
 import 'core/widgets/bottom_navigation_layout_widget.dart'
@@ -10,6 +9,8 @@ import 'features/auth/containers/register_container.dart'
     show RegisterContainer;
 import 'features/matching/containers/matching_list_container.dart'
     show MatchingListContainer;
+import 'features/profile_form/containers/profile_form_container.dart'
+    show ProfileFormContainer;
 
 final appRoutes = {
   AppRoute.logIn.value: (context) => LogInContainer(),
