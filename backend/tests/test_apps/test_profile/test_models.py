@@ -14,6 +14,7 @@ from server.apps.profile.logic.services import (
 from server.apps.profile.models import (
   Company,
   CompanyToProfile,
+  InvestorProfile,
   StartupToProfile,
   validate_profile_is_unassigned,
 )
@@ -234,3 +235,41 @@ def test_profile_company_property():
         match='This profile does not belong to any company.',
     ):
         assert profile.company
+
+
+@pytest.mark.django_db
+def test_investor_profile_is_company():
+    # GIVEN InvestorProfile assigned to company
+    company = CompanyFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=company.pk)
+    # WHEN .is_company is triggered
+    value = investor_profile.is_company
+    # THEN return true
+    assert value
+
+    # GIVEN InvestorProfile assigned not to company
+    investor = AngelInvestorFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=investor.pk)
+    # WHEN .is_company is triggered
+    value = investor_profile.is_company
+    # THEN return false
+    assert not value
+
+
+@pytest.mark.django_db
+def test_investor_profile_is_angel_investor():
+    # GIVEN InvestorProfile assigned to angel investor
+    investor = AngelInvestorFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=investor.pk)
+    # WHEN .is_angel_investor is triggered
+    value = investor_profile.is_angel_investor
+    # THEN return true
+    assert value
+
+    # GIVEN InvestorProfile assigned not to angel investor
+    company = CompanyFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=company.pk)
+    # WHEN .is_angel_investor is triggered
+    value = investor_profile.is_angel_investor
+    # THEN return false
+    assert not value

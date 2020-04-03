@@ -13,7 +13,7 @@ from tests.factories import (
 
 @pytest.mark.django_db
 def test_get_matches_for_investor(django_assert_max_num_queries):
-    # GIVEN company
+    # GIVEN profile assigned to company
     profile = ProfileFactory.create()
     company = CompanyFactory.create(profiles=[profile])
     # GIVEN 100 matchings with 100 random startups
@@ -49,4 +49,36 @@ def test_get_matches_for_investor(django_assert_max_num_queries):
 
 @pytest.mark.django_db
 def test_get_matches_for_startup(django_assert_max_num_queries):
-    ...
+    # GIVEN profile assigned to startup
+    profile = ProfileFactory.create()
+    startup = StartupFactory.create(profiles=[profile])
+    # GIVEN 100 matchings with 100 random investors
+    for _ in range(100):
+        MatchFactory.create(startup=startup, investor=CompanyFactory.create())
+    # WHEN get_matches is triggered
+    with django_assert_max_num_queries(3):
+        matches = Match.objects.get_matches(profile=profile)
+    # THEN return 100 matches objects ordered by the highest value
+    assert list(matches) == list(
+        Match.objects.filter(startup=startup).order_by('-result'),
+    )
+    assert matches.count() == Match.objects.filter(startup=startup).count()
+
+    # GIVEN 100 matchings with 100 random investors + 3 duplicated investors
+    company = CompanyFactory.create()
+    MatchFactory.create(investor=company, startup=startup, result=100)
+    MatchFactory.create(investor=company, startup=startup, result=10)
+    MatchFactory.create(investor=company, startup=startup, result=30)
+
+    # WHEN get_matches is triggered
+    with django_assert_max_num_queries(3):
+        matches = Match.objects.get_matches(profile=profile)
+    # THEN get the highest value from the same investor
+    assert matches.count() == 101
+    matches_results = matches.values_list('result', flat=True)
+    assert sorted(matches_results, reverse=True) == list(matches_results)
+    assert Match.objects.filter(
+        startup=startup,
+        investor=company,
+        result=100,
+    ).exists()
