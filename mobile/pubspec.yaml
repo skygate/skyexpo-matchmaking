@@ -31,7 +31,9 @@ dev_dependencies:
   json_serializable: ^3.2.5
   mockito: ^4.1.1
   reflectable: ^2.0.10+1
+
 flutter:
   assets:
     - .env
+    - assets/
   uses-material-design: true

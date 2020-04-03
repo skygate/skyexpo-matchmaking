@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:mobile/common/widgets/form_field_wrapper_widget.dart'
     show FormFieldWrapper;
-import 'package:mobile/config/index.dart' show AppColor, FontSize;
+import 'package:mobile/config/index.dart'
+    show AppColor, FontSize, semiBoldFontWeight;
 
 class ImagePicker extends StatefulWidget {
   @override
@@ -29,13 +30,30 @@ class _ImagePickerState extends State<ImagePicker> {
     return FormFieldWrapper(
         label: 'Upload profile photo',
         child: GestureDetector(
-            onTap: () => getImage,
+            onTap: getImage,
             child: Container(
                 width: MediaQuery.of(context).size.width,
+                height: 200,
                 color: AppColor.inputBackground.value,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Select a image'),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColor.elementsBackground.value,
+                      ),
+                      child: Icon(Icons.cloud_upload,
+                          color: AppColor.icon.value, size: 70),
+                    ),
+                    Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: Text('Select a image',
+                            style: TextStyle(
+                                fontSize: FontSize.normal.value,
+                                fontWeight: semiBoldFontWeight))),
                     Text('PNG, JPG or GIF under 1MB in size',
                         style: TextStyle(fontSize: FontSize.small.value)),
                   ],

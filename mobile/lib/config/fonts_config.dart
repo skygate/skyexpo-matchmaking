@@ -12,4 +12,5 @@ class FontSize extends Vnum<double> {
   factory FontSize(double value) => Vnum.fromValue(value, FontSize);
 }
 
+const FontWeight semiBoldFontWeight = FontWeight.w500;
 const FontWeight boldFontWeight = FontWeight.w800;
