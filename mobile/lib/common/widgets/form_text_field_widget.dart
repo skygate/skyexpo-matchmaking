@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:mobile/common/helpers/compose_validators_helper.dart'
     show composeValidators;
-import 'package:mobile/config/index.dart' show AppColor, FontSize;
+import 'package:mobile/common/widgets/form_field_wrapper_widget.dart';
+import 'package:mobile/config/index.dart' show AppColor;
 
 InputDecoration getInputDecorator(Widget suffix) => InputDecoration(
     filled: true,
@@ -31,24 +31,13 @@ class FormTextField extends StatelessWidget {
       this.suffix});
 
   @override
-  Widget build(BuildContext context) => Container(
-      margin: new EdgeInsets.only(bottom: 15),
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child:
-                Text(label, style: TextStyle(fontSize: FontSize.normal.value)),
-            margin: EdgeInsets.only(bottom: 12),
-          ),
-          TextFormField(
-            decoration: getInputDecorator(suffix),
-            obscureText: isObscureText,
-            onChanged: (value) => setFormFieldValue(fieldId, value),
-            validator: (_) =>
-                composeValidators(validators, formValues[fieldId]),
-          ),
-        ],
-      ));
+  Widget build(BuildContext context) => FormFieldWrapper(
+        label: label,
+        child: TextFormField(
+          decoration: getInputDecorator(suffix),
+          obscureText: isObscureText,
+          onChanged: (value) => setFormFieldValue(fieldId, value),
+          validator: (_) => composeValidators(validators, formValues[fieldId]),
+        ),
+      );
 }
