@@ -1,2 +1,4 @@
+import 'dart:math';
+
 String getFileSizeFromBytes(int bytes) =>
-    (bytes / 1000000).toStringAsFixed(2) + ' MB';
+    (bytes / pow(1024, 2)).toStringAsFixed(2) + ' MB';

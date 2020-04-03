@@ -14,13 +14,10 @@ class ImagePickerPreview extends StatelessWidget {
         width: imageSize,
         margin: EdgeInsets.only(bottom: 20),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: (image != null)
-              ? new Image.file(
-                  image,
-                  fit: BoxFit.cover,
-                )
-              : Container(),
-        ),
+            borderRadius: BorderRadius.circular(50),
+            child: Image.file(
+              image,
+              fit: BoxFit.cover,
+            )),
       );
 }
