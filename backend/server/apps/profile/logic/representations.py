@@ -79,4 +79,4 @@ class AngelInvestorRepresentation:
     is_product_on_market: bool
     business_type: str
     phone_number: Optional[PhoneNumber] = None
-    avatar: Optional[str] = None
+    logotype: Optional[str] = None

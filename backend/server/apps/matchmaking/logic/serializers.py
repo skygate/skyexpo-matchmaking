@@ -24,7 +24,7 @@ class AngelInvestorNestedOutputSerializer(serializers.ModelSerializer):
         read_only=True,
     )
     logotype = serializers.CharField(
-        source='angelinvestor.avatar',
+        source='angelinvestor.logotype',
         read_only=True,
     )
 

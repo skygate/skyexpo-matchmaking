@@ -146,7 +146,7 @@ class AngelInvestorFactory(
     class Meta:
         model = AngelInvestor
 
-    avatar = factory.django.ImageField()
+    logotype = factory.django.ImageField()
     profile = factory.SubFactory('tests.factories.ProfileFactory')
 
 

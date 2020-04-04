@@ -187,7 +187,7 @@ def validate_angel_investor_form_step1(data: Dict[str, Any]) -> None:
         'is_product_on_market',
         'business_type',
         'profile',
-        'avatar',
+        'logotype',
     ]
     investor.clean_fields(exclude=exclude)
     investor.validate_unique(exclude=exclude)

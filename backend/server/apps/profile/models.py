@@ -157,8 +157,8 @@ class Profile(models.Model):
 class AngelInvestor(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
     """Represents an individual who provides financial backing for startups."""
 
-    # TODO: set 'default' attr on ImageField when I get the default avatar.
-    avatar = models.ImageField(blank=True)
+    # TODO: set 'default' attr on ImageField when I get the default logotype.
+    logotype = models.ImageField(blank=True)
     profile = models.OneToOneField(
         Profile, on_delete=models.CASCADE, related_name='angel_investor',
     )

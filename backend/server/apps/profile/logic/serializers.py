@@ -265,7 +265,7 @@ class AngelInvestorCreateInputSerializer(
     it to the API. This serializer validates this input schema.
     """
 
-    avatar = serializers.CharField()
+    logotype = serializers.CharField()
 
 
 class AngelInvestorCreateOutputSerializer(serializers.ModelSerializer):
@@ -277,7 +277,7 @@ class AngelInvestorCreateOutputSerializer(serializers.ModelSerializer):
         model = AngelInvestor
         fields = [
             'id',
-            'avatar',
+            'logotype',
             'website',
             'phone_number',
             'country',
