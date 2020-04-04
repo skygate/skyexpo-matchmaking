@@ -33,6 +33,7 @@ from server.apps.profile.logic.serializers import (
   StartupValidateFormStep1Serializer,
   StartupValidateFormStep2Serializer,
   StartupValidateFormStep3Serializer,
+  UploadLogotypeStep1Serializer,
 )
 from server.apps.profile.logic.services import (
   assign_profiles_to_company,
@@ -42,6 +43,7 @@ from server.apps.profile.logic.services import (
   create_startup,
   create_team_members_profiles,
   register_user,
+  upload_logotype,
   validate_angel_investor_form_step1,
   validate_company_form_step1,
   validate_matchmaking_form,
@@ -58,7 +60,6 @@ class CompanyValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser]
 
     @swagger_auto_schema(
         request_body=CompanyValidateFormStep1Serializer,
@@ -73,6 +74,31 @@ class CompanyValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
         validate_company_form_step1(data=serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UploadLogotypeStep1View(ExceptionHandlerMixin, views.APIView):
+    """
+    When a user invokes the UploadPicker and selects a picture, the frontend
+    should immediately send a request to this endpoint, and the response should
+    be passed to the '4. Create company' request as 'logotype' field.
+    """
+
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [CamelCaseMultiPartParser]
+
+    @swagger_auto_schema(
+        request_body=UploadLogotypeStep1Serializer,
+        responses={
+            status.HTTP_201_CREATED: openapi.Response(description=''),
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = UploadLogotypeStep1Serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        path = upload_logotype(**serializer.validated_data)
+
+        return Response(data={'logotype': path}, status=status.HTTP_201_CREATED)
 
 
 class CompanyValidateFormStep2View(ExceptionHandlerMixin, views.APIView):
@@ -131,7 +157,6 @@ class CompanyCreateView(ExceptionHandlerMixin, views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]
 
     @swagger_auto_schema(
         request_body=CompanyCreateInputSerializer,
@@ -164,7 +189,6 @@ class StartupValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser]
 
     @swagger_auto_schema(
         request_body=StartupValidateFormStep1Serializer,
@@ -237,7 +261,7 @@ class StartupCreateView(ExceptionHandlerMixin, views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]
+    parser_classes = [CamelCaseJSONParser]
 
     @swagger_auto_schema(
         request_body=StartupCreateInputSerializer,
@@ -270,7 +294,6 @@ class AngelInvestorValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
     """
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser]
 
     @swagger_auto_schema(
         request_body=AngelInvestorValidateFormStep1Serializer,
@@ -314,7 +337,6 @@ class AngelInvestorCreateView(ExceptionHandlerMixin, views.APIView):
     """View used for registering an AngelInvestor after filling out the form."""
 
     permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser, CamelCaseJSONParser]
 
     @swagger_auto_schema(
         request_body=AngelInvestorCreateInputSerializer,

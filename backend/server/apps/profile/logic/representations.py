@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 from django.contrib.auth import get_user_model
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from phonenumber_field.phonenumber import PhoneNumber
 from typing_extensions import TypedDict
 
@@ -33,8 +32,8 @@ class CompanyRepresentation:
     max_investment_size: int
     is_product_on_market: bool
     business_type: str
+    logotype: Optional[str] = None
     phone_number: Optional[PhoneNumber] = None
-    logotype: Optional[InMemoryUploadedFile] = None
 
 
 @dataclass
@@ -56,8 +55,8 @@ class StartupRepresentation:
     max_investment_size: int
     is_product_on_market: bool
     business_type: str
+    logotype: Optional[str] = None
     phone_number: Optional[PhoneNumber] = None
-    logotype: Optional[InMemoryUploadedFile] = None
 
 
 @dataclass
@@ -80,4 +79,4 @@ class AngelInvestorRepresentation:
     is_product_on_market: bool
     business_type: str
     phone_number: Optional[PhoneNumber] = None
-    avatar: Optional[InMemoryUploadedFile] = None
+    avatar: Optional[str] = None

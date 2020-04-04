@@ -15,6 +15,7 @@ from server.apps.profile.views import (
   StartupValidateFormStep1View,
   StartupValidateFormStep2View,
   StartupValidateFormStep3View,
+  UploadLogotypeStep1View,
 )
 
 urlpatterns = [
@@ -36,6 +37,11 @@ urlpatterns = [
         'form/company/step-1/',
         CompanyValidateFormStep1View.as_view(),
         name='validate-form-company-step-1',
+    ),
+    path(
+        'form/upload-logotype',
+        UploadLogotypeStep1View.as_view(),
+        name='upload-logotype-step-1',
     ),
     path(
         'form/company/step-2/',

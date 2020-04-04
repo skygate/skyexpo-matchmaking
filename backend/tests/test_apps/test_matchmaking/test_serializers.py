@@ -11,7 +11,7 @@ from server.apps.matchmaking.models import Match
 from tests.factories import AngelInvestorFactory, CompanyFactory, MatchFactory
 
 
-class TestSerializerClass(serializers.ModelSerializer):
+class SerializerClass(serializers.ModelSerializer):
     """Serializer used for test InvestorProfileObjectRelatedField"""
 
     investor = InvestorProfileObjectRelatedField(read_only=True)
@@ -32,7 +32,7 @@ def test_investor_profile_object_related_field():
 
     # WHEN angel investor or company passed to Serializer where
     # InvestorProfileObjectRelatedField is used.
-    serializer = TestSerializerClass(Match.objects.all(), many=True)
+    serializer = SerializerClass(Match.objects.all(), many=True)
     # THEN return CompanyNestedOutputSerializer
     # or AngelInvestorNestedOutputSerializer
 
