@@ -33,7 +33,8 @@ from server.apps.profile.logic.serializers import (
   StartupValidateFormStep1Serializer,
   StartupValidateFormStep2Serializer,
   StartupValidateFormStep3Serializer,
-  UploadLogotypeStep1Serializer,
+  UploadLogotypeInputSerializer,
+  UploadLogotypeOutputSerializer,
 )
 from server.apps.profile.logic.services import (
   assign_profiles_to_company,
@@ -80,25 +81,27 @@ class UploadLogotypeStep1View(ExceptionHandlerMixin, views.APIView):
     """
     When a user invokes the UploadPicker and selects a picture, the frontend
     should immediately send a request to this endpoint, and the response should
-    be passed to the '4. Create company' request as 'logotype' field.
+    be passed to the create step as 'logotype' field.
     """
 
     permission_classes = [permissions.AllowAny]
     parser_classes = [CamelCaseMultiPartParser]
 
     @swagger_auto_schema(
-        request_body=UploadLogotypeStep1Serializer,
+        request_body=UploadLogotypeOutputSerializer,
         responses={
-            status.HTTP_201_CREATED: openapi.Response(description=''),
+            status.HTTP_201_CREATED: UploadLogotypeOutputSerializer,
         },
     )
     def post(self, request: Request) -> Response:
-        serializer = UploadLogotypeStep1Serializer(data=request.data)
+        serializer = UploadLogotypeInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
         path = upload_logotype(**serializer.validated_data)
-
-        return Response(data={'logotype': path}, status=status.HTTP_201_CREATED)
+        return Response(
+            data=UploadLogotypeOutputSerializer({'logotype': path}).data,
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class CompanyValidateFormStep2View(ExceptionHandlerMixin, views.APIView):

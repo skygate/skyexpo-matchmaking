@@ -67,12 +67,18 @@ class CompanyValidateFormStep1Serializer(MainInfoCommonSerializer):
     email = serializers.EmailField()
 
 
-class UploadLogotypeStep1Serializer(serializers.Serializer):
+class UploadLogotypeInputSerializer(serializers.Serializer):
     """Validates the input data for a logotype."""
 
     logotype = serializers.ImageField(
         required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
     )
+
+
+class UploadLogotypeOutputSerializer(serializers.Serializer):
+    """Validates the input data for a logotype."""
+
+    logotype = serializers.CharField(read_only=True)
 
 
 class TeamMembersSerializer(serializers.Serializer):
