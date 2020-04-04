@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from server.apps.profile.models import AngelInvestor, Profile
+import contextlib
+
+from server.apps.profile.models import AngelInvestor, InvestorProfile, Profile
 
 
 def is_assigned(*, profile: Profile):
@@ -12,3 +14,12 @@ def is_assigned(*, profile: Profile):
     ):
         return True
     return False
+
+
+def get_investor(*, profile: Profile) -> InvestorProfile:
+    with contextlib.suppress(AngelInvestor.DoesNotExist):
+        return AngelInvestor.objects.get(profile=profile)
+    try:
+        return profile.company
+    except AttributeError:
+        raise ValueError(f'Profile {profile.name} is not investor.')

@@ -8,6 +8,7 @@ from django.contrib.postgres import fields, validators
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
+from django.utils.functional import cached_property
 from django.utils.translation import ugettext_lazy as ugtl
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
@@ -108,14 +109,22 @@ class BaseMatchmakingInfo(models.Model):
 class InvestorProfile(models.Model):
     """Marks model as investor."""
 
-    def get_child(self) -> Union['Company', 'AngelInvestor']:
+    def get_child_instance(self) -> Union['Company', 'AngelInvestor']:
         try:
             return self.company
         except AttributeError:
             return self.angelinvestor
 
+    @cached_property
+    def is_company(self) -> bool:
+        return hasattr(self, 'company')  # noqa: WPS421
+
+    @cached_property
+    def is_angel_investor(self) -> bool:
+        return hasattr(self, 'angelinvestor')  # noqa: WPS421
+
     def __str__(self) -> str:
-        return str(self.get_child())
+        return str(self.get_child_instance())
 
 
 class Profile(models.Model):
@@ -129,6 +138,20 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return str(self.user)
+
+    @cached_property
+    def startup(self) -> 'Startup':
+        startup = self.startups.first()  # type: ignore
+        if startup is None:
+            raise AttributeError('This profile does not belong to any startup.')
+        return startup
+
+    @cached_property
+    def company(self) -> 'Company':
+        company = self.companies.first()  # type: ignore
+        if company is None:
+            raise AttributeError('This profile does not belong to any company.')
+        return company
 
 
 class AngelInvestor(BaseInfo, BaseMatchmakingInfo, InvestorProfile):

@@ -15,23 +15,25 @@ from server.apps.profile.models import (
   Company,
   CompanyToProfile,
   InvestorProfile,
-  Profile,
   StartupToProfile,
   validate_profile_is_unassigned,
 )
 from tests.factories import (
   AngelInvestorFactory,
   CompanyFactory,
+  InvestorProfileFactory,
   ProfileFactory,
   StartupFactory,
+  UserFactory,
 )
 
 User = get_user_model()
 
 
-def test_profile_string_representation(user):
+def test_profile_string_representation():
     """Ensures that Profile and User models representations are the same."""
-    profile = Profile(user=user)
+    user = UserFactory.build()
+    profile = ProfileFactory.build(user=user)
 
     assert str(profile) == str(user)
 
@@ -57,12 +59,20 @@ def test_company_string_representation():
     assert str(company) == company.name
 
 
-def test_company_investor_profile_string_repr(company):
-    assert str(InvestorProfile.objects.first()) == str(company)
+def test_company_investor_profile_string_repr():
+    company = CompanyFactory.build()
+    company_investor_profile = InvestorProfileFactory.build(
+        company=company,
+    )
+    assert str(company_investor_profile.company) == str(company)
 
 
-def test_angelinvestor_profile_string_repr(angel_investor):
-    assert str(InvestorProfile.objects.first()) == str(angel_investor)
+def test_angel_investor_profile_string_repr():
+    angel_investor = AngelInvestorFactory.build()
+    angel_investor_profile = InvestorProfileFactory.build(
+        angelinvestor=angel_investor,
+    )
+    assert str(angel_investor_profile) == str(angel_investor)
 
 
 def test_startup_to_profile_string_representation():
@@ -89,7 +99,7 @@ def test_company_to_profile_string_representation():
 def test_company_investment_size_constraint(company_data):
     """
     We represent the company's investment_size as IntegerRangeField so,
-    there should be a constraint: where NumericRange(X, Y) => X < Y.
+    there should be a constraint: NumericRange(X, Y) => X < Y.
     """
     company_data['investment_size'] = NumericRange(2, 1)
 
@@ -185,3 +195,81 @@ def test_startup_get_profiles(startup):
     assign_profiles_to_startup(startup=startup, profiles=profiles)
 
     assert list(startup.get_profiles()) == profiles
+
+
+@pytest.mark.django_db
+def test_profile_startup_property():
+    # GIVEN profile assigned to startup
+    profile = ProfileFactory.create()
+    startup = StartupFactory.create(profiles=[profile])
+    # WHEN profile.startup property triggered
+    # THEN return startup where a profile is assigned to
+    assert profile.startup == startup
+
+    # GIVEN profile not assigned to startup
+    profile = ProfileFactory.create()
+    # WHEN profile.startup property triggered
+    # THEN raise error
+    with pytest.raises(
+        AttributeError,
+        match='This profile does not belong to any startup.',
+    ):
+        assert profile.startup
+
+
+@pytest.mark.django_db
+def test_profile_company_property():
+    # GIVEN profile assigned to company
+    profile = ProfileFactory.create()
+    company = CompanyFactory.create(profiles=[profile])
+    # WHEN profile.company property triggered
+    # THEN return company where a profile is assigned to
+    assert profile.company == company
+
+    # GIVEN profile not assigned to company
+    profile = ProfileFactory.create()
+    # WHEN profile.company property triggered
+    # THEN raise error
+    with pytest.raises(
+        AttributeError,
+        match='This profile does not belong to any company.',
+    ):
+        assert profile.company
+
+
+@pytest.mark.django_db
+def test_investor_profile_is_company():
+    # GIVEN InvestorProfile assigned to company
+    company = CompanyFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=company.pk)
+    # WHEN .is_company is triggered
+    value = investor_profile.is_company
+    # THEN return true
+    assert value
+
+    # GIVEN InvestorProfile assigned not to company
+    investor = AngelInvestorFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=investor.pk)
+    # WHEN .is_company is triggered
+    value = investor_profile.is_company
+    # THEN return false
+    assert not value
+
+
+@pytest.mark.django_db
+def test_investor_profile_is_angel_investor():
+    # GIVEN InvestorProfile assigned to angel investor
+    investor = AngelInvestorFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=investor.pk)
+    # WHEN .is_angel_investor is triggered
+    value = investor_profile.is_angel_investor
+    # THEN return true
+    assert value
+
+    # GIVEN InvestorProfile assigned not to angel investor
+    company = CompanyFactory.create()
+    investor_profile = InvestorProfile.objects.get(pk=company.pk)
+    # WHEN .is_angel_investor is triggered
+    value = investor_profile.is_angel_investor
+    # THEN return false
+    assert not value

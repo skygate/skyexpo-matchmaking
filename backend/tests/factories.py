@@ -8,6 +8,7 @@ import factory.fuzzy  # noqa: WPS301
 from factory import LazyFunction
 from psycopg2.extras import NumericRange
 
+from server.apps.matchmaking.models import Match
 from server.apps.profile.constants import (
   BusinessType,
   CompanyStage,
@@ -21,6 +22,7 @@ from server.apps.profile.models import (
   MIN_INVESTMENT_VALUE,
   AngelInvestor,
   Company,
+  InvestorProfile,
   Profile,
   Startup,
   User,
@@ -33,6 +35,13 @@ def get_multiple_choices(
     """Get a random number of choices from given list."""
     choices_len = random.randint(1, len(choices[0]))   # noqa: S311
     return [choice[0] for choice in choices[:choices_len]]
+
+
+def unique_name():
+    """factory.Faker('name') doesn't necessarily generate unique value."""
+    return factory.Sequence(
+        lambda num: factory.Faker('name').generate() + str(num),
+    )
 
 
 class BaseInfoFactory(factory.Factory):
@@ -74,17 +83,35 @@ class BaseMatchmakingInfoFactory(factory.Factory):
         abstract = True
 
 
+class InvestorProfileFactory(factory.DjangoModelFactory):
+    """Factory for InvestorProfile model."""
+
+    class Meta:
+        model = InvestorProfile
+
+
 class CompanyFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+    BaseInfoFactory,
+    BaseMatchmakingInfoFactory,
+    InvestorProfileFactory,
 ):
     """Factory for Company model."""
 
     class Meta:
         model = Company
 
-    name = factory.Faker('name')
+    name = unique_name()
     email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
+
+    @factory.post_generation
+    def profiles(self, create, profiles):
+        if not create:
+            return
+
+        if profiles:
+            for profile in profiles:
+                self.profiles.add(profile)
 
 
 class StartupFactory(
@@ -95,13 +122,24 @@ class StartupFactory(
     class Meta:
         model = Startup
 
-    name = factory.Faker('name')
+    name = unique_name()
     email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
 
+    @factory.post_generation
+    def profiles(self, create, profiles):
+        if not create:
+            return
+
+        if profiles:
+            for profile in profiles:
+                self.profiles.add(profile)
+
 
 class AngelInvestorFactory(
-    factory.DjangoModelFactory, BaseInfoFactory, BaseMatchmakingInfoFactory,
+    BaseInfoFactory,
+    BaseMatchmakingInfoFactory,
+    InvestorProfileFactory,
 ):
     """Factory for AngelInvestor model."""
 
@@ -130,4 +168,18 @@ class ProfileFactory(factory.DjangoModelFactory):
         model = Profile
 
     user = factory.SubFactory(UserFactory)
-    name = factory.Faker('name')
+    name = unique_name()
+
+
+class MatchFactory(factory.DjangoModelFactory):
+    """
+    Factory for Match model.
+    If you want to add investor to this factory, you have to set him explicitly,
+    e.g: MatchFactory.create(investor=AngelInvestorFactory.create())
+    """
+
+    class Meta:
+        model = Match
+
+    startup = factory.SubFactory(StartupFactory)
+    result = factory.fuzzy.FuzzyInteger(0, 100)

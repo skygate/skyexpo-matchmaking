@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from typing import List, Union
+from dataclasses import astuple, dataclass
+from typing import List
 
 from django.db.models import QuerySet
 from psycopg2.extras import NumericRange
@@ -8,14 +9,27 @@ from typing_extensions import Final
 
 from server.apps.matchmaking.models import Match
 from server.apps.profile.models import (
-  AngelInvestor,
   BaseMatchmakingInfo,
-  Company,
   InvestorProfile,
   Startup,
 )
 
-MatchingValueType = Union[str, List[str], bool, NumericRange]
+
+@dataclass(frozen=True)
+class MatchingData:
+    """Container that represents data used to calculate matchmaking value."""
+
+    stage: str
+    sectors: List[str]
+    industries: List[str]
+    product_types: List[str]
+    investment_stage: List[str]
+    is_product_on_market: bool
+    business_type: str
+    investment_size: NumericRange
+
+    def __iter__(self):
+        return iter(astuple(self))
 
 
 class Matchmaking:
@@ -25,47 +39,41 @@ class Matchmaking:
         self.startup = startup
         self.investor = investor
 
-    MATCHING_ARGS: Final = [
-        'stage',
-        'sectors',
-        'industries',
-        'product_types',
-        'investment_stage',
-        'is_product_on_market',
-        'business_type',
-        'investment_size',
-    ]
+        self.MATCHING_ARGS: Final = [
+            'stage',
+            'sectors',
+            'industries',
+            'product_types',
+            'investment_stage',
+            'is_product_on_market',
+            'business_type',
+            'investment_size',
+        ]
 
     def calculate_result(self) -> int:
         """Calculate investor's match to startup."""
-        investor_child = self._get_investor_child_obj()
-        investor_child_values = self._get_matching_values(investor_child)
-        startup_values = self._get_matching_values(self.startup)
+        investor = self.investor.get_child_instance()
+        investor_data = self._get_matching_data(investor)
+        startup_data = self._get_matching_data(self.startup)
 
         return self._run_matchmaking_algorithm(
-            investor_child_values, startup_values,
+            investor_data, startup_data,
         )
 
-    def _get_investor_child_obj(self) -> Union[Company, AngelInvestor]:
-        try:
-            return self.investor.company
-        except AttributeError:
-            return self.investor.angelinvestor
-
-    def _get_matching_values(
-        self, obj: BaseMatchmakingInfo,
-    ) -> List[MatchingValueType]:
-        return [
-            getattr(obj, arg) for arg in self.MATCHING_ARGS
-        ]
+    def _get_matching_data(
+        self, model_instance: BaseMatchmakingInfo,
+    ) -> MatchingData:
+        return MatchingData(
+            **{arg: getattr(model_instance, arg) for arg in self.MATCHING_ARGS},
+        )
 
     def _run_matchmaking_algorithm(
         self,
-        investor_values: List[MatchingValueType],
-        startup_values: List[MatchingValueType],
+        investor_data: MatchingData,
+        startup_data: MatchingData,
     ) -> int:
         same = 0
-        for investor_val, startup_val in zip(investor_values, startup_values):
+        for investor_val, startup_val in zip(investor_data, startup_data):
             if investor_val == startup_val:
                 same += 1
 

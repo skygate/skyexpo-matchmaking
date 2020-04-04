@@ -95,6 +95,10 @@ MIDDLEWARE = (  # noqa: WPS440
 NPLUSONE_RAISE = True  # comment out if you want to allow N+1 requests
 NPLUSONE_LOGGER = logging.getLogger('django')
 NPLUSONE_LOG_LEVEL = logging.WARN
+NPLUSONE_WHITELIST = [
+    {'model': 'profile.InvestorProfile', 'field': 'company'},
+    {'model': 'profile.InvestorProfile', 'field': 'angelinvestor'},
+]
 
 
 REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += [

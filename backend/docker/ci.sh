@@ -16,10 +16,10 @@ fi
 : "${PYTHONPATH:=''}"
 
 pyclean () {
-  set +x
-
   # Cleaning cache:
-  find . | grep -E '(__pycache__|\.static|\.py[cod]$)' | xargs rm -rf
+  find . \
+  | grep -E '(__pycache__|\.perm|\.cache|\.static|\.py[cod]$)' \
+  | xargs rm -rf
 }
 
 run_ci () {
@@ -72,6 +72,9 @@ run_ci () {
     # Only executes when there is at least one `.po` file:
     dennis-cmd lint --errorsonly locale
   fi
+
+  set +x
+  echo '[ci finished]'
 }
 
 # Remove any cache before the script:
