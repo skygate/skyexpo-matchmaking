@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from drf_yasg import openapi
 from rest_framework import serializers
 
 from server.apps.matchmaking.models import Match
@@ -22,14 +23,14 @@ class AngelInvestorNestedOutputSerializer(serializers.ModelSerializer):
         source='angelinvestor.profile.name',
         read_only=True,
     )
-    avatar = serializers.CharField(
+    logotype = serializers.CharField(
         source='angelinvestor.avatar',
         read_only=True,
     )
 
     class Meta:
         model = InvestorProfile
-        fields = ['id', 'avatar', 'name']
+        fields = ['id', 'name', 'logotype']
         read_only_fields = fields
 
 
@@ -56,6 +57,20 @@ class InvestorProfileObjectRelatedField(serializers.RelatedField):
             return AngelInvestorNestedOutputSerializer(instance=instance).data
         if instance.is_company:
             return CompanyNestedOutputSerializer(instance=instance).data
+
+    class Meta:
+        # TODO: Make this dynamic based on used serializers in to_representation
+        swagger_schema_fields = {
+            'type': 'object',
+            'properties': {
+                'id': {'type': openapi.TYPE_INTEGER},
+                'name': {'type': openapi.TYPE_STRING},
+                'logotype': {
+                    'type': openapi.TYPE_STRING,
+                    'format': openapi.FORMAT_URI,
+                },
+            },
+        }
 
 
 class MatchmakingListOutputSerializer(serializers.ModelSerializer):

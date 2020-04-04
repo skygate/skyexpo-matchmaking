@@ -164,6 +164,7 @@ def inactive_user(db):
 def api_client(user):
     """Returns DjangoRestFramework ApiClient"""
     client = APIClient()
+    ProfileFactory.create(user=user)
     client.force_login(user)
 
     return client

@@ -37,6 +37,13 @@ def get_multiple_choices(
     return [choice[0] for choice in choices[:choices_len]]
 
 
+def unique_name():
+    """factory.Faker('name') doesn't necessarily generate unique value."""
+    return factory.Sequence(
+        lambda num: factory.Faker('name').generate() + str(num),
+    )
+
+
 class BaseInfoFactory(factory.Factory):
     """Factory for BaseInfo model."""
 
@@ -93,7 +100,7 @@ class CompanyFactory(
     class Meta:
         model = Company
 
-    name = factory.Faker('name')
+    name = unique_name()
     email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
 
@@ -115,7 +122,7 @@ class StartupFactory(
     class Meta:
         model = Startup
 
-    name = factory.Faker('name')
+    name = unique_name()
     email = factory.Faker('safe_email')
     logotype = factory.django.ImageField()
 
@@ -161,7 +168,7 @@ class ProfileFactory(factory.DjangoModelFactory):
         model = Profile
 
     user = factory.SubFactory(UserFactory)
-    name = factory.Faker('name')
+    name = unique_name()
 
 
 class MatchFactory(factory.DjangoModelFactory):
