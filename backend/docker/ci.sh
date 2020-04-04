@@ -23,6 +23,7 @@ pyclean () {
 }
 
 run_ci () {
+  echo '[ci started]'
   set -x
 
   # Running linting for all python files in the project:
