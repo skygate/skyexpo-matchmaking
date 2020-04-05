@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from unittest.mock import MagicMock, patch
+
 import pytest
 from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
 
 from server.apps.profile.logic.representations import (
   AngelInvestorRepresentation,
@@ -21,6 +24,7 @@ from server.apps.profile.logic.services import (
   create_startup,
   create_team_members_profiles,
   register_user,
+  upload_file,
   validate_team_members_form,
 )
 from server.apps.profile.models import AngelInvestor, Company, Profile, Startup
@@ -230,3 +234,21 @@ def test_register_user_with_taken_email():
             name=profile.name,
             password=profile.user.password,
         )
+
+
+@patch('server.apps.profile.logic.services.default_storage')
+def test_upload_file(default_storage):
+    # GIVEN storage_system & filename & file content
+    file = MagicMock()
+    file.name = 'filename'
+    file.read = MagicMock(return_value=b'content')
+    content = ContentFile(file.read())
+
+    # WHEN upload_file is called
+    upload_file(
+        name=file.name,
+        content=content,
+    )
+
+    # THEN save file to storage system
+    default_storage.save.assert_called_once_with(file.name, content)

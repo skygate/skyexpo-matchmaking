@@ -80,7 +80,6 @@ def company_step1_data(company_data):
         'country': company_data['country'],
         'founding_date': company_data['founding_date'],
         'description': company_data['description'],
-        'logotype': company_data['logotype'],
     }
 
 
@@ -119,15 +118,12 @@ def company_create_data(
     company_step1_data, company_step2_data, company_step3_data,
 ):
     """Returns example data needed for company creation."""
-    data = {
+    return {
         **company_step1_data,
         **company_step2_data,
         **company_step3_data,
+        'logotype': 'logotype_example.png',
     }
-    # TODO: Set up sending images.
-    data.pop('logotype')
-
-    return data
 
 
 @pytest.fixture()

@@ -21,7 +21,6 @@ def test_register_company_validation_step1(company_step1_data):
         'country',
         'founding_date',
         'description',
-        'logotype',
     }
 
 

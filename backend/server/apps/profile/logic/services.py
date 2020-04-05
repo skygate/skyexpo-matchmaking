@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import asdict
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.db import transaction
 from django.utils.translation import ugettext_lazy as ugt
 from glom import glom
@@ -51,6 +53,7 @@ def validate_company_form_step1(data: Dict[str, Any]) -> None:
             'investment_size',
             'is_product_on_market',
             'business_type',
+            'logotype',
         ],
     )
 
@@ -162,6 +165,7 @@ def validate_startup_form_step1(data: Dict[str, Any]) -> None:
             'investment_size',
             'is_product_on_market',
             'business_type',
+            'logotype',
         ],
     )
 
@@ -182,6 +186,7 @@ def validate_angel_investor_form_step1(data: Dict[str, Any]) -> None:
         'is_product_on_market',
         'business_type',
         'profile',
+        'logotype',
     ]
     investor.clean_fields(exclude=exclude)
     investor.validate_unique(exclude=exclude)
@@ -265,3 +270,7 @@ def register_user(*, email: str, name: str, password: str) -> Profile:
     profile.user.set_password(password)
     profile.user.save()
     return profile
+
+
+def upload_file(*, name: str, content: ContentFile) -> Optional[str]:
+    return default_storage.save(name, content)

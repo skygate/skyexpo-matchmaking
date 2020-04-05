@@ -11,7 +11,7 @@ from server.apps.profile.constants import (
   BusinessType,
   CompanyStage,
 )
-from server.apps.profile.models import AngelInvestor, Company, Profile
+from server.apps.profile.models import AngelInvestor, Company, Profile, Startup
 
 User = get_user_model()
 
@@ -65,9 +65,20 @@ class CompanyValidateFormStep1Serializer(MainInfoCommonSerializer):
 
     name = serializers.CharField(max_length=255)
     email = serializers.EmailField()
+
+
+class UploadLogotypeInputSerializer(serializers.Serializer):
+    """Validates the input data for a logotype."""
+
     logotype = serializers.ImageField(
         required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
     )
+
+
+class UploadLogotypeOutputSerializer(serializers.Serializer):
+    """Validates the input data for a logotype."""
+
+    logotype = serializers.CharField(read_only=True)
 
 
 class TeamMembersSerializer(serializers.Serializer):
@@ -111,7 +122,7 @@ class CompanyCreateInputSerializer(
     it to the API. This serializer validates this input schema.
     """
 
-    pass  # noqa: WPS604, WPS420
+    logotype = serializers.CharField()
 
 
 class ProfileNestedOutputSerializer(serializers.ModelSerializer):
@@ -165,9 +176,6 @@ class StartupValidateFormStep1Serializer(MainInfoCommonSerializer):
 
     name = serializers.CharField(max_length=255)
     email = serializers.EmailField()
-    logotype = serializers.ImageField(
-        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
-    )
 
 
 class StartupValidateFormStep2Serializer(serializers.Serializer):
@@ -199,7 +207,7 @@ class StartupCreateInputSerializer(
     it to the API. This serializer validates this input schema.
     """
 
-    pass  # noqa: WPS604, WPS420
+    logotype = serializers.CharField()
 
 
 class StartupCreateOutputSerializer(serializers.ModelSerializer):
@@ -210,7 +218,7 @@ class StartupCreateOutputSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = Company
+        model = Startup
         fields = [
             'id',
             'name',
@@ -242,9 +250,6 @@ class AngelInvestorValidateFormStep1Serializer(MainInfoCommonSerializer):
 
     name = serializers.CharField(max_length=255)
     email = serializers.EmailField()
-    avatar = serializers.ImageField(
-        required=False, help_text='Available formats: .jpg, .jpeg, .png, .gif.',
-    )
 
 
 class AngelInvestorValidateFormStep2Serializer(MatchmakingCommonSerializer):
@@ -266,7 +271,7 @@ class AngelInvestorCreateInputSerializer(
     it to the API. This serializer validates this input schema.
     """
 
-    pass  # noqa: WPS604, WPS420
+    logotype = serializers.CharField()
 
 
 class AngelInvestorCreateOutputSerializer(serializers.ModelSerializer):
@@ -278,7 +283,7 @@ class AngelInvestorCreateOutputSerializer(serializers.ModelSerializer):
         model = AngelInvestor
         fields = [
             'id',
-            'avatar',
+            'logotype',
             'website',
             'phone_number',
             'country',
