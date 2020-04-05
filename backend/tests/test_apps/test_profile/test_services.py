@@ -13,6 +13,7 @@ from server.apps.profile.logic.representations import (
 )
 from server.apps.profile.logic.selectors import is_assigned
 from server.apps.profile.logic.services import (
+  activate_profile,
   assign_profile_to_company,
   assign_profile_to_startup,
   assign_profiles_to_company,
@@ -45,7 +46,7 @@ def test_check_for_duplicated_emails():
 def test_validate_team_members_form(company):
     """Checks if profiles are already assigned."""
     profile1 = ProfileFactory.create()
-    profile2 = ProfileFactory.create(user=UserFactory(is_active=False))
+    profile2 = ProfileFactory.create(user=UserFactory.create(is_active=False))
     assign_profile_to_company(profile=profile1, company=company)
 
     team_members = [
@@ -122,16 +123,19 @@ def test_create_team_members_profiles():
 @pytest.mark.django_db
 def test_create_team_members_for_existing_profile():
     """If the profile exists just go on."""
+    # GIVEN active profile and inactive profile
     profile1 = ProfileFactory.create()
-    profile1_name, profile1_email = profile1.name, profile1.user.email
+    profile2 = ProfileFactory.create(user=UserFactory.create(is_active=False))
     team_members = [
-        {'name': 'Marcin', 'email': 'marcin@email.com'},
-        {'name': profile1_name, 'email': profile1_email},
+        {'name': profile1.name, 'email': profile1.user.email},
+        {'name': profile2.name, 'email': profile2.user.email},
     ]
-
+    # WHEN create_team_members_profiles
     profiles = create_team_members_profiles(team_members=team_members)
 
-    assert Profile.objects.count() == 2
+    # THEN inactive profiles are activated and returned back
+    # THEN existing active profiles are just returned back
+    assert Profile.objects.filter(user__is_active=True).count() == 2
     assert set(Profile.objects.all()) == set(profiles)
 
 
@@ -252,3 +256,16 @@ def test_upload_file(default_storage):
 
     # THEN save file to storage system
     default_storage.save.assert_called_once_with(file.name, content)
+
+
+@pytest.mark.django_db
+def test_activate_profile():
+    # GIVEN inactive profile
+    profile = ProfileFactory.create(user=UserFactory.create(is_active=False))
+
+    # WHEN activate_profile is triggered
+    activate_profile(email=profile.user.email)
+
+    # THEN profile has been activated
+    profile.user.refresh_from_db()
+    assert profile.user.is_active

@@ -126,6 +126,7 @@ def assign_profile_to_company(*, profile: Profile, company: Company) -> Profile:
     return relation.profile
 
 
+@transaction.atomic()
 def create_team_members_profiles(
     *, team_members: List[TeamMember],
 ) -> List[Profile]:
@@ -133,12 +134,17 @@ def create_team_members_profiles(
     profiles = []
     for team_member in team_members:
         try:
-            profile = Profile.objects.get(user__email=team_member['email'])
+            profile = Profile.objects.select_related('user').get(
+                user__email=team_member['email'],
+            )
         except Profile.DoesNotExist:
             profile = create_inactive_profile(
                 email=team_member['email'],
                 name=team_member['name'],
             )
+        else:
+            profile.user.is_active = True
+            profile.user.save(update_fields=['is_active'])
         profiles.append(profile)
 
     return profiles
@@ -224,6 +230,15 @@ def create_startup(*, startup: StartupRepresentation) -> Startup:
     return startup_instance
 
 
+def activate_profile(*, email: str) -> Profile:
+    profile = Profile.objects.select_related('user').get(
+        user__email=email, user__is_active=False,
+    )
+    profile.user.is_active = True
+    profile.user.save(update_fields=['is_active'])
+    return profile
+
+
 @transaction.atomic()
 def create_angel_investor(
     *, angel_investor: AngelInvestorRepresentation,
@@ -235,11 +250,16 @@ def create_angel_investor(
         upper=investor_data.pop('max_investment_size'),
     )
 
-    profile = create_inactive_profile(
-        email=investor_data.pop('email'),
-        name=investor_data.pop('name'),
-    )
+    try:
+        profile = activate_profile(email=investor_data['email'])
+    except Profile.DoesNotExist:
+        profile = create_inactive_profile(
+            email=investor_data['email'],
+            name=investor_data['name'],
+        )
 
+    investor_data.pop('email')
+    investor_data.pop('name')
     investor_instance = AngelInvestor(
         **investor_data,
         investment_size=investment_size,
