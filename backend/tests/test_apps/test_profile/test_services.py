@@ -13,6 +13,7 @@ from server.apps.profile.logic.representations import (
 )
 from server.apps.profile.logic.selectors import is_assigned
 from server.apps.profile.logic.services import (
+  activate_profile,
   assign_profile_to_company,
   assign_profile_to_startup,
   assign_profiles_to_company,
@@ -45,7 +46,7 @@ def test_check_for_duplicated_emails():
 def test_validate_team_members_form(company):
     """Checks if profiles are already assigned."""
     profile1 = ProfileFactory.create()
-    profile2 = ProfileFactory.create(user=UserFactory(is_active=False))
+    profile2 = ProfileFactory.create(user=UserFactory.create(is_active=False))
     assign_profile_to_company(profile=profile1, company=company)
 
     team_members = [
@@ -124,7 +125,7 @@ def test_create_team_members_for_existing_profile():
     """If the profile exists just go on."""
     # GIVEN active profile and inactive profile
     profile1 = ProfileFactory.create()
-    profile2 = ProfileFactory.create(user=UserFactory(is_active=False))
+    profile2 = ProfileFactory.create(user=UserFactory.create(is_active=False))
     team_members = [
         {'name': profile1.name, 'email': profile1.user.email},
         {'name': profile2.name, 'email': profile2.user.email},
@@ -255,3 +256,16 @@ def test_upload_file(default_storage):
 
     # THEN save file to storage system
     default_storage.save.assert_called_once_with(file.name, content)
+
+
+@pytest.mark.django_db
+def test_activate_profile():
+    # GIVEN inactive profile
+    profile = ProfileFactory.create(user=UserFactory.create(is_active=False))
+
+    # WHEN activate_profile is triggered
+    activate_profile(email=profile.user.email)
+
+    # THEN profile has been activated
+    profile.user.refresh_from_db()
+    assert profile.user.is_active
