@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import json
+import tempfile
 from unittest.mock import patch
 
 import pytest
+from PIL import Image
 from rest_framework import status
 from rest_framework.reverse import reverse
 
@@ -208,4 +210,25 @@ def test_profile_create_view(api_client):
         },
     )
 
+    assert response.status_code == status.HTTP_201_CREATED
+
+
+@patch('server.apps.profile.views.upload_file')
+def test_upload_logotype_step1_view(upload_file, api_client):
+    """Ensures that 'upload-logotype-step-1' endpoint calls upload_file"""
+    # GIVEN Image
+    image = Image.new('RGB', (100, 100))
+    tmp_image = tempfile.NamedTemporaryFile(suffix='.jpg')
+    image.save(tmp_image)
+    tmp_image.seek(0)
+
+    # WHEN send image to upload-logotype-step-1
+    response = api_client.post(
+        reverse('upload-logotype-step-1'),
+        {'logotype': tmp_image},
+        format='multipart',
+    )
+
+    # THEN save file to storage
+    upload_file.assert_called_once()
     assert response.status_code == status.HTTP_201_CREATED

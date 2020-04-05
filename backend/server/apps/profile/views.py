@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import transaction
 from djangorestframework_camel_case.parser import (
   CamelCaseJSONParser,
@@ -44,7 +46,7 @@ from server.apps.profile.logic.services import (
   create_startup,
   create_team_members_profiles,
   register_user,
-  upload_logotype,
+  upload_file,
   validate_angel_investor_form_step1,
   validate_company_form_step1,
   validate_matchmaking_form,
@@ -52,6 +54,38 @@ from server.apps.profile.logic.services import (
   validate_team_members_form,
 )
 from server.utils.exception_handler import ExceptionHandlerMixin
+
+
+class UploadLogotypeStep1View(ExceptionHandlerMixin, views.APIView):
+    """
+    When a user invokes the UploadPicker and selects a picture, the frontend
+    should immediately send a request to this endpoint, and the response should
+    be passed to the create step as 'logotype' field.
+    """
+
+    permission_classes = [permissions.AllowAny]
+    parser_classes = [CamelCaseMultiPartParser]
+
+    @swagger_auto_schema(
+        request_body=UploadLogotypeOutputSerializer,
+        responses={
+            status.HTTP_201_CREATED: UploadLogotypeOutputSerializer,
+        },
+    )
+    def post(self, request: Request) -> Response:
+        serializer = UploadLogotypeInputSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        logotype: InMemoryUploadedFile = serializer.validated_data['logotype']
+        path = upload_file(
+            name=logotype.name,
+            content=ContentFile(logotype.read()),
+        )
+
+        return Response(
+            data=UploadLogotypeOutputSerializer({'logotype': path}).data,
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class CompanyValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
@@ -75,33 +109,6 @@ class CompanyValidateFormStep1View(ExceptionHandlerMixin, views.APIView):
         validate_company_form_step1(data=serializer.validated_data)
 
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class UploadLogotypeStep1View(ExceptionHandlerMixin, views.APIView):
-    """
-    When a user invokes the UploadPicker and selects a picture, the frontend
-    should immediately send a request to this endpoint, and the response should
-    be passed to the create step as 'logotype' field.
-    """
-
-    permission_classes = [permissions.AllowAny]
-    parser_classes = [CamelCaseMultiPartParser]
-
-    @swagger_auto_schema(
-        request_body=UploadLogotypeOutputSerializer,
-        responses={
-            status.HTTP_201_CREATED: UploadLogotypeOutputSerializer,
-        },
-    )
-    def post(self, request: Request) -> Response:
-        serializer = UploadLogotypeInputSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        path = upload_logotype(**serializer.validated_data)
-        return Response(
-            data=UploadLogotypeOutputSerializer({'logotype': path}).data,
-            status=status.HTTP_201_CREATED,
-        )
 
 
 class CompanyValidateFormStep2View(ExceptionHandlerMixin, views.APIView):

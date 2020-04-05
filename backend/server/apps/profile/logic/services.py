@@ -6,8 +6,7 @@ from typing import Any, Dict, List, Optional
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
-from django.core.files.storage import DefaultStorage
-from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.files.storage import default_storage
 from django.db import transaction
 from django.utils.translation import ugettext_lazy as ugt
 from glom import glom
@@ -273,8 +272,5 @@ def register_user(*, email: str, name: str, password: str) -> Profile:
     return profile
 
 
-def upload_logotype(*, logotype: InMemoryUploadedFile) -> Optional[str]:
-    storage_system = DefaultStorage()
-    return storage_system.save(  # type: ignore
-        logotype.name, ContentFile(logotype.read()),
-    )
+def upload_file(*, name: str, content: ContentFile) -> Optional[str]:
+    return default_storage.save(name, content)
