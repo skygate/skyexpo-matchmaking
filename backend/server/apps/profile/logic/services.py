@@ -126,6 +126,7 @@ def assign_profile_to_company(*, profile: Profile, company: Company) -> Profile:
     return relation.profile
 
 
+@transaction.atomic()
 def create_team_members_profiles(
     *, team_members: List[TeamMember],
 ) -> List[Profile]:
@@ -133,12 +134,17 @@ def create_team_members_profiles(
     profiles = []
     for team_member in team_members:
         try:
-            profile = Profile.objects.get(user__email=team_member['email'])
+            profile = Profile.objects.select_related('user').get(
+                user__email=team_member['email'],
+            )
         except Profile.DoesNotExist:
             profile = create_inactive_profile(
                 email=team_member['email'],
                 name=team_member['name'],
             )
+        else:
+            profile.user.is_active = True
+            profile.user.save(update_fields=['is_active'])
         profiles.append(profile)
 
     return profiles

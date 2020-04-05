@@ -39,7 +39,7 @@ urlpatterns = [
         name='validate-form-company-step-1',
     ),
     path(
-        'form/upload-logotype',
+        'form/upload-logotype/',
         UploadLogotypeStep1View.as_view(),
         name='upload-logotype-step-1',
     ),
