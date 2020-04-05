@@ -1,0 +1,812 @@
+---
+_type: export
+__export_format: 4
+__export_date: 2020-04-05T17:52:29.205Z
+__export_source: insomnia.desktop.app:v7.1.1
+resources:
+  - _id: req_53a7a992f85f4abc870c9504c4a1beda
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "barry@gmail.com",
+        	"password": "123qweasd"
+        }
+    created: 1583848848845
+    description: ""
+    headers:
+      - id: pair_49ecc54e492c4b0887b0338a74a5a859
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586010864356
+    method: POST
+    modified: 1586082970383
+    name: 5. Sign in AngelInvestor
+    parameters: []
+    parentId: fld_56c547883e0e475f9be88297216565e3
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/token/
+    _type: request
+  - _id: fld_56c547883e0e475f9be88297216565e3
+    created: 1586010823448
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1586010823448
+    modified: 1586109109469
+    name: Create Angel Investor & Sign up & Sign in
+    parentId: wrk_2d7b1d46077947cfb4d5c9c89f0c536e
+    _type: request_group
+  - _id: wrk_2d7b1d46077947cfb4d5c9c89f0c536e
+    created: 1576490316203
+    description: ""
+    modified: 1576490316203
+    name: skyexpo-matchmaking
+    parentId: null
+    _type: workspace
+  - _id: req_f7a4ab66fbec44169f906ede35d622a6
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Barry Roy",
+        	"email": "barry@gmail.com",
+        	"password": "123qweasd"
+        }
+    created: 1578923504624
+    description: ""
+    headers:
+      - id: pair_230d785ac3134104a64d846544bc9df0
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586010864306
+    method: POST
+    modified: 1586072933245
+    name: 4. Sign up AngelInvestor
+    parameters: []
+    parentId: fld_56c547883e0e475f9be88297216565e3
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/profiles/
+    _type: request
+  - _id: req_839bc189c89940fa9d6eef493ce81c24
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"website": "https://www.linkedin.com/BarryRoy",
+        	"phoneNumber": "+1 630-217-7681",
+        	"country": "US",
+        	"foundingDate": "1965-05-21",
+        	"description": "Angel Investor from USA",
+        	"name": "Barry Roy",
+        	"email": "barry@gmail.com",
+        	"industries": ["ENERGY", "MOBILITY", "ENTERTAINMENT"],
+        	"sectors": ["IOT_AND_SENSORS", "AI_AND_ROBOTICS"],
+        	"productTypes": ["HARDWARE", "SOFTWARE"],
+        	"stage": "CONCEPT_STAGE",
+        	"investmentStage": ["BUSINESS_ANGELS"],
+        	"minInvestmentSize": 10000,
+        	"maxInvestmentSize": 1000000,
+        	"isProductOnMarket": false,
+        	"businessType": "B2C",
+        	"logotype": "bioenergy_logo_OvLOGjP.png"
+        }
+    created: 1586011191005
+    description: ""
+    headers:
+      - id: pair_97058221e3ca411f9f5a0630d6584564
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586010864256
+    method: POST
+    modified: 1586013067446
+    name: 3. Create AngelInvestor profile
+    parameters: []
+    parentId: fld_56c547883e0e475f9be88297216565e3
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/profiles/investors/
+    _type: request
+  - _id: req_7f22756a3b984ce1b8bfba3ee67c1b09
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |
+        {
+        	"industries": ["ENERGY", "MOBILITY", "ENTERTAINMENT"],
+        	"sectors": ["IOT_AND_SENSORS", "AI_AND_ROBOTICS"],
+        	"productTypes": ["HARDWARE", "SOFTWARE"],
+        	"stage": "CONCEPT_STAGE",
+        	"investmentStage": ["BUSINESS_ANGELS"],
+        	"minInvestmentSize": 10000,
+        	"maxInvestmentSize": 1000000,
+        	"isProductOnMarket": false,
+        	"businessType": "B2C"
+        }
+    created: 1586011137055
+    description: ""
+    headers:
+      - id: pair_5847a2eb40a14189abac3291cc6eaee3
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586010864206
+    method: POST
+    modified: 1586011169318
+    name: 2. Validate AngelInvestor Step 2
+    parameters: []
+    parentId: fld_56c547883e0e475f9be88297216565e3
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/investor/step-2/
+    _type: request
+  - _id: req_1d786feea20049f48b700d7aa887cffe
+    authentication: {}
+    body:
+      mimeType: multipart/form-data
+      params:
+        - description: ""
+          fileName: /Users/user/Desktop/insomnia/bioenergy_logo.png
+          id: pair_99fd60e85e2a495bb393b77ee2f926b3
+          name: logotype
+          type: file
+          value: ""
+    created: 1586011096927
+    description: ""
+    headers:
+      - id: pair_274fde8f971d48feb58574d63a6edcd5
+        name: Content-Type
+        value: multipart/form-data
+    isPrivate: false
+    metaSortKey: -1586010864156
+    method: POST
+    modified: 1586083594783
+    name: 1.1 Upload logotype
+    parameters: []
+    parentId: fld_56c547883e0e475f9be88297216565e3
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/upload-logotype/
+    _type: request
+  - _id: req_e63dbc32e69d4a27830f92b7e88773e1
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"website": "https://www.linkedin.com/BarryRoy",
+        	"phoneNumber": "+1 630-217-7681",
+        	"country": "US",
+        	"foundingDate": "1965-05-21",
+        	"description": "Angel Investor from USA",
+        	"name": "Barry Roy",
+        	"email": "barry@gmail.com"
+        }
+    created: 1586010864106
+    description: ""
+    headers:
+      - id: pair_a6585791dc734fb985e243b8c3aa55b2
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586010864106
+    method: POST
+    modified: 1586011065398
+    name: 1. Validate AngelInvestor Step 1
+    parameters: []
+    parentId: fld_56c547883e0e475f9be88297216565e3
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/investor/step-1/
+    _type: request
+  - _id: req_0268d6646531477ca2e66348245b4a70
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "Ruth@iotservice.io",
+        	"password": "123qweasd"
+        }
+    created: 1586083198237
+    description: ""
+    headers:
+      - id: pair_20feb44a6c644142a3be5d38760b5390
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586083198237
+    method: POST
+    modified: 1586108773833
+    name: 6. Sign in account
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/token/
+    _type: request
+  - _id: fld_b0def67eb7e8462fa66126f1b09d691c
+    created: 1586008655275
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1586008655275
+    modified: 1586109090523
+    name: Create startup & add members & sign up & sign in
+    parentId: wrk_2d7b1d46077947cfb4d5c9c89f0c536e
+    _type: request_group
+  - _id: req_93606a198bb94ef7b215a443b4c8b792
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Ruth Reyes",
+        	"email": "Ruth@iotservice.io",
+        	"password": "123qweasd"
+        }
+    created: 1586083188179
+    description: ""
+    headers:
+      - id: pair_dd589e9be58e48939d890f9ba20fc4fb
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586083188179
+    method: POST
+    modified: 1586083246806
+    name: 5. Sign up account
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/profiles/
+    _type: request
+  - _id: req_ffd3eb5a56b2402abfa109144c4def0c
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"website": "https://IOTservice.io",
+        	"phoneNumber": "+41-755-5532-77",
+        	"country": "CH",
+        	"foundingDate": "2020-01-11",
+        	"description": "We build things",
+        	"name": "IoT Service",
+        	"email": "hi@iotservice.io",
+        	"logotype": "bioenergy_logo_4Zn7flG.png",
+        	"teamMembers": [
+            {
+              "name": "Kenny Grinder ",
+              "email": "KennyGrinder@iotservice.io"
+            },
+            {
+              "name": "Ruth Reyes",
+              "email": "Ruth@iotservice.io"
+            },
+        		{
+              "name": "Loretta Page",
+              "email": "lorettapage@iotservice.io"
+            }
+          ],
+        	"industries": ["ENERGY", "MOBILITY", "ENTERTAINMENT"],
+        	"sectors": ["IOT_AND_SENSORS", "AI_AND_ROBOTICS"],
+        	"productTypes": ["HARDWARE", "SOFTWARE"],
+        	"stage": "CONCEPT_STAGE",
+        	"investmentStage": ["ACCELERATOR", "BUSINESS_ANGELS", "INCUBATOR"],
+        	"minInvestmentSize": 10000,
+        	"maxInvestmentSize": 1000000,
+        	"isProductOnMarket": false,
+        	"businessType": "B2C"
+        }
+    created: 1586010220234
+    description: ""
+    headers:
+      - id: pair_b9d92a505a284b529477b364a9400f1c
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1585632356168
+    method: POST
+    modified: 1586083344210
+    name: 4. Create Startup
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/profiles/startups/
+    _type: request
+  - _id: req_66619fda32f341d48be52c2423ef35e8
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |
+        {
+        	"industries": ["ENERGY", "MOBILITY", "ENTERTAINMENT"],
+        	"sectors": ["IOT_AND_SENSORS", "AI_AND_ROBOTICS"],
+        	"productTypes": ["HARDWARE", "SOFTWARE"],
+        	"stage": "CONCEPT_STAGE",
+        	"investmentStage": ["ACCELERATOR", "BUSINESS_ANGELS", "INCUBATOR"],
+        	"minInvestmentSize": 10000,
+        	"maxInvestmentSize": 1000000,
+        	"isProductOnMarket": false,
+        	"businessType": "B2C"
+        }
+    created: 1586010118036
+    description: ""
+    headers:
+      - id: pair_9a50373c8ce34eb6bb77bcf27f31f6c4
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1585632356118
+    method: POST
+    modified: 1586010999190
+    name: 3. Validate Startup Step 3
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/startup/step-3/
+    _type: request
+  - _id: req_9a547ebc66e847a8a1cc470de81baf41
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "teamMembers": [
+            {
+              "name": "Kenny Grinder ",
+              "email": "KennyGrinder@iotservice.io"
+            },
+            {
+              "name": "Ruth Reyes",
+              "email": "Ruth@iotservice.io"
+            },
+        		{
+              "name": "Loretta Page",
+              "email": "lorettapage@iotservice.io"
+            }
+          ]
+        }
+    created: 1586009176619
+    description: ""
+    headers:
+      - id: pair_295c46526c8d4f96ba26dd56475675e9
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1585632356068
+    method: POST
+    modified: 1586010085414
+    name: 2. Validate Startup Step 2
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/startup/step-2/
+    _type: request
+  - _id: req_cd18f8c62a5c468a96ebfbcaad29c23f
+    authentication: {}
+    body:
+      mimeType: multipart/form-data
+      params:
+        - description: ""
+          fileName: /Users/user/Desktop/insomnia/bioenergy_logo.png
+          id: pair_d42e20c1407749b2a43bc28e1db69db3
+          name: logotype
+          type: file
+          value: ""
+    created: 1586009083276
+    description: ""
+    headers:
+      - id: pair_750c78e078214fc29df49992bf859cd6
+        name: Content-Type
+        value: multipart/form-data
+    isPrivate: false
+    metaSortKey: -1585632356018
+    method: POST
+    modified: 1586083414540
+    name: 1.1 Upload logotype
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/upload-logotype/
+    _type: request
+  - _id: req_151d497b05c64403aee09e1d96a4d509
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"website": "https://IOTservice.io",
+        	"phoneNumber": "+41-755-5532-77",
+        	"country": "CH",
+        	"foundingDate": "2020-01-11",
+        	"description": "We build things",
+        	"name": "IoT Service",
+        	"email": "hi@iotservice.io"
+        }
+    created: 1586008667666
+    description: ""
+    headers:
+      - id: pair_d14221ca3d694bf7b704ed9bbf734e50
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1585632355968
+    method: POST
+    modified: 1586009048771
+    name: 1. Validate Startup Step 1
+    parameters: []
+    parentId: fld_b0def67eb7e8462fa66126f1b09d691c
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/startup/step-1/
+    _type: request
+  - _id: req_14cb0e0f7b5d4c2da8bc4c72402948bd
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"email": "MichaelSutton@bioenergy.com",
+        	"password": "123qweasd"
+        }
+    created: 1586082958668
+    description: ""
+    headers:
+      - id: pair_1e241b339e2a444fa9c99ccbeb6da45f
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586082958668
+    method: POST
+    modified: 1586082991025
+    name: 6. Sign in account
+    parameters: []
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/token/
+    _type: request
+  - _id: fld_74f761b788a3440c8c1369f627d71013
+    created: 1585256056661
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1585256056661
+    modified: 1586109099012
+    name: Create company & add representants & sign up & sign in
+    parentId: wrk_2d7b1d46077947cfb4d5c9c89f0c536e
+    _type: request_group
+  - _id: req_c3fdea51a2aa48339073659871d1d6ca
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Michael Sutton",
+        	"email": "MichaelSutton@bioenergy.com",
+        	"password": "123qweasd"
+        }
+    created: 1586082468790
+    description: ""
+    headers:
+      - id: pair_f880ee9a85e04cef8a11114b2e085486
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1586082468790
+    method: POST
+    modified: 1586082945018
+    name: 5. Sign up account
+    parameters: []
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/profiles/
+    _type: request
+  - _id: req_7f2c6159894649f9aebda39c8907ddff
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"industries": ["ENERGY", "HARDWARE", "MATERIALS"],
+        	"sectors": ["IOT_AND_SENSORS"],
+        	"productTypes": ["HARDWARE", "OTHER"],
+        	"stage": "GROWTH_STAGE",
+        	"investmentStage": ["VENTURE_CAPITAL", "BUSINESS_ANGELS"],
+        	"minInvestmentSize": 1000000,
+        	"maxInvestmentSize": 9000000,
+        	"isProductOnMarket": true,
+        	"businessType": "B2B",
+        	 "teamMembers": [
+           {
+             "name": "Michael Sutton",
+             "email": "MichaelSutton@bioenergy.com"
+           },
+           {
+             "name": "Michelle Lang",
+             "email": "Michelle@bioenergy.com"
+            }
+          ],
+         "website": "https://bioenergy.com",
+         "phoneNumber": "+48 609123915",
+         "foundingDate": "1997-03-29",
+         "description": |"Bioenergy refers to electricity and gas.",
+         "country": "PL",
+         "name": "BioEnergy",
+         "email": "contact@bioenergy.com",
+        	"logotype": "bioenergy_logo_kIVo2SN.png"
+        }
+    created: 1576490492488
+    description: ""
+    headers:
+      - description: ""
+        disabled: false
+        id: pair_7152fea171c94ea5ac74366f5bf2f5b6
+        name: Accept
+        value: application/json
+      - id: pair_5eca947baf864bb79ff231df5e781a92
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1584552452903.5
+    method: POST
+    modified: 1586082874921
+    name: 4. Create company
+    parameters:
+      - description: ""
+        disabled: true
+        id: pair_1b3a99da7d5546289da362f27cf9627b
+        multiline: true
+        name: logotype
+        type: text
+        value: ""
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/profiles/companies/
+    _type: request
+  - _id: req_c9460aadde6f44f4a3a159c100436b4e
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |
+        {
+        	"industries": ["ENERGY", "HARDWARE", "MATERIALS"],
+        	"sectors": ["IOT_AND_SENSORS"],
+        	"productTypes": ["HARDWARE", "OTHER"],
+        	"stage": "GROWTH_STAGE",
+        	"investmentStage": ["VENTURE_CAPITAL", "BUSINESS_ANGELS"],
+        	"minInvestmentSize": 1000000,
+        	"maxInvestmentSize": 9000000,
+        	"isProductOnMarket": true,
+        	"businessType": "B2B"
+        }
+    created: 1576502435789
+    description: ""
+    headers:
+      - id: pair_089ae088bb5c4336ab831fc5d49163c3
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1584552452853.5
+    method: POST
+    modified: 1585997945811
+    name: 3. Validate Company Step 3
+    parameters: []
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/form/company/step-3/
+    _type: request
+  - _id: req_d21b979e75744867b880ebf9557e3677
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "teamMembers": [
+            {
+              "name": "Michael Sutton ",
+              "email": "MichaelSutton@bioenergy.com"
+            },
+              {
+              "name": "Michelle Lang",
+              "email": "Michelle@bioenergy.com"
+              }
+          ]
+        }
+    created: 1576502395856
+    description: ""
+    headers:
+      - id: pair_8194ddd759bc4e07ace8c2697c7322db
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1584552452803.5
+    method: POST
+    modified: 1585997463573
+    name: 2. Validate Company Step 2
+    parameters: []
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/form/company/step-2/
+    _type: request
+  - _id: req_6f2b417fa36f483589c0f245f216e681
+    authentication: {}
+    body:
+      mimeType: multipart/form-data
+      params:
+        - description: ""
+          fileName: /Users/user/Desktop/insomnia/bioenergy_logo.png
+          id: pair_7c45c3775d734c38b38cc5105e77b173
+          name: logotype
+          type: file
+          value: ""
+    created: 1586003145445
+    description: When a user invokes the UploadPicker and selects a picture,
+      should immediately send a request to this endpoint, and the response
+      should be passed to the '4. Create company' request as 'logotype' field.
+    headers:
+      - id: pair_52060ad922c848d6836fce0c674946d7
+        name: Content-Type
+        value: multipart/form-data
+    isPrivate: false
+    metaSortKey: -1584552452778.5
+    method: POST
+    modified: 1586083622624
+    name: 1.1 Upload logotype
+    parameters: []
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: http://localhost:8000/api/form/upload-logotype/
+    _type: request
+  - _id: req_2e0324fa1934476381acf7c76a318292
+    authentication: {}
+    body:
+      mimeType: application/json
+      text: >-
+        {
+         "website": "https://bioenergy.com",
+         "phoneNumber": "+48 609123915",
+         "foundingDate": "1997-03-29",
+         "description": "Bioenergy refers to electricity and gas.",
+         "country": "PL",
+         "name": "BioEnergy",
+         "email": "contact@bioenergy.com"
+        }
+    created: 1576502266352
+    description: ""
+    headers:
+      - id: pair_84458fbd7c3f49c19031b9c41657fa61
+        name: Content-Type
+        value: application/json
+    isPrivate: false
+    metaSortKey: -1584552452753.5
+    method: POST
+    modified: 1586005476518
+    name: 1. Validate Company Step 1
+    parameters:
+      - id: pair_3d5e330d427e4c7aba07eae9408edb92
+        name: ""
+        value: ""
+    parentId: fld_74f761b788a3440c8c1369f627d71013
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingFollowRedirects: global
+    settingRebuildPath: true
+    settingSendCookies: true
+    settingStoreCookies: true
+    url: localhost:8000/api/form/company/step-1/
+    _type: request
+  - _id: env_9d393e5c689714deae3ef8f4d0c30f39990a728a
+    color: null
+    created: 1576490316240
+    data: {}
+    dataPropertyOrder: null
+    isPrivate: false
+    metaSortKey: 1576490316241
+    modified: 1576490316240
+    name: Base Environment
+    parentId: wrk_2d7b1d46077947cfb4d5c9c89f0c536e
+    _type: environment
+  - _id: jar_9d393e5c689714deae3ef8f4d0c30f39990a728a
+    cookies: []
+    created: 1576490316243
+    modified: 1576490316243
+    name: Default Jar
+    parentId: wrk_2d7b1d46077947cfb4d5c9c89f0c536e
+    _type: cookie_jar
