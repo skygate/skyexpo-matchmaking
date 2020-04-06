@@ -1,4 +1,4 @@
-import 'package:mobile/common/models/validation_error_model.dart';
+import 'package:mobile/features/form/models/validation_error_model.dart';
 
 import 'on_form_submit_type.dart';
 

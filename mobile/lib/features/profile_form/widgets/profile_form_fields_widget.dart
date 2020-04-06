@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/common/models/form_field_controller_model.dart';
+// import 'package:mobile/common/models/form_field_controller_model.dart';
 
 import 'package:mobile/common/validators/validators.dart'
     show isNotEmptyValidator;
 import 'package:mobile/common/widgets/form_text_field_widget.dart'
     show FormTextField;
+import 'package:mobile/features/form/models/form_field_controller_model.dart';
 import 'image_picker_widget.dart' show ImagePicker;
 
 class ProfileFormFields extends StatelessWidget {

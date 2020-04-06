@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/common/models/form_field_controller_model.dart';
 
 import 'package:mobile/config/colors_config.dart' show AppColor;
 import 'package:mobile/config/fonts_config.dart' show FontSize;
+import 'package:mobile/features/form/models/form_field_controller_model.dart';
 
 class FormFieldError extends StatelessWidget {
   final FormFieldController controller;

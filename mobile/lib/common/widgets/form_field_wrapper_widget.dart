@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/common/models/form_field_controller_model.dart';
 import 'package:mobile/common/widgets/form_field_error_widget.dart';
 
 import 'package:mobile/config/index.dart' show FontSize;
+import 'package:mobile/features/form/models/form_field_controller_model.dart';
 
 class FormFieldWrapper extends StatelessWidget {
   final String label;

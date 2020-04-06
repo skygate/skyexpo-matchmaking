@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/common/models/form_field_controller_model.dart';
+// import 'package:mobile/common/models/form_field_controller_model.dart';
 import 'package:mobile/common/validators/validators.dart';
+import 'package:mobile/features/form/models/form_field_controller_model.dart';
 import 'package:mobile/features/profile_form/mocks/team_avatars_mock.dart';
 import 'package:mobile/features/profile_form/widgets/profile_form_widget.dart';
 
@@ -46,15 +47,9 @@ class _ProfileFormContainerState extends State<ProfileFormContainer> {
       });
 
   void submitForm() {
-    print('odpalam submit');
-
     profileFormGroup.handleSubmit((values) {
       print(values);
     });
-
-    print(profileFormGroup.hasErrors);
-    print(profileFormGroup.controllers['avatar'].touched);
-    print(profileFormGroup.controllers['avatar'].errors);
   }
 
   @override
