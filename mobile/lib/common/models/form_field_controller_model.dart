@@ -6,14 +6,14 @@ class FormFieldController {
   final String key;
   final List<AppValidator> validators;
   dynamic value;
-  Map<String, String> errors;
-  bool touched;
+  Map<String, String> errors = {};
+  bool touched = false;
 
-  FormFieldController({this.key, this.touched, this.validators});
+  FormFieldController({this.key, this.value, this.validators});
 
   handleChange(dynamic newValue) {
     value = newValue;
-    this.handleFieldValidation(newValue);
+    this.validateField();
   }
 
   handleBlur() {
@@ -24,43 +24,69 @@ class FormFieldController {
     this.touched = true;
   }
 
-  handleFieldValidation(newValue) {
-    final errorsList = validators.map((validator) => validator(newValue));
-    errors = Map.fromIterable(errorsList);
+  validateField() {
+    final errorsList = validators
+        .map((validator) => validator(value))
+        .where((error) => error != null);
+
+    errors = Map.fromIterable(
+      errorsList,
+      key: (controller) => controller.key,
+      value: (controller) => controller.value,
+    );
   }
 }
 
 class FormGroup {
-  final Map<String, FormFieldController> controllers;
-  bool hasErrors;
-  bool isSubmitted;
+  Map<String, FormFieldController> controllers;
+  bool hasErrors = false;
+  bool isSubmitted = false;
 
   FormGroup(
     this.controllers,
   );
 
+  void validateFields() => this
+      .controllers
+      .values
+      .map((controller) => controller.validateField())
+      .toList();
+
   void checkIfFieldsHaveErrors() {
     this.hasErrors = this
         .controllers
-        .entries
-        .any((controller) => controller.value.errors.isNotEmpty);
+        .values
+        .any((controller) => controller.errors.isNotEmpty);
   }
 
   void markAllFieldsAsTouched() {
-    this
-        .controllers
-        .entries
-        .map((controller) => controller.value.touched = true);
+    final newControllersList = this.controllers.entries.map((entry) {
+      entry.value.touched = true;
+      return entry;
+    });
+
+    this.controllers = Map.fromIterable(
+      newControllersList,
+      key: (controller) => controller.key,
+      value: (controller) => controller.value,
+    );
   }
 
   Map<String, String> getFormValues() {
-    final listOfValues =
-        this.controllers.entries.map((entry) => {entry.key, entry.value.value});
-    return Map.fromIterable(listOfValues);
+    final listOfValues = this.controllers.entries.map((entry) {
+      return MapEntry(entry.key, entry.value.value);
+    });
+
+    return Map.fromIterable(
+      listOfValues,
+      key: (controller) => controller.key,
+      value: (controller) => controller.value,
+    );
   }
 
   handleSubmit(OnFormSubmit onSubmit) {
     this.markAllFieldsAsTouched();
+    this.validateFields();
     this.checkIfFieldsHaveErrors();
 
     if (!this.hasErrors) {

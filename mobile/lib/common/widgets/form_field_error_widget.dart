@@ -12,6 +12,9 @@ class FormFieldError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final errors = controller.errors;
+    print('sdf');
+    print(controller.errors);
+    print('sdf');
 
     bool isErrorVisible = errors.isNotEmpty && controller.touched;
 

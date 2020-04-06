@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/common/models/form_field_controller_model.dart';
 
 import 'package:mobile/core/widgets/sliver_layout_widget.dart'
     show SliverLayout;
@@ -15,13 +16,15 @@ class ProfileForm extends StatelessWidget {
   final Function setFormFieldValue;
   final Function onFormSubmit;
   final Team team;
+  final FormGroup profileFormGroup;
 
   ProfileForm(
       {@required this.formKey,
       @required this.profileFormData,
       @required this.setFormFieldValue,
       @required this.onFormSubmit,
-      @required this.team});
+      @required this.team,
+      @required this.profileFormGroup});
 
   @override
   Widget build(BuildContext context) => SliverLayout(
@@ -39,6 +42,7 @@ class ProfileForm extends StatelessWidget {
             formKey: formKey,
             formData: profileFormData,
             setFormFieldValue: setFormFieldValue,
+            profileFormGroup: profileFormGroup,
           )
         ]),
         bottomChild: SubmitButton(
