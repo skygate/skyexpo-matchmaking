@@ -11,20 +11,14 @@ import 'profile_form_header.dart' show ProfileFormHeader;
 import 'profile_form_fields_widget.dart' show ProfileFormFields;
 
 class ProfileForm extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final Map profileFormData;
-  final Function setFormFieldValue;
   final Function onFormSubmit;
   final Team team;
-  final FormGroup profileFormGroup;
+  final Map<String, FormFieldController> controllers;
 
   ProfileForm(
-      {@required this.formKey,
-      @required this.profileFormData,
-      @required this.setFormFieldValue,
-      @required this.onFormSubmit,
+      {@required this.onFormSubmit,
       @required this.team,
-      @required this.profileFormGroup});
+      @required this.controllers});
 
   @override
   Widget build(BuildContext context) => SliverLayout(
@@ -39,10 +33,7 @@ class ProfileForm extends StatelessWidget {
                 thickness: 1,
               )),
           ProfileFormFields(
-            formKey: formKey,
-            formData: profileFormData,
-            setFormFieldValue: setFormFieldValue,
-            profileFormGroup: profileFormGroup,
+            controllers: controllers,
           )
         ]),
         bottomChild: SubmitButton(
