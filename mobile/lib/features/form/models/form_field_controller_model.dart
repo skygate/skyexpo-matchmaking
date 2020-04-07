@@ -1,8 +1,6 @@
 import 'package:rxdart/rxdart.dart';
-import 'dart:async';
 
-import 'package:mobile/features/form/models/validation_error_model.dart';
-import 'on_form_submit_type.dart';
+import '../models/validation_error_model.dart';
 
 class FormFieldController {
   final List<AppValidator> validators;
@@ -18,27 +16,26 @@ class FormFieldController {
     this.touchedSubject.add(false);
   }
 
-  onDispose() {
+  void onDispose() {
     this.valueSubject.close();
     this.touchedSubject.close();
   }
 
-  handleChange(newValue) {
+  void handleChange(newValue) {
     this.valueSubject.add(newValue);
     this.validateField();
-    print(this.errors);
   }
 
-  handleBlur() {
+  void handleBlur() {
     setFieldAsTouched();
     validateField();
   }
 
-  setFieldAsTouched() {
+  void setFieldAsTouched() {
     this.touchedSubject.add(true);
   }
 
-  validateField() {
+  void validateField() {
     final errorsList = validators
         .map((validator) => validator(this.valueSubject.value))
         .where((error) => error != null);

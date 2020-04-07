@@ -1,1 +1,1 @@
-typedef void OnFormSubmit(Map<String, String> values);
+typedef Map<String, dynamic> OnFormSubmit();

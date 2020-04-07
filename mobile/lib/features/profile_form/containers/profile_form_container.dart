@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-// import 'package:mobile/common/models/form_field_controller_model.dart';
-import 'package:mobile/features/form/containers/form_container.dart';
-import 'package:mobile/features/form/models/form_field_controller_model.dart';
-import 'package:mobile/features/form/models/on_form_submit_type.dart';
-import 'package:mobile/features/profile_form/configs/profile_form_config.dart';
-import 'package:mobile/features/profile_form/mocks/team_avatars_mock.dart';
-import 'package:mobile/features/profile_form/widgets/profile_form_widget.dart';
+
+import 'package:mobile/features/form/containers/form_container.dart'
+    show FormContainer;
+import 'package:mobile/features/form/models/form_field_controller_model.dart'
+    show FormFieldController;
+import 'package:mobile/features/form/models/on_form_submit_type.dart'
+    show OnFormSubmit;
+
+import '../configs/profile_form_config.dart' show profileFormConfig;
+import '../mocks/team_avatars_mock.dart' show teamMock;
+import '../widgets/profile_form_widget.dart' show ProfileForm;
 
 class _ProfileFormContainer extends StatelessWidget {
   final Map<String, FormFieldController> controllers;
-  final Function handleSubmit;
+  final OnFormSubmit handleSubmit;
 
   _ProfileFormContainer({this.controllers, this.handleSubmit});
 
@@ -23,10 +27,8 @@ class _ProfileFormContainer extends StatelessWidget {
       controllers: controllers, team: teamMock, onFormSubmit: onFormSubmit);
 }
 
-Widget createProfileContainer(controllers, handleSubmit) {
-  return _ProfileFormContainer(
-      controllers: controllers, handleSubmit: handleSubmit);
-}
+Widget createProfileContainer(controllers, OnFormSubmit handleSubmit) =>
+    _ProfileFormContainer(controllers: controllers, handleSubmit: handleSubmit);
 
 final profileFormContainer = FormContainer(
     controllers: profileFormConfig, createChild: createProfileContainer);

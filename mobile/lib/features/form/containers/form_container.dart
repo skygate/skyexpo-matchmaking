@@ -4,7 +4,8 @@ import 'package:mobile/features/form/models/on_form_submit_type.dart';
 
 class FormContainer extends StatefulWidget {
   final Map<String, FormFieldController> controllers;
-  final Widget Function(Map<String, FormFieldController>, dynamic) createChild;
+  final Widget Function(Map<String, FormFieldController>, OnFormSubmit)
+      createChild;
 
   FormContainer({@required this.controllers, @required this.createChild});
 
@@ -68,7 +69,7 @@ class _FormContainerState extends State<FormContainer> {
     );
   }
 
-  handleSubmit() async {
+  Map<String, dynamic> handleSubmit() {
     setState(() {
       this.markAllFieldsAsTouched();
       this.validateAllFormFields();
