@@ -5,14 +5,12 @@ import 'package:mobile/features/form/models/validation_error_model.dart';
 import 'on_form_submit_type.dart';
 
 class FormFieldController {
-  final String key;
   final List<AppValidator> validators;
   Map<String, String> errors = {};
   BehaviorSubject<dynamic> valueSubject = BehaviorSubject<dynamic>();
   BehaviorSubject<bool> touchedSubject = BehaviorSubject<bool>();
 
   FormFieldController({
-    this.key,
     initialValue,
     this.validators,
   }) {
@@ -25,7 +23,7 @@ class FormFieldController {
     this.touchedSubject.close();
   }
 
-  handleChange(dynamic newValue) {
+  handleChange(newValue) {
     this.valueSubject.add(newValue);
     this.validateField();
     print(this.errors);
