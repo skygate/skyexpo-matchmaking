@@ -11,7 +11,7 @@ import 'profile_form_header.dart' show ProfileFormHeader;
 import 'profile_form_fields_widget.dart' show ProfileFormFields;
 
 class ProfileForm extends StatelessWidget {
-  final Function onFormSubmit;
+  final dynamic onFormSubmit;
   final Team team;
   final Map<String, FormFieldController> controllers;
 

@@ -14,6 +14,7 @@ class FormFieldController {
   handleChange(dynamic newValue) {
     value = newValue;
     this.validateField();
+    print('odpalam sie');
   }
 
   handleBlur() {
@@ -40,7 +41,6 @@ class FormFieldController {
 class FormGroup {
   Map<String, FormFieldController> controllers;
   bool hasErrors = false;
-  bool isSubmitted = false;
 
   FormGroup(
     this.controllers,
