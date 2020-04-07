@@ -1,14 +1,15 @@
-import 'package:mobile/features/form/models/validation_error_model.dart';
 import 'package:rxdart/rxdart.dart';
+import 'dart:async';
 
+import 'package:mobile/features/form/models/validation_error_model.dart';
 import 'on_form_submit_type.dart';
 
 class FormFieldController {
   final String key;
   final List<AppValidator> validators;
   Map<String, String> errors = {};
-  BehaviorSubject<dynamic> valueSubject = BehaviorSubject();
-  BehaviorSubject<bool> touchedSubject = BehaviorSubject();
+  BehaviorSubject<dynamic> valueSubject = BehaviorSubject<dynamic>();
+  BehaviorSubject<bool> touchedSubject = BehaviorSubject<bool>();
 
   FormFieldController({
     this.key,
@@ -17,6 +18,11 @@ class FormFieldController {
   }) {
     this.valueSubject.add(initialValue);
     this.touchedSubject.add(false);
+  }
+
+  onDispose() {
+    this.valueSubject.close();
+    this.touchedSubject.close();
   }
 
   handleChange(dynamic newValue) {

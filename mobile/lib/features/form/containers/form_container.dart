@@ -23,12 +23,25 @@ class _FormContainerState extends State<FormContainer> {
     controllers = widget.controllers;
   }
 
+  @override
+  void dispose() {
+    this.disposeAllControllers();
+
+    super.dispose();
+  }
+
   void checkIfFieldsHaveErrors() {
     this.hasErrors = this
         .controllers
         .values
         .any((controller) => controller.errors.isNotEmpty);
   }
+
+  void disposeAllControllers() => this
+      .controllers
+      .values
+      .map((controller) => controller.onDispose())
+      .toList();
 
   void validateAllFormFields() => this
       .controllers
