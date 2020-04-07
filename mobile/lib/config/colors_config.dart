@@ -7,6 +7,7 @@ class AppColor extends Vnum<Color> {
   static const AppColor elementsBackground =
       const AppColor.define(Color(0xFFFFFFFF));
   static const AppColor primary = const AppColor.define(Color(0xFF000A64));
+  static const AppColor danger = const AppColor.define(Color(0xFFF50602));
   static const AppColor inputBackground =
       const AppColor.define(Color(0xFFF5F5F5));
   static const AppColor buttonBackground =
