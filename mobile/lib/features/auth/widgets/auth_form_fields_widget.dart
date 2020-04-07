@@ -24,28 +24,28 @@ class AuthFormFields extends StatelessWidget {
       key: formKey,
       child: Column(
         children: <Widget>[
-          // if (isRegisterForm)
-          //   FormTextField(
-          //     fieldId: 'name',
-          //     label: "Name",
-          //     setFormFieldValue: setFormFieldValue,
-          //     formValues: formData,
-          //     validators: [isNotEmptyValidator],
-          //   ),
-          // FormTextField(
-          //   fieldId: 'email',
-          //   label: "Email address",
-          //   setFormFieldValue: setFormFieldValue,
-          //   formValues: formData,
-          //   validators: [isNotEmptyValidator, isValidEmailValidator],
-          // ),
-          // FormPasswordField(
-          //   fieldId: 'password',
-          //   label: "Password",
-          //   setFormFieldValue: setFormFieldValue,
-          //   formValues: formData,
-          //   validators: [isNotEmptyValidator, isValidPasswordValidator],
-          // ),
+          if (isRegisterForm)
+            FormTextField(
+              fieldId: 'name',
+              label: "Name",
+              setFormFieldValue: setFormFieldValue,
+              formValues: formData,
+              validators: [isNotEmptyValidator],
+            ),
+          FormTextField(
+            fieldId: 'email',
+            label: "Email address",
+            setFormFieldValue: setFormFieldValue,
+            formValues: formData,
+            validators: [isNotEmptyValidator, isValidEmailValidator],
+          ),
+          FormPasswordField(
+            fieldId: 'password',
+            label: "Password",
+            setFormFieldValue: setFormFieldValue,
+            formValues: formData,
+            validators: [isNotEmptyValidator, isValidPasswordValidator],
+          ),
         ],
       ),
     );
