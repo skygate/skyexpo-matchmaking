@@ -9,7 +9,7 @@ import 'package:mobile/features/profile_form/widgets/profile_form_widget.dart';
 
 class _ProfileFormContainer extends StatelessWidget {
   final Map<String, FormFieldController> controllers;
-  final dynamic handleSubmit;
+  final Function handleSubmit;
 
   _ProfileFormContainer({this.controllers, this.handleSubmit});
 
@@ -27,9 +27,6 @@ Widget createProfileContainer(controllers, handleSubmit) {
   return _ProfileFormContainer(
       controllers: controllers, handleSubmit: handleSubmit);
 }
-
-// final profileFormContainer =
-//     withForm(profileFormConfig, createProfileContainer);
 
 final profileFormContainer = FormContainer(
     controllers: profileFormConfig, createChild: createProfileContainer);

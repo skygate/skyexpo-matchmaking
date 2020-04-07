@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/features/form/models/form_field_controller_model.dart';
 import 'package:mobile/features/form/models/on_form_submit_type.dart';
+import 'package:rxdart/rxdart.dart';
 
 class FormContainer extends StatefulWidget {
   final Map<String, FormFieldController> controllers;
@@ -22,12 +23,6 @@ class _FormContainerState extends State<FormContainer> {
     super.initState();
     controllers = widget.controllers;
   }
-
-  void validateFields() => this
-      .controllers
-      .values
-      .map((controller) => controller.validateField())
-      .toList();
 
   void checkIfFieldsHaveErrors() {
     this.hasErrors = this
@@ -51,7 +46,7 @@ class _FormContainerState extends State<FormContainer> {
 
   Map<String, String> getFormValues() {
     final listOfValues = this.controllers.entries.map((entry) {
-      return MapEntry(entry.key, entry.value.value);
+      return MapEntry(entry.key, entry.value.valueSubject.value);
     });
 
     return Map.fromIterable(
@@ -61,16 +56,24 @@ class _FormContainerState extends State<FormContainer> {
     );
   }
 
-  Map<String, String> handleSubmit() {
-    this.markAllFieldsAsTouched();
-    this.validateFields();
-    this.checkIfFieldsHaveErrors();
+  void validateAllFormFields() => this
+      .controllers
+      .values
+      .map((controller) => controller.validateField())
+      .toList();
+
+  handleSubmit() async {
+    setState(() {
+      this.markAllFieldsAsTouched();
+      this.validateAllFormFields();
+      this.checkIfFieldsHaveErrors();
+    });
 
     if (!this.hasErrors) {
       final values = this.getFormValues();
       return values;
     }
-    print(controllers['avatar'].errors);
+
     return null;
   }
 

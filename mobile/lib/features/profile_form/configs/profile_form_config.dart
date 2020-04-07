@@ -3,15 +3,15 @@ import 'package:mobile/features/form/models/form_field_controller_model.dart';
 
 final Map<String, FormFieldController> profileFormConfig = {
   "avatar": FormFieldController(
-      key: "avatar", value: '', validators: [isNotEmptyValidator]),
+      key: "avatar", initialValue: '', validators: [isNotEmptyValidator]),
   "phone": FormFieldController(
-      key: "phone", value: '', validators: [isNotEmptyValidator]),
+      key: "phone", initialValue: '', validators: [isNotEmptyValidator]),
   "country": FormFieldController(
-      key: "country", value: '', validators: [isNotEmptyValidator]),
+      key: "country", initialValue: '', validators: [isNotEmptyValidator]),
   "proffesion": FormFieldController(
-      key: "proffesion", value: '', validators: [isNotEmptyValidator]),
+      key: "proffesion", initialValue: '', validators: [isNotEmptyValidator]),
   "role": FormFieldController(
-      key: "role", value: '', validators: [isNotEmptyValidator]),
+      key: "role", initialValue: '', validators: [isNotEmptyValidator]),
   "gender": FormFieldController(
-      key: "gender", value: '', validators: [isNotEmptyValidator]),
+      key: "gender", initialValue: '', validators: [isNotEmptyValidator]),
 };
