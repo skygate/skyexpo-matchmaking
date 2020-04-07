@@ -14,4 +14,6 @@ final Map<String, FormFieldController> profileFormConfig = {
       key: "role", initialValue: '', validators: [isNotEmptyValidator]),
   "gender": FormFieldController(
       key: "gender", initialValue: '', validators: [isNotEmptyValidator]),
+  "biogram": FormFieldController(
+      key: "biogram", initialValue: '', validators: [isNotEmptyValidator]),
 };

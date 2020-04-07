@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/common/helpers/compose_validators_helper.dart'
-    show composeValidators;
 import 'package:mobile/config/index.dart' show AppColor;
-import 'package:mobile/features/form/models/form_field_controller_model.dart';
+import 'package:mobile/features/form/models/form_field_controller_model.dart'
+    show FormFieldController;
 
 import 'form_field_wrapper_widget.dart';
 
