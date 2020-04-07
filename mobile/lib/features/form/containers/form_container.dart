@@ -5,9 +5,9 @@ import 'package:mobile/features/profile_form/widgets/profile_form_widget.dart';
 
 class FormContainer extends StatefulWidget {
   final Map<String, FormFieldController> controllers;
-  final Widget child;
+  final Widget Function(Map<String, FormFieldController>) createChild;
 
-  FormContainer({@required this.controllers, @required this.child});
+  FormContainer({@required this.controllers, @required this.createChild});
 
   @override
   _FormContainerState createState() => _FormContainerState();
@@ -25,5 +25,10 @@ class _FormContainerState extends State<FormContainer> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => widget.createChild(controllers);
+}
+
+Widget withForm(Map<String, FormFieldController> controllers,
+    Widget Function(Map<String, FormFieldController> controllers) createChild) {
+  return FormContainer(createChild: createChild, controllers: controllers);
 }
