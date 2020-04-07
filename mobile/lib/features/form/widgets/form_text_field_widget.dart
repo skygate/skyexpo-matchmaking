@@ -13,7 +13,7 @@ InputDecoration getInputDecorator(Widget suffix) => InputDecoration(
     fillColor: AppColor.inputBackground.value,
     suffix: suffix);
 
-class FormTextField extends StatelessWidget {
+class FormTextField extends StatefulWidget {
   final String label;
   final Iterable<Function> validators;
   final bool isObscureText;
@@ -27,15 +27,40 @@ class FormTextField extends StatelessWidget {
       this.validators,
       this.suffix});
 
+  _FormTextFieldState createState() => _FormTextFieldState();
+}
+
+class _FormTextFieldState extends State<FormTextField> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(() {
+      print("Has focus: ${_focusNode.hasFocus}");
+
+      if (_focusNode.hasFocus) {
+        widget.controller.handleBlur();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FormFieldWrapper(
-      label: label,
-      controller: controller,
+      label: widget.label,
+      controller: widget.controller,
       child: TextFormField(
-        decoration: getInputDecorator(suffix),
-        obscureText: isObscureText,
-        onChanged: controller.handleChange,
+        focusNode: _focusNode,
+        decoration: getInputDecorator(widget.suffix),
+        obscureText: widget.isObscureText,
+        onChanged: widget.controller.handleChange,
       ),
     );
   }

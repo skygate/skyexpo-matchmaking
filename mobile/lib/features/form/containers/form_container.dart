@@ -45,9 +45,10 @@ class _FormContainerState extends State<FormContainer> {
   }
 
   Map<String, String> getFormValues() {
-    final listOfValues = this.controllers.entries.map((entry) {
-      return MapEntry(entry.key, entry.value.valueSubject.value);
-    });
+    final listOfValues = this
+        .controllers
+        .entries
+        .map((entry) => MapEntry(entry.key, entry.value.valueSubject.value));
 
     return Map.fromIterable(
       listOfValues,
@@ -71,6 +72,7 @@ class _FormContainerState extends State<FormContainer> {
 
     if (!this.hasErrors) {
       final values = this.getFormValues();
+
       return values;
     }
 
