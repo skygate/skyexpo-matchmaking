@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/features/form/models/form_field_controller_model.dart';
 import 'package:mobile/features/form/models/on_form_submit_type.dart';
-import 'package:rxdart/rxdart.dart';
 
 class FormContainer extends StatefulWidget {
   final Map<String, FormFieldController> controllers;
@@ -31,18 +30,17 @@ class _FormContainerState extends State<FormContainer> {
         .any((controller) => controller.errors.isNotEmpty);
   }
 
-  void markAllFieldsAsTouched() {
-    final newControllersList = this.controllers.entries.map((entry) {
-      entry.value.touched = true;
-      return entry;
-    });
+  void validateAllFormFields() => this
+      .controllers
+      .values
+      .map((controller) => controller.validateField())
+      .toList();
 
-    this.controllers = Map.fromIterable(
-      newControllersList,
-      key: (controller) => controller.key,
-      value: (controller) => controller.value,
-    );
-  }
+  void markAllFieldsAsTouched() => this
+      .controllers
+      .values
+      .map((controller) => controller.setFieldAsTouched())
+      .toList();
 
   Map<String, String> getFormValues() {
     final listOfValues = this
@@ -56,12 +54,6 @@ class _FormContainerState extends State<FormContainer> {
       value: (controller) => controller.value,
     );
   }
-
-  void validateAllFormFields() => this
-      .controllers
-      .values
-      .map((controller) => controller.validateField())
-      .toList();
 
   handleSubmit() async {
     setState(() {

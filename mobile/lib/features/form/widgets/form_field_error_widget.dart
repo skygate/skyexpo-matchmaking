@@ -13,7 +13,7 @@ class FormFieldError extends StatelessWidget {
   Widget build(BuildContext context) {
     final errors = controller.errors;
 
-    bool isErrorVisible = errors.isNotEmpty && controller.touched;
+    bool isErrorVisible = errors.isNotEmpty && controller.touchedSubject.value;
 
     return Container(child: Text(isErrorVisible ? errors.values.first : ''));
   }

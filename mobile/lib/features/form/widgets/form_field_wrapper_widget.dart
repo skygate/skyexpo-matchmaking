@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:mobile/config/index.dart' show FontSize;
-import 'package:mobile/features/form/models/form_field_controller_model.dart';
-
-import 'form_field_error_widget.dart';
+import '../models/form_field_controller_model.dart' show FormFieldController;
+import 'form_field_error_widget.dart' show FormFieldError;
 
 class FormFieldWrapper extends StatefulWidget {
   final String label;
@@ -18,12 +19,26 @@ class FormFieldWrapper extends StatefulWidget {
 }
 
 class _FormFieldWrapperState extends State<FormFieldWrapper> {
+  StreamSubscription<dynamic> valueSubscription;
+  StreamSubscription<bool> touchSubscription;
+
+  void refresh() => setState(() {});
+
   @override
   void initState() {
     super.initState();
-    widget.controller.valueSubject.listen((value) {
-      setState(() {}); //setState is  required to refresh widget on value change
-    });
+
+    valueSubscription = widget.controller.valueSubject.listen((_) => refresh());
+    touchSubscription =
+        widget.controller.touchedSubject.listen((_) => refresh());
+  }
+
+  @override
+  void dispose() {
+    valueSubscription.cancel();
+    touchSubscription.cancel();
+
+    super.dispose();
   }
 
   @override

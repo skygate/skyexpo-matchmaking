@@ -37,9 +37,7 @@ class _FormTextFieldState extends State<FormTextField> {
   void initState() {
     super.initState();
     _focusNode.addListener(() {
-      print("Has focus: ${_focusNode.hasFocus}");
-
-      if (_focusNode.hasFocus) {
+      if (!_focusNode.hasFocus) {
         widget.controller.handleBlur();
       }
     });
@@ -52,16 +50,14 @@ class _FormTextFieldState extends State<FormTextField> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return FormFieldWrapper(
-      label: widget.label,
-      controller: widget.controller,
-      child: TextFormField(
-        focusNode: _focusNode,
-        decoration: getInputDecorator(widget.suffix),
-        obscureText: widget.isObscureText,
-        onChanged: widget.controller.handleChange,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => FormFieldWrapper(
+        label: widget.label,
+        controller: widget.controller,
+        child: TextFormField(
+          focusNode: _focusNode,
+          decoration: getInputDecorator(widget.suffix),
+          obscureText: widget.isObscureText,
+          onChanged: widget.controller.handleChange,
+        ),
+      );
 }

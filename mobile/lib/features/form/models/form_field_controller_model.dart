@@ -6,9 +6,9 @@ import 'on_form_submit_type.dart';
 class FormFieldController {
   final String key;
   final List<AppValidator> validators;
-  BehaviorSubject<dynamic> valueSubject = BehaviorSubject();
   Map<String, String> errors = {};
-  bool touched = false;
+  BehaviorSubject<dynamic> valueSubject = BehaviorSubject();
+  BehaviorSubject<bool> touchedSubject = BehaviorSubject();
 
   FormFieldController({
     this.key,
@@ -16,6 +16,7 @@ class FormFieldController {
     this.validators,
   }) {
     this.valueSubject.add(initialValue);
+    this.touchedSubject.add(false);
   }
 
   handleChange(dynamic newValue) {
@@ -26,10 +27,11 @@ class FormFieldController {
 
   handleBlur() {
     setFieldAsTouched();
+    validateField();
   }
 
   setFieldAsTouched() {
-    this.touched = true;
+    this.touchedSubject.add(true);
   }
 
   validateField() {
