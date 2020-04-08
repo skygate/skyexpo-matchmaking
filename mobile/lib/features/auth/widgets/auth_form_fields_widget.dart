@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mobile/common/validators/index.dart'
     show isNotEmptyValidator, isValidEmailValidator, isValidPasswordValidator;
-import 'package:mobile/common/widgets/form_text_field_widget.dart'
+import 'package:mobile/features/form/widgets/form_text_field_widget.dart'
     show FormTextField;
 import 'form_password_field.dart' show FormPasswordField;
 

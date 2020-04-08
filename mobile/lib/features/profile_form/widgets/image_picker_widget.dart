@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as image_picker;
 
 import 'package:mobile/config/index.dart' show AppColor;
-import 'package:mobile/common/widgets/form_field_wrapper_widget.dart'
+import 'package:mobile/features/form/widgets/form_field_wrapper_widget.dart'
     show FormFieldWrapper;
-import '../helpers/get_file_size_from_bytes.dart';
+import '../helpers/get_file_size_from_bytes.dart' show getFileSizeFromBytes;
 import 'image_picker_placeholder_widget.dart' show ImagePickerPlaceholder;
 import 'image_picker_preview_widget.dart' show ImagePickerPreview;
 import 'image_picker_body_widget.dart' show ImagePickerBody;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:mobile/common/widgets/form_text_field_widget.dart';
+import 'package:mobile/features/form/widgets/form_text_field_widget.dart';
 
 class FormPasswordField extends StatefulWidget {
   final String label;
@@ -35,10 +34,7 @@ class _FormPasswordFieldState extends State<FormPasswordField> {
 
   @override
   Widget build(BuildContext context) => FormTextField(
-      fieldId: widget.fieldId,
       label: widget.label,
-      setFormFieldValue: widget.setFormFieldValue,
-      formValues: widget.formValues,
       validators: widget.validators,
       isObscureText: isObscureText,
       suffix: GestureDetector(

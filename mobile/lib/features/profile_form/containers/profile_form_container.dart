@@ -1,45 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/profile_form/mocks/team_avatars_mock.dart';
-import 'package:mobile/features/profile_form/widgets/profile_form_widget.dart';
 
-class ProfileFormContainer extends StatefulWidget {
-  @override
-  _ProfileFormContainerState createState() => _ProfileFormContainerState();
-}
+import 'package:mobile/features/form/containers/form_container.dart'
+    show FormContainer;
+import 'package:mobile/features/form/models/form_field_controller_model.dart'
+    show FormFieldController;
+import 'package:mobile/features/form/models/on_form_submit_type.dart'
+    show OnFormSubmit;
 
-class _ProfileFormContainerState extends State<ProfileFormContainer> {
-  final formKey = GlobalKey<FormState>();
-  Map<String, String> profileFormData;
+import '../configs/profile_form_config.dart' show profileFormConfig;
+import '../mocks/team_avatars_mock.dart' show teamMock;
+import '../widgets/profile_form_widget.dart' show ProfileForm;
 
-  @override
-  void initState() {
-    super.initState();
-    profileFormData = {
-      'avatar': '',
-      'phone': '',
-      'country': '',
-      'proffesion': '',
-      'role': '',
-      'gender': ''
-    };
-  }
+class _ProfileFormContainer extends StatelessWidget {
+  final Map<String, FormFieldController> controllers;
+  final OnFormSubmit handleSubmit;
 
-  void setFormFieldValue(String fieldId, String value) => setState(() {
-        profileFormData[fieldId] = value;
-      });
+  _ProfileFormContainer({this.controllers, this.handleSubmit});
 
-  void submitForm() {
-    if (formKey.currentState.validate()) {
-      formKey.currentState.save();
-    }
+  void onFormSubmit() {
+    final result = handleSubmit();
+    print(result);
   }
 
   @override
   Widget build(BuildContext context) => ProfileForm(
-        formKey: formKey,
-        profileFormData: profileFormData,
-        setFormFieldValue: setFormFieldValue,
-        onFormSubmit: submitForm,
-        team: teamMock,
-      );
+      controllers: controllers, team: teamMock, onFormSubmit: onFormSubmit);
 }
+
+Widget createProfileContainer(controllers, OnFormSubmit handleSubmit) =>
+    _ProfileFormContainer(controllers: controllers, handleSubmit: handleSubmit);
+
+final profileFormContainer = FormContainer(
+    controllers: profileFormConfig, createChild: createProfileContainer);

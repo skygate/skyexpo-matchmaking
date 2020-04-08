@@ -1,80 +1,49 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/common/validators/index.dart'
-    show isNotEmptyValidator, isValidEmailValidator;
-import 'package:mobile/common/widgets/form_text_field_widget.dart'
+import 'package:mobile/features/form/models/form_field_controller_model.dart'
+    show FormFieldController;
+import 'package:mobile/features/form/widgets/form_text_field_widget.dart'
     show FormTextField;
 import 'image_picker_widget.dart' show ImagePicker;
 
 class ProfileFormFields extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final Function setFormFieldValue;
-  final Map<String, String> formData;
+  final Map<String, FormFieldController> controllers;
 
-  ProfileFormFields({
-    @required this.setFormFieldValue,
-    @required this.formKey,
-    @required this.formData,
-  });
+  ProfileFormFields({@required this.controllers});
 
   @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
+  Widget build(BuildContext context) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           FormTextField(
-            fieldId: 'name',
-            label: "Name",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator],
+            label: "Avatar",
+            controller: controllers["avatar"],
           ),
-          ImagePicker(),
+          // ImagePicker(),
           FormTextField(
-            fieldId: 'phone',
             label: "Phone (optional)",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator],
+            controller: controllers["phone"],
           ),
           FormTextField(
-            fieldId: 'country',
             label: "Country",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator],
+            controller: controllers["country"],
           ),
           FormTextField(
-            fieldId: 'proffesion',
             label: "Proffesion",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator, isValidEmailValidator],
+            controller: controllers["proffesion"],
           ),
           FormTextField(
-            fieldId: 'Role ',
             label: "Role",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator],
+            controller: controllers["role"],
           ),
           FormTextField(
-            fieldId: 'gender',
             label: "Gender",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator, isValidEmailValidator],
+            controller: controllers["gender"],
           ),
           FormTextField(
-            fieldId: 'biogram',
             label: "Short biogram (optional)",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
+            controller: controllers["biogram"],
           ),
         ],
-      ),
-    );
-  }
+      );
 }

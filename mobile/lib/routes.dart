@@ -10,12 +10,12 @@ import 'features/auth/containers/register_container.dart'
 import 'features/matching/containers/matching_list_container.dart'
     show MatchingListContainer;
 import 'features/profile_form/containers/profile_form_container.dart'
-    show ProfileFormContainer;
+    show profileFormContainer;
 
 final appRoutes = {
   AppRoute.logIn.value: (context) => LogInContainer(),
   AppRoute.register.value: (context) => RegisterContainer(),
-  AppRoute.profileForm.value: (context) => ProfileFormContainer(),
+  AppRoute.profileForm.value: (context) => profileFormContainer,
   AppRoute.bottomNavigation.value: (context) => BottomNavigationLayout(),
 };
 
