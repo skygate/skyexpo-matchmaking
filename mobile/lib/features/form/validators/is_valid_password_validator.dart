@@ -4,13 +4,13 @@ import '../models/controller_value_union.dart' show FieldValueUnion;
 import '../models/validation_error_model.dart' show ValidationError;
 
 // 8 characters, one small letter, big letter, number and special character
-final passordRegex =
+final passwordRegex =
     RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 
 ValidationError isValidPasswordValidator(FieldValueUnion value) {
   String text = value.value;
 
-  bool isValidPassword = passordRegex.hasMatch(text);
+  bool isValidPassword = passwordRegex.hasMatch(text);
 
   return isValidPassword == false
       ? ValidationError(

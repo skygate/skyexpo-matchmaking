@@ -1,5 +1,3 @@
-// import 'package:union/union.dart';
-
 typedef FieldValueUnion = void Function(
   void Function(String value),
   void Function(int value),

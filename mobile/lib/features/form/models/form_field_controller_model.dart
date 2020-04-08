@@ -29,8 +29,8 @@ class FormFieldController {
   }
 
   void handleBlur() {
-    setFieldAsTouched();
-    validateField();
+    this.setFieldAsTouched();
+    this.validateField();
   }
 
   void setFieldAsTouched() {
@@ -42,7 +42,7 @@ class FormFieldController {
         .map((validator) => validator(this.valueSubject.value))
         .where((error) => error != null);
 
-    errors = Map.fromIterable(
+    this.errors = Map.fromIterable(
       errorsList,
       key: (controller) => controller.key,
       value: (controller) => controller.value,
