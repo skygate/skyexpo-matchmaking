@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/features/form/models/form_field_controller_model.dart';
-import 'package:mobile/features/form/models/on_form_submit_type.dart';
+
+import '../models/controller_value_union.dart' show FieldValueUnion;
+import '../models/form_field_controller_model.dart' show FormFieldController;
+import '../models/on_form_submit_type.dart' show OnFormSubmit;
 
 class FormContainer extends StatefulWidget {
   final Map<String, FormFieldController> controllers;
@@ -56,7 +58,7 @@ class _FormContainerState extends State<FormContainer> {
       .map((controller) => controller.setFieldAsTouched())
       .toList();
 
-  Map<String, String> getFormValues() {
+  Map<String, FieldValueUnion> getFormValues() {
     final listOfValues = this
         .controllers
         .entries
@@ -69,7 +71,7 @@ class _FormContainerState extends State<FormContainer> {
     );
   }
 
-  Map<String, dynamic> handleSubmit() {
+  Map<String, FieldValueUnion> handleSubmit() {
     setState(() {
       this.markAllFieldsAsTouched();
       this.validateAllFormFields();

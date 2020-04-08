@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union/union.dart';
 
 import 'package:mobile/config/index.dart' show AppColor;
 import 'package:mobile/features/form/models/form_field_controller_model.dart'
@@ -57,7 +58,7 @@ class _FormTextFieldState extends State<FormTextField> {
           focusNode: _focusNode,
           decoration: getInputDecorator(widget.suffix),
           obscureText: widget.isObscureText,
-          onChanged: widget.controller.handleChange,
+          onChanged: (value) => widget.controller.handleChange(value.asFirst()),
         ),
       );
 }

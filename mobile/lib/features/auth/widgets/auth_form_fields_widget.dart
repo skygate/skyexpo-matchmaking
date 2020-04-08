@@ -1,53 +1,35 @@
 import 'package:flutter/material.dart';
 
-import 'package:mobile/common/validators/index.dart'
-    show isNotEmptyValidator, isValidEmailValidator, isValidPasswordValidator;
+import 'package:mobile/features/form/models/form_field_controller_model.dart'
+    show FormFieldController;
 import 'package:mobile/features/form/widgets/form_text_field_widget.dart'
     show FormTextField;
 import 'form_password_field.dart' show FormPasswordField;
 
 class AuthFormFields extends StatelessWidget {
-  final GlobalKey<FormState> formKey;
-  final Function setFormFieldValue;
-  final Map<String, String> formData;
+  final Map<String, FormFieldController> controllers;
   final bool isRegisterForm;
 
-  AuthFormFields(
-      {@required this.setFormFieldValue,
-      @required this.formKey,
-      @required this.formData,
-      @required this.isRegisterForm});
+  AuthFormFields({@required this.controllers, @required this.isRegisterForm});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: <Widget>[
-          if (isRegisterForm)
-            FormTextField(
-              fieldId: 'name',
-              label: "Name",
-              setFormFieldValue: setFormFieldValue,
-              formValues: formData,
-              validators: [isNotEmptyValidator],
-            ),
+    return Column(
+      children: <Widget>[
+        if (isRegisterForm)
           FormTextField(
-            fieldId: 'email',
-            label: "Email address",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator, isValidEmailValidator],
+            label: "Name",
+            controller: controllers['name'],
           ),
-          FormPasswordField(
-            fieldId: 'password',
-            label: "Password",
-            setFormFieldValue: setFormFieldValue,
-            formValues: formData,
-            validators: [isNotEmptyValidator, isValidPasswordValidator],
-          ),
-        ],
-      ),
+        FormTextField(
+          label: "Email address",
+          controller: controllers['email'],
+        ),
+        FormPasswordField(
+          label: "Password",
+          controller: controllers['password'],
+        ),
+      ],
     );
   }
 }
