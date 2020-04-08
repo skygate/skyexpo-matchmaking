@@ -1,1 +1,3 @@
-typedef Map<String, dynamic> OnFormSubmit();
+import '../models/controller_value_union.dart';
+
+typedef Map<String, FieldValueUnion> OnFormSubmit();

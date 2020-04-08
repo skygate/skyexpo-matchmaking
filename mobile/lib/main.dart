@@ -35,7 +35,7 @@ class Main extends StatelessWidget {
             theme: ThemeData(
                 primarySwatch: Colors.blue,
                 backgroundColor: AppColor.primary.value),
-            initialRoute: AppRoute.profileForm.value,
+            initialRoute: AppRoute.logIn.value,
             navigatorKey: navigatorKey,
             routes: appRoutes));
   }

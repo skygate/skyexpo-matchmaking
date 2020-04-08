@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:mobile/common/validators/is_not_empty_validator.dart'
+import 'package:mobile/features/form/validators/index.dart'
     show isNotEmptyValidator;
 
 void main() {
