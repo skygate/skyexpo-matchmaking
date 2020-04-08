@@ -1,17 +1,15 @@
 import 'package:rxdart/rxdart.dart';
 
-import '../models/controller_value_union.dart' show FieldValueUnion;
-import '../models/validation_error_model.dart' show AppValidator;
+import '../models/validation_error_model.dart';
 
 class FormFieldController {
   final List<AppValidator> validators;
   Map<String, String> errors = {};
-  BehaviorSubject<FieldValueUnion> valueSubject =
-      BehaviorSubject<FieldValueUnion>();
+  BehaviorSubject<dynamic> valueSubject = BehaviorSubject<dynamic>();
   BehaviorSubject<bool> touchedSubject = BehaviorSubject<bool>();
 
   FormFieldController({
-    FieldValueUnion initialValue,
+    initialValue,
     this.validators,
   }) {
     this.valueSubject.add(initialValue);
@@ -23,14 +21,14 @@ class FormFieldController {
     this.touchedSubject.close();
   }
 
-  void handleChange(FieldValueUnion newValue) {
+  void handleChange(newValue) {
     this.valueSubject.add(newValue);
     this.validateField();
   }
 
   void handleBlur() {
-    this.setFieldAsTouched();
-    this.validateField();
+    setFieldAsTouched();
+    validateField();
   }
 
   void setFieldAsTouched() {
@@ -42,7 +40,7 @@ class FormFieldController {
         .map((validator) => validator(this.valueSubject.value))
         .where((error) => error != null);
 
-    this.errors = Map.fromIterable(
+    errors = Map.fromIterable(
       errorsList,
       key: (controller) => controller.key,
       value: (controller) => controller.value,

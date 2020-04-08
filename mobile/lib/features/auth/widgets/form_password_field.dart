@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-
-import 'package:mobile/features/form/models/form_field_controller_model.dart'
-    show FormFieldController;
-import 'package:mobile/features/form/widgets/form_text_field_widget.dart'
-    show FormTextField;
+import 'package:mobile/features/form/widgets/form_text_field_widget.dart';
 
 class FormPasswordField extends StatefulWidget {
   final String label;
-  final FormFieldController controller;
+  final String fieldId;
+  final Function setFormFieldValue;
+  final Iterable<Function> validators;
+  final Map<String, String> formValues;
 
-  FormPasswordField({
-    @required this.label,
-    @required this.controller,
-  });
+  FormPasswordField(
+      {@required this.label,
+      @required this.fieldId,
+      @required this.setFormFieldValue,
+      @required this.formValues,
+      this.validators});
 
   @override
   _FormPasswordFieldState createState() => _FormPasswordFieldState();
@@ -34,7 +35,7 @@ class _FormPasswordFieldState extends State<FormPasswordField> {
   @override
   Widget build(BuildContext context) => FormTextField(
       label: widget.label,
-      controller: widget.controller,
+      validators: widget.validators,
       isObscureText: isObscureText,
       suffix: GestureDetector(
         onTap: togglePasswordPreview,
