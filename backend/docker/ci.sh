@@ -31,7 +31,7 @@ run_ci () {
 
   # Running type checking:
   # See: https://github.com/typeddjango/django-stubs
-  PYTHONPATH="$PYTHONPATH:$PWD" mypy server
+  mypy server
 
   # Running tests:
   pytest --dead-fixtures --dup-fixtures

@@ -2,7 +2,7 @@
 
 from typing import List, Tuple
 
-from django.utils.translation import ugettext_lazy as ugtl
+from django.utils.translation import gettext_lazy as ugtl
 from typing_extensions import Final
 
 ChoicesType = List[Tuple[str, str]]

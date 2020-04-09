@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as ugt
+from django.utils.translation import gettext_lazy as ugt
 from glom import glom
 from psycopg2.extras import NumericRange
 

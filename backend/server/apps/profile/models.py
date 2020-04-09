@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
-from django.utils.translation import ugettext_lazy as ugtl
+from django.utils.translation import gettext_lazy as ugtl
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -23,7 +23,7 @@ from server.apps.profile.logic import managers, querysets
 
 def validate_profile_is_unassigned(*, profile: 'Profile', msg: str) -> None:
     """Raise error if profile is already assigned."""
-    if profile not in Profile.objects.unassigned_profiles():
+    if profile not in Profile.objects.unassigned_profiles():  # type: ignore
         raise ValidationError({'profile': msg})
 
 
@@ -141,14 +141,14 @@ class Profile(models.Model):
 
     @cached_property
     def startup(self) -> 'Startup':
-        startup = self.startups.first()  # type: ignore
+        startup = self.startups.first()
         if startup is None:
             raise AttributeError('This profile does not belong to any startup.')
         return startup
 
     @cached_property
     def company(self) -> 'Company':
-        company = self.companies.first()  # type: ignore
+        company = self.companies.first()
         if company is None:
             raise AttributeError('This profile does not belong to any company.')
         return company
