@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.urls import include, path
-from rest_framework_simplejwt.views import (
-  TokenObtainPairView,
-  TokenRefreshView,
-)
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from server.apps.profile.views import (
   AngelInvestorValidateFormStep1View,

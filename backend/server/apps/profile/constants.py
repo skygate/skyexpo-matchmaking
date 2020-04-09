@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from typing import List, Tuple
+from typing import Final, List, Tuple
 
 from django.utils.translation import gettext_lazy as gtl
-from typing_extensions import Final
 
 ChoicesType = List[Tuple[str, str]]
 

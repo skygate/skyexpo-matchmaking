@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import astuple, dataclass
-from typing import List
+from typing import Final, List
 
 from django.db.models import QuerySet
 from psycopg2.extras import NumericRange
-from typing_extensions import Final
 
 from server.apps.matchmaking.models import Match
 from server.apps.profile.models import (

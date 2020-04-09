@@ -2,11 +2,10 @@
 
 import datetime
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, TypedDict
 
 from django.contrib.auth import get_user_model
 from phonenumber_field.phonenumber import PhoneNumber
-from typing_extensions import TypedDict
 
 User = get_user_model()
 

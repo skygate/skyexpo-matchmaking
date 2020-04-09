@@ -4,11 +4,7 @@ import pytest
 
 from server.apps.profile.logic.selectors import get_investor, is_assigned
 from server.apps.profile.logic.services import assign_profile_to_startup
-from tests.factories import (
-  AngelInvestorFactory,
-  CompanyFactory,
-  ProfileFactory,
-)
+from tests.factories import AngelInvestorFactory, CompanyFactory, ProfileFactory
 
 
 @pytest.mark.django_db
