@@ -1,7 +1,7 @@
 # This Dockerfile uses multi-stage build to customize DEV and PROD images:
 # https://docs.docker.com/develop/develop-images/multistage-build/
 
-FROM python:3.7.6-slim-buster as development_build
+FROM python:3.8.2-slim-buster as development_build
 
 ARG DJANGO_ENV
 
@@ -19,7 +19,7 @@ ENV DJANGO_ENV=${DJANGO_ENV} \
   # tini:
   TINI_VERSION=v0.18.0 \
   # poetry:
-  POETRY_VERSION=1.0.3 \
+  POETRY_VERSION=1.0.5 \
   POETRY_VIRTUALENVS_CREATE=false
 
 
