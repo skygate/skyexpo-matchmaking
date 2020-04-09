@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 from typing import Dict, List, Tuple, Union
 
-from django.utils.translation import gettext_lazy as ugt
+from django.utils.translation import gettext_lazy as gtl
 
 from server.settings.components import BASE_DIR, config
 
@@ -120,7 +120,7 @@ USE_I18N = False
 USE_L10N = False
 
 LANGUAGES = (
-    ('en', ugt('English')),
+    ('en', gtl('English')),
 )
 
 LOCALE_PATHS = (

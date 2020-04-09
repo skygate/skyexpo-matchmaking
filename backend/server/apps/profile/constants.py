@@ -2,7 +2,7 @@
 
 from typing import List, Tuple
 
-from django.utils.translation import gettext_lazy as ugtl
+from django.utils.translation import gettext_lazy as gtl
 from typing_extensions import Final
 
 ChoicesType = List[Tuple[str, str]]
@@ -19,9 +19,9 @@ class Sector:
     AGRICULTURE = 'AGRICULTURE'
 
     CHOICES: Final[ChoicesType] = [
-        (AI_AND_ROBOTICS, ugtl('AI and robotics')),
-        (IOT_AND_SENSORS, ugtl('IoT and sensors')),
-        (AGRICULTURE, ugtl('Agriculture')),
+        (AI_AND_ROBOTICS, gtl('AI and robotics')),
+        (IOT_AND_SENSORS, gtl('IoT and sensors')),
+        (AGRICULTURE, gtl('Agriculture')),
     ]
 
 
@@ -39,15 +39,15 @@ class Industry:
     ENERGY = 'ENERGY'
 
     CHOICES: Final[ChoicesType] = [
-        (BUSINESS_ANALYTICS, ugtl('Business & Analytics')),
-        (FINANCIAL_SERVICES, ugtl('Financial Services & Security')),
-        (ENTERTAINMENT, ugtl('Entertainment and Mobile')),
-        (HEALTH_CARE, ugtl('Health-care and Wellbeing')),
-        (E_COMMERCE, ugtl('E-commerce, Adtech, Martech')),
-        (MATERIALS, ugtl('Manufacturing and materials')),
-        (HARDWARE, ugtl('Hardware & Iot')),
-        (MOBILITY, ugtl('Mobility & Transportation')),
-        (ENERGY, ugtl('Energy and Cleantech')),
+        (BUSINESS_ANALYTICS, gtl('Business & Analytics')),
+        (FINANCIAL_SERVICES, gtl('Financial Services & Security')),
+        (ENTERTAINMENT, gtl('Entertainment and Mobile')),
+        (HEALTH_CARE, gtl('Health-care and Wellbeing')),
+        (E_COMMERCE, gtl('E-commerce, Adtech, Martech')),
+        (MATERIALS, gtl('Manufacturing and materials')),
+        (HARDWARE, gtl('Hardware & Iot')),
+        (MOBILITY, gtl('Mobility & Transportation')),
+        (ENERGY, gtl('Energy and Cleantech')),
     ]
 
 
@@ -60,10 +60,10 @@ class CompanyStage:
     SEED_STAGE = 'SEED_STAGE'
 
     CHOICES: Final[ChoicesType] = [
-        (CONCEPT_STAGE, ugtl('Concept stage')),
-        (GROWTH_STAGE, ugtl('Growth stage (generating revenue)')),
-        (EARLY_STAGE, ugtl('Early stage (market launch)')),
-        (SEED_STAGE, ugtl('Seed stage (product development)')),
+        (CONCEPT_STAGE, gtl('Concept stage')),
+        (GROWTH_STAGE, gtl('Growth stage (generating revenue)')),
+        (EARLY_STAGE, gtl('Early stage (market launch)')),
+        (SEED_STAGE, gtl('Seed stage (product development)')),
     ]
 
 
@@ -75,9 +75,9 @@ class ProductType:
     OTHER = 'OTHER'
 
     CHOICES: Final[ChoicesType] = [
-        (SOFTWARE, ugtl('Software')),
-        (HARDWARE, ugtl('Hardware')),
-        (OTHER, ugtl('Other')),
+        (SOFTWARE, gtl('Software')),
+        (HARDWARE, gtl('Hardware')),
+        (OTHER, gtl('Other')),
     ]
 
 
@@ -90,10 +90,10 @@ class InvestmentStage:
     ACCELERATOR = 'ACCELERATOR'
 
     CHOICES: Final[ChoicesType] = [
-        (BUSINESS_ANGELS, ugtl('Business Angels')),
-        (INCUBATOR, ugtl('Incubator')),
-        (VENTURE_CAPITAL, ugtl('Venture Capital')),
-        (ACCELERATOR, ugtl('Accelerator')),
+        (BUSINESS_ANGELS, gtl('Business Angels')),
+        (INCUBATOR, gtl('Incubator')),
+        (VENTURE_CAPITAL, gtl('Venture Capital')),
+        (ACCELERATOR, gtl('Accelerator')),
     ]
 
 
@@ -104,6 +104,6 @@ class BusinessType:
     B2C = 'B2C'
 
     CHOICES: Final[ChoicesType] = [
-        (B2B, ugtl('Business to Business')),
-        (B2C, ugtl('Business to Customer')),
+        (B2B, gtl('Business to Business')),
+        (B2C, gtl('Business to Customer')),
     ]

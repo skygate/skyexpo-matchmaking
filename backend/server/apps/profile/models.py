@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as ugtl
+from django.utils.translation import gettext_lazy as gtl
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -96,7 +96,7 @@ class BaseMatchmakingInfo(models.Model):
 
         if self.investment_size.lower > self.investment_size.upper:
             raise ValidationError({
-                'investment_size': ugtl(
+                'investment_size': gtl(
                     'Maximum investment size should be lower or ' +
                     'equal to minimum investment size.',
                 ),
@@ -165,7 +165,7 @@ class AngelInvestor(BaseInfo, BaseMatchmakingInfo, InvestorProfile):
 
     def clean(self):
         validate_profile_is_unassigned(
-            profile=self.profile, msg=ugtl('This profile is already assigned.'),
+            profile=self.profile, msg=gtl('This profile is already assigned.'),
         )
 
     def __str__(self) -> str:
@@ -209,7 +209,7 @@ class StartupToProfile(models.Model):
 
     def clean(self):
         validate_profile_is_unassigned(
-            profile=self.profile, msg=ugtl('This profile is already assigned.'),
+            profile=self.profile, msg=gtl('This profile is already assigned.'),
         )
 
     def __str__(self) -> str:
@@ -256,7 +256,7 @@ class CompanyToProfile(models.Model):
 
     def clean(self):
         validate_profile_is_unassigned(
-            profile=self.profile, msg=ugtl('This profile is already assigned.'),
+            profile=self.profile, msg=gtl('This profile is already assigned.'),
         )
 
     def __str__(self) -> str:
