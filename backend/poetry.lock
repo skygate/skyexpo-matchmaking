@@ -257,17 +257,6 @@ click = "*"
 
 [[package]]
 category = "dev"
-description = "Library to calculate Python functions cognitive complexity via code"
-name = "cognitive-complexity"
-optional = false
-python-versions = ">=3.6"
-version = "0.0.4"
-
-[package.dependencies]
-setuptools = "*"
-
-[[package]]
-category = "dev"
 description = "Cross-platform colored terminal text."
 name = "colorama"
 optional = false
@@ -759,17 +748,6 @@ pyflakes = ">=2.1.0,<2.2.0"
 
 [[package]]
 category = "dev"
-description = "A flake8 extension that checks for type annotations complexity"
-name = "flake8-annotations-complexity"
-optional = false
-python-versions = "*"
-version = "0.0.2"
-
-[package.dependencies]
-setuptools = "*"
-
-[[package]]
-category = "dev"
 description = "Automated security testing with bandit and flake8."
 name = "flake8-bandit"
 optional = false
@@ -788,7 +766,7 @@ description = "Flake8 plugin to forbid backslashes for line breaks"
 name = "flake8-broken-line"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.1.1"
+version = "0.2.0"
 
 [package.dependencies]
 flake8 = ">=3.5,<4.0"
@@ -804,31 +782,6 @@ version = "19.8.0"
 [package.dependencies]
 attrs = "*"
 flake8 = ">=3.0.0"
-
-[[package]]
-category = "dev"
-description = "Check for python builtins being used as variables or parameters."
-name = "flake8-builtins"
-optional = false
-python-versions = "*"
-version = "1.5.2"
-
-[package.dependencies]
-flake8 = "*"
-
-[package.extras]
-test = ["coverage", "coveralls", "mock", "pytest", "pytest-cov"]
-
-[[package]]
-category = "dev"
-description = "Adds coding magic comment checks to flake8"
-name = "flake8-coding"
-optional = false
-python-versions = "*"
-version = "1.3.2"
-
-[package.dependencies]
-flake8 = "*"
 
 [[package]]
 category = "dev"
@@ -897,23 +850,12 @@ description = "Flake8 plugin to find commented out code"
 name = "flake8-eradicate"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.2.4"
+version = "0.3.0"
 
 [package.dependencies]
-attrs = ">=18.2,<20.0"
-eradicate = ">=0.2.1,<1.1.0"
+attrs = "*"
+eradicate = ">=1.0,<2.0"
 flake8 = ">=3.5,<4.0"
-
-[[package]]
-category = "dev"
-description = "A Flake8 plugin for checking executable permissions and shebangs."
-name = "flake8-executable"
-optional = false
-python-versions = ">=3.6"
-version = "2.0.3"
-
-[package.dependencies]
-flake8 = ">=3.0.0"
 
 [[package]]
 category = "dev"
@@ -936,28 +878,6 @@ test = ["pytest"]
 
 [[package]]
 category = "dev"
-description = "Flake8 extension to validate (lack of) logging format strings"
-name = "flake8-logging-format"
-optional = false
-python-versions = "*"
-version = "0.6.0"
-
-[[package]]
-category = "dev"
-description = "Checks for old string formatting."
-name = "flake8-pep3101"
-optional = false
-python-versions = "*"
-version = "1.3.0"
-
-[package.dependencies]
-flake8 = ">=3.0"
-
-[package.extras]
-test = ["pytest", "testfixtures"]
-
-[[package]]
-category = "dev"
 description = "The package provides base classes and utils for flake8 plugin writing"
 name = "flake8-plugin-utils"
 optional = false
@@ -974,19 +894,6 @@ version = "1.0.2"
 
 [package.dependencies]
 flake8 = "*"
-
-[[package]]
-category = "dev"
-description = "print statement checker plugin for flake8"
-name = "flake8-print"
-optional = false
-python-versions = "*"
-version = "3.1.4"
-
-[package.dependencies]
-flake8 = ">=1.5"
-pycodestyle = "*"
-six = "*"
 
 [[package]]
 category = "dev"
@@ -1849,7 +1756,7 @@ version = "2.8.4"
 [[package]]
 category = "dev"
 description = "Run a subprocess in a pseudo terminal"
-marker = "sys_platform != \"win32\" or os_name != \"nt\" or python_version >= \"3.3\" and sys_platform != \"win32\""
+marker = "python_version >= \"3.3\" and sys_platform != \"win32\" or sys_platform != \"win32\" or os_name != \"nt\" or python_version >= \"3.3\" and sys_platform != \"win32\" and (python_version >= \"3.3\" and sys_platform != \"win32\" or sys_platform != \"win32\")"
 name = "ptyprocess"
 optional = false
 python-versions = "*"
@@ -2502,37 +2409,32 @@ description = "The strictest and most opinionated python linter ever"
 name = "wemake-python-styleguide"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.13.2"
+version = "0.14.0"
 
 [package.dependencies]
 astor = ">=0.8,<0.9"
 attrs = "*"
-cognitive_complexity = ">=0.0.4,<0.0.5"
-darglint = ">=1.1,<2.0"
+darglint = ">=1.2,<2.0"
 flake8 = ">=3.7,<4.0"
-flake8-annotations-complexity = ">=0.0.2,<0.0.3"
 flake8-bandit = ">=2.1,<3.0"
-flake8-broken-line = ">=0.1,<0.2"
+flake8-broken-line = ">=0.2,<0.3"
 flake8-bugbear = ">=19.3,<20.0"
-flake8-builtins = ">=1.4,<2.0"
-flake8-coding = ">=1.3,<2.0"
 flake8-commas = ">=2.0,<3.0"
 flake8-comprehensions = ">=3.1.0,<4.0.0"
 flake8-debugger = ">=3.1,<4.0"
 flake8-docstrings = ">=1.3.1,<2.0.0"
-flake8-eradicate = ">=0.2,<0.3"
-flake8-executable = ">=2.0,<3.0"
-flake8-isort = ">=2.6,<3.0"
-flake8-logging-format = ">=0.6,<0.7"
-flake8-pep3101 = ">=1.2,<2.0"
-flake8-print = ">=3.1.4,<4.0.0"
+flake8-eradicate = ">=0.3,<0.4"
+flake8-isort = ">=2.9.0,<3.0.0"
 flake8-quotes = ">=2.0.1,<3.0.0"
 flake8-rst-docstrings = ">=0.0.12,<0.0.13"
 flake8-string-format = ">=0.2,<0.3"
 pep8-naming = ">=0.9.1,<0.10.0"
 pygments = ">=2.4,<3.0"
-radon = ">=2.4,<3.0"
 typing_extensions = ">=3.6,<4.0"
+
+[package.dependencies.importlib-metadata]
+python = "<3.8"
+version = "*"
 
 [[package]]
 category = "dev"
@@ -2583,7 +2485,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "bb829fd812673aec52989ea0a977536db2089bce265879cb02c6f046dd7ee9db"
+content-hash = "97465dad887837961298d935a40232cac5c712388c4bf6329c9ee750b0ca7eb8"
 python-versions = "3.7.6"
 
 [metadata.files]
@@ -2714,9 +2616,6 @@ click = [
 ]
 click-default-group = [
     {file = "click-default-group-1.2.2.tar.gz", hash = "sha256:d9560e8e8dfa44b3562fbc9425042a0fd6d21956fcc2db0077f63f34253ab904"},
-]
-cognitive-complexity = [
-    {file = "cognitive_complexity-0.0.4.tar.gz", hash = "sha256:8a456bf2871a40c73f33c937ec0b42bc2daaefafa850b3158b0f7a2a91af2b64"},
 ]
 colorama = [
     {file = "colorama-0.3.9-py2.py3-none-any.whl", hash = "sha256:463f8483208e921368c9f306094eb6f725c6ca42b0f97e313cb5d5512459feda"},
@@ -2913,27 +2812,16 @@ flake8 = [
     {file = "flake8-3.7.9-py2.py3-none-any.whl", hash = "sha256:49356e766643ad15072a789a20915d3c91dc89fd313ccd71802303fd67e4deca"},
     {file = "flake8-3.7.9.tar.gz", hash = "sha256:45681a117ecc81e870cbf1262835ae4af5e7a8b08e40b944a8a6e6b895914cfb"},
 ]
-flake8-annotations-complexity = [
-    {file = "flake8_annotations_complexity-0.0.2.tar.gz", hash = "sha256:e499d2186efcc5f6f2f1c7eb18568d08f4d9313fad15f614645f3f445f70b45c"},
-]
 flake8-bandit = [
     {file = "flake8_bandit-2.1.2.tar.gz", hash = "sha256:687fc8da2e4a239b206af2e54a90093572a60d0954f3054e23690739b0b0de3b"},
 ]
 flake8-broken-line = [
-    {file = "flake8-broken-line-0.1.1.tar.gz", hash = "sha256:30378a3749911e453d0a9e03204156cbbd35bcc03fb89f12e6a5206e5baf3537"},
-    {file = "flake8_broken_line-0.1.1-py3-none-any.whl", hash = "sha256:7721725dce3aeee1df371a252822f1fcecfaf2766dcf5bac54ee1b3f779ee9d1"},
+    {file = "flake8-broken-line-0.2.0.tar.gz", hash = "sha256:550d217ebcdb1d3febc3a7dd5962b2deb4f809a5b0f10b7632b416c4877d2760"},
+    {file = "flake8_broken_line-0.2.0-py3-none-any.whl", hash = "sha256:167130fcb4761755e9919c0bc8f984ff5790df1ff7a4447fed5c00b09ea6b4c3"},
 ]
 flake8-bugbear = [
     {file = "flake8-bugbear-19.8.0.tar.gz", hash = "sha256:d8c466ea79d5020cb20bf9f11cf349026e09517a42264f313d3f6fddb83e0571"},
     {file = "flake8_bugbear-19.8.0-py35.py36.py37-none-any.whl", hash = "sha256:ded4d282778969b5ab5530ceba7aa1a9f1b86fa7618fc96a19a1d512331640f8"},
-]
-flake8-builtins = [
-    {file = "flake8-builtins-1.5.2.tar.gz", hash = "sha256:fe7be13fe51bfb06bdae6096c6488e328c822c3aa080e24b91b77116a4fbb8b0"},
-    {file = "flake8_builtins-1.5.2-py2.py3-none-any.whl", hash = "sha256:a0296d23da92a6f2494243b9f2039bfdb73f34aba20054c1b70b2a60c84745bb"},
-]
-flake8-coding = [
-    {file = "flake8-coding-1.3.2.tar.gz", hash = "sha256:b8f4d5157a8f74670e6cfea732c3d9f4291a4e994c8701d2c55f787c6e6cb741"},
-    {file = "flake8_coding-1.3.2-py2.py3-none-any.whl", hash = "sha256:79704112c44d09d4ab6c8965e76a20c3f7073d52146db60303bce777d9612260"},
 ]
 flake8-commas = [
     {file = "flake8-commas-2.0.0.tar.gz", hash = "sha256:d3005899466f51380387df7151fb59afec666a0f4f4a2c6a8995b975de0f44b7"},
@@ -2954,23 +2842,12 @@ flake8-docstrings = [
     {file = "flake8_docstrings-1.5.0-py2.py3-none-any.whl", hash = "sha256:a256ba91bc52307bef1de59e2a009c3cf61c3d0952dbe035d6ff7208940c2edc"},
 ]
 flake8-eradicate = [
-    {file = "flake8-eradicate-0.2.4.tar.gz", hash = "sha256:b693e9dfe6da42dbc7fb75af8486495b9414d1ab0372d15efcf85a2ac85fd368"},
-    {file = "flake8_eradicate-0.2.4-py3-none-any.whl", hash = "sha256:b0bcdbb70a489fb799f9ee11fefc57bd0d3251e1ea9bdc5bf454443cccfd620c"},
-]
-flake8-executable = [
-    {file = "flake8-executable-2.0.3.tar.gz", hash = "sha256:a636ff78b14b63b1245d1c4d509db2f6ea0f2e27a86ee7eb848f3827bef7e16d"},
-    {file = "flake8_executable-2.0.3-py3-none-any.whl", hash = "sha256:968618c475a23a538ced9b957a741b818d37610838f99f6abcea249e4de7c9ec"},
+    {file = "flake8-eradicate-0.3.0.tar.gz", hash = "sha256:d0b3d283d85079917acbfe39b9d637385cd82cba3ae3d76c1278c07ddcf0d9b9"},
+    {file = "flake8_eradicate-0.3.0-py3-none-any.whl", hash = "sha256:e8b32b32300bfb407fe7ef74667c8d2d3a6a81bdf6f09c14a7bcc82b7b870f8b"},
 ]
 flake8-isort = [
     {file = "flake8-isort-2.9.1.tar.gz", hash = "sha256:0d34b266080e1748412b203a1690792245011706b1858c203476b43460bf3652"},
     {file = "flake8_isort-2.9.1-py2.py3-none-any.whl", hash = "sha256:a77df28778a1ac6ac4153339ebd9d252935f3ed4379872d4f8b84986296d8cc3"},
-]
-flake8-logging-format = [
-    {file = "flake8-logging-format-0.6.0.tar.gz", hash = "sha256:ca5f2b7fc31c3474a0aa77d227e022890f641a025f0ba664418797d979a779f8"},
-]
-flake8-pep3101 = [
-    {file = "flake8-pep3101-1.3.0.tar.gz", hash = "sha256:86e3eb4e42de8326dcd98ebdeaf9a3c6854203a48f34aeb3e7e8ed948107f512"},
-    {file = "flake8_pep3101-1.3.0-py2.py3-none-any.whl", hash = "sha256:a5dae1caca1243b2b40108dce926d97cf5a9f52515c4a4cbb1ffe1ca0c54e343"},
 ]
 flake8-plugin-utils = [
     {file = "flake8-plugin-utils-1.3.0.tar.gz", hash = "sha256:965931e7c17a760915e38bb10dc60516b414ef8210e987252a8d73dcb196a5f5"},
@@ -2979,9 +2856,6 @@ flake8-plugin-utils = [
 flake8-polyfill = [
     {file = "flake8-polyfill-1.0.2.tar.gz", hash = "sha256:e44b087597f6da52ec6393a709e7108b2905317d0c0b744cdca6208e670d8eda"},
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
-]
-flake8-print = [
-    {file = "flake8-print-3.1.4.tar.gz", hash = "sha256:324f9e59a522518daa2461bacd7f82da3c34eb26a4314c2a54bd493f8b394a68"},
 ]
 flake8-pytest = [
     {file = "flake8-pytest-1.3.tar.gz", hash = "sha256:b4d6703f7d7b646af1e2660809e795886dd349df11843613dbe6515efa82c0f3"},
@@ -3628,8 +3502,8 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 wemake-python-styleguide = [
-    {file = "wemake-python-styleguide-0.13.2.tar.gz", hash = "sha256:068af99d31010f991d792ba5acfa848b18f5345423795c14e9edb440c0be8c06"},
-    {file = "wemake_python_styleguide-0.13.2-py3-none-any.whl", hash = "sha256:5e7e3b1c38f8aa5b9814a13b99cbd77c7ced4089f5378889ee8e345a39e3da3d"},
+    {file = "wemake-python-styleguide-0.14.0.tar.gz", hash = "sha256:633d738b65c7ddf0c2b9e26e9d889d76f0f1993a82902821da359f08b233dbc8"},
+    {file = "wemake_python_styleguide-0.14.0-py3-none-any.whl", hash = "sha256:21e09b786a38f62399dc727ca801f49084dcbc025b5ac44faf8182f959deb6e0"},
 ]
 widgetsnbextension = [
     {file = "widgetsnbextension-3.5.1-py2.py3-none-any.whl", hash = "sha256:bd314f8ceb488571a5ffea6cc5b9fc6cba0adaf88a9d2386b93a489751938bcd"},
