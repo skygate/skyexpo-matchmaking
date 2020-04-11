@@ -82,3 +82,5 @@ CSRF_COOKIE_SECURE = True
 sentry_sdk.init(  # type: ignore
     integrations=[DjangoIntegration()],
 )
+
+SECURE_REFERRER_POLICY = 'same-origin'

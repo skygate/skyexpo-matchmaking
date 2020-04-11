@@ -31,7 +31,7 @@ run_ci () {
 
   # Running type checking:
   # See: https://github.com/typeddjango/django-stubs
-  PYTHONPATH="$PYTHONPATH:$PWD" mypy server
+  mypy server
 
   # Running tests:
   pytest --dead-fixtures --dup-fixtures
@@ -45,9 +45,6 @@ run_ci () {
 
   # Check that all migrations worked fine:
   python manage.py makemigrations --dry-run --check
-
-  # Running code-quality check:
-  xenon --max-absolute A --max-modules A --max-average A server
 
   # Checking if all the dependencies are secure and do not have any
   # known vulnerabilities:

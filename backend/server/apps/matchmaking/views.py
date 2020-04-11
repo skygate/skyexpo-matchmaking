@@ -23,9 +23,8 @@ class MatchmakingListView(ExceptionHandlerMixin, views.APIView):
         },
     )
     def get(self, request: Request) -> Response:
-        # TODO: Check why request.user doesn't return the User model
-        matches = Match.objects.get_matches(
-            profile=request.user.profile,  # type: ignore
+        matches = Match.objects.get_matches(  # type: ignore
+            profile=request.user.profile,
         ).select_related(
             'startup',
             'investor',

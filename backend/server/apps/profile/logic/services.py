@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.db import transaction
-from django.utils.translation import ugettext_lazy as ugt
+from django.utils.translation import gettext_lazy as gtl
 from glom import glom
 from psycopg2.extras import NumericRange
 
@@ -36,7 +36,7 @@ def check_for_duplicated_emails(*, emails: List[str]) -> None:
     """Check if emails are duplicated in team members input."""
     if len(emails) != len(set(emails)):
         raise ValidationError(
-            {'team_members': ugt('You cannot enter the same email twice.')},
+            {'team_members': gtl('You cannot enter the same email twice.')},
         )
 
 
@@ -69,7 +69,7 @@ def validate_team_members_form(
         email__in=emails,
     ).values_list('email', flat=True)
     if users:
-        exception_msg = {user: ugt('is already assigned.') for user in users}
+        exception_msg = {user: gtl('is already assigned.') for user in users}
         raise ValidationError(exception_msg)
 
 

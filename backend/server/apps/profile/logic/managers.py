@@ -2,11 +2,12 @@
 
 from typing import TYPE_CHECKING, Any, Optional, cast
 
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.base_user import BaseUserManager
 
 if TYPE_CHECKING:  # pragma: no cover
     from server.apps.profile.models import User  # noqa: WPS433
-    BaseUserManagerType = BaseUserManager[AbstractBaseUser]
+    from django.contrib.auth.models import AbstractUser  # noqa: WPS433
+    BaseUserManagerType = BaseUserManager[AbstractUser]
 else:
     BaseUserManagerType = BaseUserManager
 

@@ -65,6 +65,10 @@ services:
       - db
       - redis
     command: celery -A server worker -l info
+    environment:
+      # Fix issue with docker's terminal and python 3.8
+      # Read more at: https://github.com/celery/celery/issues/5761
+      COLUMNS: 256
 
   celery-flower:
     <<: *web
