@@ -53,7 +53,7 @@ def test_get_matches_for_startup(django_assert_max_num_queries):
     profile = ProfileFactory.create()
     startup = StartupFactory.create(profiles=[profile])
     # GIVEN 100 matchings with 100 random investors
-    for _ in range(100):
+    for _ in range(100):  # noqa: WPS122
         MatchFactory.create(startup=startup, investor=CompanyFactory.create())
     # WHEN get_matches is triggered
     with django_assert_max_num_queries(3):
