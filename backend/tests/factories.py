@@ -2,9 +2,10 @@
 
 import random
 from functools import partial
-from typing import List, Tuple
+from typing import List, Tuple, Final
 
 import factory.fuzzy  # noqa: WPS301
+from django_countries import countries
 from factory import LazyFunction
 from psycopg2.extras import NumericRange
 
@@ -28,6 +29,8 @@ from server.apps.profile.models import (
   User,
 )
 
+DEFAULT_PASSWORD: Final[str] = '123qweasd'
+
 
 def get_multiple_choices(
     choices: List[Tuple[str, str]],
@@ -48,8 +51,8 @@ class BaseInfoFactory(factory.Factory):
     """Factory for BaseInfo model."""
 
     website = factory.Faker('uri')
-    phone_number = '+48 508223012'
-    country = 'PL'
+    phone_number = factory.Faker('phone_number')
+    country = factory.fuzzy.FuzzyChoice(dict(countries).keys())
     founding_date = factory.Faker('date')
     description = factory.Faker('sentence')
 
@@ -74,7 +77,7 @@ class BaseMatchmakingInfoFactory(factory.Factory):
     investment_size = NumericRange(
         MIN_INVESTMENT_VALUE, MAX_INTEGER_FIELD_VALUE,
     )
-    is_product_on_market = True
+    is_product_on_market = factory.fuzzy.FuzzyChoice([True, False])
     business_type = factory.fuzzy.FuzzyChoice(
         choice[0] for choice in BusinessType.CHOICES
     )
@@ -157,6 +160,9 @@ class UserFactory(factory.DjangoModelFactory):
         model = User
 
     email = factory.Faker('safe_email')
+    password = factory.PostGenerationMethodCall(
+        'set_password', DEFAULT_PASSWORD,
+    )
     is_staff = False
     is_active = True
 

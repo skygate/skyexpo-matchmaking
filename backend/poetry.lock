@@ -1700,6 +1700,14 @@ virtualenv = ">=15.2"
 
 [[package]]
 category = "dev"
+description = "A simple Python library for easily displaying tabular data in a visually appealing ASCII table format."
+name = "prettytable"
+optional = false
+python-versions = "*"
+version = "0.7.2"
+
+[[package]]
+category = "dev"
 description = "Python client for the Prometheus monitoring system."
 name = "prometheus-client"
 optional = false
@@ -2418,7 +2426,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d26eff332f80a0993dd6a0a0bc8a48bc27ce8ac8cc7255a1f61fc7793967fa3b"
+content-hash = "2f56ecb8c35aad5af898e5186427549901f99598094afc094a9314fa0a42873f"
 python-versions = "3.8.2"
 
 [metadata.files]
@@ -3091,6 +3099,11 @@ polint = [
 pre-commit = [
     {file = "pre_commit-1.21.0-py2.py3-none-any.whl", hash = "sha256:f92a359477f3252452ae2e8d3029de77aec59415c16ae4189bcfba40b757e029"},
     {file = "pre_commit-1.21.0.tar.gz", hash = "sha256:8f48d8637bdae6fa70cc97db9c1dd5aa7c5c8bf71968932a380628c25978b850"},
+]
+prettytable = [
+    {file = "prettytable-0.7.2.tar.bz2", hash = "sha256:853c116513625c738dc3ce1aee148b5b5757a86727e67eff6502c7ca59d43c36"},
+    {file = "prettytable-0.7.2.tar.gz", hash = "sha256:2d5460dc9db74a32bcc8f9f67de68b2c4f4d2f01fa3bd518764c69156d9cacd9"},
+    {file = "prettytable-0.7.2.zip", hash = "sha256:a53da3b43d7a5c229b5e3ca2892ef982c46b7923b51e98f0db49956531211c4f"},
 ]
 prometheus-client = [
     {file = "prometheus_client-0.7.1.tar.gz", hash = "sha256:71cd24a2b3eb335cb800c7159f423df1bd4dcd5171b234be15e3f31ec9f622da"},
