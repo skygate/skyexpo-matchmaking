@@ -75,7 +75,7 @@ djangorestframework-stubs = "^1.1"
 ipython = "^7.11"
 jupyter = "^1.0"
 
-yamllint = "^1.20"
+yamllint = "^1.22"
 safety = "^1.8"
 dotenv-linter = "^0.1"
 polint = "^0.4"
