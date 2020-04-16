@@ -1,12 +1,10 @@
 import 'package:meta/meta.dart';
 
-import 'controller_value_union.dart';
-
-typedef ValidationError AppValidator(FieldValueUnion value);
+typedef ValidationError AppValidator(dynamic value);
 
 class ValidationError {
   final String key;
-  final String value;
+  final dynamic value;
 
   ValidationError({@required this.key, @required this.value});
 }

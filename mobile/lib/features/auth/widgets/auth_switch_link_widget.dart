@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'package:mobile/config/index.dart' show AppRoute, FontSize;
 import 'package:mobile/config/routes_config.dart' show redirect;
@@ -13,14 +14,16 @@ class AuthSwitchLink extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-      onTap: () => redirect(route),
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        child: Center(
-            child: Text(
-          title,
-          style: TextStyle(fontSize: FontSize.small.value),
-        )),
-      ));
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onTap: () => redirect(route),
+        child: Container(
+          margin: EdgeInsets.only(bottom: 10),
+          child: Center(
+              child: Text(
+            title,
+            style: TextStyle(fontSize: FontSize.small.value),
+          )),
+        ));
+  }
 }
