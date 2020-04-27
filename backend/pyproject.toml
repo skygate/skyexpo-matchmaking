@@ -76,7 +76,7 @@ ipython = "^7.11"
 jupyter = "^1.0"
 
 yamllint = "^1.22"
-safety = "^1.8"
+safety = "^1.9"
 dotenv-linter = "^0.1"
 polint = "^0.4"
 dennis = "^0.9"
