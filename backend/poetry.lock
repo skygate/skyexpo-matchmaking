@@ -1604,7 +1604,7 @@ description = "Python version of Google's common library for parsing, formatting
 name = "phonenumbers"
 optional = false
 python-versions = "*"
-version = "8.12.1"
+version = "8.12.4"
 
 [[package]]
 category = "dev"
@@ -2773,6 +2773,8 @@ flake8-debugger = [
 ]
 flake8-django = [
     {file = "flake8-django-0.0.4.tar.gz", hash = "sha256:7329ec2e2b8b194e8109639c534359014c79df4d50b14f4b85b8395edc5d6760"},
+    {file = "flake8_django-0.0.4-py3.5.egg", hash = "sha256:ca66462724acbcf241d29edec201dac40c05cc27ae118b5abb8d74066681402f"},
+    {file = "flake8_django-0.0.4-py3.7.egg", hash = "sha256:29721a4976f784921b140752234447af1192c4e4f989d0db4e2d9f7f7915fa86"},
 ]
 flake8-docstrings = [
     {file = "flake8-docstrings-1.5.0.tar.gz", hash = "sha256:3d5a31c7ec6b7367ea6506a87ec293b94a0a46c0bce2bb4975b7f1d09b6f3717"},
@@ -3036,8 +3038,8 @@ pexpect = [
     {file = "pexpect-4.8.0.tar.gz", hash = "sha256:fc65a43959d153d0114afe13997d439c22823a27cefceb5ff35c2178c6784c0c"},
 ]
 phonenumbers = [
-    {file = "phonenumbers-8.12.1-py2.py3-none-any.whl", hash = "sha256:bebf881ef0e775b93062fbd107bf164b5baef877a7b8f702e93a9a5d24ae4065"},
-    {file = "phonenumbers-8.12.1.tar.gz", hash = "sha256:59ae9cb25fb03027c9f2bf5584098e699be7eca12c443838b83752956be15cda"},
+    {file = "phonenumbers-8.12.4-py2.py3-none-any.whl", hash = "sha256:c6c43d6459aac85b646d6b7a7ab79b3b629eb168f0e9b851b331e2e5872bbd01"},
+    {file = "phonenumbers-8.12.4.tar.gz", hash = "sha256:46c5997fe076026aa2d4b66d0c53eea4babae2e808e8a5f39c09e2dfa6612d08"},
 ]
 pickleshare = [
     {file = "pickleshare-0.7.5-py2.py3-none-any.whl", hash = "sha256:9649af414d74d4df115d5d718f82acb59c9d418196b7b4290ed47a12ce62df56"},
