@@ -833,7 +833,7 @@ description = "Plugin to catch bad style specific to Django Projects"
 name = "flake8-django"
 optional = false
 python-versions = "*"
-version = "0.0.4"
+version = "1.1.0"
 
 [package.dependencies]
 flake8 = "*"
@@ -2418,7 +2418,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d6dbe32f2e7168409ddc5833ff350242ecfd8c838c45ed832c96713ccd68603d"
+content-hash = "ca89e3ddd952eaec691124ec928c7922023e790a6f4a47982fad9509e50589cd"
 python-versions = "3.8.2"
 
 [metadata.files]
@@ -2772,7 +2772,10 @@ flake8-debugger = [
     {file = "flake8-debugger-3.2.1.tar.gz", hash = "sha256:712d7c1ff69ddf3f0130e94cc88c2519e720760bce45e8c330bfdcb61ab4090d"},
 ]
 flake8-django = [
-    {file = "flake8-django-0.0.4.tar.gz", hash = "sha256:7329ec2e2b8b194e8109639c534359014c79df4d50b14f4b85b8395edc5d6760"},
+    {file = "flake8-django-1.1.0.tar.gz", hash = "sha256:93b101c6f683d94eeeb9c042261fda87e5e54c4f4e621549aade9ce39c1e4986"},
+    {file = "flake8_django-1.1.0-py3-none-any.whl", hash = "sha256:af88da63452b45e9bb5fdc2ddcdadbe0be13b0eaa55bd3e6906391f44f840e8f"},
+    {file = "flake8_django-1.1.0-py3.6.egg", hash = "sha256:510a75351d7fa8447a6d89a04128b1516ab3371738d3382c981151849d9ff53b"},
+    {file = "flake8_django-1.1.0-py3.7.egg", hash = "sha256:320f36bfe505e037e4609f93361f1024905dab48b7204d818dcd2863a55dccfd"},
 ]
 flake8-docstrings = [
     {file = "flake8-docstrings-1.5.0.tar.gz", hash = "sha256:3d5a31c7ec6b7367ea6506a87ec293b94a0a46c0bce2bb4975b7f1d09b6f3717"},
