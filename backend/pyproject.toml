@@ -81,4 +81,4 @@ dotenv-linter = "^0.1"
 polint = "^0.4"
 dennis = "^0.9"
 
-pre-commit = "^1.21"
+pre-commit = "^2.6"
