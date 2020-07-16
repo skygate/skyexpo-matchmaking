@@ -2399,7 +2399,7 @@ description = "A linter for YAML files."
 name = "yamllint"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "1.22.1"
+version = "1.24.1"
 
 [package.dependencies]
 pathspec = ">=0.5.3"
@@ -2418,7 +2418,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "d6dbe32f2e7168409ddc5833ff350242ecfd8c838c45ed832c96713ccd68603d"
+content-hash = "38b46e22ab83e9dceb94c3d39b0d101bd68d340fcb31bfc03b377b3ee3ab7ae8"
 python-versions = "3.8.2"
 
 [metadata.files]
@@ -2773,6 +2773,8 @@ flake8-debugger = [
 ]
 flake8-django = [
     {file = "flake8-django-0.0.4.tar.gz", hash = "sha256:7329ec2e2b8b194e8109639c534359014c79df4d50b14f4b85b8395edc5d6760"},
+    {file = "flake8_django-0.0.4-py3.5.egg", hash = "sha256:ca66462724acbcf241d29edec201dac40c05cc27ae118b5abb8d74066681402f"},
+    {file = "flake8_django-0.0.4-py3.7.egg", hash = "sha256:29721a4976f784921b140752234447af1192c4e4f989d0db4e2d9f7f7915fa86"},
 ]
 flake8-docstrings = [
     {file = "flake8-docstrings-1.5.0.tar.gz", hash = "sha256:3d5a31c7ec6b7367ea6506a87ec293b94a0a46c0bce2bb4975b7f1d09b6f3717"},
@@ -3277,6 +3279,7 @@ redis = [
     {file = "redis-3.4.1.tar.gz", hash = "sha256:0dcfb335921b88a850d461dc255ff4708294943322bd55de6cfd68972490ca1f"},
 ]
 requests = [
+    {file = "requests-2.23.0-py2.7.egg", hash = "sha256:5d2d0ffbb515f39417009a46c14256291061ac01ba8f875b90cad137de83beb4"},
     {file = "requests-2.23.0-py2.py3-none-any.whl", hash = "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee"},
     {file = "requests-2.23.0.tar.gz", hash = "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"},
 ]
@@ -3445,8 +3448,8 @@ widgetsnbextension = [
     {file = "widgetsnbextension-3.5.1.tar.gz", hash = "sha256:079f87d87270bce047512400efd70238820751a11d2d8cb137a5a5bdbaf255c7"},
 ]
 yamllint = [
-    {file = "yamllint-1.22.1-py2.py3-none-any.whl", hash = "sha256:1b0dfb4f5679ca3effcfa9c67d2d79f81e4b8239a725ad9f0118bdd8f5b36d8f"},
-    {file = "yamllint-1.22.1.tar.gz", hash = "sha256:dd8eb7540e6fd929494280a4def7dc76c1f802d43446a0b612c19b850d70945e"},
+    {file = "yamllint-1.24.1-py2.py3-none-any.whl", hash = "sha256:8f92d0c1770369fea467d6c278a4556aca36f753c62b3bf95664e311227e7ebe"},
+    {file = "yamllint-1.24.1.tar.gz", hash = "sha256:c104ff5c29511ea59236cb06a68e34a9663724a35f1fdee736657d90fcb56162"},
 ]
 zipp = [
     {file = "zipp-3.1.0-py3-none-any.whl", hash = "sha256:aa36550ff0c0b7ef7fa639055d797116ee891440eac1a56f378e2d3179e0320b"},
